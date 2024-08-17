@@ -1,0 +1,12 @@
+{
+  "name": "@radroots/locales",
+  "version": "0.0.0",
+  "private": true,
+  "license": "GPLv3",
+  "files": [
+    "iso-639_1.json"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}
