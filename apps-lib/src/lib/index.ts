@@ -1,3 +1,6 @@
 export * from "./locales/i18n"
+export * from "./stores/client"
+export * from "./types"
 export { default as css_static } from "./ui/css_static.svelte"
 export * from "./utils/client"
+export * from "./utils/dom"
