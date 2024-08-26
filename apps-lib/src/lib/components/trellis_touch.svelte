@@ -21,7 +21,7 @@
         class={`${fmt_trellis(hide_border_b, hide_border_t)} flex flex-row h-full w-full justify-center items-center border-t-line border-layer-${layer}-surface-edge transition-all`}
     >
         <button
-            class={`relative group flex flex-row h-line w-full pl-[2px] pr-[2px] justify-between items-center transition-all`}
+            class={`relative group flex flex-row h-line w-full pr-[2px] justify-between items-center transition-all`}
             on:click={async (ev) => {
                 await sleep(100);
                 if (basis.callback) await basis.callback(ev);

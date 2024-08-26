@@ -21,7 +21,7 @@
 			<svelte:component this={fill} />
 		{:else}
 			<p
-				class={`glyph font-sans text-labelTrellis text-layer-${layer}-glyph-label uppercase`}
+				class={`font-sans text-labelTrellis text-layer-${layer}-glyph-label uppercase`}
 			>
 				{basis.value || ``}
 			</p>
@@ -37,7 +37,7 @@
 		>
 			{#if basis.link.glyph}
 				<p
-					class={`${fmt_cl(basis.link.glyph.classes)} glyph font-sans text-labelTrellis uppercase fade-in`}
+					class={`${fmt_cl(basis.link.glyph.classes)} font-sans text-labelTrellis uppercase fade-in`}
 				>
 					{basis.link.glyph.value || ``}
 				</p>

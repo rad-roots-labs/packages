@@ -12,16 +12,20 @@
 		<div class={`flex flex-row h-full w-content items-center`}>
 			{#each basis.left as title_l}
 				<div
-					class={`flex flex-row h-full max-w-fit gap-1 items-center ${title_l.hide_truncate ? `` : `truncate`}`}
+					class={`flex flex-row h-full max-w-fit items-center ${title_l.hide_truncate ? `` : `truncate`}`}
 				>
 					{#if title_l.icon}
-						<svelte:component
-							this={glyph}
-							basis={{ ...title_l.icon }}
-						/>
+						<div
+							class={`flex flex-row justify-start items-center pr-1`}
+						>
+							<svelte:component
+								this={glyph}
+								basis={{ ...title_l.icon }}
+							/>
+						</div>
 					{/if}
 					<p
-						class={`${fmt_cl(title_l.classes)} ${get_label_classes(layer, title_l.kind, hide_active)}  ${title_l.hide_truncate ? `` : `truncate`} glyph font-sans text-lineTrellis transition-all`}
+						class={`${fmt_cl(title_l.classes)} ${get_label_classes(layer, title_l.kind, hide_active)}  ${title_l.hide_truncate ? `` : `truncate`} font-sans text-lineTrellis transition-all`}
 					>
 						{title_l.value || ``}
 					</p>
@@ -42,7 +46,7 @@
 						/>
 					{/if}
 					<p
-						class={`${get_label_classes(layer, title_r.kind, hide_active)} ${title_r.hide_truncate ? `` : `truncate`} glyph truncate font-sans text-lineTrellis transition-all`}
+						class={`${get_label_classes(layer, title_r.kind, hide_active)} ${title_r.hide_truncate ? `` : `truncate`} truncate font-sans text-lineTrellis transition-all`}
 					>
 						{title_r.value || ``}
 					</p>
