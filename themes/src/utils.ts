@@ -31,7 +31,7 @@ export const parse_color_mode = (color_mode?: string): ColorMode => {
 	};
 };
 
-export const write_layers = ({ layer_0: { surface: l0_s, glyphs: l0_g }, layer_1: { surface: l1_s, glyphs: l1_g }, layer_2: { surface: l2_s, glyphs: l2_g } }: ThemeLayers): Record<string, string> => ({
+export const write_layers = ({ layer_0: { surface: l0_s, glyphs: l0_g }, layer_1: { surface: l1_s, glyphs: l1_g }, layer_2: { surface: l2_s, glyphs: l2_g }}: ThemeLayers): Record<string, string> => ({
 	"--layer-0-surface": hsl(l0_s._),
 	"--layer-0-surface_a": hsl(l0_s._a),
 	"--layer-0-surface-edge": hsl(l0_s.edge),
