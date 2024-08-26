@@ -79,6 +79,7 @@
                             <svelte:component
                                 this={trellis_offset}
                                 basis={basis.offset}
+                                layer={args.layer}
                             />
                             {#if `touch` in basis && basis.touch}
                                 <svelte:component
