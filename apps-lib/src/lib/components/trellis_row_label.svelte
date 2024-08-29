@@ -25,7 +25,7 @@
 						</div>
 					{/if}
 					<p
-						class={`${fmt_cl(title_l.classes)} ${get_label_classes(layer, title_l.kind, hide_active)}  ${title_l.hide_truncate ? `` : `truncate`} font-sans text-lineTrellis transition-all`}
+						class={`${fmt_cl(title_l.classes)} ${get_label_classes(layer, title_l.kind, hide_active)}  ${title_l.hide_truncate ? `` : `truncate`} font-sans text-trellisLine transition-all`}
 					>
 						{title_l.value || ``}
 					</p>
@@ -46,7 +46,7 @@
 						/>
 					{/if}
 					<p
-						class={`${get_label_classes(layer, title_r.kind, hide_active)} ${title_r.hide_truncate ? `` : `truncate`} truncate font-sans text-lineTrellis transition-all`}
+						class={`${get_label_classes(layer, title_r.kind, hide_active)} ${title_r.hide_truncate ? `` : `truncate`} truncate font-sans text-trellisLine transition-all`}
 					>
 						{title_r.value || ``}
 					</p>
