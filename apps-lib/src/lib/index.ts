@@ -8,6 +8,7 @@ export { default as trellis_row_display_value } from "./components/trellis_row_d
 export { default as trellis_row_label } from "./components/trellis_row_label.svelte"
 export { default as trellis_title } from "./components/trellis_title.svelte"
 export { default as trellis_touch } from "./components/trellis_touch.svelte"
+export * from "./stores/client"
 export * from "./types/client"
 export * from "./types/components"
 export * from "./types/trellis"

@@ -1,4 +1,4 @@
-import type { LabelFieldKind } from "$lib/types/client";
+import type { AnchorRoute, LabelFieldKind, NavigationParamTuple, NavigationRouteParamKey } from "$lib/types/client";
 import type { ColorMode, ThemeKey, ThemeLayer } from "@radroots/theme";
 
 export const sleep = async (ms: number): Promise<void> => {
@@ -36,3 +36,27 @@ export function parse_layer(layer?: number): ThemeLayer {
 export function fmt_trellis(hide_border_t: boolean, hide_border_b: boolean): string {
     return `${hide_border_t ? `group-first:border-t-0` : `group-first:border-t-line`} ${hide_border_b ? `group-last:border-b-0` : `group-last:border-b-line`}`;
 };
+
+export function encode_qp(params_list?: NavigationParamTuple[]): string {
+    if (!params_list || !params_list.length) return ``;
+    const params = params_list.filter(i => i[0] && i[1])
+    let urlp = ``;
+    if (params_list.length) for (const [i, [k, v]] of params.entries()) urlp += `${i === 0 ? `?` : ``}&${k.trim()}=${encodeURI(v.trim())}`.trim();
+    return urlp;
+}
+
+export const decode_qp = (query_param: string): AnchorRoute => {
+    const route = decodeURI(query_param).replaceAll(`//`, `/`);
+    return `/${route.charAt(0) === `/` ? route.slice(1) : route}`;
+};
+
+export function parse_qp(param: string): NavigationRouteParamKey | undefined {
+    switch (param) {
+        case "cmd":
+        case "pk":
+        case "id":
+            return param;
+        default:
+            return undefined;
+    }
+}
