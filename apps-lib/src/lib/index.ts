@@ -1,4 +1,5 @@
 export * from "./locales/i18n"
+export { default as tabs } from "./components/tabs.svelte"
 export { default as trellis } from "./components/trellis.svelte"
 export { default as trellis_default_label } from "./components/trellis_default_label.svelte"
 export { default as trellis_end } from "./components/trellis_end.svelte"
@@ -8,6 +9,7 @@ export { default as trellis_row_label } from "./components/trellis_row_label.sve
 export { default as trellis_title } from "./components/trellis_title.svelte"
 export { default as trellis_touch } from "./components/trellis_touch.svelte"
 export * from "./types/client"
+export * from "./types/components"
 export * from "./types/trellis"
 export * from "./types/ui"
 export { default as css_static } from "./ui/css_static.svelte"
