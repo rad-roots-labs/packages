@@ -20,7 +20,7 @@ export const fmt_cl = (classes?: string): string => {
 
 export function get_label_classes(layer: ThemeLayer, label_kind: LabelFieldKind | undefined, hide_active: boolean): string {
     return `text-layer-${layer}-glyph${label_kind ? `-${label_kind}` : ``} ${hide_active ? `` : `group-active:text-layer-${layer}-glyph${label_kind ? `-${label_kind}_a` : `_a`}`}`
-}
+};
 
 export function parse_layer(layer?: number): ThemeLayer {
     switch (layer) {
@@ -30,7 +30,7 @@ export function parse_layer(layer?: number): ThemeLayer {
             return layer;
         default:
             return 0;
-    }
+    };
 };
 
 export function fmt_trellis(hide_border_t: boolean, hide_border_b: boolean): string {
@@ -43,7 +43,7 @@ export function encode_qp(params_list?: NavigationParamTuple[]): string {
     let urlp = ``;
     if (params_list.length) for (const [i, [k, v]] of params.entries()) urlp += `${i === 0 ? `?` : ``}&${k.trim()}=${encodeURI(v.trim())}`.trim();
     return urlp;
-}
+};
 
 export const decode_qp = (query_param: string): AnchorRoute => {
     const route = decodeURI(query_param).replaceAll(`//`, `/`);
@@ -58,5 +58,9 @@ export function parse_qp(param: string): NavigationRouteParamKey | undefined {
             return param;
         default:
             return undefined;
-    }
-}
+    };
+};
+
+export function time_now_ms(): number {
+    return Math.floor(new Date().getTime() / 1000);
+};
