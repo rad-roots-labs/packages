@@ -1,9 +1,8 @@
-import { NDKEvent, NDKPrivateKeySigner, NDKUser } from '@nostr-dev-kit/ndk';
-import NDKSvelte from "@nostr-dev-kit/ndk-svelte";
+import NDK, { NDKEvent, NDKPrivateKeySigner, NDKUser } from '@nostr-dev-kit/ndk';
 import { time_now_ms } from "./client";
 
 export async function ndk_setup_privkey(opts: {
-    $ndk: NDKSvelte;
+    $ndk: NDK;
     private_key: string;
 }): Promise<NDKUser | undefined> {
     try {
@@ -20,7 +19,7 @@ export async function ndk_setup_privkey(opts: {
 };
 
 export async function ndk_event(opts: {
-    $ndk: NDKSvelte;
+    $ndk: NDK;
     $ndk_user: NDKUser;
     basis: {
         kind: number;
