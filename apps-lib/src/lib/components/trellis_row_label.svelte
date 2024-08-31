@@ -7,7 +7,7 @@
 	export let hide_active: boolean;
 </script>
 
-<div class={`flex flex-row h-full items-center justify-between`}>
+<div class={`flex flex-row h-full w-full items-center justify-between`}>
 	{#if basis.left && basis.left.length}
 		<div class={`flex flex-row h-full w-content items-center`}>
 			{#each basis.left as title_l}
@@ -34,7 +34,9 @@
 		</div>
 	{/if}
 	{#if basis.right && basis.right.length}
-		<div class={`flex flex-row h-full w-content items-center justify-end`}>
+		<div
+			class={`flex flex-row h-full w-content items-center justify-end pr-4`}
+		>
 			{#each basis.right.reverse() as title_r}
 				<div
 					class={`${fmt_cl(title_r.classes)} flex flex-row h-full max-w-fit gap-1 items-center ${title_r.hide_truncate ? `` : `truncate`}`}

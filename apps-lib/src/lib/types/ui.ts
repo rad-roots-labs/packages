@@ -74,3 +74,11 @@ export type IGlyph = ICbOpt & {
     key: GlyphKey;
     dim?: GeometryGlyphDimension;
 };
+
+export type ILoadingBlades = 6 | 12;
+
+export type ILoading = {
+    classes?: string;
+    blades?: ILoadingBlades;
+    dim?: GeometryGlyphDimension;
+};
