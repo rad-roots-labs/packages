@@ -69,12 +69,12 @@ export type ILy = {
 };
 
 export type IGlOpt = {
-    icon?: IGlyph;
+    glyph?: IGlyph;
 }
 
-export type IGlyphOpt = {
+/*export type IGlyphOptFields = IGlyphFields & {
     glyph?: IGlyphFields;
-};
+};*/
 
 export type IGlyphFields = {
     value: string;

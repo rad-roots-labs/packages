@@ -14,13 +14,13 @@
 				<div
 					class={`flex flex-row h-full max-w-fit items-center ${title_l.hide_truncate ? `` : `truncate`}`}
 				>
-					{#if title_l.icon}
+					{#if title_l.glyph}
 						<div
 							class={`flex flex-row justify-start items-center pr-1`}
 						>
 							<svelte:component
 								this={glyph}
-								basis={{ ...title_l.icon }}
+								basis={{ ...title_l.glyph }}
 							/>
 						</div>
 					{/if}
@@ -41,10 +41,10 @@
 				<div
 					class={`${fmt_cl(title_r.classes)} flex flex-row h-full max-w-fit gap-1 items-center ${title_r.hide_truncate ? `` : `truncate`}`}
 				>
-					{#if title_r.icon}
+					{#if title_r.glyph}
 						<svelte:component
 							this={glyph}
-							basis={{ ...title_r.icon }}
+							basis={{ ...title_r.glyph }}
 						/>
 					{/if}
 					<p

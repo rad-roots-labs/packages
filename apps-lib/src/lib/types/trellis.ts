@@ -1,4 +1,4 @@
-import type { ICbGOpt, ICbOpt, ICbROpt, IClOpt, IGlyphOpt, ILabel, ILabelTup, ILy } from "./client";
+import type { ICbGOpt, ICbOpt, ICbROpt, IClOpt, IGlOpt, ILabel, ILabelOpt, ILabelTup, ILy } from "./client";
 import type { GlyphKey, IGlyph } from "./ui";
 
 export type ITrellis = ILy &
@@ -9,7 +9,7 @@ export type ITrellis = ILy &
         title?: ITrellisTitle;
         description?: ITrellisDescription;
         default_el?: ITrellisDefault;
-        list?: ITrellisKind[];
+        list?: (ITrellisKind | undefined)[];
     };
 
 export type ITrellisTitle = ICbOpt &
@@ -18,9 +18,7 @@ export type ITrellisTitle = ICbOpt &
         value: string | true;
         link?: ICbOpt &
         IClOpt &
-        IGlyphOpt & {
-            icon?: IGlyph;
-        };
+        IGlOpt & ILabelOpt;
     };
 
 export type ITrellisDescription = string | true;

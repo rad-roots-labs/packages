@@ -35,21 +35,21 @@
 					await basis.link.callback();
 			}}
 		>
-			{#if basis.link.glyph}
+			{#if basis.link.label}
 				<p
-					class={`${fmt_cl(basis.link.glyph.classes)} font-sans text-trellisTitle uppercase fade-in`}
+					class={`${fmt_cl(basis.link.label.classes)} font-sans text-trellisTitle uppercase fade-in`}
 				>
-					{basis.link.glyph.value || ``}
+					{basis.link.label.value || ``}
 				</p>
 			{/if}
-			{#if basis.link.icon}
+			{#if basis.link.glyph}
 				<div class={`flex flex-row w-max`}>
 					<svelte:component
 						this={glyph}
 						basis={{
-							...basis.link.icon,
+							...basis.link.glyph,
 							dim: `xs-`,
-							classes: `${fmt_cl(basis.link.icon.classes)} fade-in`,
+							classes: `${fmt_cl(basis.link.glyph.classes)} fade-in`,
 						}}
 					/>
 				</div>
