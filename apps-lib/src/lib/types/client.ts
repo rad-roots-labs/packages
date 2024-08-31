@@ -1,10 +1,5 @@
 import type { ThemeLayer } from "@radroots/theme";
-import type { Snippet } from "svelte";
 import type { IGlyph } from "./ui";
-
-export type PropChildren = {
-    children: Snippet;
-};
 
 export type AppLayoutKey = 'lg' | 'base';
 type NavigationRouteBasis = string;

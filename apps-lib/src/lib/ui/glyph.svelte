@@ -16,20 +16,18 @@
         [`xl`, `text-[30px]`],
     ]);
 
-    let { basis }: { basis: IGlyph } = $props();
+    export let basis: IGlyph;
+    $: basis = basis;
 
-    let weight = $derived(
-        !basis?.weight || basis?.weight === `regular` ? `` : `-${basis.weight}`,
-    );
+    $: weight =
+        !basis?.weight || basis?.weight === `regular` ? `` : `-${basis.weight}`;
 
-    let dimension = $derived(
-        basis?.dim ? glyph_map.get(basis.dim) : glyph_map.get(`sm`),
-    );
+    $: dimension = basis?.dim ? glyph_map.get(basis.dim) : glyph_map.get(`sm`);
 </script>
 
 <button
     class={`${fmt_cl(basis.classes)} flex flex-row justify-center items-center transition-all ${dimension}`}
-    onclick={async () => {
+    on:click={async () => {
         if (basis.callback) await basis.callback();
     }}
 >

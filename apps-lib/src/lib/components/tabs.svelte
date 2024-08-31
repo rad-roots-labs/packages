@@ -1,13 +1,10 @@
 <script lang="ts">
     import { glyph, type ITabsBasis } from "..";
 
-    let {
-        basis,
-    }: {
-        basis: ITabsBasis;
-    } = $props();
+    export let basis: ITabsBasis;
+    $: basis = basis;
 
-    let classes_blur = $derived(basis.blur ? `bg-layer-1-surface/30` : ``);
+    $: classes_blur = basis.blur ? `bg-layer-1-surface/30` : ``;
 
     let el: HTMLElement | null;
     let el_inner: HTMLElement | null;
@@ -27,7 +24,7 @@
             {#each basis.list as tab, tab_i}
                 <button
                     class={`col-span-3 flex flex-col h-full justify-start items-center transition-all`}
-                    onclick={async () => {
+                    on:click={async () => {
                         await tab.callback(tab_i);
                     }}
                 >

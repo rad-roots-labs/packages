@@ -1,13 +1,16 @@
-import i18n from '@sveltekit-i18n/base';
-import type { Config } from '@sveltekit-i18n/parser-icu';
-import parser from '@sveltekit-i18n/parser-icu';
+//import i18n from '@sveltekit-i18n/base';
+import i18n, { type Config } from '@radroots/sveltekit-i18n';
+
+//import type { Config } from '@sveltekit-i18n/parser-icu';
+//import parser from '@sveltekit-i18n/parser-icu';
 import locales_keys from './locales.json';
 
 type Locale = keyof typeof locales_keys;
+
 type LanguageConfig = {
 	default?: string;
-	value?: string;
 };
+
 const locales_files = [`app`] as const;
 const translations_keys: Record<Locale, any> = {
 	en: { locales_keys },
@@ -16,7 +19,7 @@ export const default_locale: Locale = `en`;
 
 const config: Config<LanguageConfig> = {
 	initLocale: default_locale,
-	parser: parser(),
+	//parser: parser(),
 	translations: translations_keys,
 	loaders: [
 		...Object.keys(translations_keys).map((locale) => locales_files.map(key => ({

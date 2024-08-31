@@ -1,5 +1,5 @@
-import type { GlyphKey, ICbGOpt, ICbOpt, ICbROpt, IClOpt, IGlyphOpt, ILabel, ILabelTup, ILy } from "./client";
-import type { IGlyph } from "./ui";
+import type { ICbGOpt, ICbOpt, ICbROpt, IClOpt, IGlyphOpt, ILabel, ILabelTup, ILy } from "./client";
+import type { GlyphKey, IGlyph } from "./ui";
 
 export type ITrellis = ILy &
     IClOpt &
