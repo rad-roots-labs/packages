@@ -69,3 +69,9 @@ export const fmt_id = (id: string): string => {
     const pref = location.pathname.slice(1, -1).replaceAll(`-`, `_`).replaceAll(`/`, `-`).replaceAll(`--`, `-`)
     return `${pref}-${id}`
 };
+
+export const fmt_capitalize = (val: string): string => {
+    const fmt = val.split(` `).map(i => `${i.charAt(0).toUpperCase()}${i.slice(1)}`).join(` `);
+    return fmt;
+};
+
