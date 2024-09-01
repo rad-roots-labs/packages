@@ -75,3 +75,9 @@ export const fmt_capitalize = (val: string): string => {
     return fmt;
 };
 
+export const zoom_step = (num: number, op: `inc` | `dec`): number => {
+    const int_num = Math.round(num);
+    if (op === 'inc') return Math.min(int_num + 1, 14);
+    else return Math.max(int_num - 1, 0);
+};
+
