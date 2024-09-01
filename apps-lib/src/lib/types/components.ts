@@ -1,4 +1,4 @@
-import type { CallbackPromiseGeneric } from "./client";
+import type { CallbackPromiseGeneric, IClOpt, ILy } from "./client";
 import type { GlyphKey, GlyphWeight } from "./ui";
 
 export type ITabsBasisList = {
@@ -14,5 +14,21 @@ export type ITabsBasis = {
     blur?: boolean;
     tab_active: number;
     app_layout: string;
+};
+
+export type IFormField = {
+    validate: RegExp;
+    charset: RegExp;
+    validateKeypress?: boolean;
+};
+
+export type IInputFormBasis = IClOpt & ILy & {
+    id: string;
+    placeholder?: string;
+    label?: string;
+    hidden?: boolean;
+    validate?: RegExp;
+    sync?: boolean;
+    field: IFormField
 };
 

@@ -64,3 +64,8 @@ export function parse_qp(param: string): NavigationRouteParamKey | undefined {
 export function time_now_ms(): number {
     return Math.floor(new Date().getTime() / 1000);
 };
+
+export const fmt_id = (id: string): string => {
+    const pref = location.pathname.slice(1, -1).replaceAll(`-`, `_`).replaceAll(`/`, `-`).replaceAll(`--`, `-`)
+    return `${pref}-${id}`
+};

@@ -7,7 +7,7 @@ let cacheAdapter: NDKCacheAdapter | undefined;
 if (typeof window !== `undefined`) cacheAdapter = new NDKCacheAdapterDexie({ dbName: "-radroots-app-ndk" });
 
 const _ndk = new NDKSvelte({
-  //cacheAdapter,
+  cacheAdapter,
   clientName: "»--`--,---",
 });
 

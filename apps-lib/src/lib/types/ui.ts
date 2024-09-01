@@ -2,6 +2,7 @@ import type { ThemeLayer } from "@radroots/theme";
 import type { GeometryCardinalDirection, GeometryGlyphDimension, ICbOpt } from "./client";
 
 export type GlyphKey = |
+    `handbag-simple` |
     `devices` |
     `lock-key` |
     `gear-fine` |

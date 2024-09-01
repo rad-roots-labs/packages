@@ -1,4 +1,5 @@
 export * from "./locales/i18n"
+export { default as input_form } from "./components/input_form.svelte"
 export { default as tabs } from "./components/tabs.svelte"
 export { default as trellis } from "./components/trellis.svelte"
 export { default as trellis_default_label } from "./components/trellis_default_label.svelte"
