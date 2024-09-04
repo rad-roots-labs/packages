@@ -1,6 +1,6 @@
 <script lang="ts">
     import type { ThemeLayer } from "@radroots/theme";
-    import { glyph, type ITrellisBasisTouchEnd } from "..";
+    import { Glyph, type ITrellisBasisTouchEnd } from "..";
 
     export let basis: ITrellisBasisTouchEnd;
     export let layer: ThemeLayer;
@@ -17,8 +17,7 @@
         }}
     >
         {#if basis.icon}
-            <svelte:component
-                this={glyph}
+            <Glyph
                 basis={{
                     classes: `text-layer-${layer}-glyph-shade ${hide_active ? `` : `group-active:text-layer-${layer}-glyph_a`} translate-y-[1px] opacity-70`,
                     dim: `xs-`,

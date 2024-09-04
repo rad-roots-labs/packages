@@ -1,9 +1,9 @@
 <script lang="ts">
+    import Glyph from "$lib/ui/glyph.svelte";
     import type { ThemeLayer } from "@radroots/theme";
     import {
         fmt_cl,
         get_label_classes,
-        glyph,
         type ITrellisKindDisplayValue,
     } from "..";
 
@@ -20,8 +20,7 @@
     }}
 >
     {#if `icon` in basis}
-        <svelte:component
-            this={glyph}
+        <Glyph
             basis={{
                 classes:
                     basis.icon.classes ||

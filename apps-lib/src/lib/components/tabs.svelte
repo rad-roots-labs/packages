@@ -1,5 +1,6 @@
 <script lang="ts">
-    import { glyph, type ITabsBasis } from "..";
+    import Glyph from "$lib/ui/glyph.svelte";
+    import { type ITabsBasis } from "..";
 
     export let basis: ITabsBasis;
     $: basis = basis;
@@ -28,8 +29,7 @@
                         await tab.callback(tab_i);
                     }}
                 >
-                    <svelte:component
-                        this={glyph}
+                    <Glyph
                         basis={{
                             classes:
                                 basis.tab_active === tab_i

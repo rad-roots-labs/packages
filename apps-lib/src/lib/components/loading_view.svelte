@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { loading as Loading } from "..";
+    import { Loading } from "..";
 </script>
 
 <div

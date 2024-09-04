@@ -1,9 +1,9 @@
 <script lang="ts">
     import type { ThemeLayer } from "@radroots/theme";
     import {
-        fill,
+        Fill,
         fmt_cl,
-        glyph,
+        Glyph,
         type ITrellisBasisOffset,
         type ITrellisBasisOffsetMod,
     } from "..";
@@ -19,14 +19,14 @@
     <div class={`flex flex-row h-full min-w-[34px]`}>
         {#if mod === `sm`}
             <div class={`${fmt_cl(``)} flex flex-row h-full w-[22px]`}>
-                <svelte:component this={fill} />
+                <Fill />
             </div>
         {:else if mod === `glyph`}
             <div class={`flex flex-row pr-[2px]`}>
                 <div
                     class={`${fmt_cl(``)} flex flex-row h-full w-trellisOffset`}
                 >
-                    <svelte:component this={fill} />
+                    <Fill />
                 </div>
             </div>
         {:else if typeof mod === `object`}
@@ -40,8 +40,7 @@
                             await basis.callback(ev);
                     }}
                 >
-                    <svelte:component
-                        this={glyph}
+                    <Glyph
                         basis={{
                             classes: `text-layer-${layer}-glyph ${fmt_cl(mod.classes ? `` : ``)}`,
                             ...mod,

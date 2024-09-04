@@ -1,6 +1,7 @@
 <script lang="ts">
+	import Glyph from "$lib/ui/glyph.svelte";
 	import type { ThemeLayer } from "@radroots/theme";
-	import { fmt_cl, get_label_classes, glyph, type ILabelTupFields } from "..";
+	import { fmt_cl, get_label_classes, type ILabelTupFields } from "..";
 
 	export let basis: ILabelTupFields;
 	export let layer: ThemeLayer;
@@ -18,10 +19,7 @@
 						<div
 							class={`flex flex-row justify-start items-center pr-1`}
 						>
-							<svelte:component
-								this={glyph}
-								basis={{ ...title_l.glyph }}
-							/>
+							<Glyph basis={{ ...title_l.glyph }} />
 						</div>
 					{/if}
 					<p
@@ -42,10 +40,7 @@
 					class={`${fmt_cl(title_r.classes)} flex flex-row h-full max-w-fit gap-1 items-center ${title_r.hide_truncate ? `` : `truncate`}`}
 				>
 					{#if title_r.glyph}
-						<svelte:component
-							this={glyph}
-							basis={{ ...title_r.glyph }}
-						/>
+						<Glyph basis={{ ...title_r.glyph }} />
 					{/if}
 					<p
 						class={`${get_label_classes(layer, title_r.kind, hide_active)} ${title_r.hide_truncate ? `` : `truncate`} truncate font-sans text-trellisLine transition-all`}

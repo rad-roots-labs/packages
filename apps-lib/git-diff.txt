@@ -1,0 +1,330 @@
+Listing changes in the repository:
+On branch master
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	modified:   src/lib/components/loading_view.svelte
+	modified:   src/lib/components/tabs.svelte
+	modified:   src/lib/components/trellis.svelte
+	modified:   src/lib/components/trellis_end.svelte
+	modified:   src/lib/components/trellis_offset.svelte
+	modified:   src/lib/components/trellis_row_display_value.svelte
+	modified:   src/lib/components/trellis_row_label.svelte
+	modified:   src/lib/components/trellis_title.svelte
+	modified:   src/lib/components/trellis_touch.svelte
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	git-diff.txt
+
+
+Detailed differences (unstaged changes):
+
+Staged changes (ready to be committed):
+diff --git a/src/lib/components/loading_view.svelte b/src/lib/components/loading_view.svelte
+index c826fee..485bd7a 100644
+--- a/src/lib/components/loading_view.svelte
++++ b/src/lib/components/loading_view.svelte
+@@ -1,5 +1,5 @@
+ <script lang="ts">
+-    import { loading as Loading } from "..";
++    import { Loading } from "..";
+ </script>
+ 
+ <div
+diff --git a/src/lib/components/tabs.svelte b/src/lib/components/tabs.svelte
+index 09ff298..6e83964 100644
+--- a/src/lib/components/tabs.svelte
++++ b/src/lib/components/tabs.svelte
+@@ -1,5 +1,6 @@
+ <script lang="ts">
+-    import { glyph, type ITabsBasis } from "..";
++    import Glyph from "$lib/ui/glyph.svelte";
++    import { type ITabsBasis } from "..";
+ 
+     export let basis: ITabsBasis;
+     $: basis = basis;
+@@ -28,8 +29,7 @@
+                         await tab.callback(tab_i);
+                     }}
+                 >
+-                    <svelte:component
+-                        this={glyph}
++                    <Glyph
+                         basis={{
+                             classes:
+                                 basis.tab_active === tab_i
+diff --git a/src/lib/components/trellis.svelte b/src/lib/components/trellis.svelte
+index 50c52a8..21f5f23 100644
+--- a/src/lib/components/trellis.svelte
++++ b/src/lib/components/trellis.svelte
+@@ -1,14 +1,9 @@
+ <script lang="ts">
+-    import {
+-        fmt_cl,
+-        parse_layer,
+-        t,
+-        trellis_default_label,
+-        trellis_offset,
+-        trellis_title,
+-        trellis_touch,
+-        type ITrellis,
+-    } from "..";
++    import { fmt_cl, parse_layer, t, type ITrellis } from "..";
++    import TrellisDefaultLabel from "./trellis_default_label.svelte";
++    import TrellisOffset from "./trellis_offset.svelte";
++    import TrellisTitle from "./trellis_title.svelte";
++    import TrellisTouch from "./trellis_touch.svelte";
+ 
+     const class_rounded = `xl`;
+ 
+@@ -41,8 +36,7 @@
+         class={`relative flex flex-col h-auto w-auto gap-[3px] ${set_title_background ? `bg-layer-${args.layer}-surface` : ``}`}
+     >
+         {#if args.title && (!args.default_el || (args.default_el && args.default_el.show_title))}
+-            <svelte:component
+-                this={trellis_title}
++            <TrellisTitle
+                 basis={args.title}
+                 layer={parse_layer(args.layer - 1)}
+             />
+@@ -54,8 +48,7 @@
+                 {#if $$slots.default_el}
+                     <slot name="default_el" />
+                 {:else if args.default_el}
+-                    <svelte:component
+-                        this={trellis_default_label}
++                    <TrellisDefaultLabel
+                         layer={parse_layer(args.layer - 1)}
+                         labels={args.default_el.labels
+                             ? args.default_el.labels
+@@ -76,14 +69,12 @@
+                         <div
+                             class={`flex flex-row h-full w-full gap-1 items-center overflow-y-hidden`}
+                         >
+-                            <svelte:component
+-                                this={trellis_offset}
++                            <TrellisOffset
+                                 basis={basis.offset}
+                                 layer={args.layer}
+                             />
+                             {#if `touch` in basis && basis.touch}
+-                                <svelte:component
+-                                    this={trellis_touch}
++                                <TrellisTouch
+                                     basis={basis.touch}
+                                     layer={args.layer}
+                                     {hide_border_b}
+diff --git a/src/lib/components/trellis_end.svelte b/src/lib/components/trellis_end.svelte
+index 2072a19..0dc0647 100644
+--- a/src/lib/components/trellis_end.svelte
++++ b/src/lib/components/trellis_end.svelte
+@@ -1,6 +1,6 @@
+ <script lang="ts">
+     import type { ThemeLayer } from "@radroots/theme";
+-    import { glyph, type ITrellisBasisTouchEnd } from "..";
++    import { Glyph, type ITrellisBasisTouchEnd } from "..";
+ 
+     export let basis: ITrellisBasisTouchEnd;
+     export let layer: ThemeLayer;
+@@ -17,8 +17,7 @@
+         }}
+     >
+         {#if basis.icon}
+-            <svelte:component
+-                this={glyph}
++            <Glyph
+                 basis={{
+                     classes: `text-layer-${layer}-glyph-shade ${hide_active ? `` : `group-active:text-layer-${layer}-glyph_a`} translate-y-[1px] opacity-70`,
+                     dim: `xs-`,
+diff --git a/src/lib/components/trellis_offset.svelte b/src/lib/components/trellis_offset.svelte
+index f4db017..bf28808 100644
+--- a/src/lib/components/trellis_offset.svelte
++++ b/src/lib/components/trellis_offset.svelte
+@@ -1,9 +1,9 @@
+ <script lang="ts">
+     import type { ThemeLayer } from "@radroots/theme";
+     import {
+-        fill,
++        Fill,
+         fmt_cl,
+-        glyph,
++        Glyph,
+         type ITrellisBasisOffset,
+         type ITrellisBasisOffsetMod,
+     } from "..";
+@@ -19,14 +19,14 @@
+     <div class={`flex flex-row h-full min-w-[34px]`}>
+         {#if mod === `sm`}
+             <div class={`${fmt_cl(``)} flex flex-row h-full w-[22px]`}>
+-                <svelte:component this={fill} />
++                <Fill />
+             </div>
+         {:else if mod === `glyph`}
+             <div class={`flex flex-row pr-[2px]`}>
+                 <div
+                     class={`${fmt_cl(``)} flex flex-row h-full w-trellisOffset`}
+                 >
+-                    <svelte:component this={fill} />
++                    <Fill />
+                 </div>
+             </div>
+         {:else if typeof mod === `object`}
+@@ -40,8 +40,7 @@
+                             await basis.callback(ev);
+                     }}
+                 >
+-                    <svelte:component
+-                        this={glyph}
++                    <Glyph
+                         basis={{
+                             classes: `text-layer-${layer}-glyph ${fmt_cl(mod.classes ? `` : ``)}`,
+                             ...mod,
+diff --git a/src/lib/components/trellis_row_display_value.svelte b/src/lib/components/trellis_row_display_value.svelte
+index c8c2faf..00eb843 100644
+--- a/src/lib/components/trellis_row_display_value.svelte
++++ b/src/lib/components/trellis_row_display_value.svelte
+@@ -1,9 +1,9 @@
+ <script lang="ts">
++    import Glyph from "$lib/ui/glyph.svelte";
+     import type { ThemeLayer } from "@radroots/theme";
+     import {
+         fmt_cl,
+         get_label_classes,
+-        glyph,
+         type ITrellisKindDisplayValue,
+     } from "..";
+ 
+@@ -20,8 +20,7 @@
+     }}
+ >
+     {#if `icon` in basis}
+-        <svelte:component
+-            this={glyph}
++        <Glyph
+             basis={{
+                 classes:
+                     basis.icon.classes ||
+diff --git a/src/lib/components/trellis_row_label.svelte b/src/lib/components/trellis_row_label.svelte
+index ab563bd..6815469 100644
+--- a/src/lib/components/trellis_row_label.svelte
++++ b/src/lib/components/trellis_row_label.svelte
+@@ -1,6 +1,7 @@
+ <script lang="ts">
++	import Glyph from "$lib/ui/glyph.svelte";
+ 	import type { ThemeLayer } from "@radroots/theme";
+-	import { fmt_cl, get_label_classes, glyph, type ILabelTupFields } from "..";
++	import { fmt_cl, get_label_classes, type ILabelTupFields } from "..";
+ 
+ 	export let basis: ILabelTupFields;
+ 	export let layer: ThemeLayer;
+@@ -18,10 +19,7 @@
+ 						<div
+ 							class={`flex flex-row justify-start items-center pr-1`}
+ 						>
+-							<svelte:component
+-								this={glyph}
+-								basis={{ ...title_l.glyph }}
+-							/>
++							<Glyph basis={{ ...title_l.glyph }} />
+ 						</div>
+ 					{/if}
+ 					<p
+@@ -42,10 +40,7 @@
+ 					class={`${fmt_cl(title_r.classes)} flex flex-row h-full max-w-fit gap-1 items-center ${title_r.hide_truncate ? `` : `truncate`}`}
+ 				>
+ 					{#if title_r.glyph}
+-						<svelte:component
+-							this={glyph}
+-							basis={{ ...title_r.glyph }}
+-						/>
++						<Glyph basis={{ ...title_r.glyph }} />
+ 					{/if}
+ 					<p
+ 						class={`${get_label_classes(layer, title_r.kind, hide_active)} ${title_r.hide_truncate ? `` : `truncate`} truncate font-sans text-trellisLine transition-all`}
+diff --git a/src/lib/components/trellis_title.svelte b/src/lib/components/trellis_title.svelte
+index 7f9e843..ac6cbd7 100644
+--- a/src/lib/components/trellis_title.svelte
++++ b/src/lib/components/trellis_title.svelte
+@@ -1,6 +1,8 @@
+ <script lang="ts">
++	import Fill from "$lib/ui/fill.svelte";
++	import Glyph from "$lib/ui/glyph.svelte";
+ 	import type { ThemeLayer } from "@radroots/theme";
+-	import { fill, fmt_cl, glyph, type ITrellisTitle } from "..";
++	import { fmt_cl, type ITrellisTitle } from "..";
+ 
+ 	export let basis: ITrellisTitle;
+ 	export let layer: ThemeLayer;
+@@ -18,7 +20,7 @@
+ 		}}
+ 	>
+ 		{#if basis.value === true}
+-			<svelte:component this={fill} />
++			<Fill />
+ 		{:else}
+ 			<p
+ 				class={`font-sans text-trellisTitle text-layer-${layer}-glyph-label uppercase`}
+@@ -44,8 +46,7 @@
+ 			{/if}
+ 			{#if basis.link.glyph}
+ 				<div class={`flex flex-row w-max`}>
+-					<svelte:component
+-						this={glyph}
++					<Glyph
+ 						basis={{
+ 							...basis.link.glyph,
+ 							dim: `xs-`,
+diff --git a/src/lib/components/trellis_touch.svelte b/src/lib/components/trellis_touch.svelte
+index 708adb4..6f3e217 100644
+--- a/src/lib/components/trellis_touch.svelte
++++ b/src/lib/components/trellis_touch.svelte
+@@ -1,13 +1,9 @@
+ <script lang="ts">
+     import type { ThemeLayer } from "@radroots/theme";
+-    import {
+-        fmt_trellis,
+-        sleep,
+-        trellis_end,
+-        trellis_row_display_value,
+-        trellis_row_label,
+-        type ITrellisBasisTouch,
+-    } from "..";
++    import { fmt_trellis, sleep, type ITrellisBasisTouch } from "..";
++    import TrellisEnd from "./trellis_end.svelte";
++    import TrellisRowDisplayValue from "./trellis_row_display_value.svelte";
++    import TrellisRowLabel from "./trellis_row_label.svelte";
+ 
+     export let basis: ITrellisBasisTouch;
+     export let layer: ThemeLayer;
+@@ -30,15 +26,9 @@
+             <div
+                 class={`flex flex-row h-full w-full justify-between items-center`}
+             >
+-                <svelte:component
+-                    this={trellis_row_label}
+-                    basis={basis.label}
+-                    {layer}
+-                    {hide_active}
+-                />
++                <TrellisRowLabel basis={basis.label} {layer} {hide_active} />
+                 {#if basis.display}
+-                    <svelte:component
+-                        this={trellis_row_display_value}
++                    <TrellisRowDisplayValue
+                         basis={{
+                             ...basis.display,
+                             callback: async (ev) => {
+@@ -52,12 +42,7 @@
+                 {/if}
+             </div>
+             {#if basis.end}
+-                <svelte:component
+-                    this={trellis_end}
+-                    basis={basis.end}
+-                    {layer}
+-                    {hide_active}
+-                />
++                <TrellisEnd basis={basis.end} {layer} {hide_active} />
+             {/if}
+         </button>
+     </div>

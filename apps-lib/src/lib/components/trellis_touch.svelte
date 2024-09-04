@@ -1,13 +1,9 @@
 <script lang="ts">
     import type { ThemeLayer } from "@radroots/theme";
-    import {
-        fmt_trellis,
-        sleep,
-        trellis_end,
-        trellis_row_display_value,
-        trellis_row_label,
-        type ITrellisBasisTouch,
-    } from "..";
+    import { fmt_trellis, sleep, type ITrellisBasisTouch } from "..";
+    import TrellisEnd from "./trellis_end.svelte";
+    import TrellisRowDisplayValue from "./trellis_row_display_value.svelte";
+    import TrellisRowLabel from "./trellis_row_label.svelte";
 
     export let basis: ITrellisBasisTouch;
     export let layer: ThemeLayer;
@@ -30,15 +26,9 @@
             <div
                 class={`flex flex-row h-full w-full justify-between items-center`}
             >
-                <svelte:component
-                    this={trellis_row_label}
-                    basis={basis.label}
-                    {layer}
-                    {hide_active}
-                />
+                <TrellisRowLabel basis={basis.label} {layer} {hide_active} />
                 {#if basis.display}
-                    <svelte:component
-                        this={trellis_row_display_value}
+                    <TrellisRowDisplayValue
                         basis={{
                             ...basis.display,
                             callback: async (ev) => {
@@ -52,12 +42,7 @@
                 {/if}
             </div>
             {#if basis.end}
-                <svelte:component
-                    this={trellis_end}
-                    basis={basis.end}
-                    {layer}
-                    {hide_active}
-                />
+                <TrellisEnd basis={basis.end} {layer} {hide_active} />
             {/if}
         </button>
     </div>

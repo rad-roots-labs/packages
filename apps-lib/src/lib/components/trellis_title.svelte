@@ -1,6 +1,8 @@
 <script lang="ts">
+	import Fill from "$lib/ui/fill.svelte";
+	import Glyph from "$lib/ui/glyph.svelte";
 	import type { ThemeLayer } from "@radroots/theme";
-	import { fill, fmt_cl, glyph, type ITrellisTitle } from "..";
+	import { fmt_cl, type ITrellisTitle } from "..";
 
 	export let basis: ITrellisTitle;
 	export let layer: ThemeLayer;
@@ -18,7 +20,7 @@
 		}}
 	>
 		{#if basis.value === true}
-			<svelte:component this={fill} />
+			<Fill />
 		{:else}
 			<p
 				class={`font-sans text-trellisTitle text-layer-${layer}-glyph-label uppercase`}
@@ -44,8 +46,7 @@
 			{/if}
 			{#if basis.link.glyph}
 				<div class={`flex flex-row w-max`}>
-					<svelte:component
-						this={glyph}
+					<Glyph
 						basis={{
 							...basis.link.glyph,
 							dim: `xs-`,

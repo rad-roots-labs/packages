@@ -1,14 +1,9 @@
 <script lang="ts">
-    import {
-        fmt_cl,
-        parse_layer,
-        t,
-        trellis_default_label,
-        trellis_offset,
-        trellis_title,
-        trellis_touch,
-        type ITrellis,
-    } from "..";
+    import { fmt_cl, parse_layer, t, type ITrellis } from "..";
+    import TrellisDefaultLabel from "./trellis_default_label.svelte";
+    import TrellisOffset from "./trellis_offset.svelte";
+    import TrellisTitle from "./trellis_title.svelte";
+    import TrellisTouch from "./trellis_touch.svelte";
 
     const class_rounded = `xl`;
 
@@ -41,8 +36,7 @@
         class={`relative flex flex-col h-auto w-auto gap-[3px] ${set_title_background ? `bg-layer-${args.layer}-surface` : ``}`}
     >
         {#if args.title && (!args.default_el || (args.default_el && args.default_el.show_title))}
-            <svelte:component
-                this={trellis_title}
+            <TrellisTitle
                 basis={args.title}
                 layer={parse_layer(args.layer - 1)}
             />
@@ -54,8 +48,7 @@
                 {#if $$slots.default_el}
                     <slot name="default_el" />
                 {:else if args.default_el}
-                    <svelte:component
-                        this={trellis_default_label}
+                    <TrellisDefaultLabel
                         layer={parse_layer(args.layer - 1)}
                         labels={args.default_el.labels
                             ? args.default_el.labels
@@ -76,14 +69,12 @@
                         <div
                             class={`flex flex-row h-full w-full gap-1 items-center overflow-y-hidden`}
                         >
-                            <svelte:component
-                                this={trellis_offset}
+                            <TrellisOffset
                                 basis={basis.offset}
                                 layer={args.layer}
                             />
                             {#if `touch` in basis && basis.touch}
-                                <svelte:component
-                                    this={trellis_touch}
+                                <TrellisTouch
                                     basis={basis.touch}
                                     layer={args.layer}
                                     {hide_border_b}
