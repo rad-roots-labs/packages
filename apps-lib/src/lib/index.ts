@@ -1,4 +1,5 @@
 export * from "./locales/i18n"
+export { default as Envelope } from "./components/envelope.svelte"
 export { default as InputForm } from "./components/input_form.svelte"
 export { default as LoadingView } from "./components/loading_view.svelte"
 export { default as Tabs } from "./components/tabs.svelte"

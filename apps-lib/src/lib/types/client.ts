@@ -68,6 +68,10 @@ export type ILy = {
     layer: ThemeLayer;
 };
 
+export type ILyOpt = {
+    layer?: ThemeLayer;
+};
+
 export type IGlOpt = {
     glyph?: IGlyph;
 }

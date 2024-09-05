@@ -1,4 +1,4 @@
-import type { CallbackPromiseGeneric, IClOpt, ILy } from "./client";
+import type { CallbackPromise, CallbackPromiseGeneric, ICb, IClOpt, IGlyphFields, ILy, ILyOpt } from "./client";
 import type { GlyphKey, GlyphWeight } from "./ui";
 
 export type ITabsBasisList = {
@@ -30,5 +30,24 @@ export type IInputFormBasis = IClOpt & ILy & {
     validate?: RegExp;
     sync?: boolean;
     field: IFormField
+};
+
+export type IEnvelopeBasis = ILyOpt &
+    IClOpt & IEnvelopeKind & {
+        visible: boolean;
+        close: CallbackPromise;
+        transparent?: boolean;
+    };
+
+export type IEnvelopeKind = {
+    titled: IEnvelopeTitledBasis;
+};
+
+export type IEnvelopeTitledBasis = ICb & {
+    callback_valid?: boolean;
+    previous?: string;
+    title: IGlyphFields;
+    action?: string;
+    hide_border?: boolean;
 };
 

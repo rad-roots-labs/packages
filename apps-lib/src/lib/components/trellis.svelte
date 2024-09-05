@@ -54,7 +54,7 @@
                             ? args.default_el.labels
                             : [
                                   {
-                                      label: `${$t(`glossary.no_items_to_display`)}.`,
+                                      label: `${$t(`common.no_items_to_display`)}.`,
                                   },
                               ]}
                     />
