@@ -1,4 +1,4 @@
-import type { CallbackPromise, CallbackPromiseGeneric, ICb, IClOpt, IGlyphFields, ILy, ILyOpt } from "./client";
+import type { CallbackPromise, CallbackPromiseGeneric, ICb, IClOpt, IGl, ILabelFieldsOpt, ILabelOptFieldsOpt, ILy, ILyOpt } from "./client";
 import type { GlyphKey, GlyphWeight } from "./ui";
 
 export type ITabsBasisList = {
@@ -39,15 +39,17 @@ export type IEnvelopeBasis = ILyOpt &
         transparent?: boolean;
     };
 
-export type IEnvelopeKind = {
-    titled: IEnvelopeTitledBasis;
-};
+export type IEnvelopeKind = (
+    {
+        titled: IEnvelopeTitledBasis;
+    });
 
-export type IEnvelopeTitledBasis = ICb & {
-    callback_valid?: boolean;
-    previous?: string;
-    title: IGlyphFields;
-    action?: string;
+export type IEnvelopeTitledBasis = {
     hide_border?: boolean;
+    previous?: ILabelOptFieldsOpt;
+    heading?: ILabelOptFieldsOpt;
+    submit?: ICb & (ILabelFieldsOpt | IGl) & {
+        valid?: boolean;
+    }
 };
 

@@ -22,14 +22,14 @@ export function get_label_classes(layer: ThemeLayer, label_kind: LabelFieldKind 
     return `text-layer-${layer}-glyph${label_kind ? `-${label_kind}` : ``} ${hide_active ? `` : `group-active:text-layer-${layer}-glyph${label_kind ? `-${label_kind}_a` : `_a`}`}`
 };
 
-export function parse_layer(layer?: number): ThemeLayer {
+export function parse_layer(layer?: number, layer_default?: ThemeLayer): ThemeLayer {
     switch (layer) {
         case 0:
         case 1:
         case 2:
             return layer;
         default:
-            return 0;
+            return layer_default ? layer_default : 0;
     };
 };
 

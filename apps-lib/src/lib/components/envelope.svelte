@@ -13,10 +13,8 @@
 
     export let basis: IEnvelopeBasis;
     $: basis = basis;
-    $: layer = parse_layer(basis?.layer);
 
-    //${is_transparent ? `bg-transparent` : `bg-layer-${layer}-surface opacity-[95%] backdrop-blur-sm`}
-    //$: is_transparent = basis.transparent ? basis.transparent : false;
+    $: layer = parse_layer(basis.layer, 1);
 
     let envelope_toggle = writable<boolean>(false);
     let envelope_visible = false;
@@ -62,11 +60,13 @@
                             basis={basis.titled}
                             callback_close={basis.close}
                             {layer}
-                        />
+                        >
+                            {#if $$slots.default}
+                                <slot />
+                            {/if}
+                        </EnvelopeTitled>
                     {:else if $$slots.el}
-                        <div class={`flex flex-row h-full w-full`}>
-                            <slot name="el" />
-                        </div>
+                        <slot name="el" />
                     {/if}
                 </div>
             {/if}

@@ -2,6 +2,10 @@ import type { ThemeLayer } from "@radroots/theme";
 import type { GeometryCardinalDirection, GeometryGlyphDimension, ICbOpt } from "./client";
 
 export type GlyphKey = |
+    `caret-circle-down` |
+    `caret-circle-up` |
+    `shopping-bag-open` |
+    `coffee-bean` |
     `compass` |
     `map-pin-simple` |
     `handbag-simple` |

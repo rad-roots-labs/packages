@@ -72,13 +72,27 @@ export type ILyOpt = {
     layer?: ThemeLayer;
 };
 
+export type IGl = {
+    glyph: IGlyph;
+}
+
 export type IGlOpt = {
     glyph?: IGlyph;
 }
 
-/*export type IGlyphOptFields = IGlyphFields & {
-    glyph?: IGlyphFields;
-};*/
+export type ILabelFieldsOpt = {
+    label: {
+        value?: string;
+        classes?: string;
+    };
+};
+
+export type ILabelOptFieldsOpt = {
+    label?: {
+        value?: string;
+        classes?: string;
+    };
+};
 
 export type IGlyphFields = {
     value: string;
