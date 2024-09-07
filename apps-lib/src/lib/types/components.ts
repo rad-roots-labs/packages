@@ -1,4 +1,4 @@
-import type { CallbackPromise, CallbackPromiseGeneric, ICb, IClOpt, IGl, ILabelFieldsOpt, ILabelOptFieldsOpt, ILy, ILyOpt } from "./client";
+import type { CallbackPromise, CallbackPromiseGeneric, ICb, IClOpt, IGl, IGlOpt, ILabelFieldsOpt, ILabelOpt, ILabelOptFieldsOpt, ILy, ILyOpt } from "./client";
 import type { GlyphKey, GlyphWeight } from "./ui";
 
 export type ITabsBasisList = {
@@ -51,5 +51,16 @@ export type IEnvelopeTitledBasis = {
     submit?: ICb & (ILabelFieldsOpt | IGl) & {
         valid?: boolean;
     }
+};
+
+export type INavBasis = {
+    prev: {
+        label?: string;
+        route: string;
+    };
+    title?: {
+        label: string;
+    };
+    option?: ICb & IGlOpt & ILabelOpt;
 };
 

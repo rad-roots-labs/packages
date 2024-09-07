@@ -1,3 +1,5 @@
+declare module "$app/navigation";
+
 declare class Keyva {
     /**
      * An IDBKeyRange that has no upper or lower bounding.
