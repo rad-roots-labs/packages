@@ -7,7 +7,7 @@ type LanguageConfig = {
 	default?: string;
 };
 
-const locales_files = [`app`, `common`] as const;
+const locales_files = [`app`, `common`, `trade`] as const;
 const translations_keys: Record<Locale, any> = {
 	en: { locales_keys },
 };

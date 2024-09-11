@@ -4,8 +4,11 @@ import { writable } from "svelte/store";
 
 export const app_qp = queryParameters();
 
-export const kv = writable<Keyva>();
-if (typeof window !== 'undefined') kv.set(new Keyva({ name: 'app-kv' }));
+//export const kv = writable<Keyva>();
+//if (typeof window !== 'undefined') kv.set(new Keyva({ name: 'app-kv' }));
+
+export let kv: Keyva;
+if (typeof window !== 'undefined') kv = new Keyva({ name: 'app-kv' });
 
 export const app_layout = writable<AppLayoutKey>(`base`);
 

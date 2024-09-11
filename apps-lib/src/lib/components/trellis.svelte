@@ -5,7 +5,7 @@
     import TrellisTitle from "./trellis_title.svelte";
     import TrellisTouch from "./trellis_touch.svelte";
 
-    const class_rounded = `xl`;
+    const class_rounded = `2xl`;
 
     export let basis: { args: ITrellis };
     $: ({ args } = basis);
@@ -96,4 +96,4 @@
         </div>
     {/if}
 </div>
-<div class={`hidden rounded-xl first:rounded-t-xl last:rounded-b-xl`}></div>
+<div class={`hidden rounded-2xl first:rounded-t-2xl last:rounded-b-2xl`}></div>

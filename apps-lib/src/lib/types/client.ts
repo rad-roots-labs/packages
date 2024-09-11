@@ -27,7 +27,9 @@ export type GeometryGlyphDimension =
     | `${GeometryDimension}+`;
 
 
+//export type CallbackPromiseGenericReturn<T1, T2> = (value: T1) => Promise<T2>;
 export type CallbackPromiseGeneric<T> = (value: T) => Promise<void>;
+//export type CallbackPromiseReturn<T> = () => Promise<T>;
 export type CallbackPromise = () => Promise<void>;
 
 export type NavigationRoute = string; //@todo
@@ -70,6 +72,14 @@ export type ILy = {
 
 export type ILyOpt = {
     layer?: ThemeLayer;
+};
+
+export type ILyTs = {
+    layer: ThemeLayer | false;
+};
+
+export type ILyOptTs = {
+    layer?: ThemeLayer | false;
 };
 
 export type IGl = {
