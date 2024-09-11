@@ -25,7 +25,8 @@
 
     onMount(async () => {
         try {
-            if (basis.sync) await kv.set(basis.id, basis.options[0].value);
+            if (basis.sync && basis.id)
+                await kv.set(basis.id, basis.options[0].value);
         } catch (e) {
             console.log(`e `, e);
         }
@@ -46,7 +47,7 @@
             class={`${fmt_cl(basis.classes)} z-10 form-select form-line-select text-layer-${layer}-glyph`}
             on:change={async ({ currentTarget: el }) => {
                 const val = el.value;
-                if (basis.sync) await kv.set(basis.id, val);
+                if (basis.sync && basis.id) await kv.set(basis.id, val);
                 if (basis.callback) await basis.callback(val);
             }}
         >

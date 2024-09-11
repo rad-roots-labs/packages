@@ -1,4 +1,4 @@
-import type { CallbackPromise, CallbackPromiseGeneric, ICb, ICbGOpt, IClOpt, IGl, IGlOpt, ILabelFieldsOpt, ILabelOpt, ILabelOptFieldsOpt, ILyOpt, ILyOptTs } from "./client";
+import type { CallbackPromise, CallbackPromiseGeneric, ICb, ICbGOpt, ICbOpt, IClOpt, IGl, IGlOpt, ILabelFieldsOpt, ILabelOpt, ILabelOptFieldsOpt, ILyOpt, ILyOptTs } from "./client";
 import type { GlyphKey, GlyphWeight, IGlyph } from "./ui";
 
 export type ITabsBasisList = {
@@ -45,7 +45,7 @@ export type IInputSelectBasisOption = {
 
 export type IInputSelectBasis = IClOpt & ILyOptTs & ICbGOpt<string> & {
     classes_wrap?: string;
-    id: string;
+    id?: string;
     label?: string;
     hidden?: boolean;
     hide_arrows?: boolean;
@@ -77,13 +77,15 @@ export type IEnvelopeTitledBasis = {
 };
 
 export type INavBasis = {
-    prev: {
+    prev: ICbOpt & {
         label?: string;
         route: string;
     };
     title?: {
         label: string;
     };
-    option?: ICb & IGlOpt & ILabelOpt;
+    option?: ICb & IGlOpt & ILabelOpt & {
+        loading?: boolean;
+    };
 };
 

@@ -9,6 +9,7 @@
         Glyph,
         type INavBasis,
     } from "$lib";
+    import Loading from "$lib/ui/loading.svelte";
     import { onDestroy, onMount } from "svelte";
 
     export let basis: INavBasis;
@@ -48,6 +49,7 @@
             <button
                 class={`col-span-4 flex flex-row h-full pl-2 justify-start items-center`}
                 on:click={async () => {
+                    if (basis.prev.callback) await basis.prev.callback();
                     await goto(basis.prev.route);
                 }}
             >
@@ -93,27 +95,35 @@
                 class={`col-span-4 flex flex-row h-full justify-end items-center`}
             >
                 {#if basis.option}
-                    <button
-                        class={`col-span-4 flex flex-row h-full pr-6 gap-2 justify-end items-center`}
-                        on:click={async () => {
-                            await basis.option?.callback();
-                        }}
-                    >
-                        {#if `glyph` in basis.option && basis.option.glyph}
-                            <Glyph
-                                basis={{
-                                    ...basis.option.glyph,
-                                }}
-                            />
-                        {/if}
-                        {#if `label` in basis.option && basis.option.label}
-                            <p
-                                class={`${fmt_cl(basis.option.label.classes)} font-sans text-navPrevious text-layer-1-glyph-hl group-active:opacity-60 transition-opacity`}
-                            >
-                                {basis.option.label.value}
-                            </p>
-                        {/if}
-                    </button>
+                    {#if basis.option.loading}
+                        <div
+                            class={`flex flex-row pr-4 justify-center items-center`}
+                        >
+                            <Loading />
+                        </div>
+                    {:else}
+                        <button
+                            class={`col-span-4 flex flex-row h-full pr-6 gap-2 justify-end items-center`}
+                            on:click={async () => {
+                                await basis.option?.callback();
+                            }}
+                        >
+                            {#if `glyph` in basis.option && basis.option.glyph}
+                                <Glyph
+                                    basis={{
+                                        ...basis.option.glyph,
+                                    }}
+                                />
+                            {/if}
+                            {#if `label` in basis.option && basis.option.label}
+                                <p
+                                    class={`${fmt_cl(basis.option.label.classes)} font-sans text-navPrevious text-layer-1-glyph-hl group-active:opacity-60 transition-opacity`}
+                                >
+                                    {basis.option.label.value}
+                                </p>
+                            {/if}
+                        </button>
+                    {/if}
                 {:else}
                     <Fill />
                 {/if}
