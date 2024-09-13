@@ -1,3 +1,4 @@
+<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
 <script lang="ts">
     import {
         fmt_cl,
@@ -22,6 +23,7 @@
             ? `bg-transparent`
             : `bg-layer-${layer}-surface`;
     $: classes_wrap = typeof layer === `boolean` ? `` : `px-4`;
+    $: classes_focus = basis.id_wrap ? `form-line-active` : ``;
 
     onMount(async () => {
         try {
@@ -34,7 +36,9 @@
 </script>
 
 <div
-    class={`${fmt_cl(basis.classes_wrap)} relative form-line-wrap ${classes_wrap} ${classes_layer} transition-all`}
+    id={basis.id_wrap || null}
+    tabindex={-1}
+    class={`${fmt_cl(basis.classes_wrap)} relative form-line-wrap ${classes_wrap} ${classes_layer} ${classes_focus} transition-all`}
 >
     {#if basis.loading}
         <div class={`flex flex-row w-full justify-center items-center`}>
@@ -44,6 +48,7 @@
         <select
             bind:this={el}
             bind:value
+            id={basis.id || null}
             class={`${fmt_cl(basis.classes)} z-10 form-select form-line-select text-layer-${layer}-glyph`}
             on:change={async ({ currentTarget: el }) => {
                 const val = el.value;

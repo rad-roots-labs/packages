@@ -14,6 +14,7 @@
             ? `bg-transparent`
             : `bg-layer-${layer}-surface`;
     $: classes_wrap = `px-4`;
+
     onMount(async () => {
         try {
             if (basis.sync) {

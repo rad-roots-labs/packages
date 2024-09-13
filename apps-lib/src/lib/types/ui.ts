@@ -1,7 +1,11 @@
 import type { ThemeLayer } from "@radroots/theme";
 import type { GeometryCardinalDirection, GeometryGlyphDimension, ICbOpt } from "./client";
 
+export type GlyphKeyCurrency = `dollar` | `eur`;
+
 export type GlyphKey = |
+    `currency-${GlyphKeyCurrency}` |
+    `arrow-down` |
     `caret-circle-down` |
     `caret-circle-up` |
     `shopping-bag-open` |

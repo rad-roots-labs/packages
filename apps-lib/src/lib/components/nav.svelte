@@ -78,7 +78,8 @@
                     <button
                         class={`flex flex-row justify-center items-center`}
                         on:click={async () => {
-                            // await restart();
+                            if (basis.title.callback)
+                                await basis.title.callback();
                         }}
                     >
                         <p

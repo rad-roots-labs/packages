@@ -1,0 +1,12 @@
+{
+    "usd": {
+        "symbol": "$",
+        "name": "United States Dollar",
+        "name_short": "U.S. Dollar"
+    },
+    "eur": {
+        "symbol": "€",
+        "name": "Euro",
+        "name_short": "Euro"
+    }
+}

@@ -1,37 +1,17 @@
 {
-    "quantity": {
-        "mass_unit": {
-            "g": "Gram",
-            "g_pl": "Grams",
-            "g_ab": "g.",
-            "hg": "100 Gram",
-            "hg_pl": "100 Grams",
-            "hg_ab": "100g.",
-            "kg": "Kilogram",
-            "kg_pl": "Kilograms",
-            "kg_ab": "kg.",
-            "lb": "Pound",
-            "lb_pl": "Pounds",
-            "lb_ab": "lb."
-        }
-    },
-    "currency": {
-        "usd": {
-            "symbol": "$",
-            "name": "United States Dollar",
-            "name_short": "U.S. Dollar"
-        },
-        "eur": {
-            "symbol": "€",
-            "name": "Euro",
-            "name_short": "Euro"
-        }
-    },
     "product": {
         "key": {
             "coffee": "Coffee",
             "cacao": "Cacao",
             "maca": "Maca"
+        },
+        "fields": {
+            "price_amt": {
+                "err_invalid": "Please enter the price"
+            }
         }
+    },
+    "glossary": {
+        "process": "Process"
     }
 }

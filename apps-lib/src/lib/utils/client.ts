@@ -78,6 +78,12 @@ export const fmt_capitalize = (val: string): string => {
 export const zoom_step = (num: number, op: `inc` | `dec`): number => {
     const int_num = Math.round(num);
     if (op === 'inc') return Math.min(int_num + 1, 14);
-    else return Math.max(int_num - 1, 0);
+    return Math.max(int_num - 1, 0);
+};
+
+export const int_step = (num: number, op: `+` | `-`, bounds?: number): number => {
+    const int_num = Math.round(num);
+    if (op === '+') return Math.min(int_num + 1, bounds || Number.POSITIVE_INFINITY);
+    return Math.max(int_num - 1, bounds || 0);
 };
 

@@ -1,4 +1,10 @@
 {
+    "quantity": "Quantity",
+    "per": "Per",
+    "price": "Price",
+    "product": "Product",
+    "location": "Location",
+    "edit": "Edit",
     "other": "Other",
     "add_current_location": "Add current location",
     "add_new_location": "Add new location",

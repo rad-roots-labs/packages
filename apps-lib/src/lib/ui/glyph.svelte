@@ -14,6 +14,7 @@
         [`md+`, `text-[27px]`],
         [`lg`, `text-[28px]`],
         [`xl`, `text-[30px]`],
+        [`xl+`, `text-[40px]`],
     ]);
 
     export let basis: IGlyph;

@@ -45,6 +45,7 @@ export type IInputSelectBasisOption = {
 
 export type IInputSelectBasis = IClOpt & ILyOptTs & ICbGOpt<string> & {
     classes_wrap?: string;
+    id_wrap?: string;
     id?: string;
     label?: string;
     hidden?: boolean;
@@ -81,7 +82,7 @@ export type INavBasis = {
         label?: string;
         route: string;
     };
-    title?: {
+    title?: ICbOpt & {
         label: string;
     };
     option?: ICb & IGlOpt & ILabelOpt & {
