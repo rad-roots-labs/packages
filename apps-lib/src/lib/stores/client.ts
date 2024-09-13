@@ -2,13 +2,14 @@ import { type AppLayoutKey } from "$lib";
 import { queryParameters } from "@radroots/sveltekit-search-params";
 import { writable } from "svelte/store";
 
+//@ts-ignore
+const kv_name = import.meta.env.VITE_PUBLIC_KV_NAME;
+if (!kv_name) throw new Error('Error: VITE_PUBLIC_KV_NAME is required');
+
 export const app_qp = queryParameters();
 
-//export const kv = writable<Keyva>();
-//if (typeof window !== 'undefined') kv.set(new Keyva({ name: 'app-kv' }));
-
 export let kv: Keyva;
-if (typeof window !== 'undefined') kv = new Keyva({ name: 'app-kv' });
+if (typeof window !== 'undefined') kv = new Keyva({ name: kv_name });
 
 export const app_layout = writable<AppLayoutKey>(`base`);
 
