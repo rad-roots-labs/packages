@@ -1,11 +1,16 @@
 <script lang="ts">
-    import Glyph from "$lib/ui/glyph.svelte";
-    import { type ITabsBasis } from "..";
+    import {
+        Glyph,
+        type ITabsBasis,
+        app_layout,
+        app_tab_active,
+        app_tabs_blur,
+    } from "$lib";
 
     export let basis: ITabsBasis;
     $: basis = basis;
 
-    $: classes_blur = basis.blur ? `bg-layer-1-surface/30` : ``;
+    $: classes_blur = $app_tabs_blur ? `bg-layer-1-surface/30` : ``;
 
     let el: HTMLElement | null;
     let el_inner: HTMLElement | null;
@@ -13,7 +18,7 @@
 
 <div
     bind:this={el}
-    class={`z-10 absolute bottom-0 left-0 flex flex-col w-full justify-start items-start transition-all backdrop-blur-md h-tabs_${basis.app_layout} ${classes_blur}`}
+    class={`z-10 absolute bottom-0 left-0 flex flex-col w-full justify-start items-start transition-all backdrop-blur-md h-tabs_${$app_layout} ${classes_blur}`}
 >
     <div
         bind:this={el_inner}
@@ -26,19 +31,20 @@
                 <button
                     class={`col-span-3 flex flex-col h-full justify-start items-center transition-all`}
                     on:click={async () => {
+                        app_tab_active.set(tab_i);
                         await tab.callback(tab_i);
                     }}
                 >
                     <Glyph
                         basis={{
                             classes:
-                                basis.tab_active === tab_i
-                                    ? `text-layer-0-glyph text-lineActiveBlue`
-                                    : `text-layer-0-glyph text-lineMd`,
+                                $app_tab_active === tab_i
+                                    ? `text-layer-2-glyph text-lineActiveBlue`
+                                    : `text-layer-2-glyph text-lineMd`,
                             key: tab.icon,
                             dim: `md`,
                             weight:
-                                basis.tab_active === tab_i
+                                $app_tab_active === tab_i
                                     ? tab.active_weight || `fill`
                                     : `bold`,
                         }}
