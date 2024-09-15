@@ -43,8 +43,8 @@
 		"vite": "^5.0.11"
 	},
 	"dependencies": {
-		"@nostr-dev-kit/ndk": "^2.7.1",
-		"@nostr-dev-kit/ndk-cache-dexie": "^2.3.1",
+		"@nostr-dev-kit/ndk": "^2.10.0",
+		"@nostr-dev-kit/ndk-cache-dexie": "^2.5.1",
 		"@nostr-dev-kit/ndk-svelte": "^2.2.18",
 		"@radroots/sveltekit-i18n": "workspace:*",
 		"@radroots/sveltekit-search-params": "workspace:*",

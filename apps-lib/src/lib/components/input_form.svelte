@@ -22,9 +22,7 @@
                 if (kv_val) el.value = kv_val;
                 await kv.set(basis.id, kv_val || "");
             }
-        } catch (e) {
-            console.log(`e `, e);
-        }
+        } catch (e) {}
     });
 </script>
 

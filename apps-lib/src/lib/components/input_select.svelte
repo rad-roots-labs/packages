@@ -29,9 +29,7 @@
         try {
             if (basis.sync && basis.id)
                 await kv.set(basis.id, basis.options[0].value);
-        } catch (e) {
-            console.log(`e `, e);
-        }
+        } catch (e) {}
     });
 </script>
 
