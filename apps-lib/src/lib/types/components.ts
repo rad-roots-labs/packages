@@ -30,7 +30,7 @@ export type IInputFormBasis = IClOpt & ILyOptTs & ICbGOpt<{ val: string; pass: b
     hidden?: boolean;
     validate?: RegExp;
     sync?: boolean;
-    field: IFormField;
+    field?: IFormField;
     notify_inline?: {
         glyph: GlyphKey | IGlyph;
     };

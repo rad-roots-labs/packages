@@ -7,6 +7,7 @@
     export let basis: IInputFormBasis;
     $: basis = basis;
 
+    $: id = basis.id ? basis.id : null;
     $: layer =
         typeof basis.layer === `boolean` ? false : parse_layer(basis.layer, 1);
     $: classes_layer =
@@ -17,7 +18,7 @@
 
     onMount(async () => {
         try {
-            if (basis.sync) {
+            if (basis.sync && basis.id) {
                 const kv_val = await kv.get(basis.id);
                 if (kv_val) el.value = kv_val;
                 await kv.set(basis.id, kv_val || "");
@@ -32,23 +33,26 @@
     <input
         bind:this={el}
         type="text"
-        id={basis.id}
+        {id}
         class={`${fmt_cl(basis.classes)} form-input h-full text-layer-${layer}-glyph placeholder:text-layer-${layer}-glyph_pl caret-layer-${layer}-glyph`}
         placeholder={basis.placeholder || ""}
         on:input={async ({ currentTarget: el }) => {
             let pass = true;
-            const val = el.value
-                .split("")
-                .filter((char) => basis.field.charset.test(char))
-                .join("");
-            if (
-                !basis.field.validate.test(val) &&
-                basis.field.validate_keypress
-            ) {
-                //el.classList.add(`form-invalid-layer-${layer}`);
-                pass = false;
-            } else {
-                //el.classList.remove(`form-invalid-layer-${layer}`);
+            let val = el.value;
+            if (basis.field) {
+                val = el.value
+                    .split("")
+                    .filter((char) => basis.field.charset.test(char))
+                    .join("");
+                if (
+                    !basis.field.validate.test(val) &&
+                    basis.field.validate_keypress
+                ) {
+                    //el.classList.add(`form-invalid-layer-${layer}`);
+                    pass = false;
+                } else {
+                    //el.classList.remove(`form-invalid-layer-${layer}`);
+                }
             }
             el.value = val;
             if (basis.sync) await kv.set(basis.id, val);

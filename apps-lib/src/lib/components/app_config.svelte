@@ -1,16 +1,11 @@
 <script lang="ts">
-    import { app_config, app_layout, app_thc, app_win } from "$lib";
+    import { app_config, app_layout, app_win } from "$lib";
     import { onMount } from "svelte";
 
     onMount(async () => {
         try {
             app_win.set([window.innerHeight, window.innerWidth]);
 
-            const prefers_dark = window.matchMedia(
-                `(prefers-color-scheme: dark)`,
-            ).matches;
-
-            if (prefers_dark) app_thc.set(`dark`);
             app_config.set(true);
         } catch (e) {
             console.log(`(layout mount) `, e);

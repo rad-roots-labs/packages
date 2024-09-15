@@ -1,6 +1,5 @@
 import { type AppLayoutKey } from "$lib";
 import { queryParameters } from "sveltekit-search-params";
-import { type ColorMode, type ThemeKey } from "@radroots/theme";
 import { writable } from "svelte/store";
 
 //@ts-ignore
@@ -11,9 +10,6 @@ export const app_qp = queryParameters();
 
 export let kv: Keyva;
 if (typeof window !== 'undefined') kv = new Keyva({ name: kv_name });
-
-export const app_thc = writable<ColorMode>(`light`);
-export const app_th = writable<ThemeKey>(`earth`);
 
 export const app_layout = writable<AppLayoutKey>(`base`);
 export const app_config = writable<boolean>(false);

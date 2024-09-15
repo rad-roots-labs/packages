@@ -1,5 +1,6 @@
 export * from "./locales/i18n"
 export { default as AppConfig } from "./components/app_config.svelte"
+export { default as ButtonLoading } from "./components/button_loading.svelte"
 export { default as Envelope } from "./components/envelope.svelte"
 export { default as EnvelopeTitled } from "./components/envelope_titled.svelte"
 export { default as InputForm } from "./components/input_form.svelte"
