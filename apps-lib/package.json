@@ -49,7 +49,8 @@
 		"@radroots/theme": "workspace:*",
 		"@sveltekit-i18n/base": "^1.3.7",
 		"@sveltekit-i18n/parser-icu": "^1.0.8",
-		"luxon": "^3.5.0"
+		"luxon": "^3.5.0",
+		"sveltekit-search-params": "^3.0.0"
 	},
 	"publishConfig": {
 		"access": "public"
