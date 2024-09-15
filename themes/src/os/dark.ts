@@ -22,7 +22,8 @@ export const record_os_dark: ThemeRecord = {
             surface: {
                 _: [240, 4, 11],
                 _a: [240, 2, 23],
-                edge: [240, 3, 19]
+                edge: [240, 3, 19],
+                err: [0, 0, 0],
             },
             glyphs: {
                 _: [30, 100, 100],

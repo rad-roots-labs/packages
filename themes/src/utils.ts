@@ -15,6 +15,7 @@ export const write_daisy = (obj_c: ThemeDaisy): Record<string, string> => Object
 export const parse_theme_key = (key?: string): ThemeKey => {
 	switch (key) {
 		case "os":
+		case "earth":
 			return key;
 		default:
 			return "os";
@@ -31,7 +32,7 @@ export const parse_color_mode = (color_mode?: string): ColorMode => {
 	};
 };
 
-export const write_layers = ({ layer_0: { surface: l0_s, glyphs: l0_g }, layer_1: { surface: l1_s, glyphs: l1_g }, layer_2: { surface: l2_s, glyphs: l2_g }}: ThemeLayers): Record<string, string> => ({
+export const write_layers = ({ layer_0: { surface: l0_s, glyphs: l0_g }, layer_1: { surface: l1_s, glyphs: l1_g }, layer_2: { surface: l2_s, glyphs: l2_g } }: ThemeLayers): Record<string, string> => ({
 	"--layer-0-surface": hsl(l0_s._),
 	"--layer-0-surface_a": hsl(l0_s._a),
 	"--layer-0-surface-edge": hsl(l0_s.edge),
@@ -45,6 +46,7 @@ export const write_layers = ({ layer_0: { surface: l0_s, glyphs: l0_g }, layer_1
 	"--layer-1-surface": hsl(l1_s._),
 	"--layer-1-surface_a": hsl(l1_s._a),
 	"--layer-1-surface-edge": hsl(l1_s.edge),
+	"--layer-1-surface-err": hsl(l1_s.err),
 	"--layer-1-glyph": hsl(l1_g._),
 	"--layer-1-glyph_a": hsl(l1_g._a),
 	"--layer-1-glyph-_pl": hsl(l1_g._pl),

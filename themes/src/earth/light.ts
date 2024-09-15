@@ -1,16 +1,16 @@
 import type { ThemeRecord } from "../types";
 
-export const record_os_light: ThemeRecord = {
+export const record_earth_light: ThemeRecord = {
     layers: {
         layer_0: {
             surface: {
-                _: [240, 20, 96],
+                _: [47, 32, 92],
                 _a: [240, 6, 83],
                 edge: [0, 0, 87],
                 blur: [179, 7, 96],
             },
             glyphs: {
-                _: [0, 0, 0],
+                _: [180, 2, 12],
                 _a: [240, 2, 60],
                 hl: [211, 100, 50],
                 hl_a: [211, 100, 40],
@@ -20,13 +20,13 @@ export const record_os_light: ThemeRecord = {
         },
         layer_1: {
             surface: {
-                _: [30, 100, 100],
-                _a: [240, 6, 83],
-                edge: [274, 4, 90],
-                err: [0, 0, 0],
+                _: [46, 23, 86],
+                _a: [46, 23, 86],
+                edge: [240, 2, 55],
+                err: [51, 11, 77],
             },
             glyphs: {
-                _: [0, 0, 0],
+                _: [240, 1, 38],
                 _a: [0, 0, 10],
                 _pl: [0, 0, 0],
                 hl: [211, 100, 50],
@@ -37,7 +37,7 @@ export const record_os_light: ThemeRecord = {
         },
         layer_2: {
             surface: {
-                _: [240, 5, 90],
+                _: [47, 43, 92],
                 _a: [240, 5, 95],
                 edge: [242, 2, 88],
             },
@@ -74,7 +74,8 @@ export const record_os_light: ThemeRecord = {
         "success-content": [132, 65, 95],
         "warning": [56, 89, 74],
         "warning-content": [56, 59, 34],
-        "error": [348, 68, 55],
+        "error": [3, 58, 36],
+        //[348, 68, 55],
         "error-content": [348, 83, 76],
         "--rounded-box": [0, 0, 0],
         "--rounded-btn": [0, 0, 0],
