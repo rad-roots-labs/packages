@@ -1,5 +1,5 @@
 import { type AppLayoutKey } from "$lib";
-import { queryParameters } from "@radroots/sveltekit-search-params";
+import { queryParameters } from "sveltekit-search-params";
 import { type ColorMode, type ThemeKey } from "@radroots/theme";
 import { writable } from "svelte/store";
 
