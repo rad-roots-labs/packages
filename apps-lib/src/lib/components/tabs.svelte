@@ -31,7 +31,7 @@
                 <button
                     class={`col-span-3 flex flex-col h-full justify-start items-center transition-all`}
                     on:click={async () => {
-                        app_tab_active.set(tab_i);
+                        if (!tab.hide_active) app_tab_active.set(tab_i);
                         await tab.callback(tab_i);
                     }}
                 >

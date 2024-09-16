@@ -1,4 +1,4 @@
-import type { AnchorRoute, LabelFieldKind, NavigationParamTuple, NavigationRouteParamKey } from "$lib/types/client";
+import type { AnchorRoute, CallbackPromiseGeneric, LabelFieldKind, NavigationParamTuple, NavigationRouteParamKey } from "$lib/types/client";
 import type { ColorMode, ThemeKey, ThemeLayer } from "@radroots/theme";
 
 export const sleep = async (ms: number): Promise<void> => {
@@ -87,3 +87,12 @@ export const int_step = (num: number, op: `+` | `-`, bounds?: number): number =>
     return Math.max(int_num - 1, bounds || 0);
 };
 
+export const clipboard_copy = async (text: string, callback: CallbackPromiseGeneric<string>): Promise<void> => {
+    try {
+        navigator.clipboard.writeText(text).then(async () => {
+            await callback(text);
+        });
+    } catch (e) {
+        console.log(`(error) clipboard_copy `, e);
+    }
+};
