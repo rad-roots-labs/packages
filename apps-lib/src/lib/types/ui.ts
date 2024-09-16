@@ -4,6 +4,7 @@ import type { GeometryCardinalDirection, GeometryGlyphDimension, ICbOpt } from "
 export type GlyphKeyCurrency = `dollar` | `eur`;
 
 export type GlyphKey = |
+    `plus-circle` |
     `currency-${GlyphKeyCurrency}` |
     `arrow-down` |
     `caret-circle-down` |
