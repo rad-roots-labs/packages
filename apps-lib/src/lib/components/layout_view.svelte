@@ -12,11 +12,13 @@
     import { onDestroy, onMount } from "svelte";
 
     const styles: Record<AppLayoutKey, string> = {
-        base: "pt-2",
+        base: "",
         lg: "pt-16",
     };
 
-    export let basis: (IClOpt & { fade?: boolean }) | undefined = undefined;
+    export let basis:
+        | (IClOpt & { fade?: boolean; hide_padding?: boolean })
+        | undefined = undefined;
     $: basis = basis;
 
     let el: HTMLElement | null;
@@ -39,7 +41,7 @@
 
     $: classes_nav = $app_nav_visible
         ? `pt-h_nav_${$app_layout}`
-        : `${styles[$app_layout]}`;
+        : styles[$app_layout];
     $: classes_tabs = $app_tabs_visible ? `pb-h_tabs_${$app_layout}` : ``;
     $: classes_fade = basis?.fade ? `fade-in` : ``;
 
@@ -54,7 +56,7 @@
 
 <div
     bind:this={el}
-    class={`${fmt_cl(basis?.classes)} absolute top-0 left-0 flex flex-col h-[100vh] w-full overflow-y-scroll scroll-hide ${classes_nav} ${classes_tabs} ${classes_fade}`}
+    class={`${fmt_cl(basis?.classes)} absolute top-0 left-0 flex flex-col h-[100vh] w-full overflow-y-scroll scroll-hide ${!basis?.hide_padding ? classes_nav : ``} ${classes_tabs} ${classes_fade}`}
 >
     <slot />
 </div>
