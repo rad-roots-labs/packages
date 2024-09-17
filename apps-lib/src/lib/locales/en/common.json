@@ -1,4 +1,6 @@
 {
+    "from": "From",
+    "to": "To",
     "inbox": "Inbox",
     "submit": "Submit",
     "optional": "Optional",

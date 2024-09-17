@@ -4,6 +4,7 @@
     import { fmt_cl } from "../utils/client";
 
     const glyph_map: Map<GeometryGlyphDimension, string> = new Map([
+        [`xs--`, `text-[12px]`],
         [`xs-`, `text-[13px]`],
         [`xs`, `text-[15px]`],
         [`xs+`, `text-[18px]`],

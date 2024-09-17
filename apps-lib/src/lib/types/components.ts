@@ -10,11 +10,10 @@ export type ITabsBasisList = {
     callback: CallbackPromiseGeneric<number>;
 };
 
-export type ITabsBasis = {
-    list: ITabsBasisList[];
+export type ITabsBasis = IClOpt & {
+    list?: ITabsBasisList[];
     blur?: boolean;
-    tab_active: number;
-    app_layout: string;
+    hide_active?: boolean;
 };
 
 export type IFormField = {

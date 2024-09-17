@@ -4,6 +4,10 @@ import type { GeometryCardinalDirection, GeometryGlyphDimension, ICbOpt } from "
 export type GlyphKeyCurrency = `dollar` | `eur`;
 
 export type GlyphKey = |
+    `note-pencil` |
+    `share-fat` |
+    `folder` |
+    `trash` |
     `plus-circle` |
     `currency-${GlyphKeyCurrency}` |
     `arrow-down` |
@@ -91,6 +95,7 @@ export type ILoadingBlades = 6 | 12;
 
 export type ILoading = {
     classes?: string;
+    color?: 'white';
     blades?: ILoadingBlades;
     dim?: GeometryGlyphDimension;
 };

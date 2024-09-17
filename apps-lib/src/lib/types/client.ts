@@ -24,6 +24,7 @@ export type GeometryDimension =
 export type GeometryGlyphDimension =
     | `${GeometryDimension}`
     | `${GeometryDimension}-`
+    | `${GeometryDimension}--`
     | `${GeometryDimension}+`;
 
 

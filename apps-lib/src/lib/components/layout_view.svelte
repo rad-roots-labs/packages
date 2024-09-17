@@ -12,7 +12,7 @@
     import { onDestroy, onMount } from "svelte";
 
     const styles: Record<AppLayoutKey, string> = {
-        base: "",
+        base: "pt-4",
         lg: "pt-16",
     };
 
