@@ -5,6 +5,7 @@ export type ITabsBasisList = {
     icon: GlyphKey;
     classes?: string;
     active_weight?: GlyphWeight;
+    force_weight?: GlyphWeight
     indicator?: string;
     hide_active?: boolean;
     callback: CallbackPromiseGeneric<number>;

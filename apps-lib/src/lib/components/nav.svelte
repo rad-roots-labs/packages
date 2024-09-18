@@ -47,7 +47,7 @@
             class={`absolute bottom-[5px] left-0 grid grid-cols-12 flex flex-row h-8 w-full justify-start items-center`}
         >
             <button
-                class={`col-span-4 flex flex-row h-full pl-2 justify-start items-center`}
+                class={`group col-span-4 flex flex-row h-full pl-2 justify-start items-center`}
                 on:click={async () => {
                     if (basis.prev.callback) await basis.prev.callback();
                     await goto(basis.prev.route);
@@ -104,7 +104,7 @@
                         </div>
                     {:else}
                         <button
-                            class={`col-span-4 flex flex-row h-full pr-6 gap-2 justify-end items-center`}
+                            class={`group col-span-4 flex flex-row h-full pr-6 gap-2 justify-end items-center`}
                             on:click={async () => {
                                 await basis.option?.callback();
                             }}
@@ -112,6 +112,7 @@
                             {#if `glyph` in basis.option && basis.option.glyph}
                                 <Glyph
                                     basis={{
+                                        classes: `group-active:opacity-70  ${basis.option.glyph.classes}`,
                                         ...basis.option.glyph,
                                     }}
                                 />

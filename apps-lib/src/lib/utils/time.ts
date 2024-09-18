@@ -2,7 +2,8 @@ import { DateTime, type DateTimeFormatOptions } from "luxon";
 
 const time_fmt: Record<string, DateTimeFormatOptions> = {
     default: DateTime.DATE_SHORT,
-    abbrev: DateTime.DATE_MED
+    abbrev: DateTime.DATE_MED,
+    time_24: DateTime.TIME_24_SIMPLE
 };
 
 export function time_fmt_epoch_s(locale: string, epoch_s: number | undefined, fmt_key: keyof typeof time_fmt = `default`): string {

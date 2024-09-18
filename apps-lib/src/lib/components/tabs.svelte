@@ -54,14 +54,15 @@
                                         : `text-layer-2-glyph text-lineMd`,
                                 key: tab.icon,
                                 dim: `md`,
-                                weight:
-                                    typeof tab_focus === `number` &&
-                                    tab_focus === tab_i
-                                        ? `fill`
-                                        : !basis.hide_active &&
-                                            $app_tab_active === tab_i
-                                          ? tab.active_weight || `fill`
-                                          : `bold`,
+                                weight: tab.force_weight
+                                    ? tab.force_weight
+                                    : typeof tab_focus === `number` &&
+                                        tab_focus === tab_i
+                                      ? `fill`
+                                      : !basis.hide_active &&
+                                          $app_tab_active === tab_i
+                                        ? tab.active_weight || `fill`
+                                        : `bold`,
                             }}
                         />
                     </button>

@@ -1,4 +1,9 @@
 {
+    "delete": "Delete",
+    "messages": "Messages",
+    "message": "Message",
+    "back": "Back",
+    "subject": "Subject",
     "from": "From",
     "to": "To",
     "inbox": "Inbox",
