@@ -26,7 +26,7 @@
 <div
     class={`flex flex-col h-[700px] w-full bg-layer-${layer + 1}-surface rounded-t-3xl`}
 >
-    <div class={`${classes_base} grid grid-cols-12 h-envTop w-full px-4`}>
+    <div class={`${classes_base} grid grid-cols-12 h-envelope_top w-full px-4`}>
         <div
             class={`col-span-3 flex flex-row h-full justify-start items-center`}
         >
