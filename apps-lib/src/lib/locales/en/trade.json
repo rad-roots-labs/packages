@@ -7,7 +7,7 @@
         },
         "fields": {
             "price_amt": {
-                "err_invalid": "Please enter the price"
+                "err_invalid": "Enter the price"
             }
         }
     },
