@@ -1,3 +1,14 @@
 {
-    "*_available": "{value} Available"
+    "invalid_entry": "Invalid {value} entry",
+    "enter_new": "Enter new {value}",
+    "enter": "Enter {value}",
+    "post": "Post {value}",
+    "no": "No {value}",
+    "delete": "Delete {value}",
+    "set_as": "Set as {value}",
+    "add": "Add {value}",
+    "add_a": "Add a {value}",
+    "edit": "Edit {value}",
+    "view": "View {value}",
+    "available": "{value} Available"
 }

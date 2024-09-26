@@ -13,7 +13,7 @@
 		<div class={`flex flex-row h-full w-content items-center`}>
 			{#each basis.left as title_l}
 				<div
-					class={`flex flex-row h-full max-w-fit items-center ${title_l.hide_truncate ? `` : `truncate`}`}
+					class={`${fmt_cl(title_l.classes_wrap)} flex flex-row h-full max-w-fit items-center ${title_l.hide_truncate ? `` : `truncate`}`}
 				>
 					{#if title_l.glyph}
 						<div
@@ -37,13 +37,13 @@
 		>
 			{#each basis.right.reverse() as title_r}
 				<div
-					class={`${fmt_cl(title_r.classes)} flex flex-row h-full max-w-fit gap-1 items-center ${title_r.hide_truncate ? `` : `truncate`}`}
+					class={`${fmt_cl(title_r.classes_wrap)} flex flex-row h-full max-w-trellis_value gap-1 items-center ${title_r.hide_truncate ? `` : `truncate`}`}
 				>
 					{#if title_r.glyph}
 						<Glyph basis={{ ...title_r.glyph }} />
 					{/if}
 					<p
-						class={`${get_label_classes(layer, title_r.kind, hide_active)} ${title_r.hide_truncate ? `` : `truncate`} truncate font-sans text-trellisLine transition-all`}
+						class={`${fmt_cl(title_r.classes)} ${get_label_classes(layer, title_r.kind, hide_active)} ${title_r.hide_truncate ? `` : `truncate`} font-sans text-trellisLine transition-all`}
 					>
 						{title_r.value || ``}
 					</p>

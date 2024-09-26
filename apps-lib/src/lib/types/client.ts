@@ -1,15 +1,15 @@
+import { type IGlyph, type NavigationRoute } from "$lib";
 import type { ThemeLayer } from "@radroots/theme";
-import type { IGlyph } from "./ui";
 
 export type AppLayoutKey = 'lg' | 'base';
-type NavigationRouteBasis = string;
 export type AnchorRoute = `/${string}`;
-export type NavigationRouteParamPublicKey = `pk`;
+export type NavigationRouteParamNostrPublicKey = `nostr_pk`;
+export type NavigationRouteParamRecordKey = `rkey`;
 export type NavigationRouteParamId = `id`;
 export type NavigationRouteParamCmd = `cmd`;
-export type NavigationRouteParamKey = NavigationRouteParamPublicKey | NavigationRouteParamId | NavigationRouteParamCmd;
+export type NavigationRouteParamKey = NavigationRouteParamNostrPublicKey | NavigationRouteParamId | NavigationRouteParamCmd | NavigationRouteParamRecordKey;
 export type NavigationParamTuple = [NavigationRouteParamKey, string];
-export type NavigationPreviousParam = { route: NavigationRouteBasis, label?: string; params?: NavigationParamTuple[] }
+export type NavigationPreviousParam = { route: NavigationRoute, label?: string; params?: NavigationParamTuple[] }
 
 export type GeometryScreenPositionHorizontal = `left` | `center` | `right`;
 export type GeometryScreenPositionVertical = `top` | `center` | `bottom`;
@@ -32,8 +32,6 @@ export type GeometryGlyphDimension =
 export type CallbackPromiseGeneric<T> = (value: T) => Promise<void>;
 //export type CallbackPromiseReturn<T> = () => Promise<T>;
 export type CallbackPromise = () => Promise<void>;
-
-export type NavigationRoute = string; //@todo
 
 export type IRoute = {
     route: NavigationRoute;
@@ -130,7 +128,8 @@ export type ILabelTupFields = {
 export type ILableFields = IGlOpt & {
     value: string;
     swap?: string;
-    classes?: string
+    classes_wrap?: string
+    classes?: string;
     kind?: LabelFieldKind
     hide_truncate?: boolean;
     hide_active?: boolean;

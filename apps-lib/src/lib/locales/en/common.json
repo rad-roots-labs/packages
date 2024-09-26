@@ -1,4 +1,13 @@
 {
+    "settings": "Settings",
+    "products": "Products",
+    "locations": "Locations",
+    "profiles": "Profiles",
+    "profile": "Profile",
+    "profile_name": "Profile name",
+    "details": "Details",
+    "key": "Key",
+    "active": "Active",
     "delete": "Delete",
     "messages": "Messages",
     "message": "Message",

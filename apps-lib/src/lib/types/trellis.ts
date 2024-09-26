@@ -1,5 +1,5 @@
-import type { ICbGOpt, ICbOpt, ICbROpt, IClOpt, IGlOpt, ILabel, ILabelOpt, ILabelTup, ILy } from "./client";
-import type { GlyphKey, IGlyph } from "./ui";
+import type { CallbackPromise, ICbGOpt, ICbOpt, ICbROpt, IClOpt, IGlOpt, ILabel, ILabelOpt, ILabelTup, ILy } from "./client";
+import type { GlyphKey, IGlyph, IInputElement } from "./ui";
 
 export type ITrellis = ILy &
     IClOpt &
@@ -10,6 +10,7 @@ export type ITrellis = ILy &
         description?: ITrellisDescription;
         default_el?: ITrellisDefault;
         list?: (ITrellisKind | undefined)[];
+        hide_offset?: true;
     };
 
 export type ITrellisTitle = ICbOpt &
@@ -46,6 +47,7 @@ export type ITrellisBasisOffsetMod = ITrellisBasisOffsetModKey | IGlyph;
 
 export type ITrellisKind = (
     | ITrellisKindTouch
+    | ITrellisKindInput
 );
 
 export type ITrellisBasis = {
@@ -88,3 +90,21 @@ export type ITrellisBasisTouch = ICbGOpt<MouseEvent> &
         end?: ITrellisBasisTouchEnd;
         display?: ITrellisKindDisplayValue;
     };
+
+export type ITrellisKindInput = ITrellisBasis & {
+    input: ITrellisBasisInput;
+};
+
+export type ITrellisBasisInput = {
+    basis: IInputElement;
+    line_label?: {
+        classes?: string;
+        value: string;
+    };
+    action?: {
+        visible: boolean;
+        loading?: boolean;
+        callback?: CallbackPromise;
+        glyph?: IGlyph
+    };
+};

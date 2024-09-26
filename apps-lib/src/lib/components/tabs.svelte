@@ -4,15 +4,15 @@
         type ITabsBasis,
         app_layout,
         app_tab_active,
-        app_tabs_blur,
         fmt_cl,
         sleep,
+        tabs_blur,
     } from "$lib";
 
     export let basis: ITabsBasis;
     $: basis = basis;
 
-    $: classes_blur = $app_tabs_blur ? `bg-layer-1-surface/30` : ``;
+    $: classes_blur = $tabs_blur ? `bg-layer-1-surface/30` : ``;
 
     let tab_focus: number | null = null;
 

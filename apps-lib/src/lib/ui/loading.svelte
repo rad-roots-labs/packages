@@ -1,12 +1,13 @@
 <script lang="ts">
-    import { fmt_cl, type GeometryGlyphDimension, type ILoading } from "$lib";
+    import { fmt_cl, type ILoading, type ILoadingDimension } from "$lib";
 
-    export const lm: Map<GeometryGlyphDimension, [string, string]> = new Map([
+    export const lm: Map<ILoadingDimension, [string, string]> = new Map([
         [`xl`, [`h-[36px] w-[36px]`, `text-[22px]`]],
         [`lg`, [`h-[32px] w-[32px]`, `text-[18px]`]],
         [`md`, [`h-[32px] w-[32px]`, `text-[18px]`]],
         [`sm`, [`h-[32px] w-[32px]`, `text-[18px]`]],
         [`xs`, [`h-[32px] w-[32px]`, `text-[18px]`]],
+        [`glyph-send-button`, [`h-[20px] w-[20px]`, `text-[18px]`]],
     ]);
 
     export let basis: ILoading | undefined = undefined;

@@ -15,11 +15,13 @@
             ? `bg-transparent`
             : `bg-layer-${layer}-surface`;
     $: classes_wrap = `px-4`;
+    $: sync_init =
+        typeof basis.sync_init === `boolean` ? basis.sync_init : true;
 
     onMount(async () => {
         try {
             if (basis.id) {
-                if (basis.init) await kv.set(basis.id, ``);
+                if (sync_init) await kv.set(basis.id, ``);
                 else if (basis.sync) {
                     const kv_val = await kv.get(basis.id);
                     if (kv_val) el.value = kv_val;

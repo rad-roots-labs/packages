@@ -1,3 +1,5 @@
+import { goto } from "$app/navigation";
+import type { GlyphKey, NavigationRoute } from "$lib";
 import type { AnchorRoute, CallbackPromiseGeneric, LabelFieldKind, NavigationParamTuple, NavigationRouteParamKey } from "$lib/types/client";
 import type { ColorMode, ThemeKey, ThemeLayer } from "@radroots/theme";
 
@@ -18,11 +20,11 @@ export const fmt_cl = (classes?: string): string => {
     return classes ? classes : ``;
 };
 
-export function get_label_classes(layer: ThemeLayer, label_kind: LabelFieldKind | undefined, hide_active: boolean): string {
+export const get_label_classes = (layer: ThemeLayer, label_kind: LabelFieldKind | undefined, hide_active: boolean): string => {
     return `text-layer-${layer}-glyph${label_kind ? `-${label_kind}` : ``} ${hide_active ? `` : `group-active:text-layer-${layer}-glyph${label_kind ? `-${label_kind}_a` : `_a`}`}`
 };
 
-export function parse_layer(layer?: number, layer_default?: ThemeLayer): ThemeLayer {
+export const parse_layer = (layer?: number, layer_default?: ThemeLayer): ThemeLayer => {
     switch (layer) {
         case 0:
         case 1:
@@ -33,16 +35,18 @@ export function parse_layer(layer?: number, layer_default?: ThemeLayer): ThemeLa
     };
 };
 
-export function fmt_trellis(hide_border_t: boolean, hide_border_b: boolean): string {
+export const fmt_trellis = (hide_border_t: boolean, hide_border_b: boolean): string => {
     return `${hide_border_t ? `group-first:border-t-0` : `group-first:border-t-line`} ${hide_border_b ? `group-last:border-b-0` : `group-last:border-b-line`}`;
 };
 
-export function encode_qp(params_list?: NavigationParamTuple[]): string {
-    if (!params_list || !params_list.length) return ``;
-    const params = params_list.filter(i => i[0] && i[1])
-    let urlp = ``;
-    if (params_list.length) for (const [i, [k, v]] of params.entries()) urlp += `${i === 0 ? `?` : ``}&${k.trim()}=${encodeURI(v.trim())}`.trim();
-    return urlp;
+export const encode_qp = (params_list?: NavigationParamTuple[]): string => {
+    const params = (params_list || []).filter(i => i[0] && i[1])
+    if (!params.length) return ``;
+    return params.map(([k, v], index) => `${index === 0 ? `?` : ``}&${k.trim()}=${encodeURI(v.trim())}`).join(``).trim();
+};
+
+export const encode_qp_route = (route: NavigationRoute, params_list?: NavigationParamTuple[]): string => {
+    return `${route}/${encode_qp(params_list)}`
 };
 
 export const decode_qp = (query_param: string): AnchorRoute => {
@@ -53,8 +57,9 @@ export const decode_qp = (query_param: string): AnchorRoute => {
 export function parse_qp(param: string): NavigationRouteParamKey | undefined {
     switch (param) {
         case "cmd":
-        case "pk":
+        case "nostr_pk":
         case "id":
+        case "rkey":
             return param;
         default:
             return undefined;
@@ -96,3 +101,16 @@ export const clipboard_copy = async (text: string, callback: CallbackPromiseGene
         console.log(`(error) clipboard_copy `, e);
     }
 };
+
+export const as_glyph_key = (val: string): GlyphKey => {
+    return val as GlyphKey;
+}
+
+export const route = async (route: NavigationRoute, params_list?: NavigationParamTuple[]): Promise<void> => {
+    try {
+        if (params_list && params_list.length) await goto(encode_qp_route(route, params_list));
+        else await goto(route);
+    } catch (e) {
+        console.log(`(error) route `, e);
+    }
+}

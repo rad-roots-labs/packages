@@ -2,11 +2,13 @@
     import { goto } from "$app/navigation";
     import {
         app_layout,
-        app_nav_blur,
-        app_nav_visible,
+        encode_qp_route,
         Fill,
         fmt_cl,
         Glyph,
+        nav_blur,
+        nav_prev,
+        nav_visible,
         type INavBasis,
     } from "$lib";
     import Loading from "$lib/ui/loading.svelte";
@@ -20,7 +22,7 @@
 
     onMount(async () => {
         try {
-            app_nav_visible.set(true);
+            nav_visible.set(true);
         } catch (e) {
         } finally {
         }
@@ -28,7 +30,7 @@
 
     onDestroy(async () => {
         try {
-            app_nav_visible.set(false);
+            nav_visible.set(false);
         } catch (e) {
         } finally {
         }
@@ -37,7 +39,7 @@
 
 <div
     bind:this={el}
-    class={`z-10 absolute top-0 left-0 flex flex-col w-full justify-start items-start transition-all duration-[250ms] h-nav_${$app_layout} ${$app_nav_blur ? `bg-layer-0-surface-blur/30 backdrop-blur-md` : ``}`}
+    class={`z-10 absolute top-0 left-0 flex flex-col w-full justify-start items-start transition-all duration-[250ms] h-nav_${$app_layout} ${$nav_blur ? `bg-layer-0-surface-blur/30 backdrop-blur-md` : ``}`}
 >
     <div
         bind:this={el_inner}
@@ -50,7 +52,27 @@
                 class={`group col-span-4 flex flex-row h-full pl-2 justify-start items-center`}
                 on:click={async () => {
                     if (basis.prev.callback) await basis.prev.callback();
-                    await goto(basis.prev.route);
+                    console.log(`basis.prev.route `, basis.prev.route);
+                    let route_to =
+                        typeof basis.prev.route === `string`
+                            ? basis.prev.route
+                            : encode_qp_route(
+                                  basis.prev.route[0],
+                                  basis.prev.route[1],
+                              );
+                    console.log(`route_to `, route_to);
+                    if ($nav_prev.length) {
+                        const nav_prev_param = $nav_prev.pop();
+                        console.log(`nav_prev_param `, nav_prev_param);
+                        if (nav_prev_param)
+                            route_to = encode_qp_route(
+                                nav_prev_param.route,
+                                nav_prev_param.params,
+                            );
+                    }
+
+                    console.log(`route_to `, route_to);
+                    await goto(route_to);
                 }}
             >
                 <Glyph
@@ -83,9 +105,9 @@
                         }}
                     >
                         <p
-                            class={`font-sans text-navCurrent text-layer-1-glyph`}
+                            class={`${fmt_cl(basis.title.label.classes)} font-sans text-navCurrent text-layer-1-glyph`}
                         >
-                            {basis.title.label}
+                            {basis.title.label.value}
                         </p>
                     </button>
                 {:else}

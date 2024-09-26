@@ -1,6 +1,7 @@
 <script lang="ts">
     import { fmt_cl, parse_layer, t, type ITrellis } from "..";
     import TrellisDefaultLabel from "./trellis_default_label.svelte";
+    import TrellisInput from "./trellis_input.svelte";
     import TrellisOffset from "./trellis_offset.svelte";
     import TrellisTitle from "./trellis_title.svelte";
     import TrellisTouch from "./trellis_touch.svelte";
@@ -69,10 +70,15 @@
                         <div
                             class={`flex flex-row h-full w-full gap-1 items-center overflow-y-hidden`}
                         >
-                            <TrellisOffset
-                                basis={basis.offset}
-                                layer={args.layer}
-                            />
+                            {#if !args.hide_offset}
+                                <TrellisOffset
+                                    basis={basis.offset}
+                                    layer={args.layer}
+                                />
+                            {/if}
+                            {#if $$slots.offset}
+                                <slot name="offset" />
+                            {/if}
                             {#if `touch` in basis && basis.touch}
                                 <TrellisTouch
                                     basis={basis.touch}
@@ -80,6 +86,13 @@
                                     {hide_border_b}
                                     {hide_border_t}
                                     hide_active={!!basis.hide_active}
+                                />
+                            {:else if `input` in basis && basis.input}
+                                <TrellisInput
+                                    basis={basis.input}
+                                    layer={args.layer}
+                                    {hide_border_b}
+                                    {hide_border_t}
                                 />
                             {/if}
                         </div>

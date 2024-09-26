@@ -3,11 +3,11 @@
         type AppLayoutKey,
         type IClOpt,
         app_layout,
-        app_nav_blur,
-        app_nav_visible,
-        app_tabs_blur,
-        app_tabs_visible,
         fmt_cl,
+        nav_blur,
+        nav_visible,
+        tabs_blur,
+        tabs_visible,
     } from "$lib";
     import { onDestroy, onMount } from "svelte";
 
@@ -39,18 +39,18 @@
         }
     });
 
-    $: classes_nav = $app_nav_visible
+    $: classes_nav = $nav_visible
         ? `pt-h_nav_${$app_layout}`
         : styles[$app_layout];
-    $: classes_tabs = $app_tabs_visible ? `pb-h_tabs_${$app_layout}` : ``;
+    $: classes_tabs = $tabs_visible ? `pb-h_tabs_${$app_layout}` : ``;
     $: classes_fade = basis?.fade ? `fade-in` : ``;
 
     const scrollChange = (): void => {
-        if (Math.max(el?.scrollTop || 0, 0) > 10) app_nav_blur.set(true);
-        else app_nav_blur.set(false);
+        if (Math.max(el?.scrollTop || 0, 0) > 10) nav_blur.set(true);
+        else nav_blur.set(false);
 
-        if (Math.max(el?.scrollTop || 0, 0) > 10) app_tabs_blur.set(true);
-        else app_tabs_blur.set(false);
+        if (Math.max(el?.scrollTop || 0, 0) > 10) tabs_blur.set(true);
+        else tabs_blur.set(false);
     };
 </script>
 

@@ -24,7 +24,7 @@
             }}
         >
             <div
-                class={`flex flex-row h-full w-full justify-between items-center`}
+                class={`flex flex-row h-full w-full justify-between items-center ${basis.end ? `pr-2` : ``}`}
             >
                 <TrellisRowLabel basis={basis.label} {layer} {hide_active} />
                 {#if basis.display}

@@ -1,9 +1,10 @@
+import type { CallbackPromiseGeneric, GeometryCardinalDirection, GeometryGlyphDimension, ICbGOpt, ICbOpt, IClOpt, IFormField, ILy, ILyOptTs } from "$lib";
 import type { ThemeLayer } from "@radroots/theme";
-import type { GeometryCardinalDirection, GeometryGlyphDimension, ICbOpt } from "./client";
 
 export type GlyphKeyCurrency = `dollar` | `eur`;
 
 export type GlyphKey = |
+    `address-book-tabs` |
     `paper-plane-tilt` |
     `note-pencil` |
     `share-fat` |
@@ -94,9 +95,42 @@ export type IGlyph = ICbOpt & {
 
 export type ILoadingBlades = 6 | 12;
 
+export type ILoadingDimension = GeometryGlyphDimension | `glyph-send-button`;
+
 export type ILoading = {
     classes?: string;
     color?: 'white';
     blades?: ILoadingBlades;
-    dim?: GeometryGlyphDimension;
+    dim?: ILoadingDimension;
+};
+
+export type ISelectOption<T extends string> = {
+    value: T;
+    label: string;
+    disabled?: boolean;
+};
+
+export type ISelectElement = ILy &
+    ICbGOpt<ISelectOption<string>> & {
+        id?: string;
+        classes?: string;
+        mask?: boolean;
+        options: { group?: string | true; entries: ISelectOption<string>[] }[];
+    };
+
+export type IInputElement = IClOpt & ILyOptTs & {
+    id: string;
+    placeholder?: string;
+    label?: string;
+    hidden?: boolean;
+    validate?: RegExp;
+    sync?: true;
+    sync_init?: true | string;
+    field?: IFormField;
+    /*notify_inline?: {
+        glyph: GlyphKey | IGlyph;
+    };*/
+    callback?: CallbackPromiseGeneric<{ val: string; pass: boolean; }>;
+    callback_keydown?: CallbackPromiseGeneric<{ key: string; }>;
+    on_mount?: CallbackPromiseGeneric<HTMLElement>;
 };

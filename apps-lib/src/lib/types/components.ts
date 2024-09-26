@@ -1,4 +1,5 @@
-import type { CallbackPromise, CallbackPromiseGeneric, ICb, ICbGOpt, ICbOpt, IClOpt, IGl, IGlOpt, ILabelFieldsOpt, ILabelOpt, ILabelOptFieldsOpt, ILyOpt, ILyOptTs } from "./client";
+import type { NavigationRoute } from "$lib/utils/routes";
+import type { CallbackPromise, CallbackPromiseGeneric, ICb, ICbGOpt, ICbOpt, IClOpt, IGl, IGlOpt, ILabel, ILabelFieldsOpt, ILabelOpt, ILabelOptFieldsOpt, ILyOpt, ILyOptTs, NavigationParamTuple } from "./client";
 import type { GlyphKey, GlyphWeight, IGlyph } from "./ui";
 
 export type ITabsBasisList = {
@@ -31,7 +32,7 @@ export type IInputFormBasis = IClOpt & ILyOptTs & ICbGOpt<{ val: string; pass: b
     hidden?: boolean;
     validate?: RegExp;
     sync?: boolean;
-    init?: boolean;
+    sync_init?: boolean;
     field?: IFormField;
     notify_inline?: {
         glyph: GlyphKey | IGlyph;
@@ -82,11 +83,9 @@ export type IEnvelopeTitledBasis = {
 export type INavBasis = {
     prev: ICbOpt & {
         label?: string;
-        route: string;
+        route: NavigationRoute | [NavigationRoute, NavigationParamTuple[]];
     };
-    title?: ICbOpt & {
-        label: string;
-    };
+    title?: ICbOpt & ILabel;
     option?: ICb & IGlOpt & ILabelOpt & {
         loading?: boolean;
     };
