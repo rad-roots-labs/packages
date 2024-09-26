@@ -137,3 +137,11 @@ export type ILableFields = IGlOpt & {
 
 export type LabelFieldKind = `link` | `on` | `shade`;
 
+export type IToastKind = `simple`;
+
+export type IToast = IClOpt &
+    ILabel & IGlOpt & {
+        styles?: IToastKind[];
+        layer?: ThemeLayer;
+        position?: GeometryScreenPosition;
+    };

@@ -11,8 +11,8 @@
         nav_visible,
         type INavBasis,
     } from "$lib";
-    import Loading from "$lib/ui/loading.svelte";
     import { onDestroy, onMount } from "svelte";
+    import NavOption from "./nav_option.svelte";
 
     export let basis: INavBasis;
     $: basis = basis;
@@ -20,9 +20,12 @@
     let el: HTMLElement | null;
     let el_inner: HTMLElement | null;
 
+    let nav_prev_label = ``;
+
     onMount(async () => {
         try {
             nav_visible.set(true);
+            if ($nav_prev.length) nav_prev_label = $nav_prev[0].label || ``;
         } catch (e) {
         } finally {
         }
@@ -52,7 +55,6 @@
                 class={`group col-span-4 flex flex-row h-full pl-2 justify-start items-center`}
                 on:click={async () => {
                     if (basis.prev.callback) await basis.prev.callback();
-                    console.log(`basis.prev.route `, basis.prev.route);
                     let route_to =
                         typeof basis.prev.route === `string`
                             ? basis.prev.route
@@ -60,18 +62,14 @@
                                   basis.prev.route[0],
                                   basis.prev.route[1],
                               );
-                    console.log(`route_to `, route_to);
                     if ($nav_prev.length) {
-                        const nav_prev_param = $nav_prev.pop();
-                        console.log(`nav_prev_param `, nav_prev_param);
-                        if (nav_prev_param)
+                        const nav_prev_li = $nav_prev.pop();
+                        if (nav_prev_li)
                             route_to = encode_qp_route(
-                                nav_prev_param.route,
-                                nav_prev_param.params,
+                                nav_prev_li.route,
+                                nav_prev_li.params,
                             );
                     }
-
-                    console.log(`route_to `, route_to);
                     await goto(route_to);
                 }}
             >
@@ -83,11 +81,11 @@
                         classes: `text-layer-1-glyph-hl group-active:opacity-70 transition-opacity`,
                     }}
                 />
-                {#if basis.prev.label}
+                {#if nav_prev_label || basis.prev.label}
                     <p
                         class={`font-sans text-navPrevious text-layer-1-glyph-hl group-active:opacity-60 transition-opacity`}
                     >
-                        {basis.prev.label}
+                        {nav_prev_label || basis.prev.label}
                     </p>
                 {:else}
                     <Fill />
@@ -118,36 +116,7 @@
                 class={`col-span-4 flex flex-row h-full justify-end items-center`}
             >
                 {#if basis.option}
-                    {#if basis.option.loading}
-                        <div
-                            class={`flex flex-row pr-4 justify-center items-center`}
-                        >
-                            <Loading />
-                        </div>
-                    {:else}
-                        <button
-                            class={`group col-span-4 flex flex-row h-full pr-6 gap-2 justify-end items-center`}
-                            on:click={async () => {
-                                await basis.option?.callback();
-                            }}
-                        >
-                            {#if `glyph` in basis.option && basis.option.glyph}
-                                <Glyph
-                                    basis={{
-                                        classes: `group-active:opacity-70  ${basis.option.glyph.classes}`,
-                                        ...basis.option.glyph,
-                                    }}
-                                />
-                            {/if}
-                            {#if `label` in basis.option && basis.option.label}
-                                <p
-                                    class={`${fmt_cl(basis.option.label.classes)} font-sans text-navPrevious text-layer-1-glyph-hl group-active:opacity-60 transition-opacity`}
-                                >
-                                    {basis.option.label.value}
-                                </p>
-                            {/if}
-                        </button>
-                    {/if}
+                    <NavOption basis={basis.option} />
                 {:else}
                     <Fill />
                 {/if}

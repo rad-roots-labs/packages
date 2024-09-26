@@ -1,4 +1,11 @@
 {
+    "done": "Done",
+    "unlock": "Unlock",
+    "nsec": "Nsec",
+    "npub": "Npub",
+    "hex": "Hex",
+    "public_key": "Public key",
+    "keys": "Keys",
     "settings": "Settings",
     "products": "Products",
     "locations": "Locations",

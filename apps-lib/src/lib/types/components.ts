@@ -1,5 +1,5 @@
 import type { NavigationRoute } from "$lib/utils/routes";
-import type { CallbackPromise, CallbackPromiseGeneric, ICb, ICbGOpt, ICbOpt, IClOpt, IGl, IGlOpt, ILabel, ILabelFieldsOpt, ILabelOpt, ILabelOptFieldsOpt, ILyOpt, ILyOptTs, NavigationParamTuple } from "./client";
+import type { CallbackPromise, CallbackPromiseGeneric, ICb, ICbG, ICbGOpt, ICbOpt, IClOpt, IGl, IGlOpt, ILabel, ILabelFieldsOpt, ILabelOpt, ILabelOptFieldsOpt, ILyOpt, ILyOptTs, NavigationParamTuple } from "./client";
 import type { GlyphKey, GlyphWeight, IGlyph } from "./ui";
 
 export type ITabsBasisList = {
@@ -80,14 +80,17 @@ export type IEnvelopeTitledBasis = {
     }
 };
 
+export type INavBasisOption = ICbG<
+    [boolean, HTMLLabelElement | null]
+> & IGlOpt & ILabelOpt & {
+    loading?: boolean;
+};
 export type INavBasis = {
     prev: ICbOpt & {
         label?: string;
         route: NavigationRoute | [NavigationRoute, NavigationParamTuple[]];
     };
     title?: ICbOpt & ILabel;
-    option?: ICb & IGlOpt & ILabelOpt & {
-        loading?: boolean;
-    };
+    option?: INavBasisOption;
 };
 

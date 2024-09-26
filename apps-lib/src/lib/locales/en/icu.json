@@ -1,4 +1,6 @@
 {
+    "your": "Your {value}",
+    "nostr": "Nostr {value}",
     "invalid_entry": "Invalid {value} entry",
     "enter_new": "Enter new {value}",
     "enter": "Enter {value}",

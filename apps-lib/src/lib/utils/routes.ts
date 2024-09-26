@@ -4,6 +4,7 @@ export type NavigationRoute =
 	| "/models/location-gcs/view-map"
 	| "/models/nostr-profile"
 	| "/models/nostr-profile/edit/field"
+	| "/models/nostr-profile/view"
 	| "/models/trade-product"
 	| "/models/trade-product/add"
 	| "/models/trade-product/add/preview"
@@ -24,6 +25,7 @@ export function parse_route(route: string): NavigationRoute {
 		case "/models/location-gcs/view-map":
 		case "/models/nostr-profile":
 		case "/models/nostr-profile/edit/field":
+		case "/models/nostr-profile/view":
 		case "/models/trade-product":
 		case "/models/trade-product/add":
 		case "/models/trade-product/add/preview":

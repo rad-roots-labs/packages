@@ -132,5 +132,5 @@ export type IInputElement = IClOpt & ILyOptTs & {
     };*/
     callback?: CallbackPromiseGeneric<{ val: string; pass: boolean; }>;
     callback_keydown?: CallbackPromiseGeneric<{ key: string; }>;
-    on_mount?: CallbackPromiseGeneric<HTMLElement>;
+    on_mount?: CallbackPromiseGeneric<HTMLInputElement>;
 };

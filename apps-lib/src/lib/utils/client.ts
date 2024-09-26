@@ -1,6 +1,6 @@
 import { goto } from "$app/navigation";
 import type { GlyphKey, NavigationRoute } from "$lib";
-import type { AnchorRoute, CallbackPromiseGeneric, LabelFieldKind, NavigationParamTuple, NavigationRouteParamKey } from "$lib/types/client";
+import type { AnchorRoute, AppLayoutKey, CallbackPromiseGeneric, LabelFieldKind, NavigationParamTuple, NavigationRouteParamKey } from "$lib/types/client";
 import type { ColorMode, ThemeKey, ThemeLayer } from "@radroots/theme";
 
 export const sleep = async (ms: number): Promise<void> => {
@@ -46,7 +46,7 @@ export const encode_qp = (params_list?: NavigationParamTuple[]): string => {
 };
 
 export const encode_qp_route = (route: NavigationRoute, params_list?: NavigationParamTuple[]): string => {
-    return `${route}/${encode_qp(params_list)}`
+    return `${route}/${encode_qp(params_list)}`.replaceAll(`//`, `/`)
 };
 
 export const decode_qp = (query_param: string): AnchorRoute => {
@@ -92,10 +92,10 @@ export const int_step = (num: number, op: `+` | `-`, bounds?: number): number =>
     return Math.max(int_num - 1, bounds || 0);
 };
 
-export const clipboard_copy = async (text: string, callback: CallbackPromiseGeneric<string>): Promise<void> => {
+export const clipboard_copy = async (text: string, callback?: CallbackPromiseGeneric<string>): Promise<void> => {
     try {
         navigator.clipboard.writeText(text).then(async () => {
-            await callback(text);
+            if (callback) await callback(text);
         });
     } catch (e) {
         console.log(`(error) clipboard_copy `, e);
@@ -114,3 +114,13 @@ export const route = async (route: NavigationRoute, params_list?: NavigationPara
         console.log(`(error) route `, e);
     }
 }
+
+export const get_layout = (val: string | false): AppLayoutKey => {
+    switch (val) {
+        case `base`:
+        case `lg`:
+            return val;
+        default:
+            return `base`;
+    };
+};
