@@ -31,10 +31,12 @@
             }}
         />
     {:else if basis.label}
-        <p
-            class={`${fmt_cl(basis.label.classes)} font-sans text-trellisLine line-clamp-1 ${get_label_classes(layer, basis.label.kind, hide_active)}  transition-all`}
-        >
-            {basis.label.value}
-        </p>
+        {#if `value` in basis.label}
+            <p
+                class={`${fmt_cl(basis.label.classes)} font-sans text-trellisLine line-clamp-1 ${get_label_classes(layer, basis.label.kind, hide_active)}  transition-all`}
+            >
+                {basis.label.value}
+            </p>
+        {/if}
     {/if}
 </button>

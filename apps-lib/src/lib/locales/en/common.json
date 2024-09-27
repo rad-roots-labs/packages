@@ -1,4 +1,8 @@
 {
+    "update": "Update",
+    "status": "Status",
+    "relays": "Relays",
+    "secret_key": "Secret key",
     "done": "Done",
     "unlock": "Unlock",
     "nsec": "Nsec",

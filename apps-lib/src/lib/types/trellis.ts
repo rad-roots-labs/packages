@@ -42,7 +42,7 @@ export type ITrellisStyles = {
     set_default_background?: boolean;
 };
 
-export type ITrellisBasisOffsetModKey = 'none' | 'sm' | 'glyph';
+export type ITrellisBasisOffsetModKey = 'sm' | 'glyph';
 export type ITrellisBasisOffsetMod = ITrellisBasisOffsetModKey | IGlyph;
 
 export type ITrellisKind = (
@@ -79,7 +79,6 @@ export type ITrellisKindDisplayValueIcon = {
         key: GlyphKey;
     };
 };
-
 
 export type ITrellisKindTouch = ITrellisBasis & {
     touch: ITrellisBasisTouch;

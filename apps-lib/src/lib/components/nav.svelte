@@ -25,7 +25,8 @@
     onMount(async () => {
         try {
             nav_visible.set(true);
-            if ($nav_prev.length) nav_prev_label = $nav_prev[0].label || ``;
+            if ($nav_prev.length)
+                nav_prev_label = $nav_prev[$nav_prev.length - 1].label || ``;
         } catch (e) {
         } finally {
         }
@@ -102,11 +103,13 @@
                                 await basis.title.callback();
                         }}
                     >
-                        <p
-                            class={`${fmt_cl(basis.title.label.classes)} font-sans text-navCurrent text-layer-1-glyph`}
-                        >
-                            {basis.title.label.value}
-                        </p>
+                        {#if `value` in basis.title.label}
+                            <p
+                                class={`${fmt_cl(basis.title.label.classes)} font-sans text-navCurrent text-layer-1-glyph`}
+                            >
+                                {basis.title.label.value}
+                            </p>
+                        {/if}
                     </button>
                 {:else}
                     <Fill />

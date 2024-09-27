@@ -60,11 +60,13 @@
             <div
                 class={`col-span-12 flex flex-row pl-1 ${fmt_cl(styles.map((style) => fmt_cl(lm.get(style)?.inner)).join(` `))}`}
             >
-                <p
-                    class={`font-sans font-[500] truncate text-layer-${layer}-glyph -translate-y-[1px]`}
-                >
-                    {basis.label.value}
-                </p>
+                {#if `value` in basis.label}
+                    <p
+                        class={`font-sans font-[500] truncate text-layer-${layer}-glyph -translate-y-[1px]`}
+                    >
+                        {basis.label.value}
+                    </p>
+                {/if}
             </div>
         </div>
     </div>

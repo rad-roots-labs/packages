@@ -126,10 +126,13 @@ export type ILabelTupFields = {
 };
 
 export type ILableFieldsSwap = {
-    on?: boolean;
-    value_on: string;
-    value_off: string;
-
+    toggle: boolean;
+    on: IClOpt & {
+        value: string;
+    },
+    off: IClOpt & {
+        value: string;
+    },
 };
 
 export type ILabelSwap = {

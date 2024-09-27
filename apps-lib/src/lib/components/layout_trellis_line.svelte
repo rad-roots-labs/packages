@@ -9,11 +9,13 @@
 
 <div class={`flex flex-col w-full gap-1 justify-start items-start`}>
     <div class={`flex flex-row w-full px-2 gap-2 justify-start items-center`}>
-        <p
-            class={`${fmt_cl(basis.label.classes)} font-sans font-[400] uppercase text-layer-2-glyph text-sm`}
-        >
-            {basis.label.value}
-        </p>
+        {#if `value` in basis.label}
+            <p
+                class={`${fmt_cl(basis.label.classes)} font-sans font-[400] uppercase text-layer-2-glyph text-sm`}
+            >
+                {basis.label.value}
+            </p>
+        {/if}
         {#if basis.notify}
             <div
                 class={`${fmt_cl(basis.notify.classes)} flex flex-row justify-start items-center fade-in transition-all`}
@@ -24,11 +26,13 @@
                         await basis.notify?.callback();
                     }}
                 >
-                    <p
-                        class={`${fmt_cl(basis.notify.label.classes)} font-sans font-[600] uppercase text-layer-2-glyph/80 text-xs`}
-                    >
-                        {basis.notify.label.value}
-                    </p>
+                    {#if `value` in basis.notify.label}
+                        <p
+                            class={`${fmt_cl(basis.notify.label.classes)} font-sans font-[600] uppercase text-layer-2-glyph/80 text-xs`}
+                        >
+                            {basis.notify.label.value}
+                        </p>
+                    {/if}
                 </button>
             </div>
         {/if}

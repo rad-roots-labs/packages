@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Fill from "$lib/ui/fill.svelte";
 	import Glyph from "$lib/ui/glyph.svelte";
+	import LabelSwap from "$lib/ui/label_swap.svelte";
 	import type { ThemeLayer } from "@radroots/theme";
 	import { fmt_cl, type ITrellisTitle } from "..";
 
@@ -38,11 +39,15 @@
 			}}
 		>
 			{#if basis.link.label}
-				<p
-					class={`${fmt_cl(basis.link.label.classes)} font-sans text-trellisTitle uppercase fade-in`}
-				>
-					{basis.link.label.value || ``}
-				</p>
+				{#if `swap` in basis.link.label}
+					<LabelSwap basis={basis.link.label} />
+				{:else}
+					<p
+						class={`${fmt_cl(basis.link.label.classes)} font-sans text-trellisTitle uppercase fade-in`}
+					>
+						{basis.link.label.value || ``}
+					</p>
+				{/if}
 			{/if}
 			{#if basis.link.glyph}
 				<div class={`flex flex-row w-max`}>

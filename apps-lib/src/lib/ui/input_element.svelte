@@ -13,6 +13,7 @@
 
     onMount(async () => {
         try {
+            console.log(JSON.stringify(basis, null, 4), `basis`);
             if (basis.id) {
                 if (basis.sync_init)
                     await kv.set(
@@ -21,10 +22,10 @@
                             ? basis.sync_init
                             : ``,
                     );
-                else if (basis.sync) {
+                if (basis.sync) {
                     const kv_val = await kv.get(basis.id);
                     if (kv_val) el.value = kv_val;
-                    await kv.set(basis.id, kv_val || ``);
+                    else await kv.set(basis.id, ``);
                 }
             }
             if (basis.on_mount) await basis.on_mount(el);

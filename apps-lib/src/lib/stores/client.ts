@@ -19,6 +19,7 @@ export const app_render = writable<boolean>(false);
 export const app_win = writable<[number, number]>([0, 0]);
 export const app_notify = writable<string>(``);
 export const app_toast = writable<IToast | false>(false);
+export const app_submit_route = writable<NavigationPreviousParam | undefined>(undefined);
 
 export const nav_visible = writable<boolean>(false);
 export const nav_blur = writable<boolean>(false);
