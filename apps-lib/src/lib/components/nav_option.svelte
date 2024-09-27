@@ -34,24 +34,24 @@
             />
         {/if}
         {#if `label` in basis && basis.label}
-            {#if basis.label.swap}
+            {#if `swap` in basis.label}
                 <label bind:this={el_swap} class={`swap${classes_swap}`}>
                     <div class="swap-off">
                         <p
                             class={`${fmt_cl(basis.label.classes)} font-sans text-navPrevious text-layer-${layer}-glyph-hl -translate-y-[1px] transition-all`}
                         >
-                            {basis.label.value}
+                            {basis.label.swap.value_on}
                         </p>
                     </div>
                     <div class="swap-on">
                         <p
                             class={`${fmt_cl(basis.label.classes)} font-sans text-navPrevious text-layer-${layer}-glyph-hl group-active:opacity-60 -translate-y-[1px] transition-all`}
                         >
-                            {basis.label.swap}
+                            {basis.label.swap.value_off}
                         </p>
                     </div>
                 </label>
-            {:else}
+            {:else if `value` in basis.label}
                 <p
                     class={`${fmt_cl(basis.label.classes)} font-sans text-navPrevious text-layer-1-glyph-hl group-active:opacity-60 transition-opacity`}
                 >
