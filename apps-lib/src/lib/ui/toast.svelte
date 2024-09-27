@@ -23,7 +23,7 @@
             `simple`,
             {
                 inner: `justify-center`,
-                outer: `min-h-cover1 w-full px-4 rounded-2xl shadow-sm`,
+                outer: `min-h-toast_min w-full px-4 rounded-2xl shadow-sm`,
             },
         ],
     ]);
@@ -33,8 +33,7 @@
 
     let styles: IToastKind[] = basis.styles || [`simple`];
     $: styles = styles;
-    let layer = parse_layer(basis.layer || 1);
-    $: layer = layer;
+    $: layer = basis.layer ? parse_layer(basis.layer) : 1;
     $: layout = get_layout($app_layout);
 </script>
 
@@ -46,7 +45,7 @@
             class={`${fmt_cl(basis.classes)} relative grid grid-cols-12 h-max items-center justify-center ${styles.includes(`simple`) ? `bg-layer-${layer}-surface` : ``} ${fmt_cl(styles.map((style) => fmt_cl(lm.get(style)?.outer)).join(` `))}`}
         >
             <div
-                class={`absolute top-0 left-4 flex flex-row h-full items-center`}
+                class={`absolute top-0 left-4 flex flex-row h-full items-center text-layer-${layer}-glyph`}
             >
                 <Glyph
                     basis={{

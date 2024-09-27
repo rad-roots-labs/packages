@@ -43,7 +43,9 @@ export type ITrellisStyles = {
 };
 
 export type ITrellisBasisOffsetModKey = 'sm' | 'glyph';
-export type ITrellisBasisOffsetMod = ITrellisBasisOffsetModKey | IGlyph;
+export type ITrellisBasisOffsetMod = ITrellisBasisOffsetModKey | (IGlyph & {
+    loading?: boolean;
+});
 
 export type ITrellisKind = (
     | ITrellisKindTouch

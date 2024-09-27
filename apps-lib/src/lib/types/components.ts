@@ -81,7 +81,7 @@ export type IEnvelopeTitledBasis = {
 };
 
 export type INavBasisOption = ICbG<
-    [boolean, HTMLLabelElement | null]
+    HTMLLabelElement | null
 > & IGlOpt & ILabelOpt & {
     loading?: boolean;
 };

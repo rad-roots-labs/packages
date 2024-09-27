@@ -1,4 +1,5 @@
 <script lang="ts">
+    import Loading from "$lib/ui/loading.svelte";
     import type { ThemeLayer } from "@radroots/theme";
     import {
         Fill,
@@ -29,21 +30,26 @@
         </div>
     {:else if typeof mod === `object`}
         <div
-            class={`flex flex-row h-full min-w-[20px] w-trellisOffset justify-center items-center`}
+            class={`flex flex-row h-full min-w-[20px] w-trellisOffset justify-center items-center pr-2`}
         >
             <button
                 class={`fade-in pl-2 translate-x-[3px] translate-y-[1px]`}
                 on:click|preventDefault={async (ev) => {
-                    if (typeof basis !== `boolean` && basis?.callback)
+                    if (mod.loading) return;
+                    else if (typeof basis !== `boolean` && basis?.callback)
                         await basis.callback(ev);
                 }}
             >
-                <Glyph
-                    basis={{
-                        classes: `text-layer-${layer}-glyph ${fmt_cl(mod.classes ? `` : ``)}`,
-                        ...mod,
-                    }}
-                />
+                {#if mod.loading}
+                    <Loading basis={{ blades: 6, dim: `xs` }} />
+                {:else}
+                    <Glyph
+                        basis={{
+                            classes: `${fmt_cl(mod.classes ? `` : ``)} text-layer-${layer}-glyph`,
+                            ...mod,
+                        }}
+                    />
+                {/if}
             </button>
         </div>
     {/if}

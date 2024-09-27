@@ -6,7 +6,7 @@
         [`lg`, [`h-[32px] w-[32px]`, `text-[18px]`]],
         [`md`, [`h-[32px] w-[32px]`, `text-[18px]`]],
         [`sm`, [`h-[32px] w-[32px]`, `text-[18px]`]],
-        [`xs`, [`h-[32px] w-[32px]`, `text-[18px]`]],
+        [`xs`, [`h-[20px] w-[20px]`, `text-[16px]`]],
         [`glyph-send-button`, [`h-[20px] w-[20px]`, `text-[18px]`]],
     ]);
 

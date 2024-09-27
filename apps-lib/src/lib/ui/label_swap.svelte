@@ -7,11 +7,13 @@
     $: basis = basis;
 
     $: layer = basis?.layer ? basis.layer : 1;
-    $: classes_swap = basis.swap?.toggle ? ` swap-active` : ``;
 </script>
 
 <div class={`flex flex-row justify-start items-center`}>
-    <label bind:this={el_swap} class={`swap${classes_swap}`}>
+    <label
+        bind:this={el_swap}
+        class={`swap${basis.swap.toggle ? ` swap-active` : ``}`}
+    >
         <div class="swap-on">
             <p
                 class={`${fmt_cl(basis.swap.on.classes || `text-navPrevious text-layer-${layer}-glyph-hl group-active:opacity-60`)} font-sans -translate-y-[1px] transition-all`}
