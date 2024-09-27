@@ -8,10 +8,6 @@
 
     $: layer = basis?.layer ? basis.layer : 1;
     $: classes_swap = basis.swap?.toggle ? ` swap-active` : ``;
-
-    $: {
-        console.log(`classes_swap `, classes_swap);
-    }
 </script>
 
 <div class={`flex flex-row justify-start items-center`}>

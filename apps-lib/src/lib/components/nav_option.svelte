@@ -8,33 +8,8 @@
         type INavBasisOption,
     } from "$lib";
 
-    let el_swap: HTMLLabelElement | null = null;
-
     export let basis: INavBasisOption;
     $: basis = basis;
-
-    $: classes_swap = ``;
-
-    let layer = 1;
-
-    /*
-<label bind:this={el_swap} class={`swap${classes_swap}`}>
-                    <div class="swap-off">
-                        <p
-                            class={`${fmt_cl(basis.label.classes)} font-sans text-navPrevious text-layer-${layer}-glyph-hl -translate-y-[1px] transition-all`}
-                        >
-                            {basis.label.swap.value_on}
-                        </p>
-                    </div>
-                    <div class="swap-on">
-                        <p
-                            class={`${fmt_cl(basis.label.classes)} font-sans text-navPrevious text-layer-${layer}-glyph-hl group-active:opacity-60 -translate-y-[1px] transition-all`}
-                        >
-                            {basis.label.swap.value_off}
-                        </p>
-                    </div>
-                </label>
-    */
 </script>
 
 {#if basis.loading}
@@ -45,9 +20,9 @@
     <button
         class={`group col-span-4 flex flex-row h-full pr-6 gap-2 justify-end items-center`}
         on:click={async () => {
-            await basis.callback([classes_swap ? false : true, el_swap]);
-            if (classes_swap) classes_swap = ``;
-            else classes_swap = ` swap-active`;
+            //await basis.callback([classes_swap ? false : true, el_swap]);
+            //if (classes_swap) classes_swap = ``;
+            //else classes_swap = ` swap-active`;
         }}
     >
         {#if `glyph` in basis && basis.glyph}

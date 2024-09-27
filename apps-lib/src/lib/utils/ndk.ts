@@ -1,13 +1,13 @@
 import NDK, { NDKEvent, NDKPrivateKeySigner, NDKUser } from '@nostr-dev-kit/ndk';
 import { time_now_ms } from "./client";
 
-export async function ndk_setup_privkey(opts: {
+export const ndk_init = async (opts: {
     $ndk: NDK;
-    private_key: string;
-}): Promise<NDKUser | undefined> {
+    secret_key: string;
+}): Promise<NDKUser | undefined> => {
     try {
-        const { $ndk: ndk, private_key } = opts;
-        const signer = new NDKPrivateKeySigner(private_key);
+        const { $ndk: ndk, secret_key } = opts;
+        const signer = new NDKPrivateKeySigner(secret_key);
         ndk.signer = signer;
 
         const user = await signer.user();
@@ -15,10 +15,12 @@ export async function ndk_setup_privkey(opts: {
             user.ndk = ndk;
             return user;
         }
-    } catch (e) { }
+    } catch (e) {
+        console.log(`(error) ndk_setup_privkey `, e);
+    }
 };
 
-export async function ndk_event(opts: {
+export const ndk_event = async (opts: {
     $ndk: NDK;
     $ndk_user: NDKUser;
     basis: {
@@ -26,7 +28,7 @@ export async function ndk_event(opts: {
         content: string;
         tags?: string[][];
     }
-}): Promise<NDKEvent | undefined> {
+}): Promise<NDKEvent | undefined> => {
     try {
         const { $ndk: ndk, $ndk_user: ndk_user, basis } = opts;
         const time_now = time_now_ms();
@@ -47,5 +49,7 @@ export async function ndk_event(opts: {
             tags
         });
         return event;
-    } catch (e) { };
+    } catch (e) {
+        console.log(`(error) ndk_event `, e);
+    }
 };

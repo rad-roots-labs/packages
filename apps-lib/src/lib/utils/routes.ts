@@ -5,6 +5,7 @@ export type NavigationRoute =
 	| "/models/nostr-profile"
 	| "/models/nostr-profile/edit/field"
 	| "/models/nostr-profile/view"
+	| "/models/nostr-relay"
 	| "/models/trade-product"
 	| "/models/trade-product/add"
 	| "/models/trade-product/add/preview"
@@ -26,6 +27,7 @@ export function parse_route(route: string): NavigationRoute {
 		case "/models/nostr-profile":
 		case "/models/nostr-profile/edit/field":
 		case "/models/nostr-profile/view":
+		case "/models/nostr-relay":
 		case "/models/trade-product":
 		case "/models/trade-product/add":
 		case "/models/trade-product/add/preview":

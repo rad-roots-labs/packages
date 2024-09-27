@@ -7,7 +7,9 @@
         fmt_cl,
         sleep,
         tabs_blur,
+        tabs_visible,
     } from "$lib";
+    import { onDestroy, onMount } from "svelte";
 
     export let basis: ITabsBasis;
     $: basis = basis;
@@ -18,6 +20,22 @@
 
     let el: HTMLElement | null;
     let el_inner: HTMLElement | null;
+
+    onMount(async () => {
+        try {
+            tabs_visible.set(true);
+        } catch (e) {
+        } finally {
+        }
+    });
+
+    onDestroy(async () => {
+        try {
+            tabs_visible.set(false);
+        } catch (e) {
+        } finally {
+        }
+    });
 </script>
 
 <div

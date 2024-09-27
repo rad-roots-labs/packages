@@ -26,5 +26,13 @@
 	"banner": "Banner",
 	"nip05": "NIP 05",
 	"lud06": "LUD 06",
-	"lud16": "LUD 16"
+	"lud16": "LUD 16",
+	"url": "",
+	"description": "",
+	"pubkey": "",
+	"contact": "",
+	"supported_nips": "",
+	"software": "",
+	"version": "",
+	"data": ""
 }
