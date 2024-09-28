@@ -36,16 +36,16 @@
     }}
 >
     <div
-        class={`${fmt_cl(basis.classes)} z-10 flex flex-row justify-start items-center text-[${styles.gl_1}px]`}
+        class={`${fmt_cl(basis.classes)} z-10 flex flex-row justify-start items-center text-[${styles?.gl_1}px]`}
     >
         <i class="ph{weight} ph-{basis.key}"></i>
     </div>
-    {#if basis.fill_under && styles.dim_2}
+    {#if basis.fill_under && styles?.dim_2}
         <div
             class={`z-5 absolute top-0 left-0 flex flex-row w-full justify-center items-center`}
         >
             <div
-                class={`flex flex-row h-[${styles.dim_2}px] w-[${styles.dim_2}px] justify-start items-center translate-y-[10px] bg-white/80 rounded-full`}
+                class={`flex flex-row h-[${styles?.dim_2}px] w-[${styles?.dim_2}px] justify-start items-center translate-y-[10px] bg-white/80 rounded-full`}
             >
                 <Fill />
             </div>
