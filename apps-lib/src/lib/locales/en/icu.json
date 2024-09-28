@@ -1,4 +1,5 @@
 {
+    "unconnected_*": "Unconnected {value}",
     "connected_*": "Connected {value}",
     "no_*_published": "No {value} published",
     "*_as": "{value} as",

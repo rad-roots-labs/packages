@@ -1,27 +1,28 @@
 <script lang="ts">
-    import { fmt_cl, type ILoading, type ILoadingDimension } from "$lib";
+    import { type ILoading, type ILoadingDimension } from "$lib";
 
-    export const lm: Map<ILoadingDimension, [string, string]> = new Map([
-        [`xl`, [`h-[36px] w-[36px]`, `text-[22px]`]],
-        [`lg`, [`h-[32px] w-[32px]`, `text-[18px]`]],
-        [`md`, [`h-[32px] w-[32px]`, `text-[18px]`]],
-        [`sm`, [`h-[32px] w-[32px]`, `text-[18px]`]],
-        [`xs`, [`h-[20px] w-[20px]`, `text-[16px]`]],
-        [`glyph-send-button`, [`h-[20px] w-[20px]`, `text-[18px]`]],
+    type StyleMap = { dim_1: number; gl_1: number };
+    export const style_map: Map<ILoadingDimension, StyleMap> = new Map([
+        ["glyph-send-button", { dim_1: 20, gl_1: 20 }],
+        ["xs", { dim_1: 13, gl_1: 13 }],
+        ["sm", { dim_1: 16, gl_1: 16 }],
+        ["md", { dim_1: 20, gl_1: 20 }],
+        ["lg", { dim_1: 28, gl_1: 28 }],
+        ["xl", { dim_1: 36, gl_1: 36 }],
     ]);
 
     export let basis: ILoading | undefined = undefined;
     $: basis = basis;
 
-    $: dim = lm.get(basis?.dim || "sm");
+    $: styles = basis?.dim ? style_map.get(basis?.dim) : style_map.get("sm");
     $: num_blades = basis?.blades || 12;
 </script>
 
 <div
-    class={`relative flex flex-row justify-center items-center ${fmt_cl(dim?.[0])} fade-in transition-all`}
+    class={`relative flex flex-row justify-center items-center h-[${styles.dim_1}px] w-[${styles.dim_1}px] fade-in transition-all`}
 >
     <div
-        class={`${num_blades === 12 ? `spinner12 center` : `spinner6 center`} ${fmt_cl(dim?.[1])}`}
+        class={`${num_blades === 12 ? `spinner12 center` : `spinner6 center`} text-[${styles.gl_1 || styles.dim_1}px]`}
     >
         <div
             class={`${num_blades === 12 ? `spinner12-blade` : `spinner6-blade`}`}

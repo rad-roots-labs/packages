@@ -1,4 +1,4 @@
-import type { CallbackPromiseGeneric, GeometryCardinalDirection, GeometryGlyphDimension, ICbGOpt, ICbOpt, IClOpt, IFormField, ILy, ILyOptTs } from "$lib";
+import type { CallbackPromiseGeneric, GeometryCardinalDirection, GeometryDimension, GeometryGlyphDimension, ICbGOpt, ICbOpt, IClOpt, IFormField, ILy, ILyOptTs } from "$lib";
 import type { ThemeLayer } from "@radroots/theme";
 
 export type GlyphKeyCurrency = `dollar` | `eur`;
@@ -91,11 +91,12 @@ export type IGlyph = ICbOpt & {
     weight?: GlyphWeight;
     key: GlyphKey;
     dim?: GeometryGlyphDimension;
+    fill_under?: boolean;
 };
 
 export type ILoadingBlades = 6 | 12;
 
-export type ILoadingDimension = GeometryGlyphDimension | `glyph-send-button`;
+export type ILoadingDimension = GeometryDimension | `glyph-send-button`;
 
 export type ILoading = {
     classes?: string;

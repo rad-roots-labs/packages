@@ -1,6 +1,7 @@
 export * from "./locales/i18n";
 export { default as SelectElement } from "./ui/select_element.svelte";
 export { default as Toast } from "./ui/toast.svelte";
+export { default as CssDim } from "./ui/css_dim.svelte";
 export { default as CssStatic } from "./ui/css_static.svelte";
 export { default as Divider } from "./ui/divider.svelte";
 export { default as LabelSwap } from "./ui/label_swap.svelte";
