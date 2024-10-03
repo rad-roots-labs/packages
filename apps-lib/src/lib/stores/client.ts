@@ -32,5 +32,6 @@ export const tabs_blur = writable<boolean>(false);
 export const app_tab_active = writable<number>(0);
 
 export const nostr_relays_poll_documents = writable<boolean>(false);
+export const nostr_relays_poll_documents_count = writable<number>(0);
 export const nostr_relays_connected = writable<string[]>([]);
 

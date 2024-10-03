@@ -17,14 +17,13 @@
 				<div
 					class={`${fmt_cl(title_l.classes_wrap)} flex flex-row h-full items-center ${title_l.hide_truncate ? `` : `truncate`}`}
 				>
-					{#if title_l.glyph}
+					{#if `glyph` in title_l}
 						<div
-							class={`flex flex-row justify-start items-center pr-1`}
+							class={`flex flex-row justify-start items-center pr-2`}
 						>
 							<Glyph basis={{ ...title_l.glyph }} />
 						</div>
-					{/if}
-					{#if `value` in title_l}
+					{:else if `value` in title_l}
 						<p
 							class={`${fmt_cl(title_l.classes)} ${get_label_classes(layer, title_l.kind, hide_active)}  ${title_l.hide_truncate ? `` : `truncate`} font-sans text-trellisLine transition-all`}
 						>
@@ -43,10 +42,9 @@
 				<div
 					class={`${fmt_cl(title_r.classes_wrap)} flex flex-row h-full w-trellis_value gap-1 items-center ${title_r.hide_truncate ? `` : `truncate`}`}
 				>
-					{#if title_r.glyph}
+					{#if `glyph` in title_r}
 						<Glyph basis={{ ...title_r.glyph }} />
-					{/if}
-					{#if `value` in title_r}
+					{:else if `value` in title_r}
 						<p
 							class={`${fmt_cl(title_r.classes)} ${get_label_classes(layer, title_r.kind, hide_active)} ${title_r.hide_truncate ? `` : `truncate`} font-sans text-trellisLine transition-all`}
 						>

@@ -1,4 +1,7 @@
 {
+    "connect": "Connect",
+    "not_connected": "Not connected",
+    "url": "URL",
     "disconnect": "Disconnect",
     "connected": "Connected",
     "connection": "Connection",

@@ -139,15 +139,18 @@ export type ILabelSwap = {
     swap: ILableFieldsSwap;
 }
 
-export type ILableFields = IGlOpt & {
+export type ILableFields = & {
     classes_wrap?: string
     classes?: string;
     kind?: LabelFieldKind
     hide_truncate?: boolean;
     hide_active?: boolean;
-} & ({
-    value: string;
-} | ILabelSwap);
+} & (
+        ({
+            value: string;
+        } | ILabelSwap)
+        | IGl
+    );
 
 export type LabelFieldKind = `link` | `on` | `shade`;
 
