@@ -1,5 +1,5 @@
 import type { CallbackPromise, ICbGOpt, ICbOpt, ICbROpt, IClOpt, IGlOpt, ILabel, ILabelOpt, ILabelTup, ILy } from "./client";
-import type { GlyphKey, IGlyph, IInputElement } from "./ui";
+import type { GlyphKey, IGlyph, IGlyphCircle, IInputElement } from "./ui";
 
 export type ITrellis = ILy &
     IClOpt &
@@ -43,7 +43,7 @@ export type ITrellisStyles = {
 };
 
 export type ITrellisBasisOffsetModKey = 'sm' | 'glyph';
-export type ITrellisBasisOffsetMod = ITrellisBasisOffsetModKey | (IGlyph & {
+export type ITrellisBasisOffsetMod = ITrellisBasisOffsetModKey | (({ glyph: IGlyph } | { glyph_circle: IGlyphCircle }) & {
     loading?: boolean;
 });
 

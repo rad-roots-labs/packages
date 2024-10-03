@@ -92,7 +92,11 @@ export type IGlyph = ICbOpt & {
     weight?: GlyphWeight;
     key: GlyphKey;
     dim?: GeometryGlyphDimension;
-    fill_under?: boolean;
+};
+
+export type IGlyphCircle = {
+    classes_wrap: string;
+    glyph: IGlyph
 };
 
 export type ILoadingBlades = 6 | 12;

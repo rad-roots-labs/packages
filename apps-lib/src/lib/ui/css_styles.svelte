@@ -1,0 +1,2 @@
+<div class="h-[12px] w-[12px] h-[16px] w-[16px] h-[17px] w-[17px] h-[18px] w-[18px] h-[20px] w-[20px] h-[24px] w-[24px] h-[28px] w-[28px] h-[36px] w-[36px]"></div>
+<div class="text-[12px] text-[15px] text-[16px] text-[18px] text-[20px] text-[21px] text-[23px] text-[24px] text-[27px] text-[28px] text-[30px] text-[36px] text-[40px]"></div>

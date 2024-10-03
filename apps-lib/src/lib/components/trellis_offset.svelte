@@ -1,4 +1,5 @@
 <script lang="ts">
+    import GlyphCircle from "$lib/ui/glyph_circle.svelte";
     import Loading from "$lib/ui/loading.svelte";
     import type { ThemeLayer } from "@radroots/theme";
     import {
@@ -14,7 +15,6 @@
 
     let mod: ITrellisBasisOffsetMod = `sm`;
     $: mod = basis && basis.mod ? basis.mod : `sm`;
-    //min-w-[34px]
 </script>
 
 <div class={`flex flex-row h-full`}>
@@ -42,11 +42,25 @@
             >
                 {#if mod.loading}
                     <Loading basis={{ blades: 6, dim: `xs` }} />
-                {:else}
+                {:else if `glyph` in mod}
                     <Glyph
                         basis={{
-                            classes: `${fmt_cl(mod.classes ? `` : ``)} text-layer-${layer}-glyph`,
-                            ...mod,
+                            classes: mod.glyph.classes
+                                ? mod.glyph.classes
+                                : `text-layer-${layer}-glyph`,
+                            ...mod.glyph,
+                        }}
+                    />
+                {:else if `glyph_circle` in mod}
+                    <GlyphCircle
+                        basis={{
+                            classes_wrap: mod.glyph_circle?.classes_wrap,
+                            glyph: {
+                                classes: mod.glyph_circle?.glyph?.classes
+                                    ? mod.glyph_circle?.glyph?.classes
+                                    : `text-layer-${layer}-glyph`,
+                                ...mod.glyph_circle?.glyph,
+                            },
                         }}
                     />
                 {/if}

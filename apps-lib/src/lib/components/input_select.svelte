@@ -40,7 +40,7 @@
 >
     {#if basis.loading}
         <div class={`flex flex-row w-full justify-center items-center`}>
-            <Loading basis={{ dim: `xs-` }} />
+            <Loading basis={{ dim: `xs` }} />
         </div>
     {:else}
         <select
