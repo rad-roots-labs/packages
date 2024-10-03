@@ -30,7 +30,7 @@
         </div>
     {:else if typeof mod === `object`}
         <div
-            class={`flex flex-row h-full min-w-[20px] w-trellisOffset justify-center items-center pr-2`}
+            class={`flex flex-row h-full min-w-[20px] w-trellisOffset justify-center items-center pr-3`}
         >
             <button
                 class={`fade-in pl-2 translate-x-[3px] translate-y-[1px]`}

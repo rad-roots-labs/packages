@@ -29,11 +29,11 @@
 	"lud16": "LUD 16",
 	"url": "",
 	"relay_id": "",
-	"description": "",
-	"pubkey": "",
+	"description": "Relay Description",
+	"pubkey": "Relay Admin",
 	"contact": "",
-	"supported_nips": "",
-	"software": "",
-	"version": "",
+	"supported_nips": "Supported NIPs",
+	"software": "Software",
+	"version": "Version",
 	"data": ""
 }

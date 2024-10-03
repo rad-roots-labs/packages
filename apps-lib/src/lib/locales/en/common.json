@@ -1,4 +1,10 @@
 {
+    "disconnect": "Disconnect",
+    "connected": "Connected",
+    "connection": "Connection",
+    "description": "Description",
+    "authenticated": "Authenticated",
+    "relay": "Relay",
     "update": "Update",
     "status": "Status",
     "relays": "Relays",

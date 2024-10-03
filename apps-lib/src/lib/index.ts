@@ -1,4 +1,5 @@
 export * from "./locales/i18n";
+export { default as Blur } from "./ui/blur.svelte";
 export { default as SelectElement } from "./ui/select_element.svelte";
 export { default as Toast } from "./ui/toast.svelte";
 export { default as GlyphCircle } from "./ui/glyph_circle.svelte";
@@ -34,6 +35,7 @@ export { default as TrellisTitle } from "./components/trellis_title.svelte";
 export { default as TrellisTouch } from "./components/trellis_touch.svelte";
 export { default as Trellis } from "./components/trellis.svelte";
 export { default as TrellisRowDisplayValue } from "./components/trellis_row_display_value.svelte";
+export { default as EnvelopeButtons } from "./components/envelope_buttons.svelte";
 export { default as LayoutWindow } from "./components/layout_window.svelte";
 export { default as LayoutTrellisLine } from "./components/layout_trellis_line.svelte";
 export { default as NotifyGlyph } from "./components/notify_glyph.svelte";
