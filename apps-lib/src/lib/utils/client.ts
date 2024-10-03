@@ -56,10 +56,11 @@ export const decode_qp = (query_param: string): AnchorRoute => {
 
 export function parse_qp(param: string): NavigationRouteParamKey | undefined {
     switch (param) {
-        case "cmd":
         case "nostr_pk":
         case "id":
         case "rkey":
+        case "lat":
+        case "lng":
             return param;
         default:
             return undefined;

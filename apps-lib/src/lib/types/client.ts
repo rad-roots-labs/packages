@@ -6,8 +6,9 @@ export type AnchorRoute = `/${string}`;
 export type NavigationRouteParamNostrPublicKey = `nostr_pk`;
 export type NavigationRouteParamRecordKey = `rkey`;
 export type NavigationRouteParamId = `id`;
-export type NavigationRouteParamCmd = `cmd`;
-export type NavigationRouteParamKey = NavigationRouteParamNostrPublicKey | NavigationRouteParamId | NavigationRouteParamCmd | NavigationRouteParamRecordKey;
+export type NavigationRouteParamLat = `lat`;
+export type NavigationRouteParamLng = `lng`;
+export type NavigationRouteParamKey = NavigationRouteParamNostrPublicKey | NavigationRouteParamId | NavigationRouteParamRecordKey | NavigationRouteParamLat | NavigationRouteParamLng;
 export type NavigationParamTuple = [NavigationRouteParamKey, string];
 export type NavigationPreviousParam = { route: NavigationRoute, label?: string; params?: NavigationParamTuple[] }
 
@@ -162,3 +163,4 @@ export type IToast = IClOpt &
         layer?: ThemeLayer;
         position?: GeometryScreenPosition;
     };
+
