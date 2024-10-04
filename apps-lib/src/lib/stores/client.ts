@@ -1,4 +1,4 @@
-import { type AppLayoutKey, type IToast, type NavigationPreviousParam, type NavigationRouteParamId, type NavigationRouteParamLat, type NavigationRouteParamLng, type NavigationRouteParamNostrPublicKey, type NavigationRouteParamRecordKey } from "$lib";
+import { type AppLayoutKey, type IToast, type NavigationPreviousParam } from "$lib";
 import { writable } from "svelte/store";
 import { queryParam, queryParameters } from "sveltekit-search-params";
 
@@ -7,11 +7,11 @@ const kv_name = import.meta.env.VITE_PUBLIC_KV_NAME;
 if (!kv_name) throw new Error('Error: VITE_PUBLIC_KV_NAME is required');
 
 export const qp = queryParameters();
-export const qp_nostr_pk = queryParam<NavigationRouteParamNostrPublicKey>("nostr_pk");
-export const qp_rkey = queryParam<NavigationRouteParamRecordKey>("rkey");
-export const qp_id = queryParam<NavigationRouteParamId>("id");
-export const qp_lat = queryParam<NavigationRouteParamLat>("lat");
-export const qp_lng = queryParam<NavigationRouteParamLng>("lng");
+export const qp_nostr_pk = queryParam<string>("nostr_pk");
+export const qp_rkey = queryParam<string>("rkey");
+export const qp_id = queryParam<string>("id");
+export const qp_lat = queryParam<string>("lat");
+export const qp_lng = queryParam<string>("lng");
 
 export let kv: Keyva;
 if (typeof window !== 'undefined') kv = new Keyva({ name: kv_name });
@@ -37,4 +37,5 @@ export const nostr_ndk_configured = writable<boolean>(false);
 export const nostr_relays_poll_documents = writable<boolean>(false);
 export const nostr_relays_poll_documents_count = writable<number>(0);
 export const nostr_relays_connected = writable<string[]>([]);
+export const nostr_sync_prevent = writable<boolean>(false);
 

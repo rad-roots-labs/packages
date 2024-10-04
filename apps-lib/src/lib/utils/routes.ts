@@ -1,5 +1,7 @@
 export type NavigationRoute =
 	| "/"
+	| "/map"
+	| "/map/choose-location"
 	| "/models/location-gcs"
 	| "/models/location-gcs/view-map"
 	| "/models/nostr-profile"
@@ -12,17 +14,19 @@ export type NavigationRoute =
 	| "/models/trade-product/add/preview"
 	| "/nostr"
 	| "/nostr/keys"
+	| "/nostr/nip-99/view"
 	| "/nostr/notes"
 	| "/nostr/notes/post"
 	| "/nostr/profile"
 	| "/settings"
 	| "/test"
-	| "/init"
-	| "/map";
+	| "/init";
 
 export function parse_route(route: string): NavigationRoute {
 	switch (route) {
 		case "/":
+		case "/map":
+		case "/map/choose-location":
 		case "/models/location-gcs":
 		case "/models/location-gcs/view-map":
 		case "/models/nostr-profile":
@@ -35,13 +39,13 @@ export function parse_route(route: string): NavigationRoute {
 		case "/models/trade-product/add/preview":
 		case "/nostr":
 		case "/nostr/keys":
+		case "/nostr/nip-99/view":
 		case "/nostr/notes":
 		case "/nostr/notes/post":
 		case "/nostr/profile":
 		case "/settings":
 		case "/test":
 		case "/init":
-		case "/map":
 			return route;
 		default:
 			return "/";
