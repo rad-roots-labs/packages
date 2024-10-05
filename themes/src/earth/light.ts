@@ -24,6 +24,7 @@ export const record_earth_light: ThemeRecord = {
                 _a: [46, 23, 86],
                 edge: [240, 2, 55],
                 err: [51, 11, 77],
+                focus: [240, 5, 92],
             },
             glyphs: {
                 _: [240, 1, 38],

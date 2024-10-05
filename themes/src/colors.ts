@@ -9,6 +9,7 @@ export const theme_colors = {
 	"layer-1-surface_a": "hsl(var(--layer-1-surface_a) / <alpha-value>)",
 	"layer-1-surface-edge": "hsl(var(--layer-1-surface-edge) / <alpha-value>)",
 	"layer-1-surface-err": "hsl(var(--layer-1-surface-err) / <alpha-value>)",
+	"layer-1-surface-focus": "hsl(var(--layer-1-surface-focus) / <alpha-value>)",
 	"layer-2-surface": "hsl(var(--layer-2-surface) / <alpha-value>)",
 	"layer-2-surface_a": "hsl(var(--layer-2-surface_a) / <alpha-value>)",
 	"layer-2-surface-edge": "hsl(var(--layer-2-surface-edge) / <alpha-value>)",
@@ -56,6 +57,7 @@ export type ThemeLayer1 = {
 		_a: HslTuple;
 		edge: HslTuple;
 		err: HslTuple;
+		focus: HslTuple;
 	};
 	glyphs: {
 		_: HslTuple;

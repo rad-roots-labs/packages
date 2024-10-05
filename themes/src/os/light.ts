@@ -24,6 +24,7 @@ export const record_os_light: ThemeRecord = {
                 _a: [240, 6, 83],
                 edge: [274, 4, 90],
                 err: [0, 0, 0],
+                focus: [240, 5, 92],
             },
             glyphs: {
                 _: [0, 0, 0],

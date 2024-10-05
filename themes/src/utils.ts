@@ -47,6 +47,7 @@ export const write_layers = ({ layer_0: { surface: l0_s, glyphs: l0_g }, layer_1
 	"--layer-1-surface_a": hsl(l1_s._a),
 	"--layer-1-surface-edge": hsl(l1_s.edge),
 	"--layer-1-surface-err": hsl(l1_s.err),
+	"--layer-1-surface-focus": hsl(l1_s.focus),
 	"--layer-1-glyph": hsl(l1_g._),
 	"--layer-1-glyph_a": hsl(l1_g._a),
 	"--layer-1-glyph-_pl": hsl(l1_g._pl),
