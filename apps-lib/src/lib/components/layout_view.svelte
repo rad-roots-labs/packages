@@ -48,7 +48,6 @@
     const scrollChange = (): void => {
         if (Math.max(el?.scrollTop || 0, 0) > 10) nav_blur.set(true);
         else nav_blur.set(false);
-
         if (Math.max(el?.scrollTop || 0, 0) > 10) tabs_blur.set(true);
         else tabs_blur.set(false);
     };

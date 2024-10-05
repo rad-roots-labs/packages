@@ -80,7 +80,7 @@ export type IEnvelopeTitledBasis = {
     }
 };
 
-export type INavBasisOption = ICbG<
+export type INavBasisOption = IClOpt & ICbG<
     HTMLLabelElement | null
 > & IGlOpt & ILabelOpt & {
     loading?: boolean;
@@ -89,6 +89,9 @@ export type INavBasis = {
     prev: ICbOpt & {
         label?: string;
         route: NavigationRoute | [NavigationRoute, NavigationParamTuple[]];
+        prevent_route?: {
+            callback: CallbackPromise;
+        };
     };
     title?: ICbOpt & ILabel;
     option?: INavBasisOption;

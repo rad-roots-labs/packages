@@ -11,7 +11,6 @@ export type NavigationRoute =
 	| "/models/nostr-relay/view"
 	| "/models/trade-product"
 	| "/models/trade-product/add"
-	| "/models/trade-product/add/preview"
 	| "/nostr"
 	| "/nostr/keys"
 	| "/nostr/nip-99/view"
@@ -36,7 +35,6 @@ export function parse_route(route: string): NavigationRoute {
 		case "/models/nostr-relay/view":
 		case "/models/trade-product":
 		case "/models/trade-product/add":
-		case "/models/trade-product/add/preview":
 		case "/nostr":
 		case "/nostr/keys":
 		case "/nostr/nip-99/view":

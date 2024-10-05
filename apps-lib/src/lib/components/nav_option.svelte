@@ -22,7 +22,7 @@
     </div>
 {:else}
     <button
-        class={`group col-span-4 flex flex-row h-full pr-6 gap-2 justify-end items-center`}
+        class={`${fmt_cl(basis.classes)} group col-span-4 flex flex-row h-full pr-6 justify-end items-center`}
         on:click={async () => {
             await basis.callback(el_swap);
         }}
@@ -62,6 +62,16 @@
                 >
                     {basis.label.value}
                 </p>
+            {/if}
+            {#if `glyph` in basis.label && basis.label.glyph}
+                <Glyph
+                    basis={{
+                        key: basis.label.glyph.key,
+                        classes: `text-layer-1-glyph-hl group-active:opacity-60 ${basis.label.glyph.classes}`,
+                        weight: `bold`,
+                        dim: `md`,
+                    }}
+                />
             {/if}
         {/if}
     </button>

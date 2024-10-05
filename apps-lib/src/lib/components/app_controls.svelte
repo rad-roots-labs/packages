@@ -31,7 +31,6 @@
 
 <script lang="ts">
     import {
-        app_config,
         app_layout,
         app_toast,
         app_win,
@@ -45,7 +44,6 @@
     onMount(async () => {
         try {
             app_win.set([window.innerHeight, window.innerWidth]);
-            app_config.set(true);
             app_toast.set(false);
         } catch (e) {
             console.log(`(layout mount) `, e);

@@ -7,7 +7,7 @@
     $: basis = basis;
 </script>
 
-<div class={`flex flex-col w-full gap-1 justify-start items-start`}>
+<div class={`flex flex-col w-full gap-1 justify-start items-center`}>
     <div class={`flex flex-row w-full px-2 gap-2 justify-start items-center`}>
         {#if `value` in basis.label}
             <p
@@ -28,7 +28,7 @@
                 >
                     {#if `value` in basis.notify.label}
                         <p
-                            class={`${fmt_cl(basis.notify.label.classes)} font-sans font-[600] uppercase text-layer-2-glyph/80 text-xs`}
+                            class={`${fmt_cl(basis.notify.label.classes)} font-sans font-[500] uppercase text-layer-2-glyph/80 text-xs`}
                         >
                             {basis.notify.label.value}
                         </p>

@@ -55,7 +55,10 @@
             <button
                 class={`group col-span-4 flex flex-row h-full pl-2 justify-start items-center`}
                 on:click={async () => {
-                    if (basis.prev.callback) await basis.prev.callback();
+                    if (basis.prev.prevent_route) {
+                        await basis.prev.prevent_route.callback();
+                        return;
+                    } else if (basis.prev.callback) await basis.prev.callback();
                     let route_to =
                         typeof basis.prev.route === `string`
                             ? basis.prev.route

@@ -1,4 +1,6 @@
 {
+    "show_*": "Show {value}",
+    "invalid_*": "Invalid {value}",
     "disconnect_*": "Disconnect {value}",
     "connect_*": "Connect {value}",
     "unconnected_*": "Unconnected {value}",
