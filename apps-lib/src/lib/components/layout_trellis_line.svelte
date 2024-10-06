@@ -7,8 +7,10 @@
     $: basis = basis;
 </script>
 
-<div class={`flex flex-col w-full gap-1 justify-start items-center`}>
-    <div class={`flex flex-row w-full px-2 gap-2 justify-start items-center`}>
+<div class={`flex flex-col w-trellis_line gap-1 justify-start items-center`}>
+    <div
+        class={`flex flex-row h-5 w-full px-2 gap-2 justify-start items-center`}
+    >
         {#if `value` in basis.label}
             <p
                 class={`${fmt_cl(basis.label.classes)} font-sans font-[400] uppercase text-layer-2-glyph text-sm`}

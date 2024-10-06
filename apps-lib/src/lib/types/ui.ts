@@ -143,3 +143,20 @@ export type IInputElement = IClOpt & ILyOptTs & {
     callback_keydown?: CallbackPromiseGeneric<{ key: string; }>;
     on_mount?: CallbackPromiseGeneric<HTMLInputElement>;
 };
+
+export type ITextAreaElement = IClOpt & ILyOptTs & {
+    id: string;
+    placeholder?: string;
+    label?: string;
+    hidden?: boolean;
+    validate?: RegExp;
+    sync?: true;
+    sync_init?: true | string;
+    field?: IFormField;
+    /*notify_inline?: {
+        glyph: GlyphKey | IGlyph;
+    };*/
+    callback?: CallbackPromiseGeneric<{ val: string; pass: boolean; }>;
+    callback_keydown?: CallbackPromiseGeneric<{ key: string; }>;
+    on_mount?: CallbackPromiseGeneric<HTMLTextAreaElement>;
+};

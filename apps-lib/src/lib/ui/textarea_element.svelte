@@ -1,10 +1,10 @@
 <script lang="ts">
-    import { type IInputElement, fmt_cl, kv, parse_layer } from "$lib";
+    import { type ITextAreaElement, fmt_cl, kv, parse_layer } from "$lib";
     import { onMount } from "svelte";
 
-    let el: HTMLInputElement | null = null;
+    let el: HTMLTextAreaElement | null = null;
 
-    export let basis: IInputElement;
+    export let basis: ITextAreaElement;
     $: basis = basis;
 
     $: id = basis.id ? basis.id : null;
@@ -32,11 +32,11 @@
     });
 </script>
 
-<input
+<textarea
     bind:this={el}
     {id}
-    type="text"
-    class={`${fmt_cl(basis.classes)} form-input h-full text-layer-${layer}-glyph placeholder:text-layer-${layer}-glyph_pl caret-layer-${layer}-glyph`}
+    contenteditable="true"
+    class={`${fmt_cl(basis.classes)} form-textarea bg-layer-${layer}-surface text-layer-${layer}-glyph placeholder:text-layer-${layer}-glyph_pl caret-layer-${layer}-glyph`}
     placeholder={basis.placeholder || ""}
     on:input={async ({ currentTarget: el }) => {
         let pass = true;

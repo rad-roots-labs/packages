@@ -1,4 +1,8 @@
 {
+    "total_*": "Total {value}",
+    "*_details": "{value} details",
+    "listing_*": "Listing {value}",
+    "enter_the_*": "Enter the {value}",
     "show_*": "Show {value}",
     "invalid_*": "Invalid {value}",
     "disconnect_*": "Disconnect {value}",

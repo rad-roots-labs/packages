@@ -4,6 +4,8 @@
 	"geohash": "Geohash",
 	"label": "Label",
 	"key": "Key",
+	"title": "",
+	"summary": "",
 	"process": "Process",
 	"lot": "Lot",
 	"profile": "Profile",

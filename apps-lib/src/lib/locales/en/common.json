@@ -1,4 +1,9 @@
 {
+    "lot": "Lot",
+    "lot_name": "Lot name",
+    "product_name": "Product name",
+    "summary": "Summary",
+    "title": "Title",
     "list": "List",
     "add_map_location": "Add map location",
     "connect": "Connect",
