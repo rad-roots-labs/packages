@@ -125,3 +125,11 @@ export const get_layout = (val: string | false): AppLayoutKey => {
             return `base`;
     };
 };
+
+export const view_effect = <T extends string>(view: T): void => {
+    for (const el of document.querySelectorAll(`[data-view]`))
+        el.classList.toggle(
+            `hidden`,
+            el.getAttribute(`data-view`) !== view,
+        );
+};
