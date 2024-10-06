@@ -1,6 +1,7 @@
 import type { GeolocationCoordinatesPoint } from "@radroots/utils";
-import type { Database, ParamsObject } from "sql.js";
+import type { Database } from "sql.js";
 import type { GeocoderErrorMessage, GeocoderReverseResult } from "./types";
+import { parse_geocode_reverse_result } from "./utils";
 
 export class Geocoder {
     private _db: Database | null = null;
@@ -20,33 +21,8 @@ export class Geocoder {
             this._db = new sql.Database(new Uint8Array(database_buffer));
             return true;
         } catch (e) {
-            console.log(`Error: Geocoder.connect() `, e);
+            console.log(`Error: Geocoder connect `, e);
             return `*`;
-        };
-    }
-
-    private parse_geocode_result(obj: ParamsObject): GeocoderReverseResult | undefined {
-        if (typeof obj !== 'object' || !obj) return undefined;
-        const { id, name, admin1_id, admin1_name, country_id, country_name, latitude, longitude } = obj;
-        if (typeof id !== "number" ||
-            typeof name !== "string" || !name ||
-            typeof admin1_id !== "number" ||
-            typeof admin1_name !== "string" || !admin1_name ||
-            typeof country_id !== "string" || !country_id ||
-            typeof country_name !== "string" || !country_name ||
-            typeof latitude !== "number" ||
-            typeof longitude !== "number") {
-            return undefined;
-        }
-        return {
-            id,
-            name,
-            admin1_id,
-            admin1_name,
-            country_id,
-            country_name,
-            latitude,
-            longitude
         };
     }
 
@@ -61,12 +37,12 @@ export class Geocoder {
             const results: GeocoderReverseResult[] = [];
             while (stmt.step()) {
                 const row = stmt.getAsObject();
-                const result = this.parse_geocode_result(row);
+                const result = parse_geocode_reverse_result(row);
                 if (result) results.push(result);
             };
             return { results };
         } catch (e) {
-            console.log(`Error: Geocoder.reverse() `, e);
+            console.log(`Error: Geocoder reverse `, e);
             return `*`;
         };
     }
