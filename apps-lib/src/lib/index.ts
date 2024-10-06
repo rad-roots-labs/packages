@@ -22,6 +22,7 @@ export * from "./stores/client";
 export * from "./utils/routes";
 export * from "./utils/dom";
 export * from "./utils/styles";
+export * from "./utils/carousel";
 export * from "./utils/client";
 export * from "./utils/time";
 export * from "./utils/geo";
