@@ -24,6 +24,8 @@ export const app_notify = writable<string>(``);
 export const app_toast = writable<IToast | false>(false);
 export const app_submit_route = writable<NavigationPreviousParam | undefined>(undefined);
 export const app_blur = writable<boolean>(false);
+export const app_db = writable<boolean>(false);
+export const app_geoc = writable<boolean>(false);
 
 export const nav_visible = writable<boolean>(false);
 export const nav_blur = writable<boolean>(false);
@@ -31,7 +33,7 @@ export const nav_prev = writable<NavigationPreviousParam[]>([]);
 
 export const tabs_visible = writable<boolean>(false);
 export const tabs_blur = writable<boolean>(false);
-export const app_tab_active = writable<number>(0);
+export const tabs_active = writable<number>(0);
 
 export const carousel_active = writable<boolean>(false);
 export const carousel_index = writable<number>(0);

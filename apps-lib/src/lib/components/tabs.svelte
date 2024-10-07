@@ -3,9 +3,9 @@
         Glyph,
         type ITabsBasis,
         app_layout,
-        app_tab_active,
         fmt_cl,
         sleep,
+        tabs_active,
         tabs_blur,
         tabs_visible,
     } from "$lib";
@@ -57,7 +57,7 @@
                         class={`col-span-3 flex flex-col h-full justify-start items-center transition-all`}
                         on:click={async () => {
                             tab_focus = tab_i;
-                            if (!tab.hide_active) app_tab_active.set(tab_i);
+                            if (!tab.hide_active) tabs_active.set(tab_i);
                             await tab.callback(tab_i);
                             await sleep(150);
                             tab_focus = null;
@@ -66,8 +66,7 @@
                         <Glyph
                             basis={{
                                 classes:
-                                    !basis.hide_active &&
-                                    $app_tab_active === tab_i
+                                    !basis.hide_active && $tabs_active === tab_i
                                         ? `text-layer-2-glyph text-lineActiveBlue`
                                         : `text-layer-2-glyph text-lineMd`,
                                 key: tab.icon,
@@ -78,7 +77,7 @@
                                         tab_focus === tab_i
                                       ? `fill`
                                       : !basis.hide_active &&
-                                          $app_tab_active === tab_i
+                                          $tabs_active === tab_i
                                         ? tab.active_weight || `fill`
                                         : `bold`,
                             }}
