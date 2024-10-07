@@ -1,19 +1,19 @@
 {
+    "glossary": {
+        "lot": "Lot",
+        "process": "Process",
+        "profile": "Profile"
+    },
     "product": {
-        "key": {
-            "coffee": "Coffee",
-            "cacao": "Cacao",
-            "maca": "Maca"
-        },
         "fields": {
             "price_amt": {
                 "err_invalid": "Enter the price"
             }
+        },
+        "key": {
+            "cacao": "Cacao",
+            "coffee": "Coffee",
+            "maca": "Maca"
         }
-    },
-    "glossary": {
-        "profile": "Profile",
-        "lot": "Lot",
-        "process": "Process"
     }
 }

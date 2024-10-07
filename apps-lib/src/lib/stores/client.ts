@@ -1,7 +1,7 @@
 import { type AppLayoutKey, type IToast, type NavigationPreviousParam } from "$lib";
+import type { ColorMode, ThemeKey } from "@radroots/theme";
 import { writable } from "svelte/store";
 import { queryParam, queryParameters } from "sveltekit-search-params";
-
 //@ts-ignore
 const kv_name = import.meta.env.VITE_PUBLIC_KV_NAME;
 if (!kv_name) throw new Error('Error: VITE_PUBLIC_KV_NAME is required');
@@ -26,6 +26,10 @@ export const app_submit_route = writable<NavigationPreviousParam | undefined>(un
 export const app_blur = writable<boolean>(false);
 export const app_db = writable<boolean>(false);
 export const app_geoc = writable<boolean>(false);
+export const app_thc = writable<ColorMode>(`dark`);
+export const app_th = writable<ThemeKey>(`os`);
+export const app_nostr_key = writable<string>(``);
+export const app_pwa_polyfills = writable<boolean>(false);
 
 export const nav_visible = writable<boolean>(false);
 export const nav_blur = writable<boolean>(false);

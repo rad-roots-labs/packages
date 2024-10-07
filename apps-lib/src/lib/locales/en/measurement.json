@@ -2,17 +2,17 @@
     "mass": {
         "unit": {
             "g": "Gram",
-            "g_pl": "Grams",
             "g_ab": "g.",
+            "g_pl": "Grams",
             "hg": "100 Gram",
-            "hg_pl": "100 Grams",
             "hg_ab": "100g.",
+            "hg_pl": "100 Grams",
             "kg": "Kilogram",
-            "kg_pl": "Kilograms",
             "kg_ab": "kg.",
+            "kg_pl": "Kilograms",
             "lb": "Pound",
-            "lb_pl": "Pounds",
-            "lb_ab": "lb."
+            "lb_ab": "lb.",
+            "lb_pl": "Pounds"
         }
     }
 }
