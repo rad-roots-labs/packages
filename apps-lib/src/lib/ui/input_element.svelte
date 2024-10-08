@@ -36,7 +36,7 @@
     bind:this={el}
     {id}
     type="text"
-    class={`${fmt_cl(basis.classes)} form-input h-full text-layer-${layer}-glyph placeholder:text-layer-${layer}-glyph_pl caret-layer-${layer}-glyph`}
+    class={`${fmt_cl(basis.classes)} form-input text-layer-${layer}-glyph placeholder:text-layer-${layer}-glyph_pl caret-layer-${layer}-glyph`}
     placeholder={basis.placeholder || ""}
     on:input={async ({ currentTarget: el }) => {
         let pass = true;
@@ -59,6 +59,6 @@
     }}
     on:keydown={async (ev) => {
         if (basis.callback_keydown)
-            await basis.callback_keydown({ key: ev.key });
+            await basis.callback_keydown({ key: ev.key, el: ev.currentTarget });
     }}
 />

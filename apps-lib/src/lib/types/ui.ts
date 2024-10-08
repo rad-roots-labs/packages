@@ -140,7 +140,7 @@ export type IInputElement = IClOpt & ILyOptTs & {
         glyph: GlyphKey | IGlyph;
     };*/
     callback?: CallbackPromiseGeneric<{ val: string; pass: boolean; }>;
-    callback_keydown?: CallbackPromiseGeneric<{ key: string; }>;
+    callback_keydown?: CallbackPromiseGeneric<{ key: string; el: HTMLInputElement }>;
     on_mount?: CallbackPromiseGeneric<HTMLInputElement>;
 };
 
