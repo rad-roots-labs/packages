@@ -19,7 +19,7 @@
 	"types": "./dist/index.d.ts",
 	"scripts": {
 		"dev": "svelte-package -w",
-		"build": "just build && svelte-package",
+		"build": "npm run check && just build && svelte-package",
 		"preview": "vite preview",
 		"package": "svelte-kit sync && svelte-package && publint",
 		"prepublishOnly": "npm run package",

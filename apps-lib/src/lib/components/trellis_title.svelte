@@ -41,7 +41,7 @@
 			{#if basis.link.label}
 				{#if `swap` in basis.link.label}
 					<LabelSwap basis={basis.link.label} />
-				{:else}
+				{:else if `value` in basis.link.label}
 					<p
 						class={`${fmt_cl(basis.link.label.classes)} font-sans text-trellisTitle uppercase fade-in`}
 					>
