@@ -1,7 +1,9 @@
-import type { GeolocationCoordinatesPoint } from "@radroots/utils";
+import { err_msg, type ErrorMessage, type GeolocationCoordinatesPoint, type ResultsList } from "@radroots/utils";
 import type { Database } from "sql.js";
-import type { GeocoderErrorMessage, GeocoderReverseResult } from "./types";
+import type { GeocoderDegreeOffset, GeocoderErrorMessage, GeocoderReverseResult } from "./types";
 import { parse_geocode_reverse_result } from "./utils";
+
+const KM_PER_DEGREE_LATITUDE = 111;
 
 export class Geocoder {
     private _db: Database | null = null;
@@ -12,7 +14,7 @@ export class Geocoder {
         this._database_name = database_name;
     }
 
-    public async connect(): Promise<true | GeocoderErrorMessage> {
+    public async connect(): Promise<true | ErrorMessage<GeocoderErrorMessage>> {
         try {
             const init_sqljs = await import("sql.js");
             const sql = await init_sqljs.default();
@@ -22,28 +24,38 @@ export class Geocoder {
             return true;
         } catch (e) {
             console.log(`Error: Geocoder connect `, e);
-            return `*`;
+            return err_msg(`*`);
         };
     }
 
+
+
     public async reverse(opts: {
         point: GeolocationCoordinatesPoint;
-    }): Promise<{ results: GeocoderReverseResult[] } | GeocoderErrorMessage> {
+        degree_offset?: GeocoderDegreeOffset;
+        limit?: number | false;
+    }): Promise<ResultsList<GeocoderReverseResult> | ErrorMessage<GeocoderErrorMessage>> {
         try {
-            const stmt = this._db?.prepare(`SELECT * FROM geonames WHERE id IN (SELECT feature_id FROM coordinates WHERE latitude BETWEEN $lat - 1.5 AND $lat + 1.5 AND longitude BETWEEN $lng - 1.5 AND $lng + 1.5 ORDER BY (($lat - latitude) * ($lat - latitude) + ($lng - longitude) * ($lng - longitude) * $scale) ASC LIMIT 1)`);
-            if (!stmt) return `*-statement`;
+            if (!this._db) return err_msg(`*-db`);
+            const limit = typeof opts.limit === `boolean` ? `` : opts.limit ? Math.round(opts.limit) : `1`;
+            const deg_offset = opts.degree_offset || 0.5;
+            const query = `SELECT * FROM geonames WHERE id IN (SELECT feature_id FROM coordinates WHERE latitude BETWEEN $lat - ${deg_offset} AND $lat + ${deg_offset} AND longitude BETWEEN $lng - ${deg_offset} AND $lng + ${deg_offset} ORDER BY (($lat - latitude) * ($lat - latitude) + ($lng - longitude) * ($lng - longitude) * $scale) ASC${limit ? ` LIMIT ${limit}` : ``});`
+            const stmt = this._db.prepare(query);
+            if (!stmt) return err_msg(`*-statement`);
             const { lat: $lat, lng: $lng } = opts.point;
-            stmt.bind({ $lat, $lng, $scale: Math.pow(Math.cos($lat * Math.PI / 180), 2) });
+            const latScale = KM_PER_DEGREE_LATITUDE;
+            const lngScale = KM_PER_DEGREE_LATITUDE * Math.cos($lat * (Math.PI / 180));
+            const $scale = (latScale + lngScale) / 2;
+            stmt.bind({ $lat, $lng, $scale });
             const results: GeocoderReverseResult[] = [];
             while (stmt.step()) {
-                const row = stmt.getAsObject();
-                const result = parse_geocode_reverse_result(row);
+                const result = parse_geocode_reverse_result(stmt.getAsObject());
                 if (result) results.push(result);
             };
             return { results };
         } catch (e) {
             console.log(`Error: Geocoder reverse `, e);
-            return `*`;
+            return err_msg(`*`);
         };
     }
 }
