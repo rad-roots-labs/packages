@@ -52,7 +52,7 @@
     });
 
     app_win.subscribe(([win_h, win_w]) => {
-        if (win_h > 800) app_layout.set("lg");
+        if (win_h > 800) app_layout.set(`mobile_y`);
     });
 </script>
 

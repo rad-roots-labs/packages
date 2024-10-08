@@ -1,6 +1,5 @@
 import { goto } from "$app/navigation";
-import type { GlyphKey, NavigationRoute } from "$lib";
-import type { AnchorRoute, AppLayoutKey, CallbackPromiseGeneric, LabelFieldKind, NavigationParamTuple, NavigationRouteParamKey } from "$lib/types/client";
+import type { AnchorRoute, AppLayoutKey, CallbackPromiseGeneric, GlyphKey, LabelFieldKind, NavigationParamTuple, NavigationRoute, NavigationRouteParamKey } from "$lib";
 import type { ColorMode, ThemeKey, ThemeLayer } from "@radroots/theme";
 
 export const sleep = async (ms: number): Promise<void> => {
@@ -118,11 +117,11 @@ export const route = async (route: NavigationRoute, params_list?: NavigationPara
 
 export const get_layout = (val: string | false): AppLayoutKey => {
     switch (val) {
-        case `base`:
-        case `lg`:
+        case `mobile_base`:
+        case `mobile_y`:
             return val;
         default:
-            return `base`;
+            return `mobile_base`;
     };
 };
 

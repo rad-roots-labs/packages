@@ -4,29 +4,12 @@
         fmt_cl,
         get_layout,
         parse_layer,
-        type AppLayoutKey,
+        toast_layout_map,
+        toast_style_map,
         type IToast,
         type IToastKind,
     } from "$lib";
     import Glyph from "./glyph.svelte";
-
-    export const layout_toast_map: Map<AppLayoutKey, string> = new Map([
-        [`base`, `pt-8`],
-        [`lg`, `pt-16`],
-        /*[
-        `mobile-xl`, `pt-12`
-    ]*/
-    ]);
-
-    const lm: Map<IToastKind, { inner: string; outer: string }> = new Map([
-        [
-            `simple`,
-            {
-                inner: `justify-center`,
-                outer: `min-h-toast_min w-full px-4 rounded-2xl shadow-sm`,
-            },
-        ],
-    ]);
 
     export let basis: IToast;
     $: basis = basis;
@@ -38,11 +21,11 @@
 </script>
 
 <div
-    class={`${fmt_cl(layout_toast_map.get(layout))} z-[1000] h-[100vh] toast w-full ${basis.position || `top-center`} `}
+    class={`${fmt_cl(toast_layout_map.get(layout))} z-[1000] h-[100vh] toast w-full ${basis.position || `top-center`} `}
 >
     <div class={`flex flex-row w-full h-max justify-center pb-2`}>
         <div
-            class={`${fmt_cl(basis.classes)} relative grid grid-cols-12 h-max items-center justify-center ${styles.includes(`simple`) ? `bg-layer-${layer}-surface` : ``} ${fmt_cl(styles.map((style) => fmt_cl(lm.get(style)?.outer)).join(` `))}`}
+            class={`${fmt_cl(basis.classes)} relative grid grid-cols-12 h-max items-center justify-center ${styles.includes(`simple`) ? `bg-layer-${layer}-surface` : ``} ${fmt_cl(styles.map((style) => fmt_cl(toast_style_map.get(style)?.outer)).join(` `))}`}
         >
             <div
                 class={`absolute top-0 left-4 flex flex-row h-full items-center text-layer-${layer}-glyph`}
@@ -57,7 +40,7 @@
                 />
             </div>
             <div
-                class={`col-span-12 flex flex-row pl-1 ${fmt_cl(styles.map((style) => fmt_cl(lm.get(style)?.inner)).join(` `))}`}
+                class={`col-span-12 flex flex-row pl-1 ${fmt_cl(styles.map((style) => fmt_cl(toast_style_map.get(style)?.inner)).join(` `))}`}
             >
                 {#if `value` in basis.label}
                     <p

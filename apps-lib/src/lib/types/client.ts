@@ -1,7 +1,6 @@
 import { type IGlyph, type NavigationRoute } from "$lib";
 import type { ThemeLayer } from "@radroots/theme";
 
-export type AppLayoutKey = 'lg' | 'base';
 export type AnchorRoute = `/${string}`;
 export type NavigationRouteParamNostrPublicKey = `nostr_pk`;
 export type NavigationRouteParamRecordKey = `rkey`;

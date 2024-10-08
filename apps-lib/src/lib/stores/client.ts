@@ -1,7 +1,8 @@
-import { type AppLayoutKey, type IToast, type NavigationPreviousParam } from "$lib";
+import { type AppLayoutKey, type IToast, type NavigationPreviousParam, } from "$lib";
 import type { ColorMode, ThemeKey } from "@radroots/theme";
 import { writable } from "svelte/store";
 import { queryParam, queryParameters } from "sveltekit-search-params";
+
 //@ts-ignore
 const kv_name = import.meta.env.VITE_PUBLIC_KV_NAME;
 if (!kv_name) throw new Error('Error: VITE_PUBLIC_KV_NAME is required');
@@ -16,7 +17,7 @@ export const qp_lng = queryParam<string>("lng");
 export let kv: Keyva;
 if (typeof window !== 'undefined') kv = new Keyva({ name: kv_name });
 
-export const app_layout = writable<AppLayoutKey>(`base`);
+export const app_layout = writable<AppLayoutKey>(`mobile_base`);
 export const app_config = writable<boolean>(false);
 export const app_render = writable<boolean>(false);
 export const app_win = writable<[number, number]>([0, 0]);

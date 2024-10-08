@@ -12,8 +12,8 @@
     import { onDestroy, onMount } from "svelte";
 
     const styles: Record<AppLayoutKey, string> = {
-        base: "pt-4",
-        lg: "pt-16",
+        mobile_base: "pt-4",
+        mobile_y: "pt-16 pb-10",
     };
 
     export let basis:
@@ -39,8 +39,8 @@
         }
     });
 
-    $: classes_nav = $nav_visible
-        ? `pt-h_nav_${$app_layout}`
+    $: classes_layout = $nav_visible
+        ? `pt-h_nav_${$app_layout} ${styles[$app_layout]}`
         : styles[$app_layout];
     $: classes_tabs = $tabs_visible ? `pb-h_tabs_${$app_layout}` : ``;
     $: classes_fade = basis?.fade ? `fade-in` : ``;
@@ -55,7 +55,7 @@
 
 <div
     bind:this={el}
-    class={`${fmt_cl(basis?.classes)} absolute top-0 left-0 flex flex-col h-[100vh] w-full overflow-y-scroll scroll-hide ${!basis?.hide_padding ? classes_nav : ``} ${classes_tabs} ${classes_fade}`}
+    class={`${fmt_cl(basis?.classes)} absolute top-0 left-0 flex flex-col h-[100vh] w-full overflow-y-scroll scroll-hide ${!basis?.hide_padding ? classes_layout : ``} ${classes_tabs} ${classes_fade}`}
 >
     <slot />
 </div>

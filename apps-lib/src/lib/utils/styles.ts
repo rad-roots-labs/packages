@@ -1,4 +1,4 @@
-import type { GeometryGlyphDimension, ILoadingDimension } from "$lib";
+import type { AppLayoutKey, GeometryGlyphDimension, ILoadingDimension, IToastKind } from "$lib";
 
 export const glyph_style_map: Map<GeometryGlyphDimension, { gl_1: number; dim_1?: number; }> = new Map([
     ["xs--", { gl_1: 12 }],
@@ -22,4 +22,19 @@ export const loading_style_map: Map<ILoadingDimension, { dim_1: number; gl_2: nu
     ["md", { dim_1: 20, gl_2: 20 }],
     ["lg", { dim_1: 28, gl_2: 28 }],
     ["xl", { dim_1: 36, gl_2: 36 }],
+]);
+
+export const toast_layout_map: Map<AppLayoutKey, string> = new Map([
+    [`mobile_base`, `pt-8`],
+    [`mobile_y`, `pt-16`],
+]);
+
+export const toast_style_map: Map<IToastKind, { inner: string; outer: string }> = new Map([
+    [
+        `simple`,
+        {
+            inner: `justify-center`,
+            outer: `min-h-toast_min w-full px-4 rounded-2xl shadow-sm`,
+        },
+    ],
 ]);
