@@ -6,6 +6,8 @@
     "add_new_location": "Add new location",
     "authenticated": "Authenticated",
     "back": "Back",
+    "bank_account": "Bank account",
+    "business_name": "Business name",
     "cancel": "Cancel",
     "configure": "Configure",
     "connect": "Connect",
@@ -39,6 +41,8 @@
     "optional": "Optional",
     "other": "Other",
     "per": "Per",
+    "personal": "Personal",
+    "photos": "Photos",
     "price": "Price",
     "product": "Product",
     "product_name": "Product name",
@@ -53,6 +57,7 @@
     "secret_key": "Secret key",
     "settings": "Settings",
     "setup": "Setup",
+    "socials": "Socials",
     "status": "Status",
     "subject": "Subject",
     "submit": "Submit",
@@ -61,5 +66,8 @@
     "to": "To",
     "unlock": "Unlock",
     "update": "Update",
-    "url": "URL"
+    "url": "URL",
+    "wallet": "Wallet",
+    "website": "Website",
+    "your_name": "Your name"
 }
