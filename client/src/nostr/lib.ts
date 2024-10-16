@@ -1,6 +1,6 @@
 import { bytesToHex, hexToBytes } from '@noble/hashes/utils';
 import { Relay, generateSecretKey, getPublicKey, nip19, } from 'nostr-tools';
-import type { IClientNostrLib, IClientNostrLibRelayConnectResponse } from '../types';
+import type { IClientNostrLib, IClientNostrLibRelayConnectResponse } from './types';
 
 export class ClientNostrLib implements IClientNostrLib {
     private generate_key_bytes(): Uint8Array {
@@ -45,10 +45,14 @@ export class ClientNostrLib implements IClientNostrLib {
      * @returns nostr public key hex
      */
     public public_key(secret_key_hex: string | undefined): string {
-        if (!secret_key_hex) return ``;
-        const bytes = this.get_key_bytes(secret_key_hex);
-        const hex = getPublicKey(bytes)
-        return hex;
+        try {
+            if (!secret_key_hex) return ``;
+            const bytes = this.get_key_bytes(secret_key_hex);
+            const hex = getPublicKey(bytes)
+            return hex;
+        } catch (e) {
+            return ``
+        }
     }
 
     /**
@@ -66,8 +70,9 @@ export class ClientNostrLib implements IClientNostrLib {
      * @returns public key hex from npub
      */
     public npub_decode(npub: string): string {
-        const hex = nip19.decode(npub);
-        if (hex && hex.type === `npub` && hex.data) return hex.data
+        const decode = nip19.decode(npub);
+        console.log(`decode `, decode)
+        if (decode && decode.type === `npub` && decode.data) return decode.data
         return ``;
     }
 
@@ -87,10 +92,14 @@ export class ClientNostrLib implements IClientNostrLib {
      * @returns nostr secret key hex from nsec
      */
     public nsec_decode(nsec: string): string | undefined {
-        if (!nsec) return undefined;
-        const decode = nip19.decode(nsec);
-        if (decode && decode.type === `nsec` && decode.data && typeof decode.data === `string`) return decode.data
-        return undefined;
+        try {
+            if (!nsec) return undefined;
+            const decode = nip19.decode(nsec);
+            if (decode && decode.type === `nsec` && decode.data) return bytesToHex(decode.data);
+            return undefined;
+        } catch (e) {
+            return undefined;
+        }
     }
 
     /**

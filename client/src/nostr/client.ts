@@ -1,6 +1,6 @@
-import type { IClientNostr } from "../types";
 import { ClientNostrEvents } from "./events";
 import { ClientNostrLib } from "./lib";
+import type { IClientNostr } from "./types";
 
 export class ClientNostr implements IClientNostr {
     private _ev: ClientNostrEvents = new ClientNostrEvents();

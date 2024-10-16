@@ -1,5 +1,6 @@
 {
     "compilerOptions": {
+        "strict": true,
         "target": "es2021",
         "lib": [
             "es2021",
@@ -12,7 +13,7 @@
         "esModuleInterop": true,
     },
     "include": [
-        "src", "src/capacitor/camera.ts",
+        "src"
     ],
     "exclude": [
         "node_modules"
