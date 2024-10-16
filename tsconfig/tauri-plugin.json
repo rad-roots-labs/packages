@@ -1,0 +1,27 @@
+{
+    "compilerOptions": {
+        "pretty": true,
+        "module": "commonjs",
+        "target": "ES2022",
+        "resolveJsonModule": true,
+        "types": [],
+        "incremental": true,
+        "inlineSourceMap": true,
+        "inlineSources": true,
+        "allowSyntheticDefaultImports": true,
+        "strict": true,
+        "noUncheckedIndexedAccess": true,
+        "noFallthroughCasesInSwitch": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noImplicitReturns": true,
+        "esModuleInterop": true,
+        "plugins": [
+            {
+                "transform": "typia/lib/transform"
+            }
+        ],
+        "strictNullChecks": true,
+        "skipLibCheck": true
+    }
+}
