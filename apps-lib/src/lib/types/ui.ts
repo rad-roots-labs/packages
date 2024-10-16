@@ -1,9 +1,12 @@
-import type { CallbackPromiseGeneric, GeometryCardinalDirection, GeometryDimension, GeometryGlyphDimension, ICbGOpt, ICbOpt, IClOpt, IFormField, ILy, ILyOptTs } from "$lib";
+import type { CallbackPromiseGeneric, GeometryCardinalDirection, GeometryDimension, GeometryGlyphDimension, ICbGOpt, ICbOpt, IClOpt, IFormField, IId, ILy, ILyOptTs } from "$lib";
 import type { ThemeLayer } from "@radroots/theme";
 
 export type GlyphKeyCurrency = `dollar` | `eur`;
 
 export type GlyphKey = |
+    `asterisk` |
+    `asterisk-simple` |
+    `subtitles-slash` |
     `cardholder` |
     `globe-x` |
     `exclamation-mark` |
@@ -128,8 +131,7 @@ export type ISelectElement = ILy &
         options: { group?: string | true; entries: ISelectOption<string>[] }[];
     };
 
-export type IInputElement = IClOpt & ILyOptTs & {
-    id: string;
+export type IInputElement = IId & IClOpt & ILyOptTs & {
     placeholder?: string;
     label?: string;
     hidden?: boolean;
@@ -140,13 +142,12 @@ export type IInputElement = IClOpt & ILyOptTs & {
     /*notify_inline?: {
         glyph: GlyphKey | IGlyph;
     };*/
-    callback?: CallbackPromiseGeneric<{ val: string; pass: boolean; }>;
+    callback?: CallbackPromiseGeneric<{ value: string; pass: boolean; }>;
     callback_keydown?: CallbackPromiseGeneric<{ key: string; el: HTMLInputElement }>;
     on_mount?: CallbackPromiseGeneric<HTMLInputElement>;
 };
 
-export type ITextAreaElement = IClOpt & ILyOptTs & {
-    id: string;
+export type ITextAreaElement = IId & IClOpt & ILyOptTs & {
     placeholder?: string;
     label?: string;
     hidden?: boolean;

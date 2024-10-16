@@ -1,0 +1,56 @@
+{
+    "location_gcs": {
+        "gc_admin1_id": "",
+        "gc_admin1_name": "",
+        "gc_country_id": "",
+        "gc_country_name": "",
+        "gc_id": "",
+        "gc_name": "",
+        "geohash": "Geohash",
+        "label": "Label",
+        "lat": "Latitude",
+        "lng": "Longitude"
+    },
+    "nostr_profile": {
+        "about": "About",
+        "banner": "Profile banner",
+        "display_name": "Display name",
+        "lud06": "Payment request",
+        "lud16": "Payment address",
+        "name": "Profile name",
+        "nip05": "Profile address",
+        "picture": "Profile photo",
+        "public_key": "Public key",
+        "website": "Website"
+    },
+    "nostr_relay": {
+        "contact": "Administrator contact",
+        "data": "Additional information",
+        "description": "Relay description",
+        "name": "Relay name",
+        "pubkey": "Administrator",
+        "relay_id": "",
+        "software": "Software",
+        "supported_nips": "Supported NIPs",
+        "url": "Relay endpoint",
+        "version": "Software version"
+    },
+    "trade_product": {
+        "key": "Product name",
+        "lot": "Product lot",
+        "notes": "Notes",
+        "price_amt": "Price",
+        "price_currency": "Currency",
+        "price_qty_amt": "",
+        "price_qty_unit": "",
+        "process": "Processing method",
+        "profile": "Flavor profile",
+        "qty_amt": "Quantity",
+        "qty_avail": "Quantity available",
+        "qty_label": "Quantity label",
+        "qty_unit": "Quantity unit",
+        "summary": "Listing summary",
+        "title": "Listing title",
+        "year": "Year"
+    }
+}

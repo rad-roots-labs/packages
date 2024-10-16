@@ -11,7 +11,7 @@ type LanguageConfig = {
 	value?: string;
 };
 
-const locales_files = [`app`, `common`, `currency`, `icu`, `measurement`, `model_fields`, `trade`] as const;
+const locales_files = [`app`, `common`, `currency`, `error`, `eula`, `icu`, `measurement`, `model`, `trade`] as const;
 const translations_keys: Record<Locale, any> = {
 	en: { locales_keys },
 };

@@ -1,9 +1,9 @@
 <script>
-    import Blur from "$lib/ui/blur.svelte";
+    import { Blur, app_tilt } from "$lib";
 </script>
 
 <div
-    class={`relative flex flex-col h-[100vh] w-full overflow-x-hidden overflow-y-hidden bg-layer-0-surface`}
+    class={`relative flex flex-col h-[100vh] w-full overflow-x-hidden overflow-y-hidden bg-layer-0-surface ${$app_tilt ? `scale-[96%] translate-y-4 rounded-t-[3.5rem]` : ``} delay-75 duration-200 ease-in-out transition-all`}
 >
     <div class={`flex flex-col h-full w-full`}>
         <slot />

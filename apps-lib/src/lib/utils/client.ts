@@ -1,5 +1,5 @@
 import { goto } from "$app/navigation";
-import type { AnchorRoute, AppLayoutKey, CallbackPromiseGeneric, GlyphKey, LabelFieldKind, NavigationParamTuple, NavigationRoute, NavigationRouteParamKey } from "$lib";
+import { app_toast, TOAST_MS, type AnchorRoute, type AppLayoutKey, type CallbackPromise, type CallbackPromiseGeneric, type GlyphKey, type IToast, type LabelFieldKind, type NavigationParamTuple, type NavigationRoute, type NavigationRouteParamKey } from "$lib";
 import type { ColorMode, ThemeKey, ThemeLayer } from "@radroots/theme";
 
 export const sleep = async (ms: number): Promise<void> => {
@@ -115,6 +115,10 @@ export const route = async (route: NavigationRoute, params_list?: NavigationPara
     }
 }
 
+//export const route_sync = (route: NavigationRoute): void => {
+//    goto(route);
+//};
+
 export const get_layout = (val: string | false): AppLayoutKey => {
     switch (val) {
         case `mobile_base`:
@@ -131,4 +135,38 @@ export const view_effect = <T extends string>(view: T): void => {
             `hidden`,
             el.getAttribute(`data-view`) !== view,
         );
+};
+
+
+export const init_toast = (): void => {
+    app_toast.set(false);
+};
+
+export const show_toast = async (opts: {
+    args: IToast | string;
+    callback?: CallbackPromise;
+}): Promise<void> => {
+    try {
+        const basis: IToast = typeof opts.args === `string`
+            ? {
+                layer: 1,
+                label: {
+                    value: opts.args,
+                },
+            }
+            : opts.args;
+        app_toast.set(basis);
+        await sleep(TOAST_MS);
+        init_toast();
+        if (opts.callback) await opts.callback();
+    } catch (e) {
+        console.log(`(error) show_toast `, e);
+    }
+};
+
+export const value_constrain = (regex_charset: RegExp, value: string): string => {
+    return value
+        .split("")
+        .filter((char) => regex_charset.test(char))
+        .join("");
 };

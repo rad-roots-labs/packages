@@ -14,9 +14,6 @@
     $: basis = basis;
 
     $: layer = parse_layer(1);
-
-    //$: classes_wrap =
-    //   `label` in basis && ;
 </script>
 
 {#if basis?.loading}

@@ -18,9 +18,11 @@ export let kv: Keyva;
 if (typeof window !== 'undefined') kv = new Keyva({ name: kv_name });
 
 export const app_layout = writable<AppLayoutKey>(`mobile_base`);
-export const app_config = writable<boolean>(false);
+export const app_config = writable<boolean>(true);
 export const app_render = writable<boolean>(false);
-export const app_win = writable<[number, number]>([0, 0]);
+export const app_tilt = writable<boolean>(false);
+export const app_loading = writable<boolean>(false);
+export const app_win = writable<{ h: number, w: number }>({ h: 0, w: 0 });
 export const app_notify = writable<string>(``);
 export const app_toast = writable<IToast | false>(false);
 export const app_submit_route = writable<NavigationPreviousParam | undefined>(undefined);

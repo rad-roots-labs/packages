@@ -43,6 +43,18 @@ export type IRouteOpt = {
 
 export type ICbGR<T> = ICbG<T> | IRoute
 
+export type IId = {
+    id: string;
+};
+
+export type IIdOpt = {
+    id?: string;
+};
+
+export type IIdWrapOpt = {
+    id_wrap?: string;
+};
+
 export type ICb = {
     callback: CallbackPromise;
 };
@@ -60,6 +72,10 @@ export type ICbGOpt<T> = {
 };
 
 export type ICbROpt = ICbOpt | IRouteOpt
+
+export type IClWrapOpt = {
+    classes_wrap?: string;
+};
 
 export type IClOpt = {
     classes?: string;

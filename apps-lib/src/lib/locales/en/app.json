@@ -1,3 +1,24 @@
 {
-    "name": "Radroots"
+    "calendar": {
+        "weekday": {
+            "0": "Sunday",
+            "1": "Monday",
+            "2": "Tuesday",
+            "3": "Wednesday",
+            "4": "Thursday",
+            "5": "Friday",
+            "6": "Saturday"
+        }
+    },
+    "name": "Radroots",
+    "page": {
+        "conf": {
+            "init": {
+                "notification": {
+                    "no_profile_name": "Your profile will be created without a name. You can change this later in Settings > Profile",
+                    "welcome": "Welcome! Your device was configured. To view or change your configuration go to Settings > Configuration"
+                }
+            }
+        }
+    }
 }

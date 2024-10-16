@@ -1,13 +1,16 @@
 <script lang="ts">
     import { fmt_cl, type ICb, type IClOpt, type ILabel } from "$lib";
 
-    export let basis: ILabel & {
-        notify?: IClOpt & ICb & ILabel;
-    };
+    export let basis: ILabel &
+        IClOpt & {
+            notify?: IClOpt & ICb & ILabel;
+        };
     $: basis = basis;
 </script>
 
-<div class={`flex flex-col w-trellis_line gap-1 justify-start items-center`}>
+<div
+    class={`${fmt_cl(basis.classes)} flex flex-col w-trellis_line gap-[0.375rem] justify-start items-center`}
+>
     <div
         class={`flex flex-row h-5 w-full px-2 gap-2 justify-start items-center`}
     >

@@ -1,5 +1,7 @@
 import type { ClientWindow } from "$lib/types/conf";
 
+export const TOAST_MS = 1500;
+
 export const wind: ClientWindow = {
     app: {
         layout: {
@@ -7,7 +9,7 @@ export const wind: ClientWindow = {
                 h: 600
             },
             mobile_y: {
-                h: 768
+                h: 750
             }
         }
     }

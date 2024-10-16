@@ -1,0 +1,15 @@
+{
+    "client": {
+        "page": {
+            "status": {
+                "404": "The page was not found"
+            }
+        },
+        "unhandled": "There was an error during your request"
+    },
+    "geolocation": {
+        "request": {
+            "current": "Geolocation request failure"
+        }
+    }
+}

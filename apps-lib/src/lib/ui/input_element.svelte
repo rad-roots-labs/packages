@@ -1,5 +1,11 @@
 <script lang="ts">
-    import { type IInputElement, fmt_cl, kv, parse_layer } from "$lib";
+    import {
+        type IInputElement,
+        fmt_cl,
+        kv,
+        parse_layer,
+        value_constrain,
+    } from "$lib";
     import { onMount } from "svelte";
 
     let el: HTMLInputElement | null = null;
@@ -28,7 +34,9 @@
                 }
             }
             if (basis.on_mount) await basis.on_mount(el);
-        } catch (e) {}
+        } catch (e) {
+            console.log(`e input mount`, e);
+        }
     });
 </script>
 
@@ -36,26 +44,24 @@
     bind:this={el}
     {id}
     type="text"
-    class={`${fmt_cl(basis.classes)} form-input text-layer-${layer}-glyph placeholder:text-layer-${layer}-glyph_pl caret-layer-${layer}-glyph`}
+    class={`${fmt_cl(basis.classes)} el-input text-layer-${layer}-glyph placeholder:text-layer-${layer}-glyph_pl caret-layer-${layer}-glyph`}
     placeholder={basis.placeholder || ""}
     on:input={async ({ currentTarget: el }) => {
         let pass = true;
         let val = el.value;
         if (basis.field) {
-            val = el.value
-                .split("")
-                .filter((char) => basis.field.charset.test(char))
-                .join("");
+            val = value_constrain(basis.field.charset, val);
+            el.value = val;
             if (
                 !basis.field.validate.test(val) &&
                 basis.field.validate_keypress
             ) {
-                pass = false;
+                //@todo set styles
             }
+            pass = basis.field.validate.test(val);
         }
-        el.value = val;
         if (basis.sync) await kv.set(basis.id, val);
-        if (basis.callback) await basis.callback({ val, pass });
+        if (basis.callback) await basis.callback({ value: val, pass });
     }}
     on:keydown={async (ev) => {
         if (basis.callback_keydown)

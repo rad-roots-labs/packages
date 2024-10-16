@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Fill, t, type CallbackPromise } from "$lib";
+    import { app_tilt, Fill, t, type CallbackPromise } from "$lib";
     import { quintInOut } from "svelte/easing";
     import { fly } from "svelte/transition";
 
@@ -9,13 +9,17 @@
     };
 
     $: basis = basis;
+
+    $: if (basis.visible) {
+        app_tilt.set(true);
+    }
 </script>
 
 {#if basis.visible}
     <div
         in:fly={{ y: `100%`, easing: quintInOut }}
         out:fly={{ y: `100%`, easing: quintInOut }}
-        class={`z-20 absolute bottom-0 left-0 flex flex-col h-[calc(100vh-30px)] w-full justify-start items-start bg-layer-1-surface rounded-t-2xl overflow-y-scroll scroll-hide`}
+        class={`z-20 absolute bottom-0 left-0 flex flex-col h-[calc(100vh-12%)] w-full justify-start items-start bg-layer-1-surface rounded-t-2xl overflow-y-scroll scroll-hide`}
     >
         <div
             class={`sticky top-0 left-0 grid grid-cols-12 flex flex-row h-12 w-full px-4 pb-2 justify-center items-center bg-layer-1-surface/60 backdrop-blur-md`}
@@ -26,6 +30,7 @@
                 <button
                     class={`flex flex-row justify-center items-center`}
                     on:click={async () => {
+                        app_tilt.set(false);
                         await basis.close();
                     }}
                 >

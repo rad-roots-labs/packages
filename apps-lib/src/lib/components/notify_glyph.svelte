@@ -10,7 +10,7 @@
 </script>
 
 <div
-    class={`${fmt_cl(basis.classes)} z-5 absolute right-0 top-0 flex flex-row h-full pr-3 justify-end items-center fade-in transition-all`}
+    class={`${fmt_cl(basis.classes)} z-10 absolute right-0 top-0 flex flex-row h-full pr-3 justify-end items-center fade-in transition-all`}
 >
     <Glyph
         basis={typeof basis.glyph === `string`
