@@ -41,6 +41,10 @@ export type IRouteOpt = {
     route?: NavigationRoute;
 };
 
+export type ILoadingOpt = {
+    loading?: boolean;
+};
+
 export type ICbGR<T> = ICbG<T> | IRoute
 
 export type IId = {

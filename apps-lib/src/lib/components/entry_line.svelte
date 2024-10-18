@@ -1,5 +1,12 @@
 <script lang="ts">
-    import { fmt_cl, Glyph, parse_layer, type IEntryLine } from "$lib";
+    import {
+        fmt_cl,
+        Glyph,
+        Loading,
+        parse_layer,
+        type IEntryLine,
+        type ILoadingDimension,
+    } from "$lib";
     import InputElement from "$lib/ui/input_element.svelte";
 
     export let basis: IEntryLine;
@@ -13,17 +20,32 @@
         typeof layer === `boolean`
             ? `bg-transparent`
             : `bg-layer-${layer}-surface`;
+    $: clases_style =
+        basis.style === `guide` ? `h-entry_guide rounded-touch` : ``;
+
+    let loading_dim: ILoadingDimension = `sm`;
+    $: loading_dim = basis.style === `guide` ? `md` : `sm`;
 </script>
 
 <div
     id={basis.id_wrap || null}
-    class={`${fmt_cl(basis.classes_wrap)} relative el-responsive entry-line-wrap px-2 ${classes_layer}`}
+    class={`${fmt_cl(basis.classes)} relative el-responsive entry-line-wrap px-2 ${classes_layer} ${clases_style}`}
 >
     <InputElement basis={basis.el} />
-    {#if basis.notify_inline}
+    {#if basis.loading}
+        <div
+            class={`z-5 absolute el-responsive right-0 top-0 flex flex-row h-full pr-4 justify-end items-center fade-in`}
+        >
+            <Loading
+                basis={{
+                    dim: loading_dim,
+                }}
+            />
+        </div>
+    {:else if basis.notify_inline}
         {#if `glyph` in basis.notify_inline}
             <div
-                class={`z-5 absolute right-0 top-0 flex flex-row h-full pr-3 justify-end items-center translate-x-[34px] fade-in transition-all`}
+                class={`z-5 absolute el-responsive right-0 top-0 flex flex-row h-full pr-3 justify-end items-center translate-x-[34px] fade-in`}
             >
                 <Glyph
                     basis={typeof basis.notify_inline.glyph === `string`

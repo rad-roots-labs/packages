@@ -1,5 +1,5 @@
 import type { NavigationRoute } from "$lib/utils/routes";
-import type { CallbackPromise, CallbackPromiseGeneric, ICb, ICbG, ICbGOpt, ICbOpt, IClOpt, IClWrapOpt, IGl, IGlOpt, IIdOpt, IIdWrapOpt, ILabel, ILabelFieldsOpt, ILabelOpt, ILabelOptFieldsOpt, ILyOpt, ILyOptTs, NavigationParamTuple } from "./client";
+import type { CallbackPromise, CallbackPromiseGeneric, ICb, ICbG, ICbGOpt, ICbOpt, IClOpt, IClWrapOpt, IGl, IGlOpt, IIdOpt, IIdWrapOpt, ILabel, ILabelFieldsOpt, ILabelOpt, ILabelOptFieldsOpt, ILoadingOpt, ILyOpt, ILyOptTs, NavigationParamTuple } from "./client";
 import type { GlyphKey, GlyphWeight, IGlyph, IInputElement, ITextAreaElement } from "./ui";
 
 export type ITabsBasisList = IClOpt & {
@@ -23,8 +23,10 @@ export type IFormField = {
     validate_keypress?: boolean;
 };
 
-export type IEntryLine = IIdWrapOpt & IClWrapOpt & {
+export type IEntryLineStyle = `guide`;
+export type IEntryLine = IIdWrapOpt & IClOpt & ILoadingOpt & {
     el: IInputElement;
+    style?: IEntryLineStyle
     notify_inline?: {
         glyph: GlyphKey | IGlyph;
     };

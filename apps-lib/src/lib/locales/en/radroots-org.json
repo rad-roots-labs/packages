@@ -1,13 +1,13 @@
 {
     "error": {
+        "*-model-account-schema-active": "Invalid active specification",
+        "*-model-account-schema-nip_05": "Invalid profile name",
+        "*-model-account-schema-nostr_relays": "Invalid nostr relays",
+        "*-model-account-schema-public_key": "Invalid public key",
         "*-models-account-add-err": "The account could not be created",
         "*-models-account-delete-err": "The account could not be deleted",
         "*-models-account-get-err": "The account could not be found",
         "*-models-account-nip_05-unique": "The profile name is already registered",
-        "*-models-account-update-err": "The account could not be updated",
-        "*-model-account-schema-nip_05": "Invalid profile name",
-        "*-model-account-schema-active": "Invalid active specification",
-        "*-model-account-schema-public_key": "Invalid public key",
-        "*-model-account-schema-nostr_relays": "Invalid nostr relays"
+        "*-models-account-update-err": "The account could not be updated"
     }
 }

@@ -10,8 +10,9 @@ export type NavigationRoute =
 	| "/models/trade-product/add"
 	| "/settings"
 	| "/test"
-	| "/conf/error"
-	| "/conf/init";
+	| "/device/error"
+	| "/device/init"
+	| "/device/test";
 
 export function parse_route(route: string): NavigationRoute {
 	switch (route) {
@@ -26,8 +27,9 @@ export function parse_route(route: string): NavigationRoute {
 		case "/models/trade-product/add":
 		case "/settings":
 		case "/test":
-		case "/conf/error":
-		case "/conf/init":
+		case "/device/error":
+		case "/device/init":
+		case "/device/test":
 			return route;
 		default:
 			return "/";

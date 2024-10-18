@@ -44,12 +44,9 @@ export const carousel_next = async <T extends string>(
     if (get_store(carousel_active)) return;
     carousel_active.set(true);
     const slide_item = get_slide_item<T>(view);
-    console.log(`slide_item `, slide_item)
     const slide_container = get_slide_container<T>(view);
-    console.log(`slide_container `, slide_container)
     if (slide_container && slide_item) {
         const slide_w = slide_item?.clientWidth || 0;
-        console.log(`slide_w `, slide_w)
         slide_container.scrollLeft += slide_w;
         carousel_index.set(
             Math.min(get_store(carousel_index) + 1, get_store(carousel_index_max)),
