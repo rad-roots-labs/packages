@@ -1,4 +1,4 @@
-import { err_msg, type ErrorMessage } from '@radroots/utils';
+import { err_msg, ResultObj, ResultPass, ResultsList, type ErrorMessage } from '@radroots/utils';
 import { createStore, Store } from '@tauri-apps/plugin-store';
 import type { IClientKeystore, IClientKeystoreUnlisten } from './types';
 
@@ -14,7 +14,7 @@ export class TauriClientKeystore implements IClientKeystore {
         this._store = await createStore(this._store_path);
     }
 
-    public async set(key: string, value: string): Promise<{ pass: true } | ErrorMessage<string>> {
+    public async set(key: string, value: string): Promise<ResultPass | ErrorMessage<string>> {
         try {
             if (!this._store) return err_msg(`*-store`);
             await this._store.set(key, { value });
@@ -22,39 +22,50 @@ export class TauriClientKeystore implements IClientKeystore {
             return { pass: true };
         } catch (e) {
             return err_msg(`*`);
-        }
+        };
     }
 
-    public async get(key: string): Promise<{ result: string } | ErrorMessage<string>> {
+    public async get(key: string): Promise<ResultObj<string> | ErrorMessage<string>> {
         try {
             if (!this._store) return err_msg(`*-store`);
             const result = await this._store.get<{ value: any }>(key);
             if (result && typeof result.value === `string`) return { result: result.value };
-            return err_msg(`*-result`);;
+            return err_msg(`*-result`);
         } catch (e) {
             return err_msg(`*`);
-        }
+        };
     }
 
-    public async keys(): Promise<{ results: string[] } | ErrorMessage<string>> {
+    public async remove(key: string): Promise<ResultPass | ErrorMessage<string>> {
+        try {
+            if (!this._store) return err_msg(`*-store`);
+            const res = await this._store.delete(key);
+            if (!res) return err_msg(`*-pass`);
+            await this._store.save();
+            return { pass: true };
+        } catch (e) {
+            return err_msg(`*`);
+        };
+    }
+
+    public async keys(): Promise<ResultsList<string> | ErrorMessage<string>> {
         try {
             if (!this._store) return err_msg(`*-store`);
             const results = await this._store.keys();
             return { results };
         } catch (e) {
             return err_msg(`*`);
-        }
+        };
     }
 
-    public async remove(key: string): Promise<boolean | ErrorMessage<string>> {
+    public async entries(): Promise<ResultsList<[string, unknown]> | ErrorMessage<string>> {
         try {
             if (!this._store) return err_msg(`*-store`);
-            const res = await this._store.delete(key);
-            if (res) await this._store.save();
-            return res;
+            const results = await this._store.entries();
+            return { results };
         } catch (e) {
             return err_msg(`*`);
-        }
+        };
     }
 
     public async on_key_change(key: string, callback: (value: string | null) => Promise<void>): Promise<IClientKeystoreUnlisten | ErrorMessage<string>> {
@@ -64,6 +75,6 @@ export class TauriClientKeystore implements IClientKeystore {
             return res;
         } catch (e) {
             return err_msg(`*`);
-        }
+        };
     }
 }

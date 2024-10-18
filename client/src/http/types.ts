@@ -6,7 +6,7 @@ export type IClientHttpOpts = {
     params?: {
         [key: string]: string | string[];
     };
-    data?: any;
+    data?: Record<string, string | number | boolean>;
     headers?: {
         [key: string]: string;
     };

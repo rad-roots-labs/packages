@@ -18,7 +18,7 @@ export class TauriClientKeying implements IClientKeyring {
             const response = await invoke<any>("keyring_nostr_key_get", { publicKeyHex: public_key_hex });
             console.log(`response `, response);
             if (response && typeof response === `string`) return { result: response };
-            return err_msg(`*-result`);;
+            return err_msg(`*-result`);
         } catch (e) {
             return err_msg(`*`);
         }

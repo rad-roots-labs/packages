@@ -27,7 +27,6 @@ export class TauriClientHttp implements IClientHttp {
     public async fetch(opts: IClientHttpOpts): Promise<IClientHttpResponse | ErrorMessage<string>> {
         try {
             const { url } = opts;
-
             const options: RequestInit & ClientOptions = {
                 method: opts.method ? opts.method.toUpperCase() : `GET`,
             }
@@ -35,13 +34,27 @@ export class TauriClientHttp implements IClientHttp {
             if (opts.headers) options.headers = opts.headers;
             if (opts.connect_timeout) options.connectTimeout = opts.connect_timeout;
             const response = await fetch(url, options);
-            return {
-                status: response.status,
-                url: response.url,
-                data: await response.json(),
-                headers: parse_headers(response.headers)
-            };
+            switch (response.ok) {
+                case true: {
+                    const response_json = await response.json();
+                    return {
+                        status: response.status,
+                        url: response.url,
+                        data: typeof response_json === `string` ? JSON.parse(response_json) : response_json,
+                        headers: parse_headers(response.headers)
+                    };
+                }
+                case false: {
+                    return {
+                        status: response.status,
+                        url: response.url,
+                        data: null,
+                        headers: parse_headers(response.headers)
+                    };
+                }
+            }
         } catch (e) {
+            console.log(`e fetch`, e)
             return err_msg(String(e));
         };
     }
