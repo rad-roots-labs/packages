@@ -1,10 +1,12 @@
 {
     "client": {
+        "network_failure": "The requested resource is not available",
         "page": {
             "status": {
                 "404": "The page was not found"
             }
         },
+        "request_failure": "The request was not successful",
         "unhandled": "There was an error during your request"
     },
     "geolocation": {

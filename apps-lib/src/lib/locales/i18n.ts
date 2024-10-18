@@ -1,4 +1,3 @@
-//import i18n, { type Config } from '@radroots/sveltekit-i18n';
 import i18n from '@sveltekit-i18n/base';
 import type { Config } from '@sveltekit-i18n/parser-icu';
 import parser from '@sveltekit-i18n/parser-icu';
@@ -11,7 +10,7 @@ type LanguageConfig = {
 	value?: string;
 };
 
-const locales_files = [`app`, `common`, `currency`, `error`, `eula`, `icu`, `measurement`, `model`, `trade`] as const;
+const locales_files = [`app`, `common`, `currency`, `error`, `eula`, `icu`, `measurement`, `model`, `radroots-org`, `trade`] as const;
 const translations_keys: Record<Locale, any> = {
 	en: { locales_keys },
 };

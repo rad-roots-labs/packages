@@ -11,8 +11,7 @@ export type NavigationRoute =
 	| "/settings"
 	| "/test"
 	| "/conf/error"
-	| "/conf/init"
-	| "/map";
+	| "/conf/init";
 
 export function parse_route(route: string): NavigationRoute {
 	switch (route) {
@@ -29,7 +28,6 @@ export function parse_route(route: string): NavigationRoute {
 		case "/test":
 		case "/conf/error":
 		case "/conf/init":
-		case "/map":
 			return route;
 		default:
 			return "/";
