@@ -1,4 +1,4 @@
-import type { ErrorMessage } from "@radroots/utils";
+import type { ErrorMessage, FieldRecord } from "@radroots/utils";
 
 export type IClientHttpOpts = {
     url: string;
@@ -7,18 +7,15 @@ export type IClientHttpOpts = {
         [key: string]: string | string[];
     };
     data?: Record<string, string | number | boolean>;
-    headers?: {
-        [key: string]: string;
-    };
+    authorization?: string;
+    headers?: FieldRecord;
     connect_timeout?: number;
 };
 
 export type IClientHttpResponse = {
     status: number;
     data: any;
-    headers: {
-        [key: string]: string;
-    };
+    headers: FieldRecord;
     url: string;
 };
 

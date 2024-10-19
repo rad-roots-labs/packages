@@ -21,6 +21,7 @@
         "@tauri-apps/plugin-haptics": "^2.0.0-rc",
         "@tauri-apps/plugin-http": "^2.0.0-rc",
         "@tauri-apps/plugin-notification": "^2.0.0-rc",
+        "@tauri-apps/plugin-os": "^2.0.0-rc",
         "@tauri-apps/plugin-store": "^2.0.0-rc",
         "nostr-tools": "^2.7.2"
     },
