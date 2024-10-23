@@ -40,21 +40,21 @@
 
 <div
     bind:this={el}
-    class={`${fmt_cl(basis?.classes)} z-10 absolute bottom-0 left-0 flex flex-col w-full justify-start items-start transition-all backdrop-blur-md h-tabs_${$app_layout} ${classes_blur}`}
+    class={`${fmt_cl(basis?.classes)} z-10 absolute bottom-0 left-0 flex flex-col w-full justify-start items-start bg-base-100/40 backdrop-blur-md h-tabs_${$app_layout} ${classes_blur} el-re`}
 >
     <div
         bind:this={el_inner}
-        class={`relative flex flex-col h-full w-full justify-start items-center`}
+        class={`relative flex flex-col h-full w-full justify-start items-start`}
     >
         <div
-            class={`absolute top-4 left-0 grid grid-cols-12 flex flex-row w-full justify-center items-center`}
+            class={`absolute top-3 left-0 grid grid-cols-12 flex flex-row w-full justify-center items-center`}
         >
             {#if $$slots.default}
                 <slot />
             {:else}
                 {#each basis?.list || [] as tab, tab_i}
                     <button
-                        class={`col-span-3 flex flex-col h-full justify-start items-center transition-all`}
+                        class={`group col-span-3 flex flex-col h-full gap-[2px] justify-start items-center el-re`}
                         on:click={async () => {
                             tab_focus = tab_i;
                             if (!tab.hide_active) tabs_active.set(tab_i);
@@ -67,8 +67,8 @@
                             basis={{
                                 classes:
                                     !basis.hide_active && $tabs_active === tab_i
-                                        ? `text-layer-2-glyph text-lineActiveBlue`
-                                        : `text-layer-2-glyph text-lineMd`,
+                                        ? `text-layer-1-glyph text-lineActiveBlue`
+                                        : `text-layer-1-glyph text-lineMd`,
                                 key: tab.icon,
                                 dim: `md`,
                                 weight: tab.force_weight
@@ -82,6 +82,11 @@
                                         : `bold`,
                             }}
                         />
+                        <p
+                            class={`font-circ font-[400] text-layer-1-glyph text-xs tracking-tight`}
+                        >
+                            {tab.label || ``}
+                        </p>
                     </button>
                 {/each}
             {/if}

@@ -8,7 +8,6 @@
 
     $: weight =
         !basis?.weight || basis?.weight === `regular` ? `` : `-${basis.weight}`;
-
     $: styles = basis?.dim
         ? glyph_style_map.get(basis.dim)
         : glyph_style_map.get(`sm`);

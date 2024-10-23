@@ -132,6 +132,13 @@ export type ILabel = {
     label: ILableFields;
 };
 
+export type ILabelValue = {
+    label: IClOpt & {
+        value: string;
+    };
+};
+
+
 export type ILabelOpt = {
     label?: ILableFields;
 };

@@ -29,12 +29,12 @@
 
 <div
     id={basis.id_wrap || null}
-    class={`${fmt_cl(basis.classes)} relative el-responsive entry-line-wrap px-2 ${classes_layer} ${clases_style}`}
+    class={`${fmt_cl(basis.classes)} relative el-re entry-line-wrap px-2 ${classes_layer} ${clases_style}`}
 >
     <InputElement basis={basis.el} />
     {#if basis.loading}
         <div
-            class={`z-5 absolute el-responsive right-0 top-0 flex flex-row h-full pr-4 justify-end items-center fade-in`}
+            class={`z-5 absolute el-re right-0 top-0 flex flex-row h-full pr-4 justify-end items-center fade-in`}
         >
             <Loading
                 basis={{
@@ -45,7 +45,7 @@
     {:else if basis.notify_inline}
         {#if `glyph` in basis.notify_inline}
             <div
-                class={`z-5 absolute el-responsive right-0 top-0 flex flex-row h-full pr-3 justify-end items-center translate-x-[34px] fade-in`}
+                class={`z-5 absolute el-re right-0 top-0 flex flex-row h-full pr-3 justify-end items-center translate-x-[34px] fade-in`}
             >
                 <Glyph
                     basis={typeof basis.notify_inline.glyph === `string`

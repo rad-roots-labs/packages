@@ -17,7 +17,7 @@
 
 <div
     id={basis.id_wrap || null}
-    class={`${fmt_cl(basis.classes_wrap)} relative el-responsive entry-textarea-wrap ${classes_layer}`}
+    class={`${fmt_cl(basis.classes_wrap)} relative el-re entry-textarea-wrap ${classes_layer}`}
 >
     <TextareaElement basis={basis.el} />
     {#if basis.notify_inline}

@@ -28,7 +28,7 @@
 <div
     id={basis.id_wrap || null}
     tabindex={-1}
-    class={`${fmt_cl(basis.classes_wrap)} relative el-responsive entry-line-wrap ${classes_layer}`}
+    class={`${fmt_cl(basis.classes_wrap)} relative el-re entry-line-wrap ${classes_layer}`}
 >
     {#if basis.loading}
         <div class={`flex flex-row w-full justify-center items-center`}>

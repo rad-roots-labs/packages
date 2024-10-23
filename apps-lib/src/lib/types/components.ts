@@ -1,5 +1,5 @@
 import type { NavigationRoute } from "$lib/utils/routes";
-import type { CallbackPromise, CallbackPromiseGeneric, ICb, ICbG, ICbGOpt, ICbOpt, IClOpt, IClWrapOpt, IGl, IGlOpt, IIdOpt, IIdWrapOpt, ILabel, ILabelFieldsOpt, ILabelOpt, ILabelOptFieldsOpt, ILoadingOpt, ILyOpt, ILyOptTs, NavigationParamTuple } from "./client";
+import type { CallbackPromise, CallbackPromiseGeneric, ICb, ICbG, ICbGOpt, ICbOpt, IClOpt, IClWrapOpt, IGl, IGlOpt, IIdOpt, IIdWrapOpt, ILabel, ILabelFieldsOpt, ILabelOpt, ILabelOptFieldsOpt, ILabelValue, ILoadingOpt, ILyOpt, ILyOptTs, NavigationParamTuple } from "./client";
 import type { GlyphKey, GlyphWeight, IGlyph, IInputElement, ITextAreaElement } from "./ui";
 
 export type ITabsBasisList = IClOpt & {
@@ -9,6 +9,7 @@ export type ITabsBasisList = IClOpt & {
     indicator?: string;
     hide_active?: boolean;
     callback: CallbackPromiseGeneric<number>;
+    label?: string;
 };
 
 export type ITabsBasis = IClOpt & {
@@ -23,10 +24,10 @@ export type IFormField = {
     validate_keypress?: boolean;
 };
 
-export type IEntryLineStyle = `guide`;
+export type ILineStyle = `guide`;
 export type IEntryLine = IIdWrapOpt & IClOpt & ILoadingOpt & {
     el: IInputElement;
-    style?: IEntryLineStyle
+    style?: ILineStyle
     notify_inline?: {
         glyph: GlyphKey | IGlyph;
     };
@@ -94,3 +95,7 @@ export type INavBasis = {
     option?: INavBasisOption;
 };
 
+
+export type IDisplayLine = IIdWrapOpt & IClOpt & ILabelValue & ILyOpt & {
+    style?: ILineStyle
+}

@@ -1,9 +1,17 @@
-import type { CallbackPromiseGeneric, GeometryCardinalDirection, GeometryDimension, GeometryGlyphDimension, ICbGOpt, ICbOpt, IClOpt, IFormField, IId, ILy, ILyOptTs } from "$lib";
+import type { CallbackPromiseGeneric, GeometryCardinalDirection, GeometryDimension, GeometryGlyphDimension, ICbGOpt, ICbOpt, IClOpt, IFormField, IId, IIdOpt, ILy, ILyOptTs } from "$lib";
 import type { ThemeLayer } from "@radroots/theme";
 
 export type GlyphKeyCurrency = `dollar` | `eur`;
 
 export type GlyphKey = |
+    `arrow-left` |
+    `arrows-down-up` |
+    `basket` |
+    `arrow-right` |
+    `upload-simple` |
+    `printer` |
+    `download-simple` |
+    `list` |
     `asterisk` |
     `asterisk-simple` |
     `subtitles-slash` |
@@ -93,7 +101,7 @@ export type GlyphKey = |
 
 export type GlyphWeight = `light` | `regular` | `fill` | `bold`;  // `thin` `duotone`
 
-export type IGlyph = ICbOpt & {
+export type IGlyph = ICbOpt & IIdOpt & {
     layer?: ThemeLayer;
     classes?: string;
     weight?: GlyphWeight;

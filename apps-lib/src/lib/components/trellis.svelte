@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { fmt_cl, parse_layer, t, type ITrellis } from "..";
+    import { app_layout, fmt_cl, parse_layer, t, type ITrellis } from "..";
     import TrellisDefaultLabel from "./trellis_default_label.svelte";
     import TrellisInput from "./trellis_input.svelte";
     import TrellisOffset from "./trellis_offset.svelte";
@@ -34,7 +34,7 @@
     data-view={basis.args.view || ""}
 >
     <div
-        class={`relative flex flex-col h-auto w-auto gap-[3px] ${set_title_background ? `bg-layer-${args.layer}-surface` : ``}`}
+        class={`relative flex flex-col h-auto w-${$app_layout} gap-[3px] ${set_title_background ? `bg-layer-${args.layer}-surface` : ``}`}
     >
         {#if args.title && (!args.default_el || (args.default_el && args.default_el.show_title))}
             <TrellisTitle

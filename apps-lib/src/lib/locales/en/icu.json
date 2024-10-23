@@ -1,9 +1,13 @@
 {
+    "month_of_*": "Month of {value}",
+    "this_*": "This {value}",
+    "last_*": "Last {value}",
     "*_as": "{value} as",
     "*_available": "{value} Available",
     "*_copied": "{value} copied",
     "*_description": "{value} description",
     "*_details": "{value} details",
+    "*_failure": "{value} failure",
     "*_name": "{value} name",
     "*_summary": "{value} summary",
     "*_title": "{value} title",
