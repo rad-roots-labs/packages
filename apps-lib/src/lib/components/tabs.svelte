@@ -40,7 +40,7 @@
 
 <div
     bind:this={el}
-    class={`${fmt_cl(basis?.classes)} z-10 absolute bottom-0 left-0 flex flex-col w-full justify-start items-start bg-base-100/40 backdrop-blur-md h-tabs_${$app_layout} ${classes_blur} el-re`}
+    class={`${fmt_cl(basis?.classes)} z-10 absolute bottom-0 left-0 flex flex-col w-full justify-start items-start bg-layer-0-surface/40 backdrop-blur-md h-tabs_${$app_layout} ${classes_blur} el-re`}
 >
     <div
         bind:this={el_inner}
