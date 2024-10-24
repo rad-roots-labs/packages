@@ -57,6 +57,21 @@ export class ClientNostrLib implements IClientNostrLib {
 
     /**
      * 
+     * @returns nostr secret key to public key hex
+     */
+    public publickey_decode(secret_key_hex?: string): string | undefined {
+        try {
+            if (secret_key_hex) {
+                return getPublicKey(this.get_key_bytes(secret_key_hex))
+            }
+            return undefined;
+        } catch (e) {
+            return undefined;
+        }
+    }
+
+    /**
+     * 
      * @returns nostr public key npub
      */
     public npub(public_key_hex: string | undefined, fallback_to_hex?: boolean): string {
@@ -120,6 +135,19 @@ export class ClientNostrLib implements IClientNostrLib {
         if (!nprofile) return undefined;
         const decode = nip19.decode(nprofile);
         if (decode && decode.type === `nprofile` && decode.data && decode.data.pubkey && decode.data.relays) return [decode.data.pubkey, decode.data.relays]
+        return undefined;
+    }
+
+    /**
+     * 
+     * @returns nostr public key nprofile
+     */
+    public secretkey_to_publickey(nsec_or_hex: string): string | undefined {
+        if (nsec_or_hex.startsWith(`nsec1`)) {
+            return this.nsec_decode(nsec_or_hex);
+        } else if (nsec_or_hex.length === 64) {
+            return this.publickey_decode(nsec_or_hex)
+        }
         return undefined;
     }
 };

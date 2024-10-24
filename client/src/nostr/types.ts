@@ -19,6 +19,7 @@ export type IClientNostrLib = {
     nsec_decode(nsec: string): string | undefined;
     nprofile(public_key_hex: string, relays: string[]): string;
     nprofile_decode(nprofile: string): [string, string[]] | undefined;
+    secretkey_to_publickey(nsec_or_hex: string): string | undefined;
 };
 
 export type IClientNostr = {

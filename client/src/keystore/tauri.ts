@@ -1,17 +1,18 @@
-import { err_msg, ResultObj, ResultPass, ResultsList, type ErrorMessage } from '@radroots/utils';
-import { createStore, Store } from '@tauri-apps/plugin-store';
-import type { IClientKeystore, IClientKeystoreUnlisten } from './types';
+import { err_msg, type ErrorMessage, type ResultObj, type ResultPass, type ResultsList } from '@radroots/utils';
+import { load, Store } from '@tauri-apps/plugin-store';
+import type { IClientUnlisten } from '../types';
+import type { IClientKeystore } from './types';
 
 export class TauriClientKeystore implements IClientKeystore {
-    private _store: Store | undefined = undefined;
+    private _store: Store | null = null;
     private _store_path: string;
 
-    constructor(store_path: string = 'store.bin') {
+    constructor(store_path: string = 'store.json') {
         this._store_path = store_path;
     }
 
     public async init(): Promise<void> {
-        this._store = await createStore(this._store_path);
+        this._store = await load(this._store_path);
     }
 
     public async set(key: string, value: string): Promise<ResultPass | ErrorMessage<string>> {
@@ -68,7 +69,7 @@ export class TauriClientKeystore implements IClientKeystore {
         };
     }
 
-    public async on_key_change(key: string, callback: (value: string | null) => Promise<void>): Promise<IClientKeystoreUnlisten | ErrorMessage<string>> {
+    public async on_key_change(key: string, callback: (value: string | null) => Promise<void>): Promise<IClientUnlisten | ErrorMessage<string>> {
         try {
             if (!this._store) return err_msg(`*-store`);
             const res = await this._store.onKeyChange<{ value: any }>(key, async (res) => await callback(res && `value` in res ? String(res.value) : null));

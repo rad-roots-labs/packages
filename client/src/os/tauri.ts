@@ -1,4 +1,4 @@
-import { err_msg, ErrorMessage, ResultObj } from '@radroots/utils';
+import { err_msg, type ErrorMessage, type ResultObj } from '@radroots/utils';
 import { arch, hostname, platform, version } from '@tauri-apps/plugin-os';
 import type { IClientOs } from "./types";
 

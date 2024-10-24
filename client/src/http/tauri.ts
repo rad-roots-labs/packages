@@ -1,6 +1,6 @@
 import { err_msg, type ErrorMessage, type FieldRecord } from '@radroots/utils';
 import { type ClientOptions, fetch } from '@tauri-apps/plugin-http';
-import { IClientDeviceMetadata } from '../device/types';
+import type { IClientDeviceMetadata } from '../device/types';
 import type { IClientHttp, IClientHttpOpts, IClientHttpResponse } from './types';
 
 const parse_headers = (headers: Headers): FieldRecord => {
