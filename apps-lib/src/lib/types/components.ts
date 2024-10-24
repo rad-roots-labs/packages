@@ -90,6 +90,7 @@ export type INavBasis = {
         prevent_route?: {
             callback: CallbackPromise;
         };
+        kind?: 'arrow'
     };
     title?: ICbOpt & ILabel;
     option?: INavBasisOption;

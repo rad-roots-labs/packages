@@ -1,6 +1,5 @@
 export type NavigationRoute =
 	| "/"
-	| "/farmer"
 	| "/models/location-gcs"
 	| "/models/nostr-profile"
 	| "/models/nostr-profile/edit/field"
@@ -10,13 +9,12 @@ export type NavigationRoute =
 	| "/models/trade-product"
 	| "/models/trade-product/add"
 	| "/settings"
-	| "/device/error"
-	| "/device/init";
+	| "/cfg/error"
+	| "/cfg/init";
 
 export function parse_route(route: string): NavigationRoute {
 	switch (route) {
 		case "/":
-		case "/farmer":
 		case "/models/location-gcs":
 		case "/models/nostr-profile":
 		case "/models/nostr-profile/edit/field":
@@ -26,8 +24,8 @@ export function parse_route(route: string): NavigationRoute {
 		case "/models/trade-product":
 		case "/models/trade-product/add":
 		case "/settings":
-		case "/device/error":
-		case "/device/init":
+		case "/cfg/error":
+		case "/cfg/init":
 			return route;
 		default:
 			return "/";

@@ -55,7 +55,7 @@
 
 <div
     bind:this={el}
-    class={`${fmt_cl(basis?.classes)} absolute top-0 left-0 flex flex-col h-[100vh] w-full overflow-y-scroll scroll-hide ${!basis?.hide_padding ? classes_layout : ``} ${classes_tabs} ${classes_fade}`}
+    class={`${fmt_cl(basis?.classes)} absolute top-0 left-0 flex flex-col h-[100vh] w-full justify-start items-center overflow-y-scroll scroll-hide ${!basis?.hide_padding ? classes_layout : ``} ${classes_tabs} ${classes_fade}`}
 >
     <slot />
 </div>

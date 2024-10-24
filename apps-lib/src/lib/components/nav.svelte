@@ -12,6 +12,7 @@
         type INavBasis,
     } from "$lib";
     import { onDestroy, onMount } from "svelte";
+    import ButtonArrow from "./button_arrow.svelte";
     import NavOption from "./nav_option.svelte";
 
     export let basis: INavBasis;
@@ -39,6 +40,30 @@
         } finally {
         }
     });
+
+    const callback_prev = async (): Promise<void> => {
+        try {
+            if (basis.prev.prevent_route) {
+                await basis.prev.prevent_route.callback();
+                return;
+            } else if (basis.prev.callback) await basis.prev.callback();
+            let route_to =
+                typeof basis.prev.route === `string`
+                    ? basis.prev.route
+                    : encode_qp_route(basis.prev.route[0], basis.prev.route[1]);
+            if ($nav_prev.length) {
+                const nav_prev_li = $nav_prev.pop();
+                if (nav_prev_li)
+                    route_to = encode_qp_route(
+                        nav_prev_li.route,
+                        nav_prev_li.params,
+                    );
+            }
+            await goto(route_to);
+        } catch (e) {
+            console.log(`(error) callback_prev `, e);
+        }
+    };
 </script>
 
 <div
@@ -52,49 +77,49 @@
         <div
             class={`absolute bottom-[5px] left-0 grid grid-cols-12 flex flex-row h-8 w-full justify-start items-center`}
         >
-            <button
-                class={`group col-span-4 flex flex-row h-full pl-2 justify-start items-center`}
-                on:click={async () => {
-                    if (basis.prev.prevent_route) {
-                        await basis.prev.prevent_route.callback();
-                        return;
-                    } else if (basis.prev.callback) await basis.prev.callback();
-                    let route_to =
-                        typeof basis.prev.route === `string`
-                            ? basis.prev.route
-                            : encode_qp_route(
-                                  basis.prev.route[0],
-                                  basis.prev.route[1],
-                              );
-                    if ($nav_prev.length) {
-                        const nav_prev_li = $nav_prev.pop();
-                        if (nav_prev_li)
-                            route_to = encode_qp_route(
-                                nav_prev_li.route,
-                                nav_prev_li.params,
-                            );
-                    }
-                    await goto(route_to);
-                }}
+            <div
+                class={`col-span-4 flex flex-row w-full justify-start items-center`}
             >
-                <Glyph
-                    basis={{
-                        key: `caret-left`,
-                        weight: `bold`,
-                        dim: `md+`,
-                        classes: `text-layer-1-glyph-hl group-active:opacity-70 transition-opacity`,
-                    }}
-                />
-                {#if nav_prev_label || basis.prev.label}
-                    <p
-                        class={`font-sans text-navPrevious text-layer-1-glyph-hl group-active:opacity-60 transition-opacity`}
+                {#if basis.prev.kind === `arrow`}
+                    <div
+                        class={`flex flex-row w-full pl-8 justify-start items-center`}
                     >
-                        {nav_prev_label || basis.prev.label}
-                    </p>
+                        <ButtonArrow
+                            basis={{
+                                label: nav_prev_label || basis.prev.label,
+                                callback: async () => {
+                                    await callback_prev();
+                                },
+                            }}
+                        />
+                    </div>
                 {:else}
-                    <Fill />
+                    <button
+                        class={`group flex flex-row h-full pl-2 justify-start items-center`}
+                        on:click={async () => {
+                            await callback_prev();
+                        }}
+                    >
+                        <Glyph
+                            basis={{
+                                key: `caret-left`,
+                                weight: `bold`,
+                                dim: `md+`,
+                                classes: `text-layer-1-glyph-hl group-active:opacity-70 transition-opacity`,
+                            }}
+                        />
+                        {#if nav_prev_label || basis.prev.label}
+                            <p
+                                class={`font-sans text-navPrevious text-layer-1-glyph-hl group-active:opacity-60 transition-opacity`}
+                            >
+                                {nav_prev_label || basis.prev.label}
+                            </p>
+                        {:else}
+                            <Fill />
+                        {/if}
+                    </button>
                 {/if}
-            </button>
+            </div>
             <div
                 class={`col-span-4 flex flex-row h-full justify-center items-center`}
             >

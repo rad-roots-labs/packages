@@ -67,8 +67,8 @@
                             basis={{
                                 classes:
                                     !basis.hide_active && $tabs_active === tab_i
-                                        ? `text-layer-1-glyph text-lineActiveBlue`
-                                        : `text-layer-1-glyph text-lineMd`,
+                                        ? `text-layer-2-glyph text-lineActiveBlue`
+                                        : `text-layer-2-glyph text-lineMd`,
                                 key: tab.icon,
                                 dim: `md`,
                                 weight: tab.force_weight
@@ -83,7 +83,7 @@
                             }}
                         />
                         <p
-                            class={`font-circ font-[400] text-layer-1-glyph text-xs tracking-tight`}
+                            class={`font-circ font-[400] text-layer-2-glyph text-xs tracking-tight`}
                         >
                             {tab.label || ``}
                         </p>

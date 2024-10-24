@@ -1,5 +1,5 @@
 import { goto } from "$app/navigation";
-import { app_toast, TOAST_MS, type AnchorRoute, type AppLayoutKey, type CallbackPromise, type CallbackPromiseGeneric, type GlyphKey, type IToast, type LabelFieldKind, type NavigationParamTuple, type NavigationRoute, type NavigationRouteParamKey } from "$lib";
+import { app_toast, TOAST_MS, type AnchorRoute, type AppConfigType, type AppLayoutKey, type CallbackPromise, type CallbackPromiseGeneric, type GlyphKey, type IToast, type LabelFieldKind, type NavigationParamTuple, type NavigationRoute, type NavigationRouteParamKey } from "$lib";
 import type { ColorMode, ThemeKey, ThemeLayer } from "@radroots/theme";
 
 export const sleep = async (ms: number): Promise<void> => {
@@ -169,4 +169,14 @@ export const value_constrain = (regex_charset: RegExp, value: string): string =>
         .split("")
         .filter((char) => regex_charset.test(char))
         .join("");
+};
+
+export const parse_cfg_type = (value?: string): AppConfigType => {
+    switch (value) {
+        case `farmer`:
+        case `personal`:
+            return value;
+        default:
+            return `personal`
+    };
 };

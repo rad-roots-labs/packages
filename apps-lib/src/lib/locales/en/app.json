@@ -12,7 +12,7 @@
     },
     "name": "Radroots",
     "page": {
-        "conf": {
+        "cfg": {
             "init": {
                 "notification": {
                     "no_profile_name": "Your profile will be created without a name. You can change this later in Settings > Profile",

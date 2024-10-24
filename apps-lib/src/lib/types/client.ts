@@ -190,3 +190,4 @@ export type IToast = IClOpt &
         position?: GeometryScreenPosition;
     };
 
+export type AppConfigType = `farmer` | `personal`

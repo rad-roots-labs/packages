@@ -4,6 +4,10 @@ import type { ThemeLayer } from "@radroots/theme";
 export type GlyphKeyCurrency = `dollar` | `eur`;
 
 export type GlyphKey = |
+    `users-three` |
+    `note-blank` |
+    `user-circle-plus` |
+    `user-circle` |
     `receipt` |
     `invoice` |
     `note` |
