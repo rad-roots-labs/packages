@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Loading } from "..";
+    import { Loading } from "$lib";
 </script>
 
 <div

@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Fill } from "..";
+    import { Fill } from "$lib";
 </script>
 
 <div

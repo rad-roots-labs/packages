@@ -1,7 +1,5 @@
 <script lang="ts">
-    import { fmt_cl } from "$lib/utils/client";
-    import { glyph_style_map } from "$lib/utils/styles";
-    import type { IGlyph } from "../types/ui";
+    import { fmt_cl, glyph_style_map, type IGlyph } from "$lib";
 
     export let basis: IGlyph;
     $: basis = basis;

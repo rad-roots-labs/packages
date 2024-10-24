@@ -1,5 +1,6 @@
 <script lang="ts">
     import {
+        EnvelopeTitled,
         Fill,
         fmt_cl,
         parse_layer,
@@ -9,7 +10,6 @@
     import { quintInOut } from "svelte/easing";
     import { writable } from "svelte/store";
     import { slide } from "svelte/transition";
-    import EnvelopeTitled from "./envelope_titled.svelte";
 
     export let basis: IEnvelopeBasis;
     $: basis = basis;

@@ -1,6 +1,6 @@
 <script lang="ts">
+    import { fmt_cl, type ITrellisDefaultLabel } from "$lib";
     import type { ThemeLayer } from "@radroots/theme";
-    import { fmt_cl, type ITrellisDefaultLabel } from "..";
 
     export let classes = ``;
     export let layer: ThemeLayer;

@@ -1,6 +1,11 @@
 <script lang="ts">
-    import { fmt_cl, Glyph, parse_layer, type IEntryMultiLine } from "$lib";
-    import TextareaElement from "$lib/ui/textarea_element.svelte";
+    import {
+        fmt_cl,
+        Glyph,
+        parse_layer,
+        TextareaElement,
+        type IEntryMultiLine,
+    } from "$lib";
 
     export let basis: IEntryMultiLine;
     $: basis = basis;

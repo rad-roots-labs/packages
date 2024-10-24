@@ -2,12 +2,12 @@
     import {
         fmt_cl,
         Glyph,
+        InputElement,
         Loading,
         parse_layer,
         type IEntryLine,
         type ILoadingDimension,
     } from "$lib";
-    import InputElement from "$lib/ui/input_element.svelte";
 
     export let basis: IEntryLine;
     $: basis = basis;

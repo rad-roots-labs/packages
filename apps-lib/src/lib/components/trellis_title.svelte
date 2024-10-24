@@ -1,9 +1,6 @@
 <script lang="ts">
-	import Fill from "$lib/ui/fill.svelte";
-	import Glyph from "$lib/ui/glyph.svelte";
-	import LabelSwap from "$lib/ui/label_swap.svelte";
+	import { Fill, fmt_cl, Glyph, type ITrellisTitle, LabelSwap } from "$lib";
 	import type { ThemeLayer } from "@radroots/theme";
-	import { fmt_cl, type ITrellisTitle } from "..";
 
 	export let basis: ITrellisTitle;
 	export let layer: ThemeLayer;
@@ -12,7 +9,7 @@
 </script>
 
 <div
-	class={`${fmt_cl(basis.classes)} flex flex-row h-[24px] w-full pl-[6px] gap-1 items-center`}
+	class={`${fmt_cl(basis.classes)} flex flex-row h-[24px] w-full pl-[2px] gap-1 items-center`}
 >
 	<button
 		class={`flex flex-row h-full w-max items-center gap-1 ${mod === `glyph` ? `pl-[36px]` : mod === `sm` ? `pl-[16px]` : ``}`}

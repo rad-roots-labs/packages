@@ -1,14 +1,14 @@
 <script lang="ts">
-    import GlyphCircle from "$lib/ui/glyph_circle.svelte";
-    import Loading from "$lib/ui/loading.svelte";
-    import type { ThemeLayer } from "@radroots/theme";
     import {
         Fill,
         fmt_cl,
         Glyph,
+        GlyphCircle,
+        Loading,
         type ITrellisBasisOffset,
         type ITrellisBasisOffsetMod,
-    } from "..";
+    } from "$lib";
+    import type { ThemeLayer } from "@radroots/theme";
 
     export let basis: ITrellisBasisOffset | undefined = undefined;
     export let layer: ThemeLayer;

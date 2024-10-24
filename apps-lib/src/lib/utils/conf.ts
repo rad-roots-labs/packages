@@ -1,4 +1,4 @@
-import type { ClientWindow } from "$lib/types/conf";
+import type { ClientWindow } from "$lib";
 
 export const TOAST_MS = 1500;
 

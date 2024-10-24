@@ -3,13 +3,13 @@
         app_layout,
         fmt_cl,
         get_layout,
+        Glyph,
         parse_layer,
         toast_layout_map,
         toast_style_map,
         type IToast,
         type IToastKind,
     } from "$lib";
-    import Glyph from "./glyph.svelte";
 
     export let basis: IToast;
     $: basis = basis;

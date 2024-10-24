@@ -1,9 +1,13 @@
 <script lang="ts">
+    import {
+        fmt_trellis,
+        sleep,
+        TrellisEnd,
+        TrellisRowDisplayValue,
+        TrellisRowLabel,
+        type ITrellisBasisTouch,
+    } from "$lib";
     import type { ThemeLayer } from "@radroots/theme";
-    import { fmt_trellis, sleep, type ITrellisBasisTouch } from "..";
-    import TrellisEnd from "./trellis_end.svelte";
-    import TrellisRowDisplayValue from "./trellis_row_display_value.svelte";
-    import TrellisRowLabel from "./trellis_row_label.svelte";
 
     export let basis: ITrellisBasisTouch;
     export let layer: ThemeLayer;

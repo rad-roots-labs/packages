@@ -1,7 +1,13 @@
 <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
 <script lang="ts">
-    import { fmt_cl, type IEntryOption, kv, Loading, parse_layer } from "$lib";
-    import Glyph from "$lib/ui/glyph.svelte";
+    import {
+        fmt_cl,
+        Glyph,
+        type IEntryOption,
+        kv,
+        Loading,
+        parse_layer,
+    } from "$lib";
     import { onMount } from "svelte";
 
     let el: HTMLSelectElement | null;

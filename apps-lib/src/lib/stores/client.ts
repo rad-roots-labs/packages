@@ -33,6 +33,8 @@ export const app_geoc = writable<boolean>(false);
 export const app_thc = writable<ColorMode>(`dark`);
 export const app_th = writable<ThemeKey>(`os`);
 export const app_nostr_key = writable<string>(``);
+export const app_nostr_profiles = writable<string[]>([]);
+
 export const app_pwa_polyfills = writable<boolean>(false);
 
 export const nav_visible = writable<boolean>(false);

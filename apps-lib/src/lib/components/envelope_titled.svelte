@@ -1,12 +1,12 @@
 <script lang="ts">
     import {
         type CallbackPromise,
+        Fill,
         fmt_cl,
         Glyph,
         type IEnvelopeTitledBasis,
         t,
     } from "$lib";
-    import Fill from "$lib/ui/fill.svelte";
     import type { ThemeLayer } from "@radroots/theme";
 
     export let basis: IEnvelopeTitledBasis;

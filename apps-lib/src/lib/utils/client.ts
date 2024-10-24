@@ -1,6 +1,7 @@
 import { goto } from "$app/navigation";
-import { app_toast, TOAST_MS, type AnchorRoute, type AppConfigType, type AppLayoutKey, type CallbackPromise, type CallbackPromiseGeneric, type GlyphKey, type IToast, type LabelFieldKind, type NavigationParamTuple, type NavigationRoute, type NavigationRouteParamKey } from "$lib";
+import { app_toast, nav_prev, TOAST_MS, type AnchorRoute, type AppConfigType, type AppLayoutKey, type CallbackPromise, type CallbackPromiseGeneric, type GlyphKey, type IToast, type LabelFieldKind, type NavigationParamTuple, type NavigationRoute, type NavigationRouteParamKey } from "$lib";
 import type { ColorMode, ThemeKey, ThemeLayer } from "@radroots/theme";
+import { get as get_store } from "svelte/store";
 
 export const sleep = async (ms: number): Promise<void> => {
     await new Promise((resolve) => setTimeout(resolve, ms));
@@ -179,4 +180,22 @@ export const parse_cfg_type = (value?: string): AppConfigType => {
         default:
             return `personal`
     };
+};
+
+export const route_prev = async (route_fallback: NavigationRoute = `/`, params_fallback: NavigationParamTuple[] = []): Promise<void> => {
+    try {
+        let route_to = encode_qp_route(route_fallback, params_fallback);
+        const $nav_prev = get_store(nav_prev);
+        if ($nav_prev.length) {
+            const nav_prev_li = $nav_prev.pop();
+            if (nav_prev_li)
+                route_to = encode_qp_route(
+                    nav_prev_li.route,
+                    nav_prev_li.params,
+                );
+        }
+        await goto(route_to);
+    } catch (e) {
+        console.log(`(error) route_prev `, e);
+    }
 };

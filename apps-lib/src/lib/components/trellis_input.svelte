@@ -1,8 +1,12 @@
 <script lang="ts">
-    import { fmt_cl, fmt_trellis, type ITrellisBasisInput } from "$lib";
-    import Glyph from "$lib/ui/glyph.svelte";
-    import InputElement from "$lib/ui/input_element.svelte";
-    import Loading from "$lib/ui/loading.svelte";
+    import {
+        fmt_cl,
+        fmt_trellis,
+        Glyph,
+        InputElement,
+        Loading,
+        type ITrellisBasisInput,
+    } from "$lib";
     import type { ThemeLayer } from "@radroots/theme";
 
     export let basis: ITrellisBasisInput;

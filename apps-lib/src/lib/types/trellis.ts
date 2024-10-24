@@ -1,5 +1,4 @@
-import type { CallbackPromise, ICbGOpt, ICbOpt, ICbROpt, IClOpt, IGlOpt, ILabel, ILabelOpt, ILabelTup, ILy } from "./client";
-import type { GlyphKey, IGlyph, IGlyphCircle, IInputElement } from "./ui";
+import type { CallbackPromise, GlyphKey, ICbGOpt, ICbOpt, ICbROpt, IClOpt, IGlOpt, IGlyph, IGlyphCircle, IInputElement, ILabel, ILabelOpt, ILabelTup, ILy } from "$lib";
 
 export type ITrellis = ILy &
     IClOpt &

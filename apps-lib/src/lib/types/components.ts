@@ -1,6 +1,4 @@
-import type { NavigationRoute } from "$lib/utils/routes";
-import type { CallbackPromise, CallbackPromiseGeneric, ICb, ICbG, ICbGOpt, ICbOpt, IClOpt, IClWrapOpt, IGl, IGlOpt, IIdOpt, IIdWrapOpt, ILabel, ILabelFieldsOpt, ILabelOpt, ILabelOptFieldsOpt, ILabelValue, ILoadingOpt, ILyOpt, ILyOptTs, NavigationParamTuple } from "./client";
-import type { GlyphKey, GlyphWeight, IGlyph, IInputElement, ITextAreaElement } from "./ui";
+import type { CallbackPromise, CallbackPromiseGeneric, GlyphKey, GlyphWeight, ICb, ICbG, ICbGOpt, ICbOpt, IClOpt, IClWrapOpt, IGl, IGlOpt, IGlyph, IIdOpt, IIdWrapOpt, IInputElement, ILabel, ILabelFieldsOpt, ILabelOpt, ILabelOptFieldsOpt, ILabelValue, ILoadingOpt, ILyOpt, ILyOptTs, ITextAreaElement, NavigationParamTuple, NavigationRoute } from "$lib";
 
 export type ITabsBasisList = IClOpt & {
     icon: GlyphKey;

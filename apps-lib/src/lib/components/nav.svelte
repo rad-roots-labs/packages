@@ -2,6 +2,7 @@
     import { goto } from "$app/navigation";
     import {
         app_layout,
+        ButtonArrow,
         encode_qp_route,
         Fill,
         fmt_cl,
@@ -9,11 +10,10 @@
         nav_blur,
         nav_prev,
         nav_visible,
+        NavOption,
         type INavBasis,
     } from "$lib";
     import { onDestroy, onMount } from "svelte";
-    import ButtonArrow from "./button_arrow.svelte";
-    import NavOption from "./nav_option.svelte";
 
     export let basis: INavBasis;
     $: basis = basis;

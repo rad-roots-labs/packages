@@ -1,12 +1,16 @@
 <script lang="ts">
-    import { app_layout, fmt_cl, parse_layer, t, type ITrellis } from "..";
-    import TrellisDefaultLabel from "./trellis_default_label.svelte";
-    import TrellisInput from "./trellis_input.svelte";
-    import TrellisOffset from "./trellis_offset.svelte";
-    import TrellisTitle from "./trellis_title.svelte";
-    import TrellisTouch from "./trellis_touch.svelte";
-
-    const class_rounded = `2xl`;
+    import {
+        app_layout,
+        fmt_cl,
+        parse_layer,
+        t,
+        TrellisDefaultLabel,
+        TrellisInput,
+        TrellisOffset,
+        TrellisTitle,
+        TrellisTouch,
+        type ITrellis,
+    } from "$lib";
 
     export let basis: { args: ITrellis };
     $: ({ args } = basis);
@@ -30,7 +34,7 @@
 
 <div
     id={basis.args.id || ""}
-    class={`${fmt_cl(args.classes)} flex flex-col w-full`}
+    class={`${fmt_cl(args.classes)} flex flex-col`}
     data-view={basis.args.view || ""}
 >
     <div
@@ -65,7 +69,7 @@
             <div class={`flex flex-col w-full justify-center items-center`}>
                 {#each args.list as basis}
                     <div
-                        class={`${basis.hide_field ? "hidden" : ""} group flex flex-row h-full w-full justify-end items-center bg-layer-${args.layer}-surface  ${basis.full_rounded ? `rounded-${class_rounded}` : ``} ${hide_rounded ? `` : `first:rounded-t-${class_rounded} last:rounded-b-${class_rounded}`} ${!basis.hide_active ? `active:bg-layer-${args.layer}-surface_a` : ``} transition-all`}
+                        class={`${basis.hide_field ? "hidden" : ""} group flex flex-row h-full w-full justify-end items-center bg-layer-${args.layer}-surface  ${basis.full_rounded ? `rounded-touch` : ``} ${hide_rounded ? `` : `first:rounded-t-touch last:rounded-b-touch`} ${!basis.hide_active ? `active:bg-layer-${args.layer}-surface_a` : ``} transition-all`}
                     >
                         <div
                             class={`flex flex-row h-full w-full gap-1 items-center overflow-y-hidden`}
@@ -109,4 +113,3 @@
         </div>
     {/if}
 </div>
-<div class={`hidden rounded-2xl first:rounded-t-2xl last:rounded-b-2xl`}></div>

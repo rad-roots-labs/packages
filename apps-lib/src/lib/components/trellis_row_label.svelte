@@ -1,7 +1,11 @@
 <script lang="ts">
-	import Glyph from "$lib/ui/glyph.svelte";
+	import {
+		fmt_cl,
+		get_label_classes,
+		Glyph,
+		type ILabelTupFields,
+	} from "$lib";
 	import type { ThemeLayer } from "@radroots/theme";
-	import { fmt_cl, get_label_classes, type ILabelTupFields } from "..";
 
 	export let basis: ILabelTupFields;
 	export let layer: ThemeLayer;
@@ -25,7 +29,7 @@
 						</div>
 					{:else if `value` in title_l}
 						<p
-							class={`${fmt_cl(title_l.classes)} ${get_label_classes(layer, title_l.kind, hide_active)}  ${title_l.hide_truncate ? `` : `truncate`} font-sans text-line_display transition-all`}
+							class={`${fmt_cl(title_l.classes)} ${get_label_classes(layer, title_l.kind, hide_active)}  ${title_l.hide_truncate ? `` : `truncate`} font-circ text-line_display transition-all`}
 						>
 							{title_l.value || ``}
 						</p>

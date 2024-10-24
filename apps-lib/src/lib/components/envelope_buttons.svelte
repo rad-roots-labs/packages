@@ -1,6 +1,5 @@
 <script lang="ts">
-    import type { CallbackPromise } from "$lib/types/client";
-    import { fmt_cl } from "$lib/utils/client";
+    import { type CallbackPromise, fmt_cl } from "$lib";
     import { quintInOut } from "svelte/easing";
     import { fly } from "svelte/transition";
 

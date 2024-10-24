@@ -4,7 +4,8 @@
         "page": {
             "status": {
                 "404": "The page was not found"
-            }
+            },
+            "load": "There was an error loading the page"
         },
         "request_failure": "The request was not successful",
         "unhandled": "There was an error during your request"

@@ -1,6 +1,5 @@
 <script lang="ts">
-    import { app_layout, app_toast, app_win, wind } from "$lib";
-    import Toast from "$lib/ui/toast.svelte";
+    import { app_layout, app_toast, app_win, Toast, wind } from "$lib";
     import { onMount } from "svelte";
 
     onMount(async () => {

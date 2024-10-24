@@ -1,4 +1,5 @@
 {
+    "*_list": "{value} list",
     "*_as": "{value} as",
     "*_available": "{value} Available",
     "*_copied": "{value} copied",

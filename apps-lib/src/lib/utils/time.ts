@@ -1,4 +1,4 @@
-import { locale } from "$lib/locales/i18n";
+import { locale } from "$lib";
 import { DateTime, type DateTimeFormatOptions } from "luxon";
 import { get } from "svelte/store";
 
