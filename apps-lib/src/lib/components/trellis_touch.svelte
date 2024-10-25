@@ -18,10 +18,10 @@
 
 <div class={`flex flex-row flex-grow overflow-x-hidden`}>
     <div
-        class={`${fmt_trellis(hide_border_b, hide_border_t)} flex flex-row h-full w-full justify-center items-center border-t-line border-layer-${layer}-surface-edge/40 transition-all`}
+        class={`${fmt_trellis(hide_border_b, hide_border_t)} flex flex-row h-full w-full justify-center items-center border-t-line border-layer-${layer}-surface-edge el-re`}
     >
         <button
-            class={`relative group flex flex-row h-line w-full pr-[2px] justify-between items-center transition-all`}
+            class={`relative group flex flex-row h-line w-full pr-[2px] justify-between items-center el-re`}
             on:click={async (ev) => {
                 await sleep(100);
                 if (basis.callback) await basis.callback(ev);

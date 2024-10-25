@@ -3,7 +3,7 @@
 	import type { ThemeLayer } from "@radroots/theme";
 
 	export let basis: ITrellisTitle;
-	export let layer: ThemeLayer;
+	export let layer: ThemeLayer = 0;
 
 	$: mod = basis && basis.mod ? basis.mod : `sm`;
 </script>

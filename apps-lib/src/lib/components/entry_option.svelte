@@ -31,14 +31,13 @@
     });
 </script>
 
-<div
+<button
     id={basis.id_wrap || null}
-    tabindex={-1}
     class={`${fmt_cl(basis.classes_wrap)} relative el-re entry-line-wrap ${classes_layer}`}
 >
     {#if basis.loading}
         <div class={`flex flex-row w-full justify-center items-center`}>
-            <Loading basis={{ dim: `sm`, blades: 6 }} />
+            <Loading basis={{ dim: `sm`, blades: 8 }} />
         </div>
     {:else}
         <select
@@ -77,4 +76,4 @@
             />
         </div>
     {/if}
-</div>
+</button>

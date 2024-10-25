@@ -47,7 +47,7 @@
                                 <Loading
                                     basis={{
                                         dim: `glyph-send-button`,
-                                        blades: 6,
+                                        blades: 8,
                                         classes: `text-layer-${layer}-glyph transition-all`,
                                     }}
                                 />

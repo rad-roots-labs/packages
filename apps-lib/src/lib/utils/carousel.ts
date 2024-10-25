@@ -2,11 +2,12 @@ import {
     carousel_active,
     carousel_index,
     carousel_index_max,
-    sleep
+    carousel_num,
+    exe_iter
 } from "$lib";
 import { get as get_store } from 'svelte/store';
 
-const SLIDE_DURATION_MS = 400;
+const CAROUSEL_DELAY_MS = 150;
 
 const get_slide_container = <T extends string>(
     view: T,
@@ -22,7 +23,7 @@ const get_slide_item = <T extends string>(view: T): Element | undefined => {
     return el ? el : undefined;
 };
 
-export const carousel_prev = async <T extends string>(
+const carousel_dec_handler = async <T extends string>(
     view: T,
 ): Promise<void> => {
     if (get_store(carousel_active)) return;
@@ -34,11 +35,10 @@ export const carousel_prev = async <T extends string>(
         slide_container.scrollLeft -= slide_w;
         carousel_index.set(Math.max(get_store(carousel_index) - 1, 0));
     }
-    await sleep(SLIDE_DURATION_MS);
     carousel_active.set(false);
 };
 
-export const carousel_next = async <T extends string>(
+const carousel_inc_handler = async <T extends string>(
     view: T,
 ): Promise<void> => {
     if (get_store(carousel_active)) return;
@@ -52,6 +52,24 @@ export const carousel_next = async <T extends string>(
             Math.min(get_store(carousel_index) + 1, get_store(carousel_index_max)),
         );
     }
-    await sleep(SLIDE_DURATION_MS);
     carousel_active.set(false);
+};
+
+export const carousel_inc = async <T extends string>(
+    view: T,
+    duration: number = CAROUSEL_DELAY_MS
+): Promise<void> => {
+    const num = get_store(carousel_num) || 1;
+    carousel_num.set(1);
+    await exe_iter(async () => carousel_inc_handler(view), num, duration);
+};
+
+
+export const carousel_dec = async <T extends string>(
+    view: T,
+    duration: number = CAROUSEL_DELAY_MS
+): Promise<void> => {
+    const num = get_store(carousel_num) || 1;
+    carousel_num.set(1);
+    await exe_iter(async () => carousel_dec_handler(view), num, duration);
 };

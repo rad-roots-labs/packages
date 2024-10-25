@@ -121,7 +121,7 @@ export type IGlyphCircle = {
     glyph: IGlyph
 };
 
-export type ILoadingBlades = 6 | 12;
+export type ILoadingBlades = 8 | 12;
 
 export type ILoadingDimension = GeometryDimension | `glyph-send-button`;
 

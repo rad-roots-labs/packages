@@ -1,9 +1,9 @@
 <script lang="ts">
     import {
+        ButtonGlyph,
         type CallbackPromise,
         Fill,
         fmt_cl,
-        Glyph,
         type IEnvelopeTitledBasis,
         t,
     } from "$lib";
@@ -68,7 +68,7 @@
                     }}
                 >
                     {#if `glyph` in basis.submit}
-                        <Glyph basis={basis.submit?.glyph} />
+                        <ButtonGlyph basis={basis.submit?.glyph} />
                     {:else if `label` in basis.submit}
                         <p
                             class={`font-sans text-envelopeTitleAction ${classes_submit} transition-all`}

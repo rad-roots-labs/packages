@@ -41,7 +41,7 @@
                 }}
             >
                 {#if mod.loading}
-                    <Loading basis={{ blades: 6, dim: `xs` }} />
+                    <Loading basis={{ blades: 8, dim: `xs` }} />
                 {:else if `glyph` in mod}
                     <Glyph
                         basis={{

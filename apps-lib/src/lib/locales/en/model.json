@@ -1,15 +1,15 @@
 {
     "location_gcs": {
-        "geohash": "Geohash",
-        "label": "Label",
-        "lat": "Latitude",
-        "lng": "Longitude",
-        "gc_id": "",
-        "gc_name": "",
         "gc_admin1_id": "",
         "gc_admin1_name": "",
         "gc_country_id": "",
-        "gc_country_name": ""
+        "gc_country_name": "",
+        "gc_id": "",
+        "gc_name": "",
+        "geohash": "Geohash",
+        "label": "Label",
+        "lat": "Latitude",
+        "lng": "Longitude"
     },
     "nostr_profile": {
         "about": "About",
@@ -29,11 +29,11 @@
         "description": "Relay description",
         "name": "Relay name",
         "pubkey": "Administrator",
+        "relay_id": "",
         "software": "Software",
         "supported_nips": "Supported NIPs",
         "url": "Relay endpoint",
-        "version": "Software version",
-        "relay_id": ""
+        "version": "Software version"
     },
     "trade_product": {
         "key": "Product name",
@@ -41,6 +41,8 @@
         "notes": "Notes",
         "price_amt": "Price",
         "price_currency": "Currency",
+        "price_qty_amt": "",
+        "price_qty_unit": "",
         "process": "Processing method",
         "profile": "Flavor profile",
         "qty_amt": "Quantity",
@@ -49,8 +51,6 @@
         "qty_unit": "Quantity unit",
         "summary": "Listing summary",
         "title": "Listing title",
-        "year": "Year",
-        "price_qty_amt": "",
-        "price_qty_unit": ""
+        "year": "Year"
     }
 }

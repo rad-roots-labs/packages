@@ -48,6 +48,7 @@ export const tabs_active = writable<number>(0);
 export const carousel_active = writable<boolean>(false);
 export const carousel_index = writable<number>(0);
 export const carousel_index_max = writable<number>(0);
+export const carousel_num = writable<number>(1);
 
 export const nostr_ndk_configured = writable<boolean>(false);
 export const nostr_relays_poll_documents = writable<boolean>(false);

@@ -1,5 +1,10 @@
 <script lang="ts">
-    import { type IGlyphCircle, fmt_cl, Glyph, glyph_style_map } from "$lib";
+    import {
+        type IGlyphCircle,
+        ButtonGlyph,
+        fmt_cl,
+        glyph_style_map,
+    } from "$lib";
 
     export let basis: IGlyphCircle;
 
@@ -12,6 +17,6 @@
     <div
         class={`${fmt_cl(basis?.classes_wrap)} flex flex-col h-[${styles?.dim_1}px] w-[${styles?.dim_1}px] justify-center items-center rounded-full transition-all`}
     >
-        <Glyph basis={basis?.glyph} />
+        <ButtonGlyph basis={basis?.glyph} />
     </div>
 {/if}

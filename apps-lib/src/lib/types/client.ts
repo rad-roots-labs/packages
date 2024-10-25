@@ -191,3 +191,4 @@ export type IToast = IClOpt &
     };
 
 export type AppConfigType = `farmer` | `personal`
+export type GeolocationLatitudeFmtOption = 'dms' | 'd' | 'dm';

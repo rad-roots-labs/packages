@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { GlyphEl, type CallbackPromise } from "$lib";
+    import { Glyph, type CallbackPromise } from "$lib";
     import { onDestroy, onMount } from "svelte";
 
     export let basis: {
@@ -40,7 +40,7 @@
                 await basis.callback();
             }}
         >
-            <GlyphEl
+            <Glyph
                 basis={{
                     classes: `text-layer-0-glyph`,
                     dim: `sm`,

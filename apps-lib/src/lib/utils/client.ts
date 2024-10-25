@@ -1,7 +1,9 @@
 import { goto } from "$app/navigation";
-import { app_toast, nav_prev, TOAST_MS, type AnchorRoute, type AppConfigType, type AppLayoutKey, type CallbackPromise, type CallbackPromiseGeneric, type GlyphKey, type IToast, type LabelFieldKind, type NavigationParamTuple, type NavigationRoute, type NavigationRouteParamKey } from "$lib";
+import { app_toast, locale, nav_prev, TOAST_MS, type AnchorRoute, type AppConfigType, type AppLayoutKey, type CallbackPromise, type CallbackPromiseGeneric, type GeolocationLatitudeFmtOption, type GlyphKey, type IToast, type LabelFieldKind, type NavigationParamTuple, type NavigationRoute, type NavigationRouteParamKey } from "$lib";
 import type { ColorMode, ThemeKey, ThemeLayer } from "@radroots/theme";
+
 import { get as get_store } from "svelte/store";
+
 
 export const sleep = async (ms: number): Promise<void> => {
     await new Promise((resolve) => setTimeout(resolve, ms));
@@ -197,5 +199,69 @@ export const route_prev = async (route_fallback: NavigationRoute = `/`, params_f
         await goto(route_to);
     } catch (e) {
         console.log(`(error) route_prev `, e);
+    }
+};
+
+export const fmt_geol_latitude = (lat: number, fmt_opt: GeolocationLatitudeFmtOption): string => {
+    const _locale = get_store(locale);
+    const options: Intl.NumberFormatOptions = {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+    };
+    const fmt_deg = new Intl.NumberFormat(_locale, { maximumFractionDigits: 0 });
+    const fmt_min = new Intl.NumberFormat(_locale, options);
+    const fmt_sec = new Intl.NumberFormat(_locale, options);
+    if (fmt_opt === 'dms') {
+        const deg = Math.floor(Math.abs(lat));
+        const min = Math.floor((Math.abs(lat) - deg) * 60);
+        const sec = ((Math.abs(lat) - deg - min / 60) * 3600);
+        return `${fmt_deg.format(deg)}° ${fmt_min.format(min)}' ${fmt_sec.format(sec)}" ${lat >= 0 ? 'N' : 'S'}`;
+    } else if (fmt_opt === 'dm') {
+        const deg = Math.floor(Math.abs(lat));
+        const min = (Math.abs(lat) - deg) * 60;
+        return `${fmt_deg.format(deg)}° ${fmt_min.format(min)}' ${lat >= 0 ? 'N' : 'S'}`;
+    } else {
+        return `${lat.toLocaleString(_locale, { maximumFractionDigits: 5 })}° ${lat >= 0 ? 'N' : 'S'}`;
+    }
+};
+
+export const fmt_geol_longitude = (lng: number, fmt_opt: GeolocationLatitudeFmtOption): string => {
+    const _locale = get_store(locale);
+    const options: Intl.NumberFormatOptions = {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+    };
+    const fmt_deg = new Intl.NumberFormat(_locale, { maximumFractionDigits: 0 });
+    const fmt_min = new Intl.NumberFormat(_locale, options);
+    const fmt_sec = new Intl.NumberFormat(_locale, options);
+    if (fmt_opt === 'dms') {
+        const degrees = Math.floor(Math.abs(lng));
+        const minutes = Math.floor((Math.abs(lng) - degrees) * 60);
+        const seconds = ((Math.abs(lng) - degrees - minutes / 60) * 3600);
+        return `${fmt_deg.format(degrees)}° ${fmt_min.format(minutes)}' ${fmt_sec.format(seconds)}" ${lng >= 0 ? 'E' : 'W'}`;
+    } else if (fmt_opt === 'dm') {
+        const degrees = Math.floor(Math.abs(lng));
+        const minutes = (Math.abs(lng) - degrees) * 60;
+        return `${fmt_deg.format(degrees)}° ${fmt_min.format(minutes)}' ${lng >= 0 ? 'E' : 'W'}`;
+    } else {
+        return `${lng.toLocaleString(_locale, { maximumFractionDigits: 5 })}° ${lng >= 0 ? 'E' : 'W'}`;
+    }
+};
+
+export const exe_iter = async (callback: CallbackPromise, num: number = 1, delay: number = 400): Promise<void> => {
+    try {
+        const iter_fn = (count: number) => {
+            if (count > 0) {
+                callback();
+                if (count > 1) {
+                    setTimeout(() => {
+                        iter_fn(count - 1);
+                    }, delay);
+                }
+            }
+        };
+        iter_fn(num);
+    } catch (e) {
+        console.log(`(error) exe_iter `, e);
     }
 };

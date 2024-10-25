@@ -1,8 +1,8 @@
 <script lang="ts">
 	import {
+		ButtonGlyph,
 		fmt_cl,
 		get_label_classes,
-		Glyph,
 		type ILabelTupFields,
 	} from "$lib";
 	import type { ThemeLayer } from "@radroots/theme";
@@ -25,7 +25,7 @@
 						<div
 							class={`flex flex-row justify-start items-center pr-2`}
 						>
-							<Glyph basis={{ ...title_l.glyph }} />
+							<ButtonGlyph basis={{ ...title_l.glyph }} />
 						</div>
 					{:else if `value` in title_l}
 						<p
@@ -47,7 +47,7 @@
 					class={`${fmt_cl(title_r.classes_wrap)} flex flex-row h-full w-trellis_value gap-1 items-center ${title_r.hide_truncate ? `` : `truncate`}`}
 				>
 					{#if `glyph` in title_r}
-						<Glyph basis={{ ...title_r.glyph }} />
+						<ButtonGlyph basis={{ ...title_r.glyph }} />
 					{:else if `value` in title_r}
 						<p
 							class={`${fmt_cl(title_r.classes)} ${get_label_classes(layer, title_r.kind, hide_active)} ${title_r.hide_truncate ? `` : `truncate`} font-sans text-line_display transition-all`}
