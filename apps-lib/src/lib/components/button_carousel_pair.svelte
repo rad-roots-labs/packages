@@ -18,7 +18,7 @@
 
 <div class={`flex flex-col justify-center items-center`}>
     <button
-        class={`group flex flex-row h-touch_guide w-${$app_layout} justify-center items-center bg-layer-1-surface rounde-40 ${basis.continue.disabled ? `opacity-60` : `touch-layer-1`} transition-all`}
+        class={`group flex flex-row h-touch_guide w-${$app_layout} justify-center items-center bg-layer-1-surface round-40 ${basis.continue.disabled ? `opacity-60` : `touch-layer-1`} transition-all`}
         on:click|stopPropagation={async () => {
             if (!basis.continue.disabled) await basis.continue.callback();
         }}

@@ -22,7 +22,7 @@ export type IFormField = {
     validate_keypress?: boolean;
 };
 
-export type IEntryStyle = `guide` | `form_line`;
+export type IEntryStyle = `guide` | `line`;
 export type IEntryWrap = IClOpt & IIdOpt & ILyOptTs & {
     style?: IEntryStyle;
     style_a?: true;
