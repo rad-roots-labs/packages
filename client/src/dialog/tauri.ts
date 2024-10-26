@@ -1,5 +1,5 @@
-import { confirm, type ConfirmDialogOptions, message } from '@tauri-apps/plugin-dialog';
-import type { IClientDialog, IClientDialogConfirmOpts, IClientDialogKind } from "./types";
+import { confirm, type ConfirmDialogOptions, message, open, type OpenDialogOptions } from '@tauri-apps/plugin-dialog';
+import type { IClientDialog, IClientDialogConfirmOpts, IClientDialogKind, IClientDialogResolve } from "./types";
 
 export class TauriClientDialog implements IClientDialog {
     public async alert(msg: string, title?: string, kind?: IClientDialogKind): Promise<boolean> {
@@ -25,6 +25,25 @@ export class TauriClientDialog implements IClientDialog {
             return res;
         } catch (e) {
             return false;
+        };
+    }
+
+    public async open_photos(): Promise<IClientDialogResolve | undefined> {
+        try {
+            const options: OpenDialogOptions = {
+                multiple: true,
+                directory: false,
+                filters: [{
+                    name: `Image`,
+                    extensions: ['png']
+                }]
+            };
+            const res = await open(options) as any;
+            if (Array.isArray(res)) return { results: res.map(i => String(i)) };
+            else if (typeof res === `string`) return { results: [res] };
+            return undefined;
+        } catch (e) {
+            return undefined;
         };
     }
 }

@@ -1,3 +1,5 @@
+import type { ResultsList } from "@radroots/utils";
+
 export type IClientDialogPrompt = {
     title?: string;
     message: string;
@@ -11,8 +13,11 @@ export type IClientDialogKind = "info" | "warning" | "error";
 
 export type IClientDialogConfirmOpts = string | { title?: string, kind?: IClientDialogKind; message: string; cancel_label?: string; ok_label?: string; };
 
+export type IClientDialogResolve = ResultsList<string>;
+
 export type IClientDialog = {
     alert(message: string): Promise<boolean>;
     confirm(opts: IClientDialogConfirmOpts): Promise<boolean>;
+    open_photos(): Promise<IClientDialogResolve | undefined>;
     //prompt(opts: IClientDialogPrompt): Promise<string | false>;
 };
