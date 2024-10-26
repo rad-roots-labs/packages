@@ -3,39 +3,35 @@
     import {
         fmt_cl,
         Glyph,
-        type IEntryOption,
+        type IEntrySelect,
         kv,
         Loading,
         parse_layer,
     } from "$lib";
     import { onMount } from "svelte";
+    import EntryWrap from "./entry_wrap.svelte";
 
     let el: HTMLSelectElement | null;
 
     export let value: string;
-    export let basis: IEntryOption;
+    export let basis: IEntrySelect;
     $: basis = basis;
 
     $: layer =
-        typeof basis.layer === `boolean` ? false : parse_layer(basis.layer, 1);
-    $: classes_layer =
-        typeof layer === `boolean`
-            ? `bg-transparent`
-            : `bg-layer-${layer}-surface px-4`;
+        typeof basis?.wrap.layer === `boolean`
+            ? parse_layer(0)
+            : parse_layer(basis?.wrap.layer, 1);
 
     onMount(async () => {
         try {
-            if (basis.sync && basis.id)
-                await kv.set(basis.id, basis.options[0].value);
+            if (basis?.el.sync && basis?.el.id)
+                await kv.set(basis?.el.id, basis?.el.options[0].value);
         } catch (e) {}
     });
 </script>
 
-<button
-    id={basis.id_wrap || null}
-    class={`${fmt_cl(basis.classes_wrap)} relative el-re entry-line-wrap ${classes_layer}`}
->
-    {#if basis.loading}
+<EntryWrap basis={basis?.wrap}>
+    {#if basis?.loading}
         <div class={`flex flex-row w-full justify-center items-center`}>
             <Loading basis={{ dim: `sm`, blades: 8 }} />
         </div>
@@ -43,15 +39,16 @@
         <select
             bind:this={el}
             bind:value
-            id={basis.id || null}
-            class={`${fmt_cl(basis.classes)} z-10 el-select entry-line-fluid text-layer-${layer}-glyph`}
+            id={basis?.el.id || null}
+            class={`${fmt_cl(basis?.el.classes)} z-10 el-select entry-line-fluid text-layer-${layer}-glyph`}
             on:change={async ({ currentTarget: el }) => {
                 const val = el.value;
-                if (basis.sync && basis.id) await kv.set(basis.id, val);
-                if (basis.callback) await basis.callback(val);
+                if (basis?.el.sync && basis?.el.id)
+                    await kv.set(basis?.el.id, val);
+                if (basis?.el.callback) await basis?.el.callback(val);
             }}
         >
-            {#each basis.options as opt}
+            {#each basis?.el.options as opt}
                 <option
                     value={opt.value}
                     disabled={!!opt.disabled}
@@ -62,9 +59,9 @@
             {/each}
         </select>
     {/if}
-    {#if !basis.hide_arrows}
+    {#if !basis?.el.hide_arrows}
         <div
-            class={`z-5 absolute right-0 top-0 flex flex-row h-full pr-3 justify-end items-center`}
+            class={`z-5 absolute right-0 top-0 flex flex-row h-full pr-4 justify-end items-center`}
         >
             <Glyph
                 basis={{
@@ -76,4 +73,4 @@
             />
         </div>
     {/if}
-</button>
+</EntryWrap>

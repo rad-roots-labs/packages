@@ -6,6 +6,7 @@
         type ILabel,
         type ILabelOpt,
     } from "$lib";
+    import { fade } from "svelte/transition";
 
     export let basis:
         | (ILabelOpt &
@@ -32,7 +33,9 @@
             {/if}
             {#if basis?.notify}
                 <div
-                    class={`${fmt_cl(basis?.notify.classes)} flex flex-row justify-start items-center fade-in transition-all`}
+                    in:fade={{ duration: 200 }}
+                    out:fade={{ delay: 50, duration: 200 }}
+                    class={`${fmt_cl(basis?.notify.classes)} flex flex-row justify-start items-center transition-all`}
                 >
                     <button
                         class={`flex flex-row justify-center items-center`}

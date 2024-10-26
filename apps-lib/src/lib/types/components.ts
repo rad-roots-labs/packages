@@ -22,14 +22,21 @@ export type IFormField = {
     validate_keypress?: boolean;
 };
 
-export type ILineStyle = `guide`;
-export type IEntryLine = IIdWrapOpt & IClOpt & ILoadingOpt & {
+export type IEntryStyle = `guide` | `form_line`;
+export type IEntryWrap = IClOpt & IIdOpt & ILyOptTs & {
+    style?: IEntryStyle;
+    style_a?: true;
+}
+
+export type IEntryLine = ILoadingOpt & {
+    wrap?: IEntryWrap;
     el: IInputElement;
-    style?: ILineStyle
     notify_inline?: {
         glyph: GlyphKey | IGlyph;
     };
-}
+};
+
+
 
 export type IEntryMultiLine = IIdWrapOpt & IClWrapOpt & {
     el: ITextAreaElement;
@@ -38,20 +45,22 @@ export type IEntryMultiLine = IIdWrapOpt & IClWrapOpt & {
     };
 }
 
-export type IEntryOptionOption = {
+export type IEntrySelectOption = {
     value: string;
     label?: string;
     disabled?: boolean;
     selected?: boolean;
 };
 
-export type IEntryOption = IIdOpt & IIdWrapOpt & IClWrapOpt & IClOpt & ILyOptTs & ICbGOpt<string> & {
-    label?: string;
-    hidden?: boolean;
-    hide_arrows?: boolean;
-    sync?: boolean;
-    loading?: boolean;
-    options: IEntryOptionOption[];
+export type IEntrySelect = ILoadingOpt & {
+    wrap: IEntryWrap;
+    el: IIdOpt & IClOpt & ICbGOpt<string> & {
+        label?: string;
+        hidden?: boolean;
+        hide_arrows?: boolean;
+        sync?: boolean;
+        options: IEntrySelectOption[];
+    }
 };
 
 
@@ -96,5 +105,5 @@ export type INavBasis = {
 
 
 export type IDisplayLine = IIdWrapOpt & IClOpt & ILabelValue & ILyOpt & {
-    style?: ILineStyle
+    style?: IEntryStyle
 }

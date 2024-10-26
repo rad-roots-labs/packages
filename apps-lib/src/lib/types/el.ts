@@ -1,9 +1,10 @@
-import type { CallbackPromiseGeneric, GeometryCardinalDirection, GeometryDimension, GeometryGlyphDimension, ICbGOpt, ICbOpt, IClOpt, IFormField, IId, IIdOpt, ILy, ILyOptTs } from "$lib";
+import type { CallbackPromiseGeneric, GeometryCardinalDirection, GeometryDimension, GeometryGlyphDimension, ICbGOpt, ICbOpt, IClOpt, IFormField, IId, IIdOpt, ILyOptTs } from "$lib";
 import type { ThemeLayer } from "@radroots/theme";
 
 export type GlyphKeyCurrency = `dollar` | `eur`;
 
 export type GlyphKey = |
+    `funnel` |
     `users-three` |
     `note-blank` |
     `user-circle-plus` |
@@ -138,11 +139,8 @@ export type ISelectOption<T extends string> = {
     disabled?: boolean;
 };
 
-export type ISelectElement = ILy &
+export type ISelectElement = IIdOpt & IClOpt & ILyOptTs &
     ICbGOpt<ISelectOption<string>> & {
-        id?: string;
-        classes?: string;
-        mask?: boolean;
         options: { group?: string | true; entries: ISelectOption<string>[] }[];
     };
 

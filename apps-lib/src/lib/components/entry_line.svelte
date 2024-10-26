@@ -1,6 +1,6 @@
 <script lang="ts">
     import {
-        fmt_cl,
+        EntryWrap,
         Glyph,
         InputElement,
         Loading,
@@ -13,28 +13,18 @@
     $: basis = basis;
 
     $: layer =
-        typeof basis.el?.layer === `boolean`
+        typeof basis.wrap?.layer === `boolean`
             ? false
-            : parse_layer(basis.el?.layer, 1);
-    $: classes_layer =
-        typeof layer === `boolean`
-            ? `bg-transparent`
-            : `bg-layer-${layer}-surface`;
-    $: clases_style =
-        basis.style === `guide` ? `h-entry_guide rounded-touch` : ``;
-
+            : parse_layer(basis.wrap?.layer, 1);
     let loading_dim: ILoadingDimension = `sm`;
-    $: loading_dim = basis.style === `guide` ? `md` : `sm`;
+    $: loading_dim = basis.wrap?.style === `guide` ? `md` : `sm`;
 </script>
 
-<div
-    id={basis.id_wrap || null}
-    class={`${fmt_cl(basis.classes)} relative el-re entry-line-wrap px-2 ${classes_layer} ${clases_style}`}
->
+<EntryWrap basis={basis?.wrap}>
     <InputElement basis={basis.el} />
     {#if basis.loading}
         <div
-            class={`z-5 absolute el-re right-0 top-0 flex flex-row h-full pr-4 justify-end items-center fade-in`}
+            class={`z-5 absolute right-0 top-0 flex flex-row h-full pr-4 justify-end items-center fade-in el-re`}
         >
             <Loading
                 basis={{
@@ -60,4 +50,4 @@
             </div>
         {/if}
     {/if}
-</div>
+</EntryWrap>

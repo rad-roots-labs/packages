@@ -7,7 +7,7 @@ import {
 } from "$lib";
 import { get as get_store } from 'svelte/store';
 
-const CAROUSEL_DELAY_MS = 150;
+const CAROUSEL_DELAY_MS = 250;
 
 const get_slide_container = <T extends string>(
     view: T,
