@@ -6,14 +6,14 @@ import {
     watchPosition,
     type Position
 } from '@tauri-apps/plugin-geolocation';
-import { fmt_location_coords } from '../utils';
+import { parse_location_coords } from '../utils';
 import type { IClientGeolocation, IClientGeolocationPermission, IClientGeolocationPosition, IClientGeolocationWatchCallback, IClientGeolocationWatchOpts, IGeolocationErrorMessage } from './types';
 
 export class TauriClientGeolocation implements IClientGeolocation {
     private parse_geolocation_position({ coords: pos_coords }: Position): IClientGeolocationPosition {
         const position: IClientGeolocationPosition = {
-            lat: fmt_location_coords(pos_coords.latitude),
-            lng: fmt_location_coords(pos_coords.longitude),
+            lat: parse_location_coords(pos_coords.latitude),
+            lng: parse_location_coords(pos_coords.longitude),
             accuracy: pos_coords.accuracy || undefined,
             altitude: pos_coords.altitude || undefined,
             altitude_accuracy: pos_coords.altitudeAccuracy || undefined
