@@ -1,17 +1,7 @@
-<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
 <script lang="ts">
-    import {
-        fmt_cl,
-        Glyph,
-        type IEntrySelect,
-        kv,
-        Loading,
-        parse_layer,
-    } from "$lib";
-    import { onMount } from "svelte";
+    import { Glyph, type IEntrySelect, Loading, parse_layer } from "$lib";
+    import SelectElement from "$lib/el/select_element.svelte";
     import EntryWrap from "./entry_wrap.svelte";
-
-    let el: HTMLSelectElement | null;
 
     export let value: string;
     export let basis: IEntrySelect;
@@ -21,13 +11,6 @@
         typeof basis?.wrap.layer === `boolean`
             ? parse_layer(0)
             : parse_layer(basis?.wrap.layer, 1);
-
-    onMount(async () => {
-        try {
-            if (basis?.el.sync && basis?.el.id)
-                await kv.set(basis?.el.id, basis?.el.options[0].value);
-        } catch (e) {}
-    });
 </script>
 
 <EntryWrap basis={basis?.wrap}>
@@ -36,30 +19,9 @@
             <Loading basis={{ dim: `sm`, blades: 8 }} />
         </div>
     {:else}
-        <select
-            bind:this={el}
-            bind:value
-            id={basis?.el.id || null}
-            class={`${fmt_cl(basis?.el.classes)} z-10 el-select entry-line-fluid text-layer-${layer}-glyph`}
-            on:change={async ({ currentTarget: el }) => {
-                const val = el.value;
-                if (basis?.el.sync && basis?.el.id)
-                    await kv.set(basis?.el.id, val);
-                if (basis?.el.callback) await basis?.el.callback(val);
-            }}
-        >
-            {#each basis?.el.options as opt}
-                <option
-                    value={opt.value}
-                    disabled={!!opt.disabled}
-                    selected={!!opt.selected}
-                >
-                    {opt.label || opt.value}
-                </option>
-            {/each}
-        </select>
+        <SelectElement bind:value basis={basis.el} />
     {/if}
-    {#if !basis?.el.hide_arrows}
+    {#if !basis?.hide_arrows}
         <div
             class={`z-5 absolute right-0 top-0 flex flex-row h-full pr-4 justify-end items-center`}
         >

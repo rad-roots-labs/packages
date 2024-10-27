@@ -1,4 +1,5 @@
-import type { CallbackPromise, CallbackPromiseGeneric, GlyphKey, GlyphWeight, ICb, ICbG, ICbGOpt, ICbOpt, IClOpt, IGl, IGlOpt, IGlyph, IIdOpt, IIdWrapOpt, IInputElement, ILabel, ILabelFieldsOpt, ILabelOpt, ILabelOptFieldsOpt, ILabelValue, ILoadingOpt, ILyOpt, ILyOptTs, ITextAreaElement, NavigationParamTuple, NavigationRoute } from "$lib";
+import type { CallbackPromise, CallbackPromiseGeneric, GlyphKey, GlyphWeight, ICb, ICbG, ICbOpt, IClOpt, IGl, IGlOpt, IGlyph, IIdOpt, IIdWrapOpt, IInputElement, ILabel, ILabelFieldsOpt, ILabelOpt, ILabelOptFieldsOpt, ILabelValue, ILoadingOpt, ILyOpt, ILyOptTs, ISelectElement, ITextAreaElement, NavigationParamTuple, NavigationRoute } from "$lib";
+import type { TransitionConfig } from "svelte/transition";
 
 export type ITabsBasisList = IClOpt & {
     icon: GlyphKey;
@@ -26,6 +27,10 @@ export type IEntryStyle = `guide` | `line`;
 export type IEntryWrap = IClOpt & IIdOpt & ILyOptTs & {
     style?: IEntryStyle;
     style_a?: true;
+    fade?: {
+        in?: TransitionConfig;
+        out?: TransitionConfig;
+    };
 }
 
 export type IEntryLine = ILoadingOpt & {
@@ -55,13 +60,14 @@ export type IEntrySelectOption = {
 
 export type IEntrySelect = ILoadingOpt & {
     wrap: IEntryWrap;
-    el: IIdOpt & IClOpt & ICbGOpt<string> & {
+    el: ISelectElement;
+    hide_arrows?: boolean;
+    /*IIdOpt & IClOpt & ICbGOpt<string> & {
         label?: string;
         hidden?: boolean;
-        hide_arrows?: boolean;
         sync?: boolean;
         options: IEntrySelectOption[];
-    }
+    }*/
 };
 
 

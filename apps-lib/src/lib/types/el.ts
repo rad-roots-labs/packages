@@ -4,6 +4,7 @@ import type { ThemeLayer } from "@radroots/theme";
 export type GlyphKeyCurrency = `dollar` | `eur`;
 
 export type GlyphKey = |
+    `image-square` |
     `image-broken` |
     `funnel` |
     `users-three` |
@@ -142,6 +143,8 @@ export type ISelectOption<T extends string> = {
 
 export type ISelectElement = IIdOpt & IClOpt & ILyOptTs &
     ICbGOpt<ISelectOption<string>> & {
+        sync?: true;
+        sync_init?: true | string;
         options: { group?: string | true; entries: ISelectOption<string>[] }[];
     };
 
@@ -158,6 +161,7 @@ export type IInputElement = IId & IClOpt & ILyOptTs & {
     };*/
     callback?: CallbackPromiseGeneric<{ value: string; pass: boolean; }>;
     callback_keydown?: CallbackPromiseGeneric<{ key: string; el: HTMLInputElement }>;
+    callback_blur?: CallbackPromiseGeneric<{ el: HTMLInputElement }>;
     on_mount?: CallbackPromiseGeneric<HTMLInputElement>;
 };
 

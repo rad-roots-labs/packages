@@ -177,9 +177,13 @@ export const value_constrain = (regex_charset: RegExp, value: string): string =>
 export const value_constrain_textarea = (regex_charset: RegExp, value: string): string => {
     return value
         .replace(/\u00A0/g, ` `)
-        .split("")
-        .filter((char) => regex_charset.test(char))
-        .join("")
+        .split(/[\n]/)
+        .map(line => line
+            .split("")
+            .filter((char) => regex_charset.test(char))
+            .join("")
+        )
+        .join("\n")
         .replace(/ /g, `\u00A0`);
 };
 

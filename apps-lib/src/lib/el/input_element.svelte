@@ -74,10 +74,13 @@
     bind:this={el}
     {id}
     type="text"
-    class={`${fmt_cl(basis?.classes)} el-input text-layer-${layer}-glyph placeholder:text-layer-${layer}-glyph_pl caret-layer-${layer}-glyph`}
+    class={`${fmt_cl(basis?.classes)} el-input text-layer-${layer}-glyph placeholder:text-layer-${layer}-glyph_pl caret-layer-${layer}-glyph el-re`}
     placeholder={basis?.placeholder || ""}
     on:input={async ({ currentTarget: el }) => {
         await handle_on_input(el);
+    }}
+    on:blur={async ({ currentTarget: el }) => {
+        if (basis.callback_blur) await basis.callback_blur({ el });
     }}
     on:keydown={async (ev) => {
         if (basis?.callback_keydown)
