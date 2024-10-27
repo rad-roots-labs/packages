@@ -19,6 +19,14 @@
 
     onMount(async () => {
         try {
+            await kv_init();
+        } catch (e) {
+            console.log(`e input mount`, e);
+        }
+    });
+
+    const kv_init = async (): Promise<void> => {
+        try {
             if (basis?.id) {
                 if (basis?.sync_init)
                     await kv.set(
@@ -35,9 +43,31 @@
             }
             if (basis?.on_mount) await basis?.on_mount(el);
         } catch (e) {
-            console.log(`e input mount`, e);
+            console.log(`(error) kv_init `, e);
         }
-    });
+    };
+
+    const handle_on_input = async (el: HTMLInputElement): Promise<void> => {
+        try {
+            let pass = true;
+            let val = el?.value;
+            if (basis?.field && el) {
+                val = value_constrain(basis?.field.charset, val);
+                el.value = val;
+                if (
+                    !basis?.field.validate.test(val) &&
+                    basis?.field.validate_keypress
+                ) {
+                    //@todo set styles
+                }
+                pass = basis?.field.validate.test(val);
+            }
+            if (basis?.sync) await kv.set(basis?.id, val);
+            if (basis?.callback) await basis?.callback({ value: val, pass });
+        } catch (e) {
+            console.log(`(error) handle_on_input `, e);
+        }
+    };
 </script>
 
 <input
@@ -47,21 +77,7 @@
     class={`${fmt_cl(basis?.classes)} el-input text-layer-${layer}-glyph placeholder:text-layer-${layer}-glyph_pl caret-layer-${layer}-glyph`}
     placeholder={basis?.placeholder || ""}
     on:input={async ({ currentTarget: el }) => {
-        let pass = true;
-        let val = el?.value;
-        if (basis?.field && el) {
-            val = value_constrain(basis?.field.charset, val);
-            el.value = val;
-            if (
-                !basis?.field.validate.test(val) &&
-                basis?.field.validate_keypress
-            ) {
-                //@todo set styles
-            }
-            pass = basis?.field.validate.test(val);
-        }
-        if (basis?.sync) await kv.set(basis?.id, val);
-        if (basis?.callback) await basis?.callback({ value: val, pass });
+        await handle_on_input(el);
     }}
     on:keydown={async (ev) => {
         if (basis?.callback_keydown)

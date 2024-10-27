@@ -4,6 +4,7 @@ import type { ThemeLayer } from "@radroots/theme";
 export type GlyphKeyCurrency = `dollar` | `eur`;
 
 export type GlyphKey = |
+    `image-broken` |
     `funnel` |
     `users-three` |
     `note-blank` |
@@ -171,7 +172,7 @@ export type ITextAreaElement = IId & IClOpt & ILyOptTs & {
     /*notify_inline?: {
         glyph: GlyphKey | IGlyph;
     };*/
-    callback?: CallbackPromiseGeneric<{ val: string; pass: boolean; }>;
+    callback?: CallbackPromiseGeneric<{ value: string; pass: boolean; }>;
     callback_keydown?: CallbackPromiseGeneric<{ key: string; }>;
     on_mount?: CallbackPromiseGeneric<HTMLTextAreaElement>;
 };

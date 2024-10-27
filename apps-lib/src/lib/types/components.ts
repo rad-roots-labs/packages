@@ -1,4 +1,4 @@
-import type { CallbackPromise, CallbackPromiseGeneric, GlyphKey, GlyphWeight, ICb, ICbG, ICbGOpt, ICbOpt, IClOpt, IClWrapOpt, IGl, IGlOpt, IGlyph, IIdOpt, IIdWrapOpt, IInputElement, ILabel, ILabelFieldsOpt, ILabelOpt, ILabelOptFieldsOpt, ILabelValue, ILoadingOpt, ILyOpt, ILyOptTs, ITextAreaElement, NavigationParamTuple, NavigationRoute } from "$lib";
+import type { CallbackPromise, CallbackPromiseGeneric, GlyphKey, GlyphWeight, ICb, ICbG, ICbGOpt, ICbOpt, IClOpt, IGl, IGlOpt, IGlyph, IIdOpt, IIdWrapOpt, IInputElement, ILabel, ILabelFieldsOpt, ILabelOpt, ILabelOptFieldsOpt, ILabelValue, ILoadingOpt, ILyOpt, ILyOptTs, ITextAreaElement, NavigationParamTuple, NavigationRoute } from "$lib";
 
 export type ITabsBasisList = IClOpt & {
     icon: GlyphKey;
@@ -38,7 +38,8 @@ export type IEntryLine = ILoadingOpt & {
 
 
 
-export type IEntryMultiLine = IIdWrapOpt & IClWrapOpt & {
+export type IEntryMultiLine = {
+    wrap?: IEntryWrap;
     el: ITextAreaElement;
     notify_inline?: {
         glyph: GlyphKey | IGlyph;

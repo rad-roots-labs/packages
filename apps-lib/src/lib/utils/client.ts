@@ -174,6 +174,15 @@ export const value_constrain = (regex_charset: RegExp, value: string): string =>
         .join("");
 };
 
+export const value_constrain_textarea = (regex_charset: RegExp, value: string): string => {
+    return value
+        .replace(/\u00A0/g, ` `)
+        .split("")
+        .filter((char) => regex_charset.test(char))
+        .join("")
+        .replace(/ /g, `\u00A0`);
+};
+
 export const parse_cfg_type = (value?: string): AppConfigType => {
     switch (value) {
         case `farmer`:

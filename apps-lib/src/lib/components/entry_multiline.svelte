@@ -21,8 +21,8 @@
 </script>
 
 <div
-    id={basis.id_wrap || null}
-    class={`${fmt_cl(basis.classes_wrap)} relative el-re entry-textarea-wrap ${classes_layer}`}
+    id={basis.wrap?.id || null}
+    class={`${fmt_cl(basis.wrap?.classes)} relative el-re entry-textarea-wrap ${classes_layer}`}
 >
     <TextareaElement basis={basis.el} />
     {#if basis.notify_inline}
