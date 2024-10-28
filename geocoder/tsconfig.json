@@ -9,7 +9,7 @@
         "outDir": "./dist",
         "rootDir": "./src",
         "noEmit": true,
-        "skipLibCheck": true, 
+        "skipLibCheck": true,
     },
     "include": [
         "src"
