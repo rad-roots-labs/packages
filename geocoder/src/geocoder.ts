@@ -1,11 +1,11 @@
-import { err_msg, type ErrorMessage, type GeolocationCoordinatesPoint, type ResultsList } from "@radroots/utils";
+import { err_msg, ResultObj, type ErrorMessage, type GeolocationCoordinatesPoint, type ResultsList } from "@radroots/utils";
 import type { Database } from "sql.js";
-import type { GeocoderDegreeOffset, GeocoderErrorMessage, GeocoderReverseResult } from "./types";
-import { parse_geocode_reverse_result } from "./utils";
+import type { GeocoderErrorMessage, GeocoderReverseResult, IGeocoder, IGeocoderCountryCenter, IGeocoderCountryListResult, IGeocoderReverse } from "./types";
+import { parse_geocode_country_center_result, parse_geocode_country_list_result, parse_geocode_reverse_result } from "./utils";
 
 const KM_PER_DEGREE_LATITUDE = 111;
 
-export class Geocoder {
+export class Geocoder implements IGeocoder {
     private _db: Database | null = null;
     private _database_name: string;
 
@@ -28,13 +28,7 @@ export class Geocoder {
         };
     }
 
-
-
-    public async reverse(opts: {
-        point: GeolocationCoordinatesPoint;
-        degree_offset?: GeocoderDegreeOffset;
-        limit?: number | false;
-    }): Promise<ResultsList<GeocoderReverseResult> | ErrorMessage<GeocoderErrorMessage>> {
+    public async reverse(opts: IGeocoderReverse): Promise<ResultsList<GeocoderReverseResult> | ErrorMessage<GeocoderErrorMessage>> {
         try {
             if (!this._db) return err_msg(`*-db`);
             const limit = typeof opts.limit === `boolean` ? `` : opts.limit ? Math.round(opts.limit) : `1`;
@@ -58,4 +52,63 @@ export class Geocoder {
             return err_msg(`*`);
         };
     }
+
+    public async country(opts: IGeocoderCountryCenter): Promise<ResultsList<GeocoderReverseResult> | ErrorMessage<GeocoderErrorMessage>> {
+        try {
+            if (!this._db) return err_msg(`*-db`);
+            const query = `SELECT * FROM geonames WHERE country_id = $id;`
+            const stmt = this._db.prepare(query);
+            if (!stmt) return err_msg(`*-statement`);
+            const $id = opts.country_id
+            stmt.bind({ $id });
+            const results: GeocoderReverseResult[] = [];
+            while (stmt.step()) {
+                const result = parse_geocode_reverse_result(stmt.getAsObject());
+                if (result) results.push(result);
+            };
+            return { results };
+        } catch (e) {
+            console.log(`Error: Geocoder reverse `, e);
+            return err_msg(`*`);
+        };
+    }
+
+    public async country_list(): Promise<ResultsList<IGeocoderCountryListResult> | ErrorMessage<GeocoderErrorMessage>> {
+        try {
+            if (!this._db) return err_msg(`*-db`);
+            const query = `SELECT country_id, country_name, AVG(latitude) AS latitude_c, AVG(longitude) AS longitude_c FROM geonames GROUP BY country_id;`
+            const stmt = this._db.prepare(query);
+            if (!stmt) return err_msg(`*-statement`);
+            const results: IGeocoderCountryListResult[] = [];
+            while (stmt.step()) {
+                const result = parse_geocode_country_list_result(stmt.getAsObject());
+                if (result) results.push(result);
+            };
+            return { results };
+        } catch (e) {
+            console.log(`Error: Geocoder reverse `, e);
+            return err_msg(`*`);
+        };
+    }
+
+
+    public async country_center(opts: IGeocoderCountryCenter): Promise<ResultObj<GeolocationCoordinatesPoint> | ErrorMessage<GeocoderErrorMessage>> {
+        try {
+            if (!this._db) return err_msg(`*-db`);
+            const query = `SELECT AVG(latitude) AS latitude_c, AVG(longitude) AS longitude_c FROM geonames WHERE country_id = $id;`;
+            const stmt = this._db.prepare(query);
+            if (!stmt) return err_msg(`*-statement`);
+            const $id = opts.country_id
+            stmt.bind({ $id });
+            while (stmt.step()) {
+                const result = parse_geocode_country_center_result(stmt.getAsObject());
+                if (result) return { result };
+            };
+            return err_msg(`*-result`);
+        } catch (e) {
+            console.log(`Error: Geocoder reverse `, e);
+            return err_msg(`*`);
+        };
+    }
 }
+
