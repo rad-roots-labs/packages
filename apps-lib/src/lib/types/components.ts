@@ -27,6 +27,7 @@ export type IEntryStyle = `guide` | `line`;
 export type IEntryWrap = IClOpt & IIdOpt & ILyOptTs & {
     style?: IEntryStyle;
     style_a?: true;
+    no_pad?: true;
     fade?: {
         in?: TransitionConfig;
         out?: TransitionConfig;

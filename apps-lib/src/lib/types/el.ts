@@ -4,6 +4,7 @@ import type { ThemeLayer } from "@radroots/theme";
 export type GlyphKeyCurrency = `dollar` | `eur`;
 
 export type GlyphKey = |
+    `selection-foreground` |
     `image-square` |
     `image-broken` |
     `funnel` |
@@ -146,6 +147,7 @@ export type ISelectElement = IIdOpt & IClOpt & ILyOptTs &
         sync?: true;
         sync_init?: true | string;
         options: { group?: string | true; entries: ISelectOption<string>[] }[];
+        show_arrows?: 'l' | 'r';
     };
 
 export type IInputElement = IId & IClOpt & ILyOptTs & {

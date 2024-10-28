@@ -10,12 +10,12 @@
     $: classes_layer =
         layer === false
             ? `bg-transparent`
-            : `bg-layer-${layer}-surface ${basis?.style_a ? `active:bg-layer-${layer}-surface_a` : ``}`;
+            : `bg-layer-${layer}-surface text-layer-${layer}-glyph_d ${basis?.style_a ? `active:bg-layer-${layer}-surface_a` : ``}`;
 </script>
 
 <button
     id={basis?.id || null}
-    class={`${fmt_cl(basis?.classes)} relative entry-line-wrap pl-6 pr-4 h-entry_${basis?.style ? basis.style : `line`} rounded-touch ${classes_layer} el-re`}
+    class={`${fmt_cl(basis?.classes)} relative entry-line-wrap ${!basis.no_pad ? ` pl-6 pr-4` : ``} h-entry_${basis?.style ? basis.style : `line`} rounded-touch ${classes_layer} el-re`}
 >
     <slot />
 </button>

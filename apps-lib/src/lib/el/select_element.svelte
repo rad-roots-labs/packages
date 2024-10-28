@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { fmt_cl, kv, parse_layer, type ISelectElement } from "$lib";
+    import { fmt_cl, Glyph, kv, parse_layer, type ISelectElement } from "$lib";
     import { onMount } from "svelte";
 
     export let value: string;
@@ -57,6 +57,18 @@
     };
 </script>
 
+{#if basis?.show_arrows === "l"}
+    <div class={`flex flex-row justify-center items-center`}>
+        <Glyph
+            basis={{
+                key: `caret-up-down`,
+                dim: `xs`,
+                weight: `bold`,
+                classes: `text-layer-${layer}-glyph translate-y-[1px]`,
+            }}
+        />
+    </div>
+{/if}
 <select
     class={`${fmt_cl(basis.classes)} z-10 el-select ${classes_layer}`}
     bind:this={el}
@@ -87,3 +99,15 @@
         {/if}
     {/each}
 </select>
+{#if basis?.show_arrows === "r"}
+    <div class={`flex flex-row justify-center items-center`}>
+        <Glyph
+            basis={{
+                key: `caret-up-down`,
+                dim: `xs`,
+                weight: `bold`,
+                classes: `text-layer-${layer}-glyph translate-y-[1px]`,
+            }}
+        />
+    </div>
+{/if}

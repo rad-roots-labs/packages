@@ -6,6 +6,7 @@
     "*_details": "{value} details",
     "*_failure": "{value} failure",
     "*_list": "{value} list",
+    "*_price": "{value} price",
     "*_month": "{value} month",
     "*_name": "{value} name",
     "*_summary": "{value} summary",

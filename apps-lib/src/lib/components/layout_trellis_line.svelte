@@ -38,32 +38,28 @@
                 </p>
             {/if}
             {#if basis?.notify}
-                <div
+                <button
                     in:fade={{ duration: 200 }}
                     out:fade={{ delay: 50, duration: 200 }}
-                    class={`${fmt_cl(basis?.notify.classes)} flex flex-row justify-start items-center el-re`}
+                    on:click={async () => {
+                        await basis?.notify?.callback();
+                    }}
+                    class={`${fmt_cl(basis?.notify.classes || `w-full`)} flex flex-row gap-1 justify-end items-center text-layer-1-glyph_d el-re`}
                 >
-                    <button
-                        class={`flex flex-row justify-center items-center text-layer-2-glyph/80`}
-                        on:click={async () => {
-                            await basis?.notify?.callback();
-                        }}
-                    >
-                        {#if `glyph` in basis?.notify && basis?.notify?.glyph && !basis.notify.glyph_last}
-                            <Glyph basis={basis.notify.glyph} />
-                        {/if}
-                        {#if `label` in basis?.notify && basis?.notify?.label && `value` in basis?.notify?.label}
-                            <p
-                                class={`${fmt_cl(basis?.notify.label.classes)} font-sans font-[500] uppercase text-xs`}
-                            >
-                                {basis?.notify.label.value}
-                            </p>
-                        {/if}
-                        {#if `glyph` in basis?.notify && basis?.notify?.glyph && basis.notify.glyph_last}
-                            <Glyph basis={basis.notify.glyph} />
-                        {/if}
-                    </button>
-                </div>
+                    {#if `glyph` in basis?.notify && basis?.notify?.glyph && !basis.notify.glyph_last}
+                        <Glyph basis={basis.notify.glyph} />
+                    {/if}
+                    {#if `label` in basis?.notify && basis?.notify?.label && `value` in basis?.notify?.label}
+                        <p
+                            class={`${fmt_cl(basis?.notify.label.classes)} font-sans font-[500] uppercase text-xs`}
+                        >
+                            {basis?.notify.label.value}
+                        </p>
+                    {/if}
+                    {#if `glyph` in basis?.notify && basis?.notify?.glyph && basis.notify.glyph_last}
+                        <Glyph basis={basis.notify.glyph} />
+                    {/if}
+                </button>
             {/if}
         </div>
     {/if}

@@ -12,7 +12,16 @@
         },
         "key": {
             "cacao": {
-                "name": "Cacao"
+                "name": "Cacao",
+                "process": {
+                    "raw": "Raw",
+                    "fermented": "Fermented",
+                    "dried": "Dried",
+                    "roasted": "Roasted",
+                    "cocoa_powder": "Cocoa Powder",
+                    "cocoa_butter": "Cocoa Butter",
+                    "chocolate": "Chocolate"
+                }
             },
             "coffee": {
                 "name": "Coffee",
@@ -28,7 +37,14 @@
                 }
             },
             "maca": {
-                "name": "Maca"
+                "name": "Maca",
+                "process": {
+                    "raw": "Raw",
+                    "gelatinized": "Gelatinized",
+                    "powdered": "Powdered",
+                    "roasted": "Roasted",
+                    "capsules": "Capsules"
+                }
             }
         }
     }
