@@ -2,6 +2,7 @@
     import {
         type ITextAreaElement,
         fmt_cl,
+        fmt_textarea_value,
         kv,
         parse_layer,
         value_constrain_textarea,
@@ -20,23 +21,6 @@
     onMount(async () => {
         try {
             await kv_init();
-            /*
-            if (basis.id) {
-                if (basis.sync_init)
-                    await kv.set(
-                        basis.id,
-                        typeof basis.sync_init === `string`
-                            ? basis.sync_init
-                            : ``,
-                    );
-                if (basis.sync) {
-                    const kv_val = await kv.get(basis.id);
-                    if (kv_val) el.value = kv_val;
-                    else await kv.set(basis.id, ``);
-                }
-            }
-            if (basis.on_mount) await basis.on_mount(el);
-            */
         } catch (e) {}
     });
 
@@ -52,7 +36,7 @@
                     );
                 if (basis?.sync) {
                     const kv_val = await kv.get(basis?.id);
-                    if (kv_val && el) el.value = kv_val;
+                    if (kv_val && el) el.value = fmt_textarea_value(kv_val);
                     else await kv.set(basis?.id, ``);
                 }
             }
@@ -68,7 +52,7 @@
             let val = el?.value;
             if (basis?.field && el) {
                 val = value_constrain_textarea(basis?.field.charset, val);
-                el.value = val;
+                el.value = fmt_textarea_value(val);
                 if (
                     !basis?.field.validate.test(val) &&
                     basis?.field.validate_keypress
@@ -93,25 +77,6 @@
     placeholder={basis.placeholder || ""}
     on:input={async ({ currentTarget: el }) => {
         await handle_on_input(el);
-        /*
-        let pass = true;
-        let val = el.value;
-        if (basis.field) {
-            val = el.value
-                .split("")
-                .filter((char) => basis.field.charset.test(char))
-                .join("");
-            if (
-                !basis.field.validate.test(val) &&
-                basis.field.validate_keypress
-            ) {
-                pass = false;
-            }
-        }
-        el.value = val;
-        if (basis.sync) await kv.set(basis.id, val);
-        if (basis.callback) await basis.callback({ val, pass });
-        */
     }}
     on:keydown={async (ev) => {
         if (basis.callback_keydown)

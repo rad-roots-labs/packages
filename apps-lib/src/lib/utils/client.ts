@@ -174,6 +174,10 @@ export const value_constrain = (regex_charset: RegExp, value: string): string =>
         .join("");
 };
 
+export const fmt_textarea_value = (value: string): string => {
+    return value.replace(/ /g, `\u00A0`);
+};
+
 export const value_constrain_textarea = (regex_charset: RegExp, value: string): string => {
     return value
         .replace(/\u00A0/g, ` `)
@@ -183,8 +187,7 @@ export const value_constrain_textarea = (regex_charset: RegExp, value: string): 
             .filter((char) => regex_charset.test(char))
             .join("")
         )
-        .join("\n")
-        .replace(/ /g, `\u00A0`);
+        .join("\n");
 };
 
 export const parse_cfg_type = (value?: string): AppConfigType => {

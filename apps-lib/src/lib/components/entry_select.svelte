@@ -1,5 +1,11 @@
 <script lang="ts">
-    import { Glyph, type IEntrySelect, Loading, parse_layer } from "$lib";
+    import {
+        fmt_cl,
+        Glyph,
+        type IEntrySelect,
+        Loading,
+        parse_layer,
+    } from "$lib";
     import SelectElement from "$lib/el/select_element.svelte";
     import EntryWrap from "./entry_wrap.svelte";
 
@@ -19,7 +25,13 @@
             <Loading basis={{ dim: `sm`, blades: 8 }} />
         </div>
     {:else}
-        <SelectElement bind:value basis={basis.el} />
+        <SelectElement
+            bind:value
+            basis={{
+                ...basis.el,
+                classes: `${fmt_cl(basis.el.classes)} w-full`,
+            }}
+        />
     {/if}
     {#if !basis?.hide_arrows}
         <div
