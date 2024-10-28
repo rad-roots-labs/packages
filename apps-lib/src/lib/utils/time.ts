@@ -5,6 +5,7 @@ import { get } from "svelte/store";
 const time_fmt: Record<string, DateTimeFormatOptions> = {
     default: DateTime.DATE_SHORT,
     abbrev: DateTime.DATE_MED,
+    file_info: DateTime.DATETIME_SHORT_WITH_SECONDS,
     time_24: DateTime.TIME_24_SIMPLE
 };
 
@@ -15,7 +16,7 @@ export function time_fmt_epoch_s(epoch_s: number | undefined, fmt_key: keyof typ
     return time;
 };
 
-export function time_iso(iso: string, fmt_key: keyof typeof time_fmt = `default`): string {
+export function time_iso(iso: string | undefined, fmt_key: keyof typeof time_fmt = `default`): string {
     const dt = DateTime.fromISO(iso);
     if (!dt.isValid) return ``;
     const time = dt.setLocale(get(locale)).toLocaleString(time_fmt[fmt_key]);
@@ -23,7 +24,7 @@ export function time_iso(iso: string, fmt_key: keyof typeof time_fmt = `default`
 };
 
 
-export function time_iso_fmt(iso: string, fmt_str: string): string {
+export function time_iso_fmt(iso: string | undefined, fmt_str: string): string {
     const dt = DateTime.fromISO(iso);
     if (!dt.isValid) return ``;
     const time = dt.setLocale(get(locale)).toFormat(fmt_str);

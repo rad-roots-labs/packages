@@ -1,5 +1,6 @@
 <script lang="ts">
     import { app_layout, Fill, t, type CallbackPromise } from "$lib";
+    import ButtonLayout from "./button_layout.svelte";
 
     export let basis: {
         continue: {
@@ -17,18 +18,13 @@
 </script>
 
 <div class={`flex flex-col justify-center items-center`}>
-    <button
-        class={`group flex flex-row h-touch_guide w-${$app_layout} justify-center items-center bg-layer-1-surface round-40 ${basis.continue.disabled ? `opacity-60` : `touch-layer-1`} transition-all`}
-        on:click|stopPropagation={async () => {
-            if (!basis.continue.disabled) await basis.continue.callback();
+    <ButtonLayout
+        basis={{
+            disabled: basis.continue.disabled,
+            label: basis.continue.label || `${$t(`common.continue`)}`,
+            callback: basis.continue.callback,
         }}
-    >
-        <p
-            class={`font-sans font-[600] tracking-wide text-layer-1-glyph/80 ${basis.continue.disabled ? `` : `group-active:text-layer-1-glyph/40 `}transition-all`}
-        >
-            {basis.continue.label || `${$t(`common.continue`)}`}
-        </p>
-    </button>
+    />
     {#if basis.back}
         <div class={`flex flex-col justify-center items-center transition-all`}>
             {#if basis.back?.visible}
