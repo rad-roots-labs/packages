@@ -1,4 +1,4 @@
-import { err_msg, ResultObj, type ErrorMessage, type GeolocationCoordinatesPoint, type ResultsList } from "@radroots/utils";
+import { err_msg, type ErrorMessage, type GeolocationCoordinatesPoint, type ResultObj, type ResultsList } from "@radroots/utils";
 import type { Database } from "sql.js";
 import type { GeocoderErrorMessage, GeocoderReverseResult, IGeocoder, IGeocoderCountryCenter, IGeocoderCountryListResult, IGeocoderReverse } from "./types";
 import { parse_geocode_country_center_result, parse_geocode_country_list_result, parse_geocode_reverse_result } from "./utils";
