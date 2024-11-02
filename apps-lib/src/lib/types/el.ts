@@ -144,8 +144,8 @@ export type ISelectOption<T extends string> = {
 
 export type ISelectElement = IIdOpt & IClOpt & ILyOptTs &
     ICbGOpt<ISelectOption<string>> & {
-        sync?: true;
-        sync_init?: true | string;
+        sync?: boolean;
+        sync_init?: boolean;
         options: { group?: string | true; entries: ISelectOption<string>[] }[];
         show_arrows?: 'l' | 'r';
     };
@@ -155,8 +155,8 @@ export type IInputElement = IId & IClOpt & ILyOptTs & {
     label?: string;
     hidden?: boolean;
     validate?: RegExp;
-    sync?: true;
-    sync_init?: true | string;
+    sync?: boolean;
+    sync_init?: boolean;
     field?: IFormField;
     /*notify_inline?: {
         glyph: GlyphKey | IGlyph;

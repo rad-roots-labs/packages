@@ -8,6 +8,7 @@ export * from "./types/nostr";
 export { default as Blur } from "./el/blur.svelte";
 export { default as SelectElement } from "./el/select_element.svelte";
 export { default as Toast } from "./el/toast.svelte";
+export { default as ImagePath } from "./el/image_path.svelte";
 export { default as GlyphCircle } from "./el/glyph_circle.svelte";
 export { default as TextareaElement } from "./el/textarea_element.svelte";
 export { default as CssStatic } from "./el/css_static.svelte";
@@ -45,8 +46,8 @@ export { default as ButtonOptsDisplay } from "./components/button_opts_display.s
 export { default as TrellisTitle } from "./components/trellis_title.svelte";
 export { default as TrellisTouch } from "./components/trellis_touch.svelte";
 export { default as Trellis } from "./components/trellis.svelte";
+export { default as Controls } from "./components/controls.svelte";
 export { default as ButtonOptsStatic } from "./components/button_opts_static.svelte";
-export { default as AppControls } from "./components/app_controls.svelte";
 export { default as EntryLine } from "./components/entry_line.svelte";
 export { default as SplashScreen } from "./components/splash_screen.svelte";
 export { default as TrellisRowDisplayValue } from "./components/trellis_row_display_value.svelte";

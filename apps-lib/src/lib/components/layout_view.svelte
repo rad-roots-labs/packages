@@ -4,6 +4,7 @@
         type IClOpt,
         app_layout,
         fmt_cl,
+        layout_view_cover,
         nav_blur,
         nav_visible,
         tabs_blur,
@@ -16,9 +17,7 @@
         mobile_y: "pt-16 pb-10",
     };
 
-    export let basis:
-        | (IClOpt & { fade?: boolean; hide_padding?: boolean })
-        | undefined = undefined;
+    export let basis: (IClOpt & { fade?: boolean }) | undefined = undefined;
     $: basis = basis;
 
     let el: HTMLElement | null;
@@ -43,7 +42,6 @@
         ? `pt-h_nav_${$app_layout} ${styles[$app_layout]}`
         : styles[$app_layout];
     $: classes_tabs = $tabs_visible ? `pb-h_tabs_${$app_layout}` : ``;
-    $: classes_fade = basis?.fade ? `fade-in` : ``;
 
     const scrollChange = (): void => {
         if (Math.max(el?.scrollTop || 0, 0) > 10) nav_blur.set(true);
@@ -55,7 +53,7 @@
 
 <div
     bind:this={el}
-    class={`${fmt_cl(basis?.classes)} absolute top-0 left-0 flex flex-col h-[100vh] w-full justify-start items-center overflow-y-scroll scroll-hide ${!basis?.hide_padding ? classes_layout : ``} ${classes_tabs} ${classes_fade}`}
+    class={`${fmt_cl(basis?.classes)} absolute top-0 left-0 flex flex-col h-[100vh] w-full justify-start items-center overflow-y-scroll scroll-hide ${$layout_view_cover ? `` : classes_layout} ${$layout_view_cover ? `` : classes_tabs} ${basis?.fade ? `fade-in` : ``}`}
 >
     <slot />
 </div>

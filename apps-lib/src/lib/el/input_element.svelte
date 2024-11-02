@@ -10,42 +10,32 @@
 
     let el: HTMLInputElement | null = null;
 
+    export let value: string = ``;
     export let basis: IInputElement;
-    $: basis = basis;
 
+    onMount(async () => {
+        try {
+            if (basis.id && basis.sync_init) {
+                const sync_val = await kv.get(basis.id);
+                await kv.set(basis.id, sync_val || ``);
+            }
+        } catch (e) {
+        } finally {
+        }
+    });
+
+    $: basis = basis;
     $: id = basis?.id ? basis?.id : null;
     $: layer =
         typeof basis?.layer === `boolean` ? 0 : parse_layer(basis?.layer, 1); //@todo
 
-    onMount(async () => {
-        try {
-            await kv_init();
-        } catch (e) {
-            console.log(`e input mount`, e);
-        }
-    });
-
-    const kv_init = async (): Promise<void> => {
-        try {
-            if (basis?.id) {
-                if (basis?.sync_init)
-                    await kv.set(
-                        basis?.id,
-                        typeof basis?.sync_init === `string`
-                            ? basis?.sync_init
-                            : ``,
-                    );
-                if (basis?.sync) {
-                    const kv_val = await kv.get(basis?.id);
-                    if (kv_val && el) el.value = kv_val;
-                    else await kv.set(basis?.id, ``);
-                }
-            }
-            if (basis?.on_mount) await basis?.on_mount(el);
-        } catch (e) {
-            console.log(`(error) kv_init `, e);
-        }
-    };
+    $: if (basis?.id && basis?.sync) {
+        (async () => {
+            try {
+                await kv.set(basis?.id, value);
+            } catch (e) {}
+        })();
+    }
 
     const handle_on_input = async (el: HTMLInputElement): Promise<void> => {
         try {
@@ -72,10 +62,7 @@
 
 <input
     bind:this={el}
-    {id}
-    type="text"
-    class={`${fmt_cl(basis?.classes)} el-input text-layer-${layer}-glyph placeholder:text-layer-${layer}-glyph_pl caret-layer-${layer}-glyph el-re`}
-    placeholder={basis?.placeholder || ""}
+    bind:value
     on:input={async ({ currentTarget: el }) => {
         await handle_on_input(el);
     }}
@@ -89,4 +76,8 @@
                 el: ev.currentTarget,
             });
     }}
+    {id}
+    type="text"
+    class={`${fmt_cl(basis?.classes)} el-input text-layer-${layer}-glyph placeholder:text-layer-${layer}-glyph_pl caret-layer-${layer}-glyph el-re`}
+    placeholder={basis?.placeholder || ""}
 />

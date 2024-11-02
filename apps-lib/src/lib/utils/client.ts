@@ -109,18 +109,18 @@ export const as_glyph_key = (val: string): GlyphKey => {
     return val as GlyphKey;
 }
 
-export const route = async (route: NavigationRoute, params_list?: NavigationParamTuple[]): Promise<void> => {
+export const route = async (nav_route: NavigationRoute, params_list?: NavigationParamTuple[]): Promise<void> => {
     try {
-        if (params_list && params_list.length) await goto(encode_qp_route(route, params_list));
-        else await goto(route);
+        if (params_list && params_list.length) await goto(encode_qp_route(nav_route, params_list));
+        else await goto(nav_route);
     } catch (e) {
         console.log(`(error) route `, e);
     }
 }
 
-//export const route_sync = (route: NavigationRoute): void => {
-//    goto(route);
-//};
+export const route_sync = (nav_route: NavigationRoute): void => {
+    route(nav_route);
+};
 
 export const get_layout = (val: string | false): AppLayoutKey => {
     switch (val) {

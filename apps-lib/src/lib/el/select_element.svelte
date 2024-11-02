@@ -2,11 +2,13 @@
     import { fmt_cl, Glyph, kv, parse_layer, type ISelectElement } from "$lib";
     import { onMount } from "svelte";
 
+    let el: HTMLSelectElement | null = null;
+
     export let value: string;
     export let basis: ISelectElement;
-    $: basis = basis;
 
-    let el: HTMLSelectElement | null = null;
+    $: basis = basis;
+    $: id = basis?.id ? basis?.id : null;
     $: layer =
         typeof basis?.layer === `boolean`
             ? parse_layer(0)
@@ -16,31 +18,22 @@
 
     onMount(async () => {
         try {
-            await kv_init();
-        } catch (e) {
-            console.log(`e select mount`, e);
-        }
-    });
-    const kv_init = async (): Promise<void> => {
-        try {
-            if (basis?.id) {
-                if (basis?.sync_init)
-                    await kv.set(
-                        basis?.id,
-                        typeof basis?.sync_init === `string`
-                            ? basis?.sync_init
-                            : ``,
-                    );
-                if (basis?.sync) {
-                    const kv_val = await kv.get(basis?.id);
-                    if (kv_val && el) el.value = kv_val;
-                    else await kv.set(basis?.id, ``);
-                }
+            if (basis.id && basis.sync_init) {
+                const sync_val = await kv.get(basis.id);
+                await kv.set(basis.id, sync_val || ``);
             }
         } catch (e) {
-            console.log(`(error) kv_init `, e);
+        } finally {
         }
-    };
+    });
+
+    $: if (basis?.id && basis?.sync) {
+        (async () => {
+            try {
+                await kv.set(basis?.id, value);
+            } catch (e) {}
+        })();
+    }
 
     const handle_on_change = async (el: HTMLSelectElement): Promise<void> => {
         try {
@@ -70,12 +63,13 @@
     </div>
 {/if}
 <select
-    class={`${fmt_cl(basis.classes)} z-10 el-select ${classes_layer}`}
     bind:this={el}
     bind:value
     on:change={async ({ currentTarget: el }) => {
         handle_on_change(el);
     }}
+    {id}
+    class={`${fmt_cl(basis.classes)} z-10 el-select ${classes_layer}`}
 >
     {#each basis.options as opt_g}
         {#if opt_g.group}

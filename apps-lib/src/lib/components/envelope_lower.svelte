@@ -1,30 +1,34 @@
 <script lang="ts">
-    import { app_tilt, Fill, t, type CallbackPromise } from "$lib";
+    import { envelope_visible, Fill, t, type CallbackPromise } from "$lib";
     import { quintInOut } from "svelte/easing";
     import { fly } from "svelte/transition";
 
+    let el_c: HTMLDivElement;
+
+    let el_c_scrolled = false;
+
     export let basis: {
-        visible: boolean;
         close: CallbackPromise;
         label_close?: string | true;
     };
     $: basis = basis;
 
-    $: if (basis.visible) {
-        app_tilt.set(true);
-    }
-
     const handle_close = async (): Promise<void> => {
         try {
-            app_tilt.set(false);
+            envelope_visible.set(false);
             await basis.close();
         } catch (e) {
             console.log(`(error) handle_close `, e);
         }
     };
+
+    const handle_scroll = (): void => {
+        if (el_c.scrollTop > 10) el_c_scrolled = true;
+        else el_c_scrolled = false;
+    };
 </script>
 
-{#if basis.visible}
+{#if $envelope_visible}
     <div
         in:fly={{ y: `100%`, easing: quintInOut }}
         out:fly={{ y: `100%`, easing: quintInOut }}
@@ -39,10 +43,10 @@
             <Fill />
         </button>
         <div
-            class={`flex flex-col h-[calc(100vh-12%)] w-full justify-start justify-start items-start bg-layer-1-surface rounded-t-2xl`}
+            class={`relative flex flex-col h-[calc(100vh-12%)] w-full justify-start justify-start items-start bg-layer-1-surface rounded-t-2xl overflow-hidden`}
         >
             <div
-                class={`sticky top-0 left-0 grid grid-cols-12 flex flex-row h-12 w-full px-4 pb-2 justify-center items-center bg-layer-1-surface/60 backdrop-blur-md`}
+                class={`absolute z-10 top-0 left-0 grid grid-cols-12 flex flex-row h-12 w-full px-4 pb-2 justify-center items-center ${el_c_scrolled ? `bg-layer-1-surface/30  backdrop-blur-lg` : ``} el-re`}
             >
                 <div
                     class={`col-span-4 flex flex-row h-full justify-start items-end`}
@@ -83,7 +87,9 @@
                 </div>
             </div>
             <div
-                class={`flex flex-col w-full justify-start items-center overflow-y-scroll overflow-x-hidden scroll-hide`}
+                bind:this={el_c}
+                on:scroll={handle_scroll}
+                class={`flex flex-col w-full pt-12 justify-start items-center overflow-y-scroll overflow-x-hidden scroll-hide`}
             >
                 <slot />
             </div>
