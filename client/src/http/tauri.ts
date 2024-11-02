@@ -1,7 +1,7 @@
 import { err_msg, type ErrorMessage, type FieldRecord } from '@radroots/utils';
 import { type ClientOptions, fetch } from '@tauri-apps/plugin-http';
 import type { IClientDeviceMetadata } from '../device/types';
-import type { IClientHttp, IClientHttpOpts, IClientHttpResponse } from './types';
+import type { IClientHttp, IClientHttpImageResponse, IClientHttpOpts, IClientHttpResponse } from './types';
 
 const parse_headers = (headers: Headers): FieldRecord => {
     const acc: FieldRecord = {};
@@ -53,15 +53,26 @@ export class TauriClientHttp implements IClientHttp {
                 headers,
             }
             if (opts.data) options.body = to_bodyinit(opts.data);
+            if (opts.data_bin) options.body = opts.data_bin;
             if (opts.connect_timeout) options.connectTimeout = opts.connect_timeout;
             const response = await fetch(url, options);
             switch (response.ok) {
                 case true: {
-                    const response_json = await response.json();
+                    let data: any = null;
+                    try {
+                        const res_json = await response.json();
+                        data = typeof res_json === `string` ? JSON.parse(res_json) : res_json;
+                    } catch { }
+                    if (!data) {
+                        try {
+                            const res_text = await response.text();
+                            data = res_text;
+                        } catch { }
+                    }
                     return {
                         status: response.status,
                         url: response.url,
-                        data: typeof response_json === `string` ? JSON.parse(response_json) : response_json,
+                        data,
                         headers: parse_headers(response.headers)
                     };
                 }
@@ -76,6 +87,41 @@ export class TauriClientHttp implements IClientHttp {
             }
         } catch (e) {
             console.log(`e fetch`, e)
+            return err_msg(String(e));
+        };
+    }
+
+    public async fetch_image(url: string): Promise<IClientHttpImageResponse | ErrorMessage<string>> {
+        try {
+            const headers: FieldRecord = {
+                ...this._headers,
+            };
+            const options: RequestInit & ClientOptions = {
+                method: `GET`,
+                headers,
+            }
+            const response = await fetch(url, options);
+            switch (response.ok) {
+                case true: {
+                    const blob = await response.blob();
+
+                    return {
+                        status: response.status,
+                        url: response.url,
+                        blob,
+                        headers: parse_headers(response.headers)
+                    };
+                }
+                case false: {
+                    return {
+                        status: response.status,
+                        url: response.url,
+                        headers: parse_headers(response.headers)
+                    };
+                }
+            }
+        } catch (e) {
+            console.log(`e fetch_image`, e)
             return err_msg(String(e));
         };
     }

@@ -1,17 +1,17 @@
 
-import { type INostrProfileQueryBindValues, type INostrRelayQueryBindValues, type ILocationGcsAdd, type ILocationGcsAddResolve, type ILocationGcsGet, type ILocationGcsGetResolve, type ILocationGcsDelete, type ILocationGcsDeleteResolve, type ILocationGcsUpdate, type ILocationGcsUpdateResolve, type ITradeProductAdd, type ITradeProductAddResolve, type ITradeProductGet, type ITradeProductGetResolve, type ITradeProductDelete, type ITradeProductDeleteResolve, type ITradeProductUpdate, type ITradeProductUpdateResolve, type INostrProfileAdd, type INostrProfileAddResolve, type INostrProfileGet, type INostrProfileGetResolve, type INostrProfileDelete, type INostrProfileDeleteResolve, type INostrProfileUpdate, type INostrProfileUpdateResolve, type INostrRelayAdd, type INostrRelayAddResolve, type INostrRelayGet, type INostrRelayGetResolve, type INostrRelayDelete, type INostrRelayDeleteResolve, type INostrRelayUpdate, type INostrRelayUpdateResolve, type IModelsQueryBindValue, type IModelsQueryValue, type IModelsQueryBindValueTuple, type LocationGcsFields, type LocationGcsFormFields, LocationGcsSchema, LocationGcsUpdateSchema, parse_location_gcs_form_fields, parse_location_gcs_list, type TradeProductFields, type TradeProductFormFields, TradeProductSchema, TradeProductUpdateSchema, parse_trade_product_form_fields, parse_trade_product_list, type NostrProfileFields, type NostrProfileFormFields, NostrProfileSchema, NostrProfileUpdateSchema, parse_nostr_profile_form_fields, parse_nostr_profile_list, type NostrRelayFields, type NostrRelayFormFields, NostrRelaySchema, NostrRelayUpdateSchema, parse_nostr_relay_form_fields, parse_nostr_relay_list } from "@radroots/models";
-import { err_msg, type ErrorMessage, type ResultPass } from "@radroots/utils";
+import { LocationGcsSchema, LocationGcsUpdateSchema, NostrProfileSchema, NostrProfileUpdateSchema, NostrRelaySchema, NostrRelayUpdateSchema, TradeProductSchema, TradeProductUpdateSchema, parse_location_gcs_form_fields, parse_location_gcs_list, parse_nostr_profile_form_fields, parse_nostr_profile_list, parse_nostr_relay_form_fields, parse_nostr_relay_list, parse_trade_product_form_fields, parse_trade_product_list, type ILocationGcsAdd, type ILocationGcsAddResolve, type ILocationGcsDelete, type ILocationGcsDeleteResolve, type ILocationGcsGet, type ILocationGcsGetResolve, type ILocationGcsUpdate, type ILocationGcsUpdateResolve, type IModelsQueryBindValueTuple, type IModelsQueryValue, type INostrProfileAdd, type INostrProfileAddResolve, type INostrProfileDelete, type INostrProfileDeleteResolve, type INostrProfileGet, type INostrProfileGetResolve, type INostrProfileRelayRelation, type INostrProfileRelayRelationResolve, type INostrProfileUpdate, type INostrProfileUpdateResolve, type INostrRelayAdd, type INostrRelayAddResolve, type INostrRelayDelete, type INostrRelayDeleteResolve, type INostrRelayGet, type INostrRelayGetResolve, type INostrRelayUpdate, type INostrRelayUpdateResolve, type ITradeProductAdd, type ITradeProductAddResolve, type ITradeProductDelete, type ITradeProductDeleteResolve, type ITradeProductGet, type ITradeProductGetResolve, type ITradeProductUpdate, type ITradeProductUpdateResolve, type LocationGcsFields, type LocationGcsFormFields, type NostrProfileFields, type NostrProfileFormFields, type NostrRelayFields, type NostrRelayFormFields, type TradeProductFields, type TradeProductFormFields } from "@radroots/models";
+import { err_msg, type ErrorMessage } from "@radroots/utils";
 import { invoke } from "@tauri-apps/api/core";
-import type { IClientDb, IClientDbMessage } from "./types";
+import type { IClientDatabase, IClientDatabaseMessage } from "./types";
 
-export class TauriClientDb implements IClientDb {
-    private append_logs(scope: string, opts: any, error: any): IClientDbMessage {
+export class TauriClientDatabase implements IClientDatabase {
+    private append_logs(scope: string, opts: any, error: any): IClientDatabaseMessage {
         console.log("todo... append_logs");
         const error_msg = String(error);
         return error_msg;
     }
-        
-    private handle_errors(scope: string, opts: any, e: any): ErrorMessage<IClientDbMessage> {
+
+    private handle_errors(scope: string, opts: any, e: any): ErrorMessage<IClientDatabaseMessage> {
         const error = this.append_logs(scope, opts, e);
         if (error.includes("UNIQUE constraint failed: location_gcs.geohash")) return err_msg("*-location-gcs-geohash-unique");
         else if (error.includes("UNIQUE constraint failed: nostr_relay.url")) return err_msg("*-nostr-relay-url-unique");
@@ -21,7 +21,7 @@ export class TauriClientDb implements IClientDb {
     private filter_bind_value_fields(fields: IModelsQueryBindValueTuple[]): IModelsQueryBindValueTuple[] {
         return fields.filter(([_, v]) => !!v);
     }
-    
+
     private location_gcs_add_validate(fields: LocationGcsFormFields): LocationGcsFields | string[] {
         const fields_r = Object.entries(fields).filter(([_, v]) => !!v).reduce((acc: Record<string, IModelsQueryValue>, i) => {
             const [key, val] = parse_location_gcs_form_fields(i);
@@ -36,7 +36,7 @@ export class TauriClientDb implements IClientDb {
         };
     }
 
-    public async location_gcs_add(opts: ILocationGcsAdd): Promise<ILocationGcsAddResolve<IClientDbMessage>> {
+    public async location_gcs_add(opts: ILocationGcsAdd): Promise<ILocationGcsAddResolve<IClientDatabaseMessage>> {
         const err_s = this.location_gcs_add_validate(opts);
         if (Array.isArray(err_s)) return { err_s };
         const fields = this.filter_bind_value_fields(Object.entries(err_s));
@@ -51,7 +51,7 @@ export class TauriClientDb implements IClientDb {
         };
     }
 
-    public async location_gcs_get(opts: ILocationGcsGet): Promise<ILocationGcsGetResolve<IClientDbMessage>> {
+    public async location_gcs_get(opts: ILocationGcsGet): Promise<ILocationGcsGetResolve<IClientDatabaseMessage>> {
         try {
             const response = await invoke<any>("model_location_gcs_get", { opts: "list" in opts ? { list: { of: opts.list, sort: opts.sort } } : { on: { ...opts } } });
             if (typeof response === "string") return err_msg(response);
@@ -62,7 +62,7 @@ export class TauriClientDb implements IClientDb {
         };
     }
 
-    public async location_gcs_delete(opts: ILocationGcsDelete): Promise<ILocationGcsDeleteResolve<IClientDbMessage>> {
+    public async location_gcs_delete(opts: ILocationGcsDelete): Promise<ILocationGcsDeleteResolve<IClientDatabaseMessage>> {
         try {
             const response = await invoke<any>("model_location_gcs_delete", { opts });
             if (response === null) return { pass: true };
@@ -86,7 +86,7 @@ export class TauriClientDb implements IClientDb {
         };
     }
 
-    public async location_gcs_update(opts: ILocationGcsUpdate): Promise<ILocationGcsUpdateResolve<IClientDbMessage>> {
+    public async location_gcs_update(opts: ILocationGcsUpdate): Promise<ILocationGcsUpdateResolve<IClientDatabaseMessage>> {
         const err_s = this.location_gcs_update_validate(opts.fields);
         if (Array.isArray(err_s)) return { err_s };
         const fields = this.filter_bind_value_fields(Object.entries(err_s));
@@ -114,7 +114,7 @@ export class TauriClientDb implements IClientDb {
         };
     }
 
-    public async trade_product_add(opts: ITradeProductAdd): Promise<ITradeProductAddResolve<IClientDbMessage>> {
+    public async trade_product_add(opts: ITradeProductAdd): Promise<ITradeProductAddResolve<IClientDatabaseMessage>> {
         const err_s = this.trade_product_add_validate(opts);
         if (Array.isArray(err_s)) return { err_s };
         const fields = this.filter_bind_value_fields(Object.entries(err_s));
@@ -129,7 +129,7 @@ export class TauriClientDb implements IClientDb {
         };
     }
 
-    public async trade_product_get(opts: ITradeProductGet): Promise<ITradeProductGetResolve<IClientDbMessage>> {
+    public async trade_product_get(opts: ITradeProductGet): Promise<ITradeProductGetResolve<IClientDatabaseMessage>> {
         try {
             const response = await invoke<any>("model_trade_product_get", { opts: "list" in opts ? { list: { of: opts.list, sort: opts.sort } } : { on: { ...opts } } });
             if (typeof response === "string") return err_msg(response);
@@ -140,7 +140,7 @@ export class TauriClientDb implements IClientDb {
         };
     }
 
-    public async trade_product_delete(opts: ITradeProductDelete): Promise<ITradeProductDeleteResolve<IClientDbMessage>> {
+    public async trade_product_delete(opts: ITradeProductDelete): Promise<ITradeProductDeleteResolve<IClientDatabaseMessage>> {
         try {
             const response = await invoke<any>("model_trade_product_delete", { opts });
             if (response === null) return { pass: true };
@@ -164,7 +164,7 @@ export class TauriClientDb implements IClientDb {
         };
     }
 
-    public async trade_product_update(opts: ITradeProductUpdate): Promise<ITradeProductUpdateResolve<IClientDbMessage>> {
+    public async trade_product_update(opts: ITradeProductUpdate): Promise<ITradeProductUpdateResolve<IClientDatabaseMessage>> {
         const err_s = this.trade_product_update_validate(opts.fields);
         if (Array.isArray(err_s)) return { err_s };
         const fields = this.filter_bind_value_fields(Object.entries(err_s));
@@ -192,7 +192,7 @@ export class TauriClientDb implements IClientDb {
         };
     }
 
-    public async nostr_profile_add(opts: INostrProfileAdd): Promise<INostrProfileAddResolve<IClientDbMessage>> {
+    public async nostr_profile_add(opts: INostrProfileAdd): Promise<INostrProfileAddResolve<IClientDatabaseMessage>> {
         const err_s = this.nostr_profile_add_validate(opts);
         if (Array.isArray(err_s)) return { err_s };
         const fields = this.filter_bind_value_fields(Object.entries(err_s));
@@ -207,7 +207,7 @@ export class TauriClientDb implements IClientDb {
         };
     }
 
-    public async nostr_profile_get(opts: INostrProfileGet): Promise<INostrProfileGetResolve<IClientDbMessage>> {
+    public async nostr_profile_get(opts: INostrProfileGet): Promise<INostrProfileGetResolve<IClientDatabaseMessage>> {
         try {
             const response = await invoke<any>("model_nostr_profile_get", { opts: "list" in opts ? { list: { of: opts.list, sort: opts.sort } } : { on: { ...opts } } });
             if (typeof response === "string") return err_msg(response);
@@ -218,7 +218,7 @@ export class TauriClientDb implements IClientDb {
         };
     }
 
-    public async nostr_profile_delete(opts: INostrProfileDelete): Promise<INostrProfileDeleteResolve<IClientDbMessage>> {
+    public async nostr_profile_delete(opts: INostrProfileDelete): Promise<INostrProfileDeleteResolve<IClientDatabaseMessage>> {
         try {
             const response = await invoke<any>("model_nostr_profile_delete", { opts });
             if (response === null) return { pass: true };
@@ -242,7 +242,7 @@ export class TauriClientDb implements IClientDb {
         };
     }
 
-    public async nostr_profile_update(opts: INostrProfileUpdate): Promise<INostrProfileUpdateResolve<IClientDbMessage>> {
+    public async nostr_profile_update(opts: INostrProfileUpdate): Promise<INostrProfileUpdateResolve<IClientDatabaseMessage>> {
         const err_s = this.nostr_profile_update_validate(opts.fields);
         if (Array.isArray(err_s)) return { err_s };
         const fields = this.filter_bind_value_fields(Object.entries(err_s));
@@ -270,7 +270,7 @@ export class TauriClientDb implements IClientDb {
         };
     }
 
-    public async nostr_relay_add(opts: INostrRelayAdd): Promise<INostrRelayAddResolve<IClientDbMessage>> {
+    public async nostr_relay_add(opts: INostrRelayAdd): Promise<INostrRelayAddResolve<IClientDatabaseMessage>> {
         const err_s = this.nostr_relay_add_validate(opts);
         if (Array.isArray(err_s)) return { err_s };
         const fields = this.filter_bind_value_fields(Object.entries(err_s));
@@ -285,7 +285,7 @@ export class TauriClientDb implements IClientDb {
         };
     }
 
-    public async nostr_relay_get(opts: INostrRelayGet): Promise<INostrRelayGetResolve<IClientDbMessage>> {
+    public async nostr_relay_get(opts: INostrRelayGet): Promise<INostrRelayGetResolve<IClientDatabaseMessage>> {
         try {
             const response = await invoke<any>("model_nostr_relay_get", { opts: "list" in opts ? { list: { of: opts.list, sort: opts.sort } } : { on: { ...opts } } });
             if (typeof response === "string") return err_msg(response);
@@ -296,7 +296,7 @@ export class TauriClientDb implements IClientDb {
         };
     }
 
-    public async nostr_relay_delete(opts: INostrRelayDelete): Promise<INostrRelayDeleteResolve<IClientDbMessage>> {
+    public async nostr_relay_delete(opts: INostrRelayDelete): Promise<INostrRelayDeleteResolve<IClientDatabaseMessage>> {
         try {
             const response = await invoke<any>("model_nostr_relay_delete", { opts });
             if (response === null) return { pass: true };
@@ -320,7 +320,7 @@ export class TauriClientDb implements IClientDb {
         };
     }
 
-    public async nostr_relay_update(opts: INostrRelayUpdate): Promise<INostrRelayUpdateResolve<IClientDbMessage>> {
+    public async nostr_relay_update(opts: INostrRelayUpdate): Promise<INostrRelayUpdateResolve<IClientDatabaseMessage>> {
         const err_s = this.nostr_relay_update_validate(opts.fields);
         if (Array.isArray(err_s)) return { err_s };
         const fields = this.filter_bind_value_fields(Object.entries(err_s));
@@ -335,25 +335,25 @@ export class TauriClientDb implements IClientDb {
         };
     }
 
-    public async set_nostr_profile_relay(opts: { nostr_profile: INostrProfileQueryBindValues; nostr_relay: INostrRelayQueryBindValues; }): Promise<ResultPass | ErrorMessage<IClientDbMessage>> {
+    public async nostr_profile_relay_set(opts: INostrProfileRelayRelation): Promise<INostrProfileRelayRelationResolve<IClientDatabaseMessage>> {
         try {
-            const response = await invoke<any>("model_set_nostr_profile_relay", { opts });
-            if (response === null) return { pass: true };
+            const response = await invoke<any>("model_nostr_profile_relay_set", { opts });
+            if (response === true) return { pass: true };
             else if (typeof response === "string") return err_msg(response);
             return err_msg("*-result");
         } catch (e) {
-            return this.handle_errors("model_set_nostr_profile_relay", opts, e);
+            return this.handle_errors("model_nostr_profile_relay_set", opts, e);
         };
-    };    
+    };
 
-    public async unset_nostr_profile_relay(opts: { nostr_profile: INostrProfileQueryBindValues; nostr_relay: INostrRelayQueryBindValues; }): Promise<ResultPass | ErrorMessage<IClientDbMessage>> {
+    public async nostr_profile_relay_unset(opts: INostrProfileRelayRelation): Promise<INostrProfileRelayRelationResolve<IClientDatabaseMessage>> {
         try {
-            const response = await invoke<any>("model_unset_nostr_profile_relay", { opts });
-            if (response === null) return { pass: true };
+            const response = await invoke<any>("model_nostr_profile_relay_unset", { opts });
+            if (response === true) return { pass: true };
             else if (typeof response === "string") return err_msg(response);
             return err_msg("*-result");
         } catch (e) {
-            return this.handle_errors("model_unset_nostr_profile_relay", opts, e);
+            return this.handle_errors("model_nostr_profile_relay_unset", opts, e);
         };
     };
 }

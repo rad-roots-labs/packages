@@ -6,4 +6,6 @@ export type IClientDeviceMetadata = {
 
 export type IClientDevice = {
     init(opts: IClientDeviceMetadata): Promise<void>;
+    get_name(): Promise<string>;
+    get_version(): Promise<string>;
 };

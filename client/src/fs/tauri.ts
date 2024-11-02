@@ -1,5 +1,5 @@
-import { BaseDirectory, exists, open, readFile } from '@tauri-apps/plugin-fs';
-import type { IClientFs, IClientFsOpenResult } from "./types";
+import { BaseDirectory, exists, open, readFile, stat } from '@tauri-apps/plugin-fs';
+import type { IClientFs, IClientFsFileInfo, IClientFsOpenResult } from "./types";
 
 export class TauriClientFs implements IClientFs {
     public async exists(path: string): Promise<boolean> {
@@ -28,6 +28,16 @@ export class TauriClientFs implements IClientFs {
             return res;
         } catch (e) {
             console.log(`e read_bin`, e)
+            return undefined;
+        };
+    }
+
+    public async info(path: string): Promise<IClientFsFileInfo | undefined> {
+        try {
+            const res = await stat(path, { baseDir: BaseDirectory.AppData });
+            return res;
+        } catch (e) {
+            console.log(`e open`, e)
             return undefined;
         };
     }
