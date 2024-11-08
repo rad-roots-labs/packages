@@ -156,7 +156,7 @@ export type IInputElement = IId & IClOpt & ILyOptTs & {
     hidden?: boolean;
     validate?: RegExp;
     sync?: boolean;
-    sync_init?: boolean;
+    // sync_init?: string;
     field?: IFormField;
     /*notify_inline?: {
         glyph: GlyphKey | IGlyph;
@@ -173,7 +173,7 @@ export type ITextAreaElement = IId & IClOpt & ILyOptTs & {
     hidden?: boolean;
     validate?: RegExp;
     sync?: true;
-    sync_init?: true | string;
+    //sync_init?: true | string;
     field?: IFormField;
     /*notify_inline?: {
         glyph: GlyphKey | IGlyph;

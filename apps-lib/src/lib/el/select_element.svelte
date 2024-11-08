@@ -12,7 +12,7 @@
     $: layer =
         typeof basis?.layer === `boolean`
             ? parse_layer(0)
-            : parse_layer(basis.layer, 0);
+            : parse_layer(basis.layer);
     $: classes_layer =
         typeof basis?.layer === `boolean` ? `` : `text-layer-${layer}-glyph_d`;
 

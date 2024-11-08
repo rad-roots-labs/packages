@@ -11,6 +11,7 @@
 
     let el: HTMLTextAreaElement | null = null;
 
+    export let value: string = ``;
     export let basis: ITextAreaElement;
     $: basis = basis;
 
@@ -24,21 +25,21 @@
         } catch (e) {}
     });
 
+    $: if (basis?.id && basis?.sync && value) {
+        (async () => {
+            try {
+                await kv.set(basis?.id, value);
+            } catch (e) {}
+        })();
+    }
+
     const kv_init = async (): Promise<void> => {
         try {
-            if (basis?.id) {
-                if (basis?.sync_init)
-                    await kv.set(
-                        basis?.id,
-                        typeof basis?.sync_init === `string`
-                            ? basis?.sync_init
-                            : ``,
-                    );
-                if (basis?.sync) {
-                    const kv_val = await kv.get(basis?.id);
-                    if (kv_val && el) el.value = fmt_textarea_value(kv_val);
-                    else await kv.set(basis?.id, ``);
-                }
+            if (!basis?.id) return;
+            if (basis?.sync) {
+                const kv_val = await kv.get(basis?.id);
+                if (kv_val && el) el.value = fmt_textarea_value(kv_val);
+                else await kv.set(basis?.id, ``);
             }
             if (basis?.on_mount) await basis?.on_mount(el);
         } catch (e) {
@@ -71,6 +72,7 @@
 
 <textarea
     bind:this={el}
+    bind:value
     {id}
     contenteditable="true"
     class={`${fmt_cl(basis.classes)} el-textarea w-full bg-layer-${layer}-surface text-layer-${layer}-glyph placeholder:text-layer-${layer}-glyph_pl caret-layer-${layer}-glyph`}

@@ -14,8 +14,12 @@
 
     $: layer =
         typeof basis.wrap?.layer === `boolean`
-            ? false
-            : parse_layer(basis.wrap?.layer, 1);
+            ? parse_layer(0)
+            : parse_layer(basis.wrap?.layer);
+    $: classes_layer =
+        typeof basis.wrap?.layer === `boolean`
+            ? ``
+            : `text-layer-${layer}-glyph`;
     let loading_dim: ILoadingDimension = `sm`;
     $: loading_dim = basis.wrap?.style === `guide` ? `md` : `sm`;
 </script>
@@ -43,7 +47,7 @@
                               key: basis.notify_inline.glyph,
                               dim: `xs+`,
                               weight: `bold`,
-                              classes: `text-layer-${layer}-glyph`,
+                              classes: `${classes_layer}`,
                           }
                         : basis.notify_inline.glyph}
                 />

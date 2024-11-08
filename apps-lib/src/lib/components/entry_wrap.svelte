@@ -5,12 +5,12 @@
 
     $: layer =
         typeof basis?.layer === `boolean`
-            ? false
-            : parse_layer(basis?.layer, 1);
+            ? parse_layer(0)
+            : parse_layer(basis?.layer);
     $: classes_layer =
-        layer === false
+        typeof basis?.layer === `boolean`
             ? `bg-transparent`
-            : `bg-layer-${layer}-surface text-layer-${layer}-glyph_d ${basis?.style_a ? `active:bg-layer-${layer}-surface_a` : ``}`;
+            : `bg-layer-${layer}-surface ${basis?.style_a ? `active:bg-layer-${layer}-surface_a` : ``}`; //text-layer-${layer}-glyph_d
 </script>
 
 <button

@@ -15,10 +15,7 @@
 
     onMount(async () => {
         try {
-            if (basis.id && basis.sync_init) {
-                const sync_val = await kv.get(basis.id);
-                await kv.set(basis.id, sync_val || ``);
-            }
+            await kv_init();
         } catch (e) {
         } finally {
         }
@@ -29,13 +26,27 @@
     $: layer =
         typeof basis?.layer === `boolean` ? 0 : parse_layer(basis?.layer, 1); //@todo
 
-    $: if (basis?.id && basis?.sync) {
+    $: if (basis?.id && basis?.sync && value) {
         (async () => {
             try {
                 await kv.set(basis?.id, value);
             } catch (e) {}
         })();
     }
+
+    const kv_init = async (): Promise<void> => {
+        try {
+            if (!basis?.id) return;
+            if (basis?.sync) {
+                const kv_val = await kv.get(basis?.id);
+                console.log(`kv_val `, kv_val);
+                if (kv_val && el) el.value = kv_val;
+                else await kv.set(basis?.id, ``);
+            }
+        } catch (e) {
+            console.log(`(error) kv_init `, e);
+        }
+    };
 
     const handle_on_input = async (el: HTMLInputElement): Promise<void> => {
         try {
