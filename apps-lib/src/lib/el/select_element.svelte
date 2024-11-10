@@ -14,7 +14,11 @@
             ? parse_layer(0)
             : parse_layer(basis.layer);
     $: classes_layer =
-        typeof basis?.layer === `boolean` ? `` : `text-layer-${layer}-glyph_d`;
+        typeof basis?.layer === `boolean`
+            ? ``
+            : !value
+              ? `text-layer-${layer}-glyph_pl opacity-40`
+              : `text-layer-${layer}-glyph_d`;
 
     onMount(async () => {
         try {

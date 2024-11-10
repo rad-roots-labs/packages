@@ -9,6 +9,7 @@
 
     export let basis: {
         close: CallbackPromise;
+        full_cover?: boolean;
         label_close?: string | true;
     };
     $: basis = basis;
@@ -43,7 +44,7 @@
             <Fill />
         </button>
         <div
-            class={`relative flex flex-col h-[calc(100vh-12%)] w-full justify-start justify-start items-start bg-layer-1-surface rounded-t-2xl overflow-hidden`}
+            class={`relative flex flex-col h-[calc(100vh-12%)] w-full justify-start justify-start items-start bg-layer-1-surface rounded-t-3xl overflow-hidden`}
         >
             <div
                 class={`absolute z-10 top-0 left-0 grid grid-cols-12 flex flex-row h-12 w-full px-4 pb-2 justify-center items-center ${el_c_scrolled ? `bg-layer-1-surface/30  backdrop-blur-lg` : ``} el-re`}
@@ -77,7 +78,7 @@
                     }}
                 >
                     <div
-                        class={`flex flex-row justify-start items-center h-1 w-10 rounded-full bg-layer-2-surface-edge`}
+                        class={`flex flex-row justify-start items-center h-1 w-10 rounded-full ${basis.full_cover ? `bg-layer-1-surface shadow-md` : `bg-layer-2-surface-edge`}`}
                     />
                 </button>
                 <div
@@ -89,7 +90,7 @@
             <div
                 bind:this={el_c}
                 on:scroll={handle_scroll}
-                class={`flex flex-col w-full pt-12 justify-start items-center overflow-y-scroll overflow-x-hidden scroll-hide`}
+                class={`flex flex-col w-full ${basis.full_cover ? `h-full` : `pt-12`} justify-start items-center overflow-y-scroll overflow-x-hidden scroll-hide`}
             >
                 <slot />
             </div>

@@ -33,7 +33,7 @@
     {:else if basis.label}
         {#if `value` in basis.label}
             <p
-                class={`${fmt_cl(basis.label.classes)} font-circ text-line_display line-clamp-1 ${get_label_classes(layer, basis.label.kind, hide_active)}  transition-all`}
+                class={`${fmt_cl(basis.label.classes)} font-sans text-line_display line-clamp-1 ${get_label_classes(layer, basis.label.kind, hide_active)}  transition-all`}
             >
                 {basis.label.value}
             </p>

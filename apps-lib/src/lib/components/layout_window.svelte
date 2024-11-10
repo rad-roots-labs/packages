@@ -3,7 +3,7 @@
 </script>
 
 <div
-    class={`relative flex flex-col h-[100vh] w-full overflow-x-hidden overflow-y-hidden bg-layer-0-surface ${$app_tilt ? `scale-[96%] translate-y-4 rounded-t-[3.5rem]` : ``} delay-75 duration-200 el-re`}
+    class={`relative flex flex-col h-[100vh] w-full overflow-x-hidden overflow-y-hidden bg-layer-0-surface ${$app_tilt ? `scale-y-[96%] translate-y-4 rounded-t-[3rem]` : ``} delay-75 duration-200 el-re`}
 >
     <div class={`flex flex-col h-full w-full`}>
         <slot />

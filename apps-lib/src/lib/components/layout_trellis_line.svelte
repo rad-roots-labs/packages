@@ -16,7 +16,7 @@
                       ICb &
                       ILabelOpt &
                       IGlOpt & {
-                          glyph_last?: boolean;
+                          glyph_first?: boolean;
                       };
               })
         | undefined = undefined;
@@ -28,11 +28,11 @@
 >
     {#if (basis?.label && `value` in basis?.label) || basis?.notify}
         <div
-            class={`flex flex-row h-5 w-full px-2 gap-2 justify-start items-center`}
+            class={`flex flex-row h-5 w-full px-2 gap-[6px] justify-start items-center`}
         >
             {#if `value` in basis?.label}
                 <p
-                    class={`${fmt_cl(basis?.label.classes)} font-sans font-[400] uppercase text-layer-2-glyph text-sm`}
+                    class={`${fmt_cl(basis?.label.classes)} font-sans font-[400] uppercase text-layer-0-glyph text-sm`}
                 >
                     {basis?.label.value}
                 </p>
@@ -44,9 +44,9 @@
                     on:click={async () => {
                         await basis?.notify?.callback();
                     }}
-                    class={`${fmt_cl(basis?.notify.classes || `w-full`)} flex flex-row gap-1 justify-end items-center text-layer-1-glyph_d el-re`}
+                    class={`${fmt_cl(basis?.notify.classes)} flex flex-row gap-1 justify-end items-center text-layer-0-glyph/80 el-re`}
                 >
-                    {#if `glyph` in basis?.notify && basis?.notify?.glyph && !basis.notify.glyph_last}
+                    {#if `glyph` in basis?.notify && basis?.notify?.glyph && basis.notify.glyph_first}
                         <Glyph basis={basis.notify.glyph} />
                     {/if}
                     {#if `label` in basis?.notify && basis?.notify?.label && `value` in basis?.notify?.label}
@@ -56,7 +56,7 @@
                             {basis?.notify.label.value}
                         </p>
                     {/if}
-                    {#if `glyph` in basis?.notify && basis?.notify?.glyph && basis.notify.glyph_last}
+                    {#if `glyph` in basis?.notify && basis?.notify?.glyph && !basis.notify.glyph_first}
                         <Glyph basis={basis.notify.glyph} />
                     {/if}
                 </button>
