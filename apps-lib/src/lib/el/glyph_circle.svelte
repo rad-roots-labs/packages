@@ -15,7 +15,7 @@
 
 {#if styles?.dim_1}
     <div
-        class={`${fmt_cl(basis?.classes_wrap)} flex flex-col h-[${styles?.dim_1}px] w-[${styles?.dim_1}px] justify-center items-center rounded-full transition-all`}
+        class={`${fmt_cl(basis?.classes_wrap)} flex flex-col h-[${styles?.dim_1}px] w-[${styles?.dim_1}px] justify-center items-center rounded-full el-re`}
     >
         <ButtonGlyph basis={basis?.glyph} />
     </div>

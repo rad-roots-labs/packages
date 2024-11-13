@@ -33,7 +33,7 @@
             }
         },
         "schema": {
-            "geohash.length": "The location geohash must be 12 characters",
+            "geohash.length": "The location geohash must be 9 characters",
             "geohash.required": "The location geohash is required",
             "lat.max": "The location latitude must be less than 90",
             "lat.min": "The location latitude must be greater than -90",

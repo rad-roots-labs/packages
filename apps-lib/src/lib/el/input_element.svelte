@@ -95,5 +95,5 @@
     {id}
     type="text"
     class={`${fmt_cl(basis?.classes)} el-input ${classes_layer} el-re`}
-    placeholder={basis?.placeholder || ""}
+    placeholder={basis?.placeholder || ``}
 />

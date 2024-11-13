@@ -12,7 +12,7 @@
 </script>
 
 <button
-    class={`${fmt_cl(basis.classes)} flex flex-col justify-center items-center text-[${styles?.gl_1}px] transition-all`}
+    class={`${fmt_cl(basis.classes)} flex flex-col justify-center items-center text-[${styles?.gl_1}px] el-re`}
     on:click={async () => {
         if (basis.callback) await basis.callback();
     }}

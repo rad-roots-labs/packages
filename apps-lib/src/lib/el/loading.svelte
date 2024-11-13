@@ -11,7 +11,7 @@
 </script>
 
 <div
-    class={`relative flex flex-row justify-center items-center h-[${styles?.dim_1}px] w-[${styles?.dim_1}px] fade-in transition-all`}
+    class={`relative flex flex-row justify-center items-center h-[${styles?.dim_1}px] w-[${styles?.dim_1}px] fade-in el-re`}
 >
     <div
         class={`${num_blades === 12 ? `spinner12 center` : `spinner8 center`} text-[${styles?.gl_2 || styles?.dim_1}px]`}

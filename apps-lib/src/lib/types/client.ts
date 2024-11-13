@@ -169,7 +169,7 @@ export type ILabelSwap = {
 export type ILableFields = & {
     classes_wrap?: string
     classes?: string;
-    kind?: LabelFieldKind
+    kind?: LayerGlyphBasisKind;
     hide_truncate?: boolean;
     hide_active?: boolean;
 } & (
@@ -178,6 +178,8 @@ export type ILableFields = & {
         } | ILabelSwap)
         | IGl
     );
+
+export type LayerGlyphBasisKind = `_a` | `_d` | `_pl`;
 
 export type LabelFieldKind = `link` | `on` | `shade`;
 

@@ -1,5 +1,5 @@
 import { goto } from "$app/navigation";
-import { app_toast, locale, nav_prev, t, TOAST_MS, type AnchorRoute, type AppConfigType, type AppLayoutKey, type CallbackPromise, type CallbackPromiseGeneric, type GeolocationLatitudeFmtOption, type GlyphKey, type IToast, type LabelFieldKind, type NavigationParamTuple, type NavigationRoute, type NavigationRouteParamKey } from "$lib";
+import { app_toast, locale, nav_prev, t, TOAST_MS, type AnchorRoute, type AppConfigType, type AppLayoutKey, type CallbackPromise, type CallbackPromiseGeneric, type GeolocationLatitudeFmtOption, type GlyphKey, type IToast, type LabelFieldKind, type LayerGlyphBasisKind, type NavigationParamTuple, type NavigationRoute, type NavigationRouteParamKey } from "$lib";
 import type { ColorMode, ThemeKey, ThemeLayer } from "@radroots/theme";
 import { get as get_store } from "svelte/store";
 
@@ -21,7 +21,11 @@ export const fmt_cl = (classes?: string): string => {
     return classes ? classes : ``;
 };
 
-export const get_label_classes = (layer: ThemeLayer, label_kind: LabelFieldKind | undefined, hide_active: boolean): string => {
+export const get_label_classes = (layer: ThemeLayer, glyph_kind: LayerGlyphBasisKind | undefined, hide_active: boolean): string => {
+    return `text-layer-${layer}-glyph${glyph_kind ? `${glyph_kind}` : `_d`} ${hide_active ? `` : `group-active:text-layer-${layer}-glyph_a`}`
+};
+
+export const get_label_classes_ext = (layer: ThemeLayer, label_kind: LabelFieldKind | undefined, hide_active: boolean): string => {
     return `text-layer-${layer}-glyph${label_kind ? `-${label_kind}` : ``} ${hide_active ? `` : `group-active:text-layer-${layer}-glyph${label_kind ? `-${label_kind}_a` : `_a`}`}`
 };
 
@@ -168,9 +172,9 @@ export const show_toast = async (opts: {
 
 export const value_constrain = (regex_charset: RegExp, value: string): string => {
     return value
-        .split("")
+        .split(``)
         .filter((char) => regex_charset.test(char))
-        .join("");
+        .join(``);
 };
 
 export const fmt_textarea_value = (value: string): string => {
@@ -182,9 +186,9 @@ export const value_constrain_textarea = (regex_charset: RegExp, value: string): 
         .replace(/\u00A0/g, ` `)
         .split(/[\n]/)
         .map(line => line
-            .split("")
+            .split(``)
             .filter((char) => regex_charset.test(char))
-            .join("")
+            .join(``)
         )
         .join("\n");
 };

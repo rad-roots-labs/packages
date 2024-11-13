@@ -35,7 +35,7 @@
                 on:click|preventDefault={async () => await callback_close()}
             >
                 <p
-                    class={`${fmt_cl(basis.previous?.label?.classes)} font-sans text-envelopeTitlePrevious text-layer-${layer}-glyph-hl group-active:opacity-40 transition-all`}
+                    class={`${fmt_cl(basis.previous?.label?.classes)} font-sans text-envelopeTitlePrevious text-layer-${layer}-glyph-hl group-active:opacity-40 el-re`}
                 >
                     {basis.previous?.label?.value || `${$t(`common.cancel`)}`}
                 </p>
@@ -71,7 +71,7 @@
                         <ButtonGlyph basis={basis.submit?.glyph} />
                     {:else if `label` in basis.submit}
                         <p
-                            class={`font-sans text-envelopeTitleAction ${classes_submit} transition-all`}
+                            class={`font-sans text-envelopeTitleAction ${classes_submit} el-re`}
                         >
                             {basis.submit?.label.value || `${$t(`common.add`)}`}
                         </p>

@@ -55,6 +55,7 @@
     "nostr_*": "Nostr {value}",
     "post_*": "Post {value}",
     "primary_*": "Primary {value}",
+    "reading_*": "Reading {value}",
     "set_as_*": "Set as {value}",
     "show_*": "Show {value}",
     "the_*": "The {value}",

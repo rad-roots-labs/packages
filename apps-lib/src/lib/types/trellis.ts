@@ -49,6 +49,8 @@ export type ITrellisBasisOffsetMod = ITrellisBasisOffsetModKey | (({ glyph: IGly
 export type ITrellisKind = (
     | ITrellisKindTouch
     | ITrellisKindInput
+    | ITrellisKindSelect
+
 );
 
 export type ITrellisBasis = {
@@ -67,6 +69,9 @@ export type ITrellisBasisOffset = ICbGOpt<MouseEvent> &
         hide_offset?: boolean;
     };
 
+export type ITrellisKindDisplay = {
+    display?: ITrellisKindDisplayValue;
+}
 export type ITrellisKindDisplayValue = ICbGOpt<MouseEvent> &
     (ITrellisKindDisplayValueIcon | ILabel);
 
@@ -86,9 +91,8 @@ export type ITrellisKindTouch = ITrellisBasis & {
 };
 
 export type ITrellisBasisTouch = ICbGOpt<MouseEvent> &
-    ILabelTup & {
+    ILabelTup & ITrellisKindDisplay & {
         end?: ITrellisBasisTouchEnd;
-        display?: ITrellisKindDisplayValue;
     };
 
 export type ITrellisKindInput = ITrellisBasis & {
@@ -108,3 +112,12 @@ export type ITrellisBasisInput = {
         glyph?: IGlyph
     };
 };
+
+export type ITrellisKindSelect = ITrellisBasis & {
+    select: ITrellisBasisSelect;
+};
+
+export type ITrellisBasisSelect =
+    ILabelTup & ITrellisKindDisplay & {
+        end?: ITrellisBasisTouchEnd;
+    };

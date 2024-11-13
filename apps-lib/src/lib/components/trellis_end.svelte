@@ -20,7 +20,7 @@
             <Glyph
                 basis={{
                     classes: `text-layer-${layer}-glyph-shade ${hide_active ? `` : `group-active:text-layer-${layer}-glyph_a`} translate-y-[1px] opacity-70`,
-                    dim: `xs-`,
+                    dim: `xs`,
                     weight: `bold`,
                     ...basis.icon,
                 }}

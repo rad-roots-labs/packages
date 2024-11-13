@@ -33,9 +33,9 @@
 </script>
 
 <div
-    id={basis.args.id || ""}
+    id={basis.args.id || ``}
     class={`${fmt_cl(args.classes)} flex flex-col`}
-    data-view={basis.args.view || ""}
+    data-view={basis.args.view || ``}
 >
     <div
         class={`relative flex flex-col h-auto w-${$app_layout} gap-[3px] ${set_title_background ? `bg-layer-${args.layer}-surface` : ``}`}
@@ -69,7 +69,7 @@
             <div class={`flex flex-col w-full justify-center items-center`}>
                 {#each args.list as basis}
                     <div
-                        class={`${basis.hide_field ? "hidden" : ""} group flex flex-row h-full w-full justify-end items-center bg-layer-${args.layer}-surface  ${basis.full_rounded ? `rounded-touch` : ``} ${hide_rounded ? `` : `first:rounded-t-touch last:rounded-b-touch`} ${!basis.hide_active ? `active:bg-layer-${args.layer}-surface_a` : ``} transition-all`}
+                        class={`${basis.hide_field ? "hidden" : ``} group flex flex-row h-full w-full justify-end items-center bg-layer-${args.layer}-surface  ${basis.full_rounded ? `rounded-touch` : ``} ${hide_rounded ? `` : `first:rounded-t-2xl last:rounded-b-2xl`} ${!basis.hide_active ? `active:bg-layer-${args.layer}-surface_a` : ``} el-re`}
                     >
                         <div
                             class={`flex flex-row h-full w-full gap-1 items-center overflow-y-hidden`}

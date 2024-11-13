@@ -76,7 +76,7 @@
     {id}
     contenteditable="true"
     class={`${fmt_cl(basis.classes)} el-textarea w-full bg-layer-${layer}-surface text-layer-${layer}-glyph placeholder:text-layer-${layer}-glyph_pl caret-layer-${layer}-glyph`}
-    placeholder={basis.placeholder || ""}
+    placeholder={basis.placeholder || ``}
     on:input={async ({ currentTarget: el }) => {
         await handle_on_input(el);
     }}

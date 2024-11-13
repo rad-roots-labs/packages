@@ -28,7 +28,7 @@
     {#if basis.notify_inline}
         {#if `glyph` in basis.notify_inline}
             <div
-                class={`z-5 absolute right-0 top-0 flex flex-row h-full pr-3 justify-end items-center translate-x-[34px] fade-in transition-all`}
+                class={`z-5 absolute right-0 top-0 flex flex-row h-full pr-3 justify-end items-center translate-x-[34px] fade-in `}
             >
                 <Glyph
                     basis={typeof basis.notify_inline.glyph === `string`

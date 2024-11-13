@@ -48,7 +48,7 @@
                                     basis={{
                                         dim: `glyph-send-button`,
                                         blades: 8,
-                                        classes: `text-layer-${layer}-glyph transition-all`,
+                                        classes: `text-layer-${layer}-glyph el-re`,
                                     }}
                                 />
                             </div>

@@ -3,32 +3,30 @@
         TrellisEnd,
         TrellisRowDisplayValue,
         TrellisRowLabel,
-        type ITrellisBasisTouch,
+        type ITrellisBasisSelect,
     } from "$lib";
     import type { ThemeLayer } from "@radroots/theme";
     import TrellisLine from "./trellis_line.svelte";
 
-    export let basis: ITrellisBasisTouch;
+    export let basis: ITrellisBasisSelect;
     export let layer: ThemeLayer;
     export let hide_border_t: boolean;
     export let hide_border_b: boolean;
     export let hide_active: boolean;
 </script>
 
-<TrellisLine {layer} {hide_border_b} {hide_border_t} callback={basis.callback}>
-    <TrellisRowLabel basis={basis.label} {layer} />
+<TrellisLine {layer} {hide_border_b} {hide_border_t}>
+    <TrellisRowLabel basis={basis.label} {layer} {hide_active} />
     {#if basis.display}
         <TrellisRowDisplayValue
-            basis={{
-                ...basis.display,
-            }}
+            basis={{ ...basis.display }}
             {layer}
             {hide_active}
         />
     {/if}
-    <svelte:fragment slot="end">
+    <div slot="end">
         {#if basis.end}
             <TrellisEnd basis={basis.end} {layer} {hide_active} />
         {/if}
-    </svelte:fragment>
+    </div>
 </TrellisLine>

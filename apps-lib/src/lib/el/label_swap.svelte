@@ -16,14 +16,14 @@
     >
         <div class="swap-on">
             <p
-                class={`${fmt_cl(basis.swap.on.classes || `text-navPrevious text-layer-${layer}-glyph-hl group-active:opacity-60`)} font-sans -translate-y-[1px] transition-all`}
+                class={`${fmt_cl(basis.swap.on.classes || `text-navPrevious text-layer-${layer}-glyph-hl group-active:opacity-60`)} font-sans -translate-y-[1px] el-re`}
             >
                 {basis.swap.on.value}
             </p>
         </div>
         <div class="swap-off">
             <p
-                class={`${fmt_cl(basis.swap.off.classes || `text-navPrevious text-layer-${layer}-glyph-hl group-active:opacity-60`)} font-sans -translate-y-[1px] transition-all`}
+                class={`${fmt_cl(basis.swap.off.classes || `text-navPrevious text-layer-${layer}-glyph-hl group-active:opacity-60`)} font-sans -translate-y-[1px] el-re`}
             >
                 {basis.swap.off.value}
             </p>

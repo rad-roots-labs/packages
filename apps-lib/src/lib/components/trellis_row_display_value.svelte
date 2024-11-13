@@ -1,22 +1,16 @@
 <script lang="ts">
-    import {
-        fmt_cl,
-        get_label_classes,
-        Glyph,
-        type ITrellisKindDisplayValue,
-    } from "$lib";
+    import { fmt_cl, Glyph, type ITrellisKindDisplayValue } from "$lib";
     import type { ThemeLayer } from "@radroots/theme";
 
     export let basis: ITrellisKindDisplayValue;
     export let layer: ThemeLayer;
     export let hide_active: boolean;
-    export let end_offset: boolean = false;
 </script>
 
 <button
-    class={`z-10 flex flex-grow justify-end ${end_offset ? `pr-[22px]` : ``}`}
-    on:click|preventDefault={async (ev) => {
-        if (basis && basis.callback) await basis.callback(ev);
+    class={`z-10 flex flex-grow justify-end`}
+    on:click|stopPropagation={async (ev) => {
+        if (basis.callback) await basis.callback(ev);
     }}
 >
     {#if `icon` in basis}
@@ -33,7 +27,7 @@
     {:else if basis.label}
         {#if `value` in basis.label}
             <p
-                class={`${fmt_cl(basis.label.classes)} font-sans text-line_display line-clamp-1 ${get_label_classes(layer, basis.label.kind, hide_active)}  transition-all`}
+                class={`${fmt_cl(basis.label.classes)} font-sans text-line_display_e line-clamp-1 text-layer-0-glyph-label el-re`}
             >
                 {basis.label.value}
             </p>

@@ -68,7 +68,7 @@
 
 <div
     bind:this={el}
-    class={`z-10 absolute top-0 left-0 flex flex-col w-full justify-start items-start transition-all duration-[250ms] h-nav_${$app_layout} ${$nav_blur ? `bg-layer-0-surface-blur/30 backdrop-blur-md` : ``}`}
+    class={`z-10 absolute top-0 left-0 flex flex-col w-full justify-start items-start h-nav_${$app_layout} ${$nav_blur ? `bg-layer-0-surface-blur/30 backdrop-blur-md` : ``} duration-[250ms] el-re`}
 >
     <div
         bind:this={el_inner}
