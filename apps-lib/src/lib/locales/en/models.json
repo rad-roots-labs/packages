@@ -1,0 +1,207 @@
+{
+    "location_gcs": {
+        "fields": {
+            "lat": {
+                "label": "Location Latitude"
+            },
+            "lng": {
+                "label": "Location Latitude"
+            },
+            "geohash": {
+                "label": "Location Geohash"
+            },
+            "label": {
+                "label": "Location Label"
+            },
+            "gc_id": {
+                "label": "Location Gc Id"
+            },
+            "gc_name": {
+                "label": "Location Gc Name"
+            },
+            "gc_admin1_id": {
+                "label": "Location Gc Admin1 Id"
+            },
+            "gc_admin1_name": {
+                "label": "Location Gc Admin1 Name"
+            },
+            "gc_country_id": {
+                "label": "Location Gc Country Id"
+            },
+            "gc_country_name": {
+                "label": "Location Gc Country Name"
+            }
+        },
+        "schema": {
+            "lat.required": "The location latitude is required",
+            "lat.min": "The location latitude must be greater than -90",
+            "lat.max": "The location latitude must be less than 90",
+            "lng.required": "The location latitude is required",
+            "lng.min": "The location latitude must be greater than -180",
+            "lng.max": "The location latitude must be less than 180",
+            "geohash.required": "The location geohash is required",
+            "geohash.min": "The location geohash must be more than 7 characters",
+            "geohash.max": "The location geohash must be less than 12 characters"
+        }
+    },
+    "nostr_profile": {
+        "fields": {
+            "public_key": {
+                "label": "Profile Public Key"
+            },
+            "name": {
+                "label": "Profile Name"
+            },
+            "display_name": {
+                "label": "Profile Display Name"
+            },
+            "about": {
+                "label": "Profile About"
+            },
+            "website": {
+                "label": "Profile Website"
+            },
+            "picture": {
+                "label": "Profile Picture"
+            },
+            "banner": {
+                "label": "Profile Banner"
+            },
+            "nip05": {
+                "label": "Profile Nip-05"
+            },
+            "lud06": {
+                "label": "Profile Lud-06"
+            },
+            "lud16": {
+                "label": "Profile Lud-16"
+            }
+        },
+        "schema": {
+            "public_key.required": "The profile public key is required",
+            "public_key.length": "The profile public key must be 64 characters",
+            "website.url": "The profile website url is incomplete",
+            "picture.url": "The profile picture url is incomplete",
+            "banner.url": "The profile banner url is incomplete",
+            "nip05.email": "The profile nip-05 is incorrectly formatted"
+        }
+    },
+    "nostr_relay": {
+        "fields": {
+            "url": {
+                "label": "Relay Endpoint"
+            },
+            "relay_id": {
+                "label": "Relay Id"
+            },
+            "name": {
+                "label": "Relay Name"
+            },
+            "description": {
+                "label": "Relay Description"
+            },
+            "pubkey": {
+                "label": "Administrator"
+            },
+            "contact": {
+                "label": "Administrator Contact"
+            },
+            "supported_nips": {
+                "label": "Supported Nips"
+            },
+            "software": {
+                "label": "Software"
+            },
+            "version": {
+                "label": "Software Version"
+            },
+            "data": {
+                "label": "Additional Information"
+            }
+        },
+        "schema": {
+            "url.required": "The relay relay endpoint is required",
+            "url.url": "The relay relay endpoint is incorrectly formatted",
+            "url.regex": "The relay relay endpoint requires a websocket protocol"
+        }
+    },
+    "trade_product": {
+        "fields": {
+            "key": {
+                "label": "Product Kind"
+            },
+            "title": {
+                "label": "Product Title"
+            },
+            "summary": {
+                "label": "Product Description"
+            },
+            "process": {
+                "label": "Processing Method"
+            },
+            "lot": {
+                "label": "Product Lot"
+            },
+            "profile": {
+                "label": "Flavor Profile"
+            },
+            "year": {
+                "label": "Production Year"
+            },
+            "qty_amt": {
+                "label": "Quantity Amount"
+            },
+            "qty_unit": {
+                "label": "Quantity Unit"
+            },
+            "qty_label": {
+                "label": "Quantity Name"
+            },
+            "qty_avail": {
+                "label": "Quantity Available"
+            },
+            "price_amt": {
+                "label": "Price Amount"
+            },
+            "price_currency": {
+                "label": "Price Currency"
+            },
+            "price_qty_amt": {
+                "label": "Price Quantity"
+            },
+            "price_qty_unit": {
+                "label": "Price Quantity Unit"
+            },
+            "notes": {
+                "label": "Notes"
+            }
+        },
+        "schema": {
+            "key.required": "The product kind is required",
+            "title.required": "The product title is required",
+            "summary.required": "The product description is required",
+            "process.required": "The product processing method is required",
+            "lot.required": "The product lot is required",
+            "lot.min": "The product lot must be more than 1 character",
+            "lot.max": "The product lot must be less than 120 characters",
+            "profile.required": "The product flavor profile is required",
+            "year.required": "The product production year is required",
+            "year.int": "The product production year must be an integer",
+            "year.positive": "The product production year must be positive",
+            "qty_amt.required": "The product quantity amount is required",
+            "qty_amt.int": "The product quantity amount must be an integer",
+            "qty_amt.positive": "The product quantity amount must be positive",
+            "qty_unit.required": "The product quantity unit is required",
+            "qty_avail.int": "The product quantity available must be an integer",
+            "qty_avail.positive": "The product quantity available must be positive",
+            "price_amt.required": "The product price amount is required",
+            "price_amt.positive": "The product price amount must be positive",
+            "price_currency.required": "The product price currency is required",
+            "price_currency.length": "The product price currency must be 3 characters",
+            "price_qty_amt.required": "The product price quantity is required",
+            "price_qty_amt.int": "The product price quantity must be an integer",
+            "price_qty_amt.positive": "The product price quantity must be positive",
+            "price_qty_unit.required": "The product price quantity unit is required"
+        }
+    }
+}
