@@ -7,6 +7,7 @@
         TrellisDefaultLabel,
         TrellisInput,
         TrellisOffset,
+        TrellisSelect,
         TrellisTitle,
         TrellisTouch,
         type ITrellis,
@@ -97,6 +98,14 @@
                                     layer={args.layer}
                                     {hide_border_b}
                                     {hide_border_t}
+                                />
+                            {:else if `select` in basis && basis.select}
+                                <TrellisSelect
+                                    basis={basis.select}
+                                    layer={args.layer}
+                                    {hide_border_b}
+                                    {hide_border_t}
+                                    hide_active={!!basis.hide_active}
                                 />
                             {/if}
                         </div>

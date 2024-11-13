@@ -25,7 +25,7 @@ export const get_label_classes = (layer: ThemeLayer, glyph_kind: LayerGlyphBasis
     return `text-layer-${layer}-glyph${glyph_kind ? `${glyph_kind}` : `_d`} ${hide_active ? `` : `group-active:text-layer-${layer}-glyph_a`}`
 };
 
-export const get_label_classes_ext = (layer: ThemeLayer, label_kind: LabelFieldKind | undefined, hide_active: boolean): string => {
+export const get_label_classes_kind = (layer: ThemeLayer, label_kind: LabelFieldKind | undefined, hide_active: boolean): string => {
     return `text-layer-${layer}-glyph${label_kind ? `-${label_kind}` : ``} ${hide_active ? `` : `group-active:text-layer-${layer}-glyph${label_kind ? `-${label_kind}_a` : `_a`}`}`
 };
 

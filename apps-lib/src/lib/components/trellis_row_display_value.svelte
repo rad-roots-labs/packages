@@ -1,5 +1,10 @@
 <script lang="ts">
-    import { fmt_cl, Glyph, type ITrellisKindDisplayValue } from "$lib";
+    import {
+        fmt_cl,
+        get_label_classes_kind,
+        Glyph,
+        type ITrellisKindDisplayValue,
+    } from "$lib";
     import type { ThemeLayer } from "@radroots/theme";
 
     export let basis: ITrellisKindDisplayValue;
@@ -18,7 +23,8 @@
             basis={{
                 classes:
                     basis.icon.classes ||
-                    `text-layer-${layer}-glyph-shade ${hide_active ? `` : `group-active:text-layer-${layer}-glyph_a`}`,
+                    `${get_label_classes_kind(layer, `shade`, hide_active)}`,
+                // `text-layer-${layer}-glyph-shade ${hide_active ? `` : `group-active:text-layer-${layer}-glyph_a`}`,
                 key: basis.icon.key,
                 weight: `bold`,
                 dim: `sm`,

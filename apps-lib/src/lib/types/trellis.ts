@@ -1,4 +1,4 @@
-import type { CallbackPromise, GlyphKey, ICbGOpt, ICbOpt, ICbROpt, IClOpt, IGlOpt, IGlyph, IGlyphCircle, IInputElement, ILabel, ILabelOpt, ILabelTup, ILy } from "$lib";
+import type { CallbackPromise, GlyphKey, ICbGOpt, ICbOpt, ICbROpt, IClOpt, IGl, IGlOpt, IGlyph, IGlyphCircle, IInputElement, ILabel, ILabelOpt, ILabelTup, ILoadingOpt, ILy, ISelectElement } from "$lib";
 
 export type ITrellis = ILy &
     IClOpt &
@@ -72,12 +72,10 @@ export type ITrellisBasisOffset = ICbGOpt<MouseEvent> &
 export type ITrellisKindDisplay = {
     display?: ITrellisKindDisplayValue;
 }
-export type ITrellisKindDisplayValue = ICbGOpt<MouseEvent> &
+export type ITrellisKindDisplayValue = ICbGOpt<MouseEvent> & ILoadingOpt &
     (ITrellisKindDisplayValueIcon | ILabel);
 
-export type ITrellisBasisTouchEnd = ICbGOpt<MouseEvent> & {
-    icon: IGlyph;
-};
+export type ITrellisBasisTouchEnd = ICbGOpt<MouseEvent> & IGl;
 
 export type ITrellisKindDisplayValueIcon = {
     icon: {
@@ -117,7 +115,8 @@ export type ITrellisKindSelect = ITrellisBasis & {
     select: ITrellisBasisSelect;
 };
 
-export type ITrellisBasisSelect =
-    ILabelTup & ITrellisKindDisplay & {
+export type ITrellisBasisSelect = ICbGOpt<MouseEvent> &
+    ILabelTup & ITrellisKindDisplay & ILoadingOpt & {
         end?: ITrellisBasisTouchEnd;
+        el: ISelectElement & { value: string; };
     };

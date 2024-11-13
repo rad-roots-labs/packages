@@ -16,7 +16,7 @@
 </script>
 
 <TrellisLine {layer} {hide_border_b} {hide_border_t} callback={basis.callback}>
-    <TrellisRowLabel basis={basis.label} {layer} />
+    <TrellisRowLabel basis={basis.label} {layer} {hide_active} />
     {#if basis.display}
         <TrellisRowDisplayValue
             basis={{

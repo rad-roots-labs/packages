@@ -1,4 +1,5 @@
 {
+    "toggle_*": "Toggle {value}",
     "*_as": "{value} as",
     "*_available": "{value} Available",
     "*_copied": "{value} copied",

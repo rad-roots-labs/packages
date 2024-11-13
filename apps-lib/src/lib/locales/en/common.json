@@ -1,4 +1,9 @@
 {
+    "dark": "Dark",
+    "light": "Light",
+    "color_mode": "Color mode",
+    "endpoint": "Endpoint",
+    "new": "New",
     "accept": "Accept",
     "activation": "Activation",
     "active": "Active",
