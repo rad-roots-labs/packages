@@ -7,7 +7,7 @@ import {
 } from "$lib";
 import { get as get_store } from 'svelte/store';
 
-const CAROUSEL_DELAY_MS = 250;
+const CAROUSEL_DELAY_MS = 150;
 
 const get_slide_container = <T extends string>(
     view: T,
@@ -59,7 +59,7 @@ export const carousel_inc = async <T extends string>(
     view: T,
     duration: number = CAROUSEL_DELAY_MS
 ): Promise<void> => {
-    const num = get_store(carousel_num) || 1;
+    const num = get_store(carousel_num);
     carousel_num.set(1);
     await exe_iter(async () => carousel_inc_handler(view), num, duration);
 };
@@ -69,7 +69,7 @@ export const carousel_dec = async <T extends string>(
     view: T,
     duration: number = CAROUSEL_DELAY_MS
 ): Promise<void> => {
-    const num = get_store(carousel_num) || 1;
+    const num = get_store(carousel_num);
     carousel_num.set(1);
     await exe_iter(async () => carousel_dec_handler(view), num, duration);
 };

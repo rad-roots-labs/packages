@@ -4,6 +4,7 @@
         app_tilt,
         app_toast,
         app_win,
+        envelope_tilt,
         envelope_visible,
         Toast,
         wind,
@@ -25,7 +26,7 @@
     });
 
     envelope_visible.subscribe(async (_envelope_visible) => {
-        if (_envelope_visible) app_tilt.set(true);
+        if (_envelope_visible && $envelope_tilt) app_tilt.set(true);
         else app_tilt.set(false);
     });
 </script>

@@ -24,8 +24,13 @@
     $: basis = basis;
     $: id = basis?.id ? basis?.id : null;
     $: layer =
-        typeof basis?.layer === `boolean` ? 0 : parse_layer(basis?.layer, 1); //@todo
-
+        typeof basis?.layer === `boolean`
+            ? parse_layer(0)
+            : parse_layer(basis?.layer);
+    $: classes_layer =
+        typeof basis?.layer === `boolean`
+            ? ``
+            : `text-layer-${layer}-glyph placeholder:text-layer-${layer}-glyph_pl caret-layer-${layer}-glyph`;
     $: if (basis?.id && basis?.sync && value) {
         (async () => {
             try {
@@ -89,6 +94,6 @@
     }}
     {id}
     type="text"
-    class={`${fmt_cl(basis?.classes)} el-input text-layer-${layer}-glyph placeholder:text-layer-${layer}-glyph_pl caret-layer-${layer}-glyph el-re`}
+    class={`${fmt_cl(basis?.classes)} el-input ${classes_layer} el-re`}
     placeholder={basis?.placeholder || ""}
 />

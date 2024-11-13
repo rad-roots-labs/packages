@@ -42,7 +42,7 @@
                     key: `caret-up-down`,
                     dim: `xs`,
                     weight: `bold`,
-                    classes: `text-layer-${layer}-glyph`,
+                    classes: `text-layer-${layer}-glyph_d`,
                 }}
             />
         </div>

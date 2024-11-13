@@ -1,7 +1,6 @@
 import { goto } from "$app/navigation";
-import { app_toast, locale, nav_prev, TOAST_MS, type AnchorRoute, type AppConfigType, type AppLayoutKey, type CallbackPromise, type CallbackPromiseGeneric, type GeolocationLatitudeFmtOption, type GlyphKey, type IToast, type LabelFieldKind, type NavigationParamTuple, type NavigationRoute, type NavigationRouteParamKey } from "$lib";
+import { app_toast, locale, nav_prev, t, TOAST_MS, type AnchorRoute, type AppConfigType, type AppLayoutKey, type CallbackPromise, type CallbackPromiseGeneric, type GeolocationLatitudeFmtOption, type GlyphKey, type IToast, type LabelFieldKind, type NavigationParamTuple, type NavigationRoute, type NavigationRouteParamKey } from "$lib";
 import type { ColorMode, ThemeKey, ThemeLayer } from "@radroots/theme";
-
 import { get as get_store } from "svelte/store";
 
 
@@ -280,4 +279,10 @@ export const exe_iter = async (callback: CallbackPromise, num: number = 1, delay
     } catch (e) {
         console.log(`(error) exe_iter `, e);
     }
+};
+
+export const fmt_list_oxford = (list: string[], loc_key?: string): string => {
+    if (list.length > 1 && loc_key) return `${list.slice(0, -1).map(i => `${loc_key}${i}`).join(', ')} ${`${get_store(t)(`common.and`)}`} ${`${loc_key}${list[list.length - 1]}`}`;
+    else if (list.length > 1) return `${list.slice(0, -1).join(', ')} ${`${get_store(t)(`common.and`)}`} ${list[list.length - 1]}`;
+    return list[0];
 };

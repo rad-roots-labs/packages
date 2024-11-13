@@ -35,16 +35,18 @@
         out:fly={{ y: `100%`, easing: quintInOut }}
         class={`z-20 absolute bottom-0 left-0 flex flex-col h-[100vh] w-full justify-start items-start`}
     >
-        <button
-            class={`flex flex-row h-[12%] w-full justify-center items-center text-white`}
-            on:click={async () => {
-                await handle_close();
-            }}
-        >
-            <Fill />
-        </button>
+        {#if !basis.full_cover}
+            <button
+                class={`flex flex-row h-[12%] w-full justify-center items-center text-white`}
+                on:click={async () => {
+                    await handle_close();
+                }}
+            >
+                <Fill />
+            </button>
+        {/if}
         <div
-            class={`relative flex flex-col h-[calc(100vh-12%)] w-full justify-start justify-start items-start bg-layer-1-surface rounded-t-3xl overflow-hidden`}
+            class={`relative flex flex-col ${basis.full_cover ? `h-[100vh]` : `h-[calc(100vh-12%)]`} w-full justify-start justify-start items-start bg-layer-1-surface rounded-t-3xl overflow-hidden`}
         >
             <div
                 class={`absolute z-10 top-0 left-0 grid grid-cols-12 flex flex-row h-12 w-full px-4 pb-2 justify-center items-center ${el_c_scrolled ? `bg-layer-1-surface/30  backdrop-blur-lg` : ``} el-re`}

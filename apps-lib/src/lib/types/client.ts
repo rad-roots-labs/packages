@@ -192,3 +192,5 @@ export type IToast = IClOpt &
 
 export type AppConfigType = `farmer` | `personal`
 export type GeolocationLatitudeFmtOption = 'dms' | 'd' | 'dm';
+
+export type UploadFilePresignedUrl = { url: string; storage_key: string; file_name: string }

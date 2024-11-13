@@ -17,7 +17,7 @@
         typeof basis?.layer === `boolean`
             ? ``
             : !value
-              ? `text-layer-${layer}-glyph_pl opacity-40`
+              ? `text-layer-${layer}-glyph_pl`
               : `text-layer-${layer}-glyph_d`;
 
     onMount(async () => {
@@ -104,7 +104,7 @@
                 key: `caret-up-down`,
                 dim: `xs`,
                 weight: `bold`,
-                classes: `text-layer-${layer}-glyph translate-y-[1px]`,
+                classes: `text-layer-${layer}-glyph`,
             }}
         />
     </div>
