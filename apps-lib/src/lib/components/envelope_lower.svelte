@@ -33,11 +33,11 @@
     <div
         in:fly={{ y: `100%`, easing: quintInOut }}
         out:fly={{ y: `100%`, easing: quintInOut }}
-        class={`z-20 absolute bottom-0 left-0 flex flex-col h-[100vh] w-full justify-start items-start`}
+        class={`z-10 absolute bottom-0 left-0 flex flex-col h-[100vh] w-full justify-start items-start bg-transparent`}
     >
         {#if !basis.full_cover}
             <button
-                class={`flex flex-row h-[12%] w-full justify-center items-center text-white`}
+                class={`flex flex-row h-[12%] w-full justify-center items-center`}
                 on:click={async () => {
                     await handle_close();
                 }}
@@ -46,7 +46,7 @@
             </button>
         {/if}
         <div
-            class={`relative flex flex-col ${basis.full_cover ? `h-[100vh]` : `h-[calc(100vh-12%)]`} w-full justify-start justify-start items-start bg-layer-1-surface rounded-t-3xl overflow-hidden`}
+            class={`relative flex flex-col ${basis.full_cover ? `h-[100vh]` : `h-[calc(100vh-12%)]`} w-full justify-start justify-start items-start bg-red-400 rounded-t-3xl overflow-hidden`}
         >
             <div
                 class={`absolute z-10 top-0 left-0 grid grid-cols-12 flex flex-row h-12 w-full px-4 pb-2 justify-center items-center ${el_c_scrolled ? `bg-layer-1-surface/30  backdrop-blur-lg` : ``} el-re`}
@@ -92,7 +92,7 @@
             <div
                 bind:this={el_c}
                 on:scroll={handle_scroll}
-                class={`flex flex-col w-full ${basis.full_cover ? `h-full` : `pt-12`} justify-start items-center overflow-y-scroll overflow-x-hidden scroll-hide`}
+                class={`flex flex-col ${basis.full_cover ? `h-full` : `pt-12 `} w-full justify-start items-center overflow-y-scroll overflow-x-hidden scroll-hide bg-blue-400`}
             >
                 <slot />
             </div>

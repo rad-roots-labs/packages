@@ -1,5 +1,4 @@
 {
-    "toggle_*": "Toggle {value}",
     "*_as": "{value} as",
     "*_available": "{value} Available",
     "*_copied": "{value} copied",
@@ -66,7 +65,9 @@
     "the_*_is_registered": "The {value} is registered",
     "the_*_is_required": "The {value} is missing",
     "the_current_entry_*_will_be_deleted": "The current entry \"{value}\" will be deleted",
+    "the_listing_will_be_created_without_a_*": "The listing will be created without a {value}",
     "this_*": "This {value}",
+    "toggle_*": "Toggle {value}",
     "total_*": "Total {value}",
     "unable_to_save_*": "Unable to save {value}",
     "unconnected_*": "Unconnected {value}",
