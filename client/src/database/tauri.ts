@@ -1,5 +1,5 @@
 
-import { LocationGcsSchema, LocationGcsUpdateSchema, NostrProfileSchema, NostrProfileUpdateSchema, NostrRelaySchema, NostrRelayUpdateSchema, TradeProductSchema, TradeProductUpdateSchema, parse_location_gcs, parse_location_gcs_form_fields, parse_location_gcs_list, parse_nostr_profile, parse_nostr_profile_form_fields, parse_nostr_profile_list, parse_nostr_relay, parse_nostr_relay_form_fields, parse_nostr_relay_list, parse_trade_product, parse_trade_product_form_fields, parse_trade_product_list, type ILocationGcsAdd, type ILocationGcsAddResolve, type ILocationGcsDelete, type ILocationGcsDeleteResolve, type ILocationGcsGet, type ILocationGcsGetOne, type ILocationGcsGetOneResolve, type ILocationGcsGetResolve, type ILocationGcsUpdate, type ILocationGcsUpdateResolve, type IModelsQueryBindValueTuple, type IModelsQueryValue, type INostrProfileAdd, type INostrProfileAddResolve, type INostrProfileDelete, type INostrProfileDeleteResolve, type INostrProfileGet, type INostrProfileGetOne, type INostrProfileGetOneResolve, type INostrProfileGetResolve, type INostrProfileRelayRelation, type INostrProfileRelayRelationResolve, type INostrProfileUpdate, type INostrProfileUpdateResolve, type INostrRelayAdd, type INostrRelayAddResolve, type INostrRelayDelete, type INostrRelayDeleteResolve, type INostrRelayGet, type INostrRelayGetOne, type INostrRelayGetOneResolve, type INostrRelayGetResolve, type INostrRelayUpdate, type INostrRelayUpdateResolve, type ITradeProductAdd, type ITradeProductAddResolve, type ITradeProductDelete, type ITradeProductDeleteResolve, type ITradeProductGet, type ITradeProductGetOne, type ITradeProductGetOneResolve, type ITradeProductGetResolve, type ITradeProductLocationRelation, type ITradeProductLocationRelationResolve, type ITradeProductUpdate, type ITradeProductUpdateResolve, type LocationGcsFields, type LocationGcsFormFields, type NostrProfileFields, type NostrProfileFormFields, type NostrRelayFields, type NostrRelayFormFields, type TradeProductFields, type TradeProductFormFields } from "@radroots/models";
+import { LocationGcsSchema, LocationGcsUpdateSchema, NostrProfileSchema, NostrProfileUpdateSchema, NostrRelaySchema, NostrRelayUpdateSchema, TradeProductSchema, TradeProductUpdateSchema, parse_location_gcs, parse_location_gcs_form_fields, parse_location_gcs_get_composite_list, parse_location_gcs_list, parse_nostr_profile, parse_nostr_profile_form_fields, parse_nostr_profile_get_composite_list, parse_nostr_profile_list, parse_nostr_relay, parse_nostr_relay_form_fields, parse_nostr_relay_get_composite_list, parse_nostr_relay_list, parse_trade_product, parse_trade_product_form_fields, parse_trade_product_get_composite_list, parse_trade_product_list, type ILocationGcsAdd, type ILocationGcsAddResolve, type ILocationGcsDelete, type ILocationGcsDeleteResolve, type ILocationGcsGet, type ILocationGcsGetOne, type ILocationGcsGetOneResolve, type ILocationGcsGetResolve, type ILocationGcsUpdate, type ILocationGcsUpdateResolve, type IModelsQueryBindValueTuple, type IModelsQueryValue, type INostrProfileAdd, type INostrProfileAddResolve, type INostrProfileDelete, type INostrProfileDeleteResolve, type INostrProfileGet, type INostrProfileGetOne, type INostrProfileGetOneResolve, type INostrProfileGetResolve, type INostrProfileRelayRelation, type INostrProfileRelayRelationResolve, type INostrProfileUpdate, type INostrProfileUpdateResolve, type INostrRelayAdd, type INostrRelayAddResolve, type INostrRelayDelete, type INostrRelayDeleteResolve, type INostrRelayGet, type INostrRelayGetOne, type INostrRelayGetOneResolve, type INostrRelayGetResolve, type INostrRelayUpdate, type INostrRelayUpdateResolve, type ITradeProductAdd, type ITradeProductAddResolve, type ITradeProductDelete, type ITradeProductDeleteResolve, type ITradeProductGet, type ITradeProductGetOne, type ITradeProductGetOneResolve, type ITradeProductGetResolve, type ITradeProductLocationRelation, type ITradeProductLocationRelationResolve, type ITradeProductUpdate, type ITradeProductUpdateResolve, type LocationGcsFields, type LocationGcsFormFields, type NostrProfileFields, type NostrProfileFormFields, type NostrRelayFields, type NostrRelayFormFields, type TradeProductFields, type TradeProductFormFields } from "@radroots/models";
 import { err_msg, type ErrorMessage } from "@radroots/utils";
 import { invoke } from "@tauri-apps/api/core";
 import type { IClientDatabase, IClientDatabaseMessage } from "./types";
@@ -53,7 +53,7 @@ export class TauriClientDatabase implements IClientDatabase {
 
     public async location_gcs_get(opts: ILocationGcsGet): Promise<ILocationGcsGetResolve<IClientDatabaseMessage>> {
         try {
-            const response = await invoke<any>("model_location_gcs_get", { opts: "list" in opts ? { list: { of: opts.list, sort: opts.sort } } : { on: { ...opts } } });
+            const response = await invoke<any>("model_location_gcs_get", { opts: "list" in opts ? { list: { of: parse_location_gcs_get_composite_list(opts.list), sort: opts.sort } } : { on: opts } });
             if (typeof response === "string") return err_msg(response);
             else if ("results" in response && Array.isArray(response.results)) return { results: parse_location_gcs_list(response.results) };
             return err_msg("*-result");
@@ -64,7 +64,7 @@ export class TauriClientDatabase implements IClientDatabase {
 
     public async location_gcs_get_one(opts: ILocationGcsGetOne): Promise<ILocationGcsGetOneResolve<IClientDatabaseMessage>> {
         try {
-            const response = await invoke<any>("model_location_gcs_get", { opts: { on: { ...opts } } });
+            const response = await invoke<any>("model_location_gcs_get", { opts: { on: opts } });
             if (typeof response === "string") return err_msg(response);
             else if ("results" in response && Array.isArray(response.results) && response.results.length === 1) {
                 const result = parse_location_gcs(response.results[0]);
@@ -145,7 +145,7 @@ export class TauriClientDatabase implements IClientDatabase {
 
     public async trade_product_get(opts: ITradeProductGet): Promise<ITradeProductGetResolve<IClientDatabaseMessage>> {
         try {
-            const response = await invoke<any>("model_trade_product_get", { opts: "list" in opts ? { list: { of: opts.list, sort: opts.sort } } : { on: { ...opts } } });
+            const response = await invoke<any>("model_trade_product_get", { opts: "list" in opts ? { list: { of: parse_trade_product_get_composite_list(opts.list), sort: opts.sort } } : { on: opts } });
             if (typeof response === "string") return err_msg(response);
             else if ("results" in response && Array.isArray(response.results)) return { results: parse_trade_product_list(response.results) };
             return err_msg("*-result");
@@ -156,7 +156,7 @@ export class TauriClientDatabase implements IClientDatabase {
 
     public async trade_product_get_one(opts: ITradeProductGetOne): Promise<ITradeProductGetOneResolve<IClientDatabaseMessage>> {
         try {
-            const response = await invoke<any>("model_trade_product_get", { opts: { on: { ...opts } } });
+            const response = await invoke<any>("model_trade_product_get", { opts: { on: opts } });
             if (typeof response === "string") return err_msg(response);
             else if ("results" in response && Array.isArray(response.results) && response.results.length === 1) {
                 const result = parse_trade_product(response.results[0]);
@@ -237,7 +237,7 @@ export class TauriClientDatabase implements IClientDatabase {
 
     public async nostr_profile_get(opts: INostrProfileGet): Promise<INostrProfileGetResolve<IClientDatabaseMessage>> {
         try {
-            const response = await invoke<any>("model_nostr_profile_get", { opts: "list" in opts ? { list: { of: opts.list, sort: opts.sort } } : { on: { ...opts } } });
+            const response = await invoke<any>("model_nostr_profile_get", { opts: "list" in opts ? { list: { of: parse_nostr_profile_get_composite_list(opts.list), sort: opts.sort } } : { on: opts } });
             if (typeof response === "string") return err_msg(response);
             else if ("results" in response && Array.isArray(response.results)) return { results: parse_nostr_profile_list(response.results) };
             return err_msg("*-result");
@@ -248,7 +248,7 @@ export class TauriClientDatabase implements IClientDatabase {
 
     public async nostr_profile_get_one(opts: INostrProfileGetOne): Promise<INostrProfileGetOneResolve<IClientDatabaseMessage>> {
         try {
-            const response = await invoke<any>("model_nostr_profile_get", { opts: { on: { ...opts } } });
+            const response = await invoke<any>("model_nostr_profile_get", { opts: { on: opts } });
             if (typeof response === "string") return err_msg(response);
             else if ("results" in response && Array.isArray(response.results) && response.results.length === 1) {
                 const result = parse_nostr_profile(response.results[0]);
@@ -329,7 +329,7 @@ export class TauriClientDatabase implements IClientDatabase {
 
     public async nostr_relay_get(opts: INostrRelayGet): Promise<INostrRelayGetResolve<IClientDatabaseMessage>> {
         try {
-            const response = await invoke<any>("model_nostr_relay_get", { opts: "list" in opts ? { list: { of: opts.list, sort: opts.sort } } : { on: { ...opts } } });
+            const response = await invoke<any>("model_nostr_relay_get", { opts: "list" in opts ? { list: { of: parse_nostr_relay_get_composite_list(opts.list), sort: opts.sort } } : { on: opts } });
             if (typeof response === "string") return err_msg(response);
             else if ("results" in response && Array.isArray(response.results)) return { results: parse_nostr_relay_list(response.results) };
             return err_msg("*-result");
@@ -340,7 +340,7 @@ export class TauriClientDatabase implements IClientDatabase {
 
     public async nostr_relay_get_one(opts: INostrRelayGetOne): Promise<INostrRelayGetOneResolve<IClientDatabaseMessage>> {
         try {
-            const response = await invoke<any>("model_nostr_relay_get", { opts: { on: { ...opts } } });
+            const response = await invoke<any>("model_nostr_relay_get", { opts: { on: opts } });
             if (typeof response === "string") return err_msg(response);
             else if ("results" in response && Array.isArray(response.results) && response.results.length === 1) {
                 const result = parse_nostr_relay(response.results[0]);
