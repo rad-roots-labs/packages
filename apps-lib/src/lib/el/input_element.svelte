@@ -44,7 +44,6 @@
             if (!basis?.id) return;
             if (basis?.sync) {
                 const kv_val = await kv.get(basis?.id);
-                console.log(`kv_val `, kv_val);
                 if (kv_val && el) el.value = kv_val;
                 else await kv.set(basis?.id, ``);
             }
