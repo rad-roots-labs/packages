@@ -1,4 +1,4 @@
-import type { ILocationGcsAdd, ILocationGcsAddResolve, ILocationGcsDelete, ILocationGcsDeleteResolve, ILocationGcsGet, ILocationGcsGetResolve, ILocationGcsUpdate, ILocationGcsUpdateResolve, INostrProfileAdd, INostrProfileAddResolve, INostrProfileDelete, INostrProfileDeleteResolve, INostrProfileGet, INostrProfileGetResolve, INostrProfileRelayRelation, INostrProfileRelayRelationResolve, INostrProfileUpdate, INostrProfileUpdateResolve, INostrRelayAdd, INostrRelayAddResolve, INostrRelayDelete, INostrRelayDeleteResolve, INostrRelayGet, INostrRelayGetResolve, INostrRelayUpdate, INostrRelayUpdateResolve, ITradeProductAdd, ITradeProductAddResolve, ITradeProductDelete, ITradeProductDeleteResolve, ITradeProductGet, ITradeProductGetResolve, ITradeProductLocationRelation, ITradeProductLocationRelationResolve, ITradeProductUpdate, ITradeProductUpdateResolve } from "@radroots/models";
+import type { ILocationGcsAdd, ILocationGcsAddResolve, ILocationGcsDelete, ILocationGcsDeleteResolve, ILocationGcsGet, ILocationGcsGetResolve, ILocationGcsUpdate, ILocationGcsUpdateResolve, INostrProfileAdd, INostrProfileAddResolve, INostrProfileDelete, INostrProfileDeleteResolve, INostrProfileGet, INostrProfileGetResolve, INostrProfileRelayRelation, INostrProfileRelayRelationResolve, INostrProfileRelayRelationResolveGetAll, INostrProfileUpdate, INostrProfileUpdateResolve, INostrRelayAdd, INostrRelayAddResolve, INostrRelayDelete, INostrRelayDeleteResolve, INostrRelayGet, INostrRelayGetResolve, INostrRelayUpdate, INostrRelayUpdateResolve, ITradeProductAdd, ITradeProductAddResolve, ITradeProductDelete, ITradeProductDeleteResolve, ITradeProductGet, ITradeProductGetResolve, ITradeProductLocationRelation, ITradeProductLocationRelationResolve, ITradeProductLocationRelationResolveGetAll, ITradeProductUpdate, ITradeProductUpdateResolve } from "@radroots/models";
 
 export type IClientDatabaseMessage =
     | string
@@ -24,6 +24,8 @@ export type IClientDatabase = {
     nostr_relay_update(opts: INostrRelayUpdate): Promise<INostrRelayUpdateResolve<IClientDatabaseMessage>>;
     nostr_profile_relay_set(opts: INostrProfileRelayRelation): Promise<INostrProfileRelayRelationResolve<IClientDatabaseMessage>>;
     nostr_profile_relay_unset(opts: INostrProfileRelayRelation): Promise<INostrProfileRelayRelationResolve<IClientDatabaseMessage>>;
+    nostr_profile_relay_get_all(opts: INostrProfileRelayRelation): Promise<INostrProfileRelayRelationResolveGetAll<IClientDatabaseMessage>>;
     trade_product_location_set(opts: ITradeProductLocationRelation): Promise<ITradeProductLocationRelationResolve<IClientDatabaseMessage>>;
     trade_product_location_unset(opts: ITradeProductLocationRelation): Promise<ITradeProductLocationRelationResolve<IClientDatabaseMessage>>;
+    trade_product_location_get_all(opts: ITradeProductLocationRelation): Promise<ITradeProductLocationRelationResolveGetAll<IClientDatabaseMessage>>;
 };
