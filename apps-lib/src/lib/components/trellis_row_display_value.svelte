@@ -24,7 +24,6 @@
                 classes:
                     basis.icon.classes ||
                     `${get_label_classes_kind(layer, `shade`, hide_active)}`,
-                // `text-layer-${layer}-glyph-shade ${hide_active ? `` : `group-active:text-layer-${layer}-glyph_a`}`,
                 key: basis.icon.key,
                 weight: `bold`,
                 dim: `sm`,

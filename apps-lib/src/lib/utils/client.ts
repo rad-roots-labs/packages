@@ -221,7 +221,7 @@ export const route_prev = async (route_fallback: NavigationRoute = `/`, params_f
     }
 };
 
-export const fmt_geol_latitude = (lat: number, fmt_opt: GeolocationLatitudeFmtOption): string => {
+export const fmt_geol_latitude = (lat: number, fmt_opt: GeolocationLatitudeFmtOption, precision: number = 5): string => {
     const _locale = get_store(locale);
     const options: Intl.NumberFormatOptions = {
         minimumFractionDigits: 2,
@@ -240,11 +240,11 @@ export const fmt_geol_latitude = (lat: number, fmt_opt: GeolocationLatitudeFmtOp
         const min = (Math.abs(lat) - deg) * 60;
         return `${fmt_deg.format(deg)}° ${fmt_min.format(min)}' ${lat >= 0 ? 'N' : 'S'}`;
     } else {
-        return `${lat.toLocaleString(_locale, { maximumFractionDigits: 5 })}° ${lat >= 0 ? 'N' : 'S'}`;
+        return `${lat.toLocaleString(_locale, { maximumFractionDigits: precision })}° ${lat >= 0 ? 'N' : 'S'}`;
     }
 };
 
-export const fmt_geol_longitude = (lng: number, fmt_opt: GeolocationLatitudeFmtOption): string => {
+export const fmt_geol_longitude = (lng: number, fmt_opt: GeolocationLatitudeFmtOption, precision: number = 5): string => {
     const _locale = get_store(locale);
     const options: Intl.NumberFormatOptions = {
         minimumFractionDigits: 2,
@@ -263,7 +263,7 @@ export const fmt_geol_longitude = (lng: number, fmt_opt: GeolocationLatitudeFmtO
         const minutes = (Math.abs(lng) - degrees) * 60;
         return `${fmt_deg.format(degrees)}° ${fmt_min.format(minutes)}' ${lng >= 0 ? 'E' : 'W'}`;
     } else {
-        return `${lng.toLocaleString(_locale, { maximumFractionDigits: 5 })}° ${lng >= 0 ? 'E' : 'W'}`;
+        return `${lng.toLocaleString(_locale, { maximumFractionDigits: precision })}° ${lng >= 0 ? 'E' : 'W'}`;
     }
 };
 

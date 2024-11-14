@@ -12,6 +12,7 @@
     "authenticated": "Authenticated",
     "available_balance": "Available balance",
     "back": "Back",
+    "bags": "Bags",
     "bank_account": "Bank account",
     "business_name": "Business name",
     "cancel": "Cancel",
@@ -125,8 +126,10 @@
     "unlock": "Unlock",
     "update": "Update",
     "url": "URL",
+    "value": "Value",
     "wallet": "Wallet",
     "website": "Website",
+    "year": "Year",
     "yes": "Yes",
     "your_name": "Your name"
 }
