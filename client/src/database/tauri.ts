@@ -1,5 +1,5 @@
 
-import { LocationGcsSchema, LocationGcsUpdateSchema, MediaUploadSchema, MediaUploadUpdateSchema, NostrProfileSchema, NostrProfileUpdateSchema, NostrRelaySchema, NostrRelayUpdateSchema, TradeProductSchema, TradeProductUpdateSchema, parse_location_gcs, parse_location_gcs_form_fields, parse_location_gcs_get_composite_list, parse_location_gcs_list, parse_media_upload, parse_media_upload_form_fields, parse_media_upload_get_composite_list, parse_media_upload_list, parse_nostr_profile, parse_nostr_profile_form_fields, parse_nostr_profile_get_composite_list, parse_nostr_profile_list, parse_nostr_profile_relay_list, parse_nostr_relay, parse_nostr_relay_form_fields, parse_nostr_relay_get_composite_list, parse_nostr_relay_list, parse_trade_product, parse_trade_product_form_fields, parse_trade_product_get_composite_list, parse_trade_product_list, parse_trade_product_location_list, type ILocationGcsAdd, type ILocationGcsAddResolve, type ILocationGcsDelete, type ILocationGcsDeleteResolve, type ILocationGcsGet, type ILocationGcsGetOne, type ILocationGcsGetOneResolve, type ILocationGcsGetResolve, type ILocationGcsUpdate, type ILocationGcsUpdateResolve, type IMediaUploadAdd, type IMediaUploadAddResolve, type IMediaUploadDelete, type IMediaUploadDeleteResolve, type IMediaUploadGet, type IMediaUploadGetOne, type IMediaUploadGetOneResolve, type IMediaUploadGetResolve, type IMediaUploadUpdate, type IMediaUploadUpdateResolve, type IModelsQueryBindValueTuple, type IModelsQueryValue, type INostrProfileAdd, type INostrProfileAddResolve, type INostrProfileDelete, type INostrProfileDeleteResolve, type INostrProfileGet, type INostrProfileGetOne, type INostrProfileGetOneResolve, type INostrProfileGetResolve, type INostrProfileRelayRelation, type INostrProfileRelayRelationResolve, type INostrProfileRelayRelationResolveGetAll, type INostrProfileUpdate, type INostrProfileUpdateResolve, type INostrRelayAdd, type INostrRelayAddResolve, type INostrRelayDelete, type INostrRelayDeleteResolve, type INostrRelayGet, type INostrRelayGetOne, type INostrRelayGetOneResolve, type INostrRelayGetResolve, type INostrRelayUpdate, type INostrRelayUpdateResolve, type ITradeProductAdd, type ITradeProductAddResolve, type ITradeProductDelete, type ITradeProductDeleteResolve, type ITradeProductGet, type ITradeProductGetOne, type ITradeProductGetOneResolve, type ITradeProductGetResolve, type ITradeProductLocationRelation, type ITradeProductLocationRelationResolve, type ITradeProductLocationRelationResolveGetAll, type ITradeProductUpdate, type ITradeProductUpdateResolve, type LocationGcsFields, type LocationGcsFormFields, type MediaUploadFields, type MediaUploadFormFields, type NostrProfileFields, type NostrProfileFormFields, type NostrRelayFields, type NostrRelayFormFields, type TradeProductFields, type TradeProductFormFields } from "@radroots/models";
+import { LocationGcsSchema, LocationGcsUpdateSchema, MediaUploadSchema, MediaUploadUpdateSchema, NostrProfileSchema, NostrProfileUpdateSchema, NostrRelaySchema, NostrRelayUpdateSchema, TradeProductSchema, TradeProductUpdateSchema, parse_location_gcs, parse_location_gcs_form_fields, parse_location_gcs_get_composite_list, parse_location_gcs_list, parse_media_upload, parse_media_upload_form_fields, parse_media_upload_get_composite_list, parse_media_upload_list, parse_nostr_profile, parse_nostr_profile_form_fields, parse_nostr_profile_get_composite_list, parse_nostr_profile_list, parse_nostr_profile_relay_list, parse_nostr_relay, parse_nostr_relay_form_fields, parse_nostr_relay_get_composite_list, parse_nostr_relay_list, parse_trade_product, parse_trade_product_form_fields, parse_trade_product_get_composite_list, parse_trade_product_list, parse_trade_product_location_list, parse_trade_product_media_list, type ILocationGcsAdd, type ILocationGcsAddResolve, type ILocationGcsDelete, type ILocationGcsDeleteResolve, type ILocationGcsGet, type ILocationGcsGetOne, type ILocationGcsGetOneResolve, type ILocationGcsGetResolve, type ILocationGcsUpdate, type ILocationGcsUpdateResolve, type IMediaUploadAdd, type IMediaUploadAddResolve, type IMediaUploadDelete, type IMediaUploadDeleteResolve, type IMediaUploadGet, type IMediaUploadGetOne, type IMediaUploadGetOneResolve, type IMediaUploadGetResolve, type IMediaUploadUpdate, type IMediaUploadUpdateResolve, type IModelsQueryBindValueTuple, type IModelsQueryValue, type INostrProfileAdd, type INostrProfileAddResolve, type INostrProfileDelete, type INostrProfileDeleteResolve, type INostrProfileGet, type INostrProfileGetOne, type INostrProfileGetOneResolve, type INostrProfileGetResolve, type INostrProfileRelayRelation, type INostrProfileRelayRelationResolve, type INostrProfileRelayRelationResolveGetAll, type INostrProfileUpdate, type INostrProfileUpdateResolve, type INostrRelayAdd, type INostrRelayAddResolve, type INostrRelayDelete, type INostrRelayDeleteResolve, type INostrRelayGet, type INostrRelayGetOne, type INostrRelayGetOneResolve, type INostrRelayGetResolve, type INostrRelayUpdate, type INostrRelayUpdateResolve, type ITradeProductAdd, type ITradeProductAddResolve, type ITradeProductDelete, type ITradeProductDeleteResolve, type ITradeProductGet, type ITradeProductGetOne, type ITradeProductGetOneResolve, type ITradeProductGetResolve, type ITradeProductLocationRelation, type ITradeProductLocationRelationResolve, type ITradeProductLocationRelationResolveGetAll, type ITradeProductMediaRelation, type ITradeProductMediaRelationResolve, type ITradeProductMediaRelationResolveGetAll, type ITradeProductUpdate, type ITradeProductUpdateResolve, type LocationGcsFields, type LocationGcsFormFields, type MediaUploadFields, type MediaUploadFormFields, type NostrProfileFields, type NostrProfileFormFields, type NostrRelayFields, type NostrRelayFormFields, type TradeProductFields, type TradeProductFormFields } from "@radroots/models";
 import { err_msg, type ErrorMessage } from "@radroots/utils";
 import { invoke } from "@tauri-apps/api/core";
 import type { IClientDatabase, IClientDatabaseMessage } from "./types";
@@ -546,6 +546,39 @@ export class TauriClientDatabase implements IClientDatabase {
             return err_msg("*-result");
         } catch (e) {
             return this.handle_errors("model_trade_product_location_get_all", undefined, e);
+        };
+    };
+
+    public async trade_product_media_set(opts: ITradeProductMediaRelation): Promise<ITradeProductMediaRelationResolve<IClientDatabaseMessage>> {
+        try {
+            const response = await invoke<any>("model_trade_product_media_set", { opts });
+            if (response === true) return { pass: true };
+            else if (typeof response === "string") return err_msg(response);
+            return err_msg("*-result");
+        } catch (e) {
+            return this.handle_errors("model_trade_product_media_set", opts, e);
+        };
+    };    
+
+    public async trade_product_media_unset(opts: ITradeProductMediaRelation): Promise<ITradeProductMediaRelationResolve<IClientDatabaseMessage>> {
+        try {
+            const response = await invoke<any>("model_trade_product_media_unset", { opts });
+            if (response === true) return { pass: true };
+            else if (typeof response === "string") return err_msg(response);
+            return err_msg("*-result");
+        } catch (e) {
+            return this.handle_errors("model_trade_product_media_unset", opts, e);
+        };
+    };
+    
+    public async trade_product_media_get_all(): Promise<ITradeProductMediaRelationResolveGetAll<IClientDatabaseMessage>> {
+        try {
+            const response = await invoke<any>("model_trade_product_media_get_all");
+            if (typeof response === "string") return err_msg(response);
+            else if ("results" in response && Array.isArray(response.results)) return { results: parse_trade_product_media_list(response.results) };
+            return err_msg("*-result");
+        } catch (e) {
+            return this.handle_errors("model_trade_product_media_get_all", undefined, e);
         };
     };
 }
