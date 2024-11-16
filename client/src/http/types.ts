@@ -20,9 +20,16 @@ export type IClientHttpImageResponse = {
     url: string;
 };
 
+export type IClientHttpResponseError = {
+    message: string;
+    label_ok?: string;
+    label_cancel?: string;
+};
+
 export type IClientHttpResponse = {
     status: number;
     data: any;
+    error?: IClientHttpResponseError;
     headers: FieldRecord;
     url: string;
 };

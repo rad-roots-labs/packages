@@ -34,9 +34,10 @@ export class TauriClientHttp implements IClientHttp {
 
     public async init(opts: IClientDeviceMetadata): Promise<void> {
         this._headers = {
+            "User-Agent": `radroots-app/0.0.0`,
             "X-Client-Version": opts.version,
             "X-Client-Platform": opts.platform,
-            "X-Client-Locale": opts.locale
+            "X-Client-Locale": opts.locale,
         };
     }
 
@@ -56,35 +57,28 @@ export class TauriClientHttp implements IClientHttp {
             if (opts.data_bin) options.body = opts.data_bin;
             if (opts.connect_timeout) options.connectTimeout = opts.connect_timeout;
             const response = await fetch(url, options);
-            switch (response.ok) {
-                case true: {
-                    let data: any = null;
-                    try {
-                        const res_json = await response.json();
-                        data = typeof res_json === `string` ? JSON.parse(res_json) : res_json;
-                    } catch { }
-                    if (!data) {
-                        try {
-                            const res_text = await response.text();
-                            data = res_text;
-                        } catch { }
-                    }
-                    return {
-                        status: response.status,
-                        url: response.url,
-                        data,
-                        headers: parse_headers(response.headers)
-                    };
-                }
-                case false: {
-                    return {
-                        status: response.status,
-                        url: response.url,
-                        data: null,
-                        headers: parse_headers(response.headers)
-                    };
-                }
+            let data: any = null;
+            try {
+                const res_json = await response.json();
+                data = typeof res_json === `string` ? JSON.parse(res_json) : res_json;
+            } catch { }
+            if (!data) {
+                try {
+                    const res_text = await response.text();
+                    data = res_text;
+                } catch { }
             }
+            return {
+                status: response.status,
+                url: response.url,
+                data: response.ok ? data : null,
+                error: !response.ok && `error` in data ? typeof data.error === `string` ? {
+                    message: data.error
+                } : {
+                    ...data.error
+                } : undefined,
+                headers: parse_headers(response.headers)
+            };
         } catch (e) {
             console.log(`e fetch`, e)
             return err_msg(String(e));

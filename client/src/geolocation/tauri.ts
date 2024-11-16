@@ -46,8 +46,8 @@ export class TauriClientGeolocation implements IClientGeolocation {
             const position = await getCurrentPosition()
             return this.parse_geolocation_position(position);
         } catch (e) {
-            const { error } = handle_error(e);
-            if (error.includes(`The operation couldn’t be completed`)) return err_msg(`*-permissions`);
+            const { err } = handle_error(e);
+            if (err.includes(`The operation couldn’t be completed`)) return err_msg(`*-permissions`);
             return err_msg(`*`);
         };
     }
@@ -64,8 +64,8 @@ export class TauriClientGeolocation implements IClientGeolocation {
             )
             return position_w;
         } catch (e) {
-            const { error } = handle_error(e);
-            if (error.includes(`The operation couldn’t be completed`)) err_msg(`*-permissions`);
+            const { err } = handle_error(e);
+            if (err.includes(`The operation couldn’t be completed`)) err_msg(`*-permissions`);
             return err_msg(`*`);
         };
     }
