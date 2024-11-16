@@ -43,6 +43,36 @@
             "lng.required": "The location latitude is required"
         }
     },
+    "media_upload": {
+        "fields": {
+            "description": {
+                "label": "Description"
+            },
+            "file_path": {
+                "label": "File Path"
+            },
+            "label": {
+                "label": "Label"
+            },
+            "mime_type": {
+                "label": "Mime Type"
+            },
+            "res_base": {
+                "label": "Resource Endpoint"
+            },
+            "res_path": {
+                "label": "Resource Path"
+            }
+        },
+        "schema": {
+            "file_path.required": "The media file path is required",
+            "mime_type.required": "The media mime type is required",
+            "res_base.regex": "The media resource endpoint requires an http protocol",
+            "res_base.required": "The media resource endpoint is required",
+            "res_base.url": "The media resource endpoint is incorrectly formatted",
+            "res_path.required": "The media resource path is required"
+        }
+    },
     "nostr_profile": {
         "fields": {
             "about": {
