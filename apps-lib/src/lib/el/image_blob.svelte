@@ -1,7 +1,8 @@
 <script lang="ts">
+    import type { IIdOpt } from "$lib";
     import { onDestroy, onMount } from "svelte";
 
-    export let basis: {
+    export let basis: IIdOpt & {
         data: Uint8Array | undefined;
         alt?: string;
     };
@@ -29,7 +30,7 @@
 </script>
 
 {#if img_url}
-    <img src={img_url} alt={basis.alt || null} />
+    <img id={basis.id || null} src={img_url} alt={basis.alt || null} />
 {/if}
 
 <style>

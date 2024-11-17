@@ -1,12 +1,20 @@
+<!-- svelte-ignore a11y-click-events-have-key-events -->
+<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 <script lang="ts">
-    import type { IClOpt } from "$lib/types/client";
+    import type { ICbGOpt, IClOpt, IIdOpt } from "$lib/types/client";
     import { fmt_cl } from "$lib/utils/client";
     import { onMount } from "svelte";
 
-    export let basis: IClOpt & {
-        path?: string;
-        alt?: string;
-    };
+    export let basis: IClOpt &
+        ICbGOpt<
+            MouseEvent & {
+                currentTarget: EventTarget & HTMLImageElement;
+            }
+        > &
+        IIdOpt & {
+            path?: string;
+            alt?: string;
+        };
 
     let img_src = ``;
 
@@ -21,9 +29,13 @@
 
 {#if img_src}
     <img
+        id={basis.id || null}
         class={`${fmt_cl(basis.path)}`}
         src={img_src}
         alt={basis.alt || null}
+        on:click|stopPropagation={async (ev) => {
+            if (basis.callback) await basis.callback(ev);
+        }}
     />
 {/if}
 

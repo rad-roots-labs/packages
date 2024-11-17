@@ -37,6 +37,7 @@ export { default as TrellisLine } from "./components/trellis_line.svelte";
 export { default as EnvelopeLower } from "./components/envelope_lower.svelte";
 export { default as TrellisSelect } from "./components/trellis_select.svelte";
 export { default as TrellisInput } from "./components/trellis_input.svelte";
+export { default as InsetWhite } from "./components/inset_white.svelte";
 export { default as TrellisEnd } from "./components/trellis_end.svelte";
 export { default as ButtonGlyph } from "./components/button_glyph.svelte";
 export { default as Envelope } from "./components/envelope.svelte";
