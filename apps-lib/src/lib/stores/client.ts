@@ -19,7 +19,7 @@ if (typeof window !== 'undefined') kv = new Keyva({ name: kv_name });
 
 export const app_layout = writable<AppLayoutKey>(`mobile_base`);
 export const app_cfg_type = writable<AppConfigType>(`personal`);
-export const app_render = writable<boolean>(false);
+export const app_init = writable<boolean>(false);
 export const app_tilt = writable<boolean>(false);
 export const app_loading = writable<boolean>(false);
 export const app_splash = writable<boolean>(true);

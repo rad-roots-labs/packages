@@ -4,6 +4,7 @@
         "file_path_read_bin_undefined": "The file was not found",
         "keystore_nostr_secretkey": "The nostr key is not configured",
         "network_failure": "The requested resource is not available",
+        "nostr_sync_disabled": "Sync to nostr network is disabled. Do you want to activate it?",
         "page": {
             "load": "There was an error loading the page",
             "status": {
