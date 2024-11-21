@@ -43,7 +43,7 @@
 		"vite": "^5.0.11"
 	},
 	"dependencies": {
-		"@nostr-dev-kit/ndk": "^2.10.0",
+		"@nostr-dev-kit/ndk": "^2.10.6",
 		"@nostr-dev-kit/ndk-cache-dexie": "^2.5.1",
 		"@nostr-dev-kit/ndk-svelte": "^2.2.18",
 		"@radroots/theme": "workspace:*",

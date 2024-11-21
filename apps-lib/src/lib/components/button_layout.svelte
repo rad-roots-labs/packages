@@ -27,7 +27,7 @@
     }}
 >
     <p
-        class={`${fmt_cl(basis.classes_inner)} font-sans font-[600] tracking-wide text-layer-${layer}-glyph_d ${basis.disabled ? `` : `group-active:text-layer-${layer}-glyph/40 `} el-re`}
+        class={`${fmt_cl(basis.classes_inner)} font-sans font-[600] tracking-wide text-layer-${layer}-glyph-shade ${basis.disabled ? `` : `group-active:text-layer-${layer}-glyph/40 `} el-re`}
     >
         {basis.label}
     </p>
