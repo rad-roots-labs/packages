@@ -1,16 +1,20 @@
 <script lang="ts">
-    import { app_layout, Fill, t, type CallbackPromise } from "$lib";
+    import {
+        app_layout,
+        Fill,
+        t,
+        type CallbackPromise,
+        type IDisabledOpt,
+    } from "$lib";
     import ButtonLayout from "./button_layout.svelte";
 
     export let basis: {
-        continue: {
-            disabled?: boolean;
+        continue: IDisabledOpt & {
             label?: string;
             callback: CallbackPromise;
         };
-        back?: {
+        back?: IDisabledOpt & {
             visible: boolean;
-            disabled?: boolean;
             label?: string;
             callback: CallbackPromise;
         };

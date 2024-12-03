@@ -23,6 +23,8 @@
 
     let nav_prev_label = ``;
 
+    $: classes_nav_blur = $nav_blur ? `bg-white/40 backdrop-blur-lg` : ``;
+
     onMount(async () => {
         try {
             nav_visible.set(true);
@@ -68,7 +70,7 @@
 
 <div
     bind:this={el}
-    class={`z-10 absolute top-0 left-0 flex flex-col w-full justify-start items-start h-nav_${$app_layout} ${$nav_blur ? `bg-layer-0-surface-blur/30 backdrop-blur-md` : ``} duration-[250ms] el-re`}
+    class={`z-10 absolute top-0 left-0 flex flex-col w-full justify-start items-start h-nav_${$app_layout} ${classes_nav_blur} duration-[250ms] el-re`}
 >
     <div
         bind:this={el_inner}

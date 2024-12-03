@@ -12,8 +12,8 @@
 
     export let basis: INavBasisOption;
     $: basis = basis;
-
     $: layer = parse_layer(1);
+    $: classes_disabled = basis.disabled ? `opacity-60` : ``;
 </script>
 
 {#if basis?.loading}
@@ -22,9 +22,9 @@
     </div>
 {:else}
     <button
-        class={`${fmt_cl(basis?.classes)} group col-span-4 flex flex-row h-full justify-end items-center`}
+        class={`${fmt_cl(basis?.classes)} group col-span-4 flex flex-row h-full justify-end items-center ${classes_disabled}`}
         on:click={async () => {
-            await basis?.callback(el_swap);
+            if (!basis.disabled) await basis?.callback(el_swap);
         }}
     >
         {#if `glyph` in basis && basis?.glyph}

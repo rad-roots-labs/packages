@@ -4,6 +4,12 @@ import type { ThemeLayer } from "@radroots/theme";
 export type GlyphKeyCurrency = `dollar` | `eur`;
 
 export type GlyphKey = |
+    `bell` |
+    `columns` |
+    `bold` |
+    `article` |
+    `grid-four` |
+    `link-simple` |
     `seal-check` |
     `selection-foreground` |
     `image-square` |
@@ -137,10 +143,13 @@ export type ILoading = {
     dim?: ILoadingDimension;
 };
 
-export type ISelectOption<T extends string> = {
+export type IDisabledOpt = {
+    disabled?: boolean;
+}
+
+export type ISelectOption<T extends string> = IDisabledOpt & {
     value: T;
     label: string;
-    disabled?: boolean;
 };
 
 export type ISelectElement = IIdOpt & IClOpt & ILyOptTs &

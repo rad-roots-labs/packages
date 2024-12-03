@@ -1,4 +1,4 @@
-import type { CallbackPromise, CallbackPromiseGeneric, GlyphKey, GlyphWeight, ICb, ICbG, ICbOpt, IClOpt, IGl, IGlOpt, IGlyph, IIdOpt, IIdWrapOpt, IInputElement, ILabel, ILabelFieldsOpt, ILabelOpt, ILabelOptFieldsOpt, ILabelValue, ILoadingOpt, ILyOpt, ILyOptTs, ISelectElement, ITextAreaElement, NavigationParamTuple, NavigationRoute } from "$lib";
+import type { CallbackPromise, CallbackPromiseGeneric, GlyphKey, GlyphWeight, ICb, ICbG, ICbOpt, IClOpt, IDisabledOpt, IGl, IGlOpt, IGlyph, IIdOpt, IIdWrapOpt, IInputElement, ILabel, ILabelFieldsOpt, ILabelOpt, ILabelOptFieldsOpt, ILabelValue, ILoadingOpt, ILyOpt, ILyOptTs, ISelectElement, ITextAreaElement, NavigationParamTuple, NavigationRoute } from "$lib";
 import type { TransitionConfig } from "svelte/transition";
 
 export type ITabsBasisList = IClOpt & {
@@ -52,10 +52,9 @@ export type IEntryMultiLine = {
     };
 }
 
-export type IEntrySelectOption = {
+export type IEntrySelectOption = IDisabledOpt & {
     value: string;
     label?: string;
-    disabled?: boolean;
     selected?: boolean;
 };
 
@@ -95,7 +94,7 @@ export type IEnvelopeTitledBasis = {
 
 export type INavBasisOption = IClOpt & ICbG<
     HTMLLabelElement | null
-> & IGlOpt & ILabelOpt & {
+> & IGlOpt & ILabelOpt & IDisabledOpt & {
     loading?: boolean;
 };
 export type INavBasis = {

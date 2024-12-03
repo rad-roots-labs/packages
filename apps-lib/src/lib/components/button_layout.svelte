@@ -5,14 +5,15 @@
         parse_layer,
         type CallbackPromise,
         type IClOpt,
+        type IDisabledOpt,
         type ILyOpt,
     } from "$lib";
 
     export let basis: ILyOpt &
-        IClOpt & {
+        IClOpt &
+        IDisabledOpt & {
             classes_inner?: string;
             hide_active?: boolean;
-            disabled?: boolean;
             label: string;
             callback: CallbackPromise;
         };
