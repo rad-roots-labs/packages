@@ -1,10 +1,11 @@
 import type { ThemeRecord } from "../types";
 
-export const record_earth_dark: ThemeRecord = {
+export const record_garden_dark: ThemeRecord = {
     layers: {
         layer_0: {
             surface: {
                 _: [0, 0, 7],
+                _w: [0, 0, 7],
                 _a: [240, 2, 23],
                 edge: [274, 4, 11],
                 blur: [0, 0, 12],
@@ -12,6 +13,7 @@ export const record_earth_dark: ThemeRecord = {
             glyphs: {
                 _: [230, 3, 56],
                 _a: [230, 3, 51],
+                _pl: [30, 1, 99],
                 hl: [210, 100, 52],
                 hl_a: [210, 91, 21],
                 shade: [240, 3, 57],
@@ -29,6 +31,7 @@ export const record_earth_dark: ThemeRecord = {
             glyphs: {
                 _: [30, 100, 100],
                 _a: [30, 1, 90],
+                _d: [30, 1, 80],
                 _pl: [30, 1, 99],
                 hl: [210, 100, 52],
                 hl_a: [210, 100, 62],
@@ -45,6 +48,7 @@ export const record_earth_dark: ThemeRecord = {
             glyphs: {
                 _: [240, 3, 73],
                 _a: [230, 4, 51],
+                _d: [230, 4, 61],
                 _pl: [240, 2, 40],
                 hl: [210, 100, 52],
                 hl_a: [210, 100, 42],
@@ -53,7 +57,7 @@ export const record_earth_dark: ThemeRecord = {
         }
     },
     daisy: {
-        "primary": [135, 58, 49],
+        "primary": [0, 0, 0],
         "primary-focus": [0, 0, 0],
         "primary-content": [0, 0, 0],
         "secondary": [0, 0, 0],

@@ -9,7 +9,7 @@ export type ColorKeyDark<T extends ThemeKey> = `${T}_dark`;
 export type HslTuple = [number, number, number];
 
 export type Theme = keyof typeof themes;
-export type ThemeKey = `os` | `earth`;
+export type ThemeKey = `os` | `garden`;
 export type ThemeLayer = 0 | 1 | 2;
 export type ThemeRecord = { layers: ThemeLayers } & { daisy: ThemeDaisy };
 export type ThemeLayers = {
