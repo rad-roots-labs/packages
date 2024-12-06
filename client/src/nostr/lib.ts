@@ -119,12 +119,19 @@ export class ClientNostrLib implements IClientNostrLib {
 
     /**
      * 
+     * @returns
+     */
+    public nevent(event_pointer: nip19.EventPointer, relays: string[]): string {
+        return nip19.neventEncode(event_pointer)
+    }
+
+    /**
+     * 
      * @returns nostr public key nprofile
      */
     public nprofile(public_key_hex: string, relays: string[]): string {
         if (!public_key_hex || !relays.length) return ``;
-        const nprofile = nip19.nprofileEncode({ pubkey: public_key_hex, relays })
-        return nprofile;
+        return nip19.nprofileEncode({ pubkey: public_key_hex, relays })
     }
 
     /**
@@ -140,7 +147,7 @@ export class ClientNostrLib implements IClientNostrLib {
 
     /**
      * 
-     * @returns nostr public key nprofile
+     * @returns
      */
     public secretkey_to_publickey(nsec_or_hex: string): string | undefined {
         if (nsec_or_hex.startsWith(`nsec1`)) {

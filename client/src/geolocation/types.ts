@@ -9,9 +9,9 @@ export type IGeolocationErrorMessage = `*-permissions` | `*`;
 export type IClientGeolocationPosition = {
     lat: number;
     lng: number;
-    accuracy: number | undefined;
-    altitude: number | undefined;
-    altitude_accuracy: number | undefined;
+    accuracy?: number;
+    altitude?: number;
+    altitude_accuracy?: number;
 };
 
 export type IClientGeolocationWatchOpts = {

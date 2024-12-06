@@ -11,12 +11,14 @@ export type IClientDialogPrompt = {
 
 export type IClientDialogKind = "info" | "warning" | "error";
 
+export type IClientDialogAlertOpts = string;
+
 export type IClientDialogConfirmOpts = string | { title?: string, kind?: IClientDialogKind; message: string; cancel_label?: string; ok_label?: string; };
 
 export type IClientDialogResolve = ResultsList<string>;
 
 export type IClientDialog = {
-    alert(message: string): Promise<boolean>;
+    alert(opts: IClientDialogAlertOpts): Promise<boolean>;
     confirm(opts: IClientDialogConfirmOpts): Promise<boolean>;
     open_photos(): Promise<IClientDialogResolve | undefined>;
     //prompt(opts: IClientDialogPrompt): Promise<string | false>;

@@ -2,9 +2,9 @@ import { confirm, type ConfirmDialogOptions, message, open, type OpenDialogOptio
 import type { IClientDialog, IClientDialogConfirmOpts, IClientDialogKind, IClientDialogResolve } from "./types";
 
 export class TauriClientDialog implements IClientDialog {
-    public async alert(msg: string, title?: string, kind?: IClientDialogKind): Promise<boolean> {
+    public async alert(opts: string, title?: string, kind?: IClientDialogKind): Promise<boolean> {
         try {
-            await message(msg, { title: title || ``, kind: kind || `info` });
+            await message(opts, { title: title || ``, kind: kind || `info` });
             return true;
         } catch (e) {
             return false;
