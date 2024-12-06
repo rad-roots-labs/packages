@@ -1,8 +1,9 @@
 import { goto } from "$app/navigation";
 import { app_toast, locale, nav_prev, t, TOAST_MS, type AnchorRoute, type AppConfigType, type AppLayoutKey, type CallbackPromise, type CallbackPromiseGeneric, type GeolocationLatitudeFmtOption, type GlyphKey, type IToast, type LabelFieldKind, type LayerGlyphBasisKind, type NavigationParamTuple, type NavigationRoute, type NavigationRouteParamKey } from "$lib";
 import type { ColorMode, ThemeKey, ThemeLayer } from "@radroots/theme";
-import { get as get_store } from "svelte/store";
+import { get } from "svelte/store";
 
+export const get_store = get;
 
 export const sleep = async (ms: number): Promise<void> => {
     await new Promise((resolve) => setTimeout(resolve, ms));
@@ -78,7 +79,7 @@ export function time_now_ms(): number {
 
 export const fmt_id = (id?: string): string => {
     const pref = location.pathname.slice(1, -1).replaceAll(`-`, `_`).replaceAll(`/`, `-`).replaceAll(`--`, `-`);
-    return `${pref}${id ? `-${id}` : ``}`
+    return `*${pref}${id ? `-${id}` : ``}`
 };
 
 export const fmt_capitalize = (val: string): string => {

@@ -11,7 +11,7 @@ export const glyph_style_map: Map<GeometryGlyphDimension, { gl_1: number; dim_1?
     ["md-", { gl_1: 23 }],
     ["md", { gl_1: 24 }],
     ["md+", { gl_1: 26 }],
-    ["lg-", { gl_1: 28 }],
+    ["lg-", { gl_1: 27 }],
     ["lg", { gl_1: 28 }],
     ["xl", { gl_1: 30 }],
     ["xl+", { gl_1: 40 }],

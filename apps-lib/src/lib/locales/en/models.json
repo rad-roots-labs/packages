@@ -191,6 +191,9 @@
     },
     "trade_product": {
         "fields": {
+            "category": {
+                "label": "Product Category"
+            },
             "key": {
                 "label": "Product Kind"
             },
@@ -241,6 +244,7 @@
             }
         },
         "schema": {
+            "category.required": "The product category is required",
             "key.required": "The product kind is required",
             "lot.max": "The product lot must be less than 120 characters",
             "lot.min": "The product lot must be more than 1 character",

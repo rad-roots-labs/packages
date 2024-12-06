@@ -10,8 +10,8 @@ export type NavigationRoute =
     | "/models/trade-product/add"
     | "/models/trade-product/view"
     | "/settings"
-    | "/settings/account"
     | "/settings/nostr"
+    | "/settings/profile"
     | "/test"
     | "/cfg/error"
     | "/cfg/init";
@@ -29,8 +29,8 @@ export function parse_route(route: string): NavigationRoute {
         case "/models/trade-product/add":
         case "/models/trade-product/view":
         case "/settings":
-        case "/settings/account":
         case "/settings/nostr":
+        case "/settings/profile":
         case "/test":
         case "/cfg/error":
         case "/cfg/init":

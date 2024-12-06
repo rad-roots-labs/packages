@@ -19,10 +19,14 @@
         };
 
     $: layer = parse_layer(basis.layer, 1);
+
+    $: classes_active = !basis.hide_active
+        ? `layer-1-active-surface layer-1-active-raise-less layer-1-active-ring-less`
+        : ``;
 </script>
 
 <button
-    class={`${fmt_cl(basis.classes)} group flex flex-row h-touch_guide w-${$app_layout} justify-center items-center bg-layer-${layer}-surface round-44 ${!basis.hide_active ? `active:bg-layer-${layer}-surface_a` : ``} ${basis.disabled ? `opacity-60` : ``} el-re`}
+    class={`${fmt_cl(basis.classes)} group flex flex-row h-touch_guide w-${$app_layout} justify-center items-center bg-layer-${layer}-surface rounded-touch ${basis.disabled ? `opacity-60` : classes_active} el-re`}
     on:click|stopPropagation={async () => {
         if (!basis.disabled) await basis.callback();
     }}

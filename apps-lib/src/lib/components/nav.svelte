@@ -23,7 +23,7 @@
 
     let nav_prev_label = ``;
 
-    $: classes_nav_blur = $nav_blur ? `bg-white/40 backdrop-blur-lg` : ``;
+    $: classes_nav_blur = $nav_blur ? `bg-white/40 backdrop-blur-sm` : ``;
 
     onMount(async () => {
         try {
@@ -74,10 +74,10 @@
 >
     <div
         bind:this={el_inner}
-        class={`relative flex flex-col h-full w-full justify-end items-center bg-transparent`}
+        class={`relative flex flex-col h-full w-full justify-end items-center`}
     >
         <div
-            class={`absolute bottom-[5px] left-0 grid grid-cols-12 flex flex-row h-8 w-full justify-start items-center`}
+            class={`absolute bottom-[6px] left-0 grid grid-cols-12 flex flex-row h-8 w-full justify-start items-center`}
         >
             <div
                 class={`col-span-4 flex flex-row w-full justify-start items-center`}

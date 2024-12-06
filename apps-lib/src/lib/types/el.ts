@@ -56,6 +56,7 @@ export type GlyphKey = |
     `handbag-simple` |
     `devices` |
     `lock-key` |
+    `gear` |
     `gear-fine` |
     `bell-simple` |
     `envelope` |

@@ -13,7 +13,7 @@
     export let basis: INavBasisOption;
     $: basis = basis;
     $: layer = parse_layer(1);
-    $: classes_disabled = basis.disabled ? `opacity-60` : ``;
+    $: classes_disabled = basis.disabled ? `opacity-40` : ``;
 </script>
 
 {#if basis?.loading}
