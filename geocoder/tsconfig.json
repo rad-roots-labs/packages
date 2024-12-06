@@ -5,6 +5,7 @@
             "es2021",
             "WebWorker",
         ],
+        "target": "es2021",
         "module": "CommonJS",
         "outDir": "./dist",
         "rootDir": "./src",
