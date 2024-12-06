@@ -13,7 +13,6 @@
         "@noble/hashes": "^1.4.0",
         "@nostr-dev-kit/ndk": "^2.10.6",
         "@radroots/models": "workspace:*",
-        "@radroots/tauri-plugin-map-display": "workspace:*",
         "@radroots/utils": "workspace:*",
         "@tauri-apps/api": "2.0.3",
         "@tauri-apps/plugin-dialog": "^2.0.1",
