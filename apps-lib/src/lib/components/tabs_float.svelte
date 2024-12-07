@@ -8,7 +8,7 @@
 >
     <div class={`flex flex-row justify-between gap-10 items-center`}>
         <div
-            class={`grid grid-cols-4 flex flex-row h-[3.0rem] px-6 gap-6 justify-start items-center bg-layer-1-surface rounded-full backdrop-blur-lg`}
+            class={`grid grid-cols-4 flex flex-row h-[3.1rem] px-6 gap-6 justify-start items-center bg-layer-1-surface rounded-full backdrop-blur-lg`}
         >
             <button
                 class={`col-span-1 flex flex-row justify-center items-center`}
@@ -86,7 +86,7 @@
             </button>
         </div>
         <button
-            class={`flex flex-row h-[3.0rem] w-[3.0rem] justify-center items-center bg-layer-1-surface rounded-full backdrop-blur-lg`}
+            class={`flex flex-row h-[3.1rem] w-[3.1rem] justify-center items-center bg-layer-1-surface rounded-full backdrop-blur-lg`}
             on:click={async () => {}}
         >
             <Glyph

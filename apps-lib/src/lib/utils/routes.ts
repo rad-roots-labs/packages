@@ -1,5 +1,7 @@
 export type NavigationRoute =
     | "/"
+    | "/farm/land"
+    | "/farm/land/add"
     | "/models/location-gcs"
     | "/models/nostr-profile"
     | "/models/nostr-profile/edit/field"
@@ -20,6 +22,8 @@ export type NavigationRoute =
 export function parse_route(route: string): NavigationRoute {
     switch (route) {
         case "/":
+        case "/farm/land":
+        case "/farm/land/add":
         case "/models/location-gcs":
         case "/models/nostr-profile":
         case "/models/nostr-profile/edit/field":
