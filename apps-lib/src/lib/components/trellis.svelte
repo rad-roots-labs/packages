@@ -2,8 +2,8 @@
     import {
         app_layout,
         fmt_cl,
+        ls,
         parse_layer,
-        t,
         TrellisDefaultLabel,
         TrellisInput,
         TrellisOffset,
@@ -60,7 +60,7 @@
                             ? args.default_el.labels
                             : [
                                   {
-                                      label: `${$t(`common.no_items_to_display`)}.`,
+                                      label: `${$ls(`common.no_items_to_display`)}.`,
                                   },
                               ]}
                     />

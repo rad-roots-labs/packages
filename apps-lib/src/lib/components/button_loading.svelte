@@ -1,8 +1,8 @@
 <script lang="ts">
-    import { type CallbackPromise, fmt_cl, Loading, t } from "$lib";
+    import { type CallbackPromise, fmt_cl, Loading, ls } from "$lib";
 
     export let basis: {
-        classes?:string;
+        classes?: string;
         callback: CallbackPromise;
         loading?: boolean;
         label?: string;
@@ -19,6 +19,6 @@
     {#if basis.loading}
         <Loading basis={{ dim: `xs` }} />
     {:else}
-        {basis.label || `${$t(`common.submit`, { default: `submit` })}`}
+        {basis.label || `${$ls(`common.submit`, { default: `submit` })}`}
     {/if}
 </button>

@@ -30,7 +30,7 @@ const config: Config<LanguageConfig> = {
 };
 
 const {
-	t,
+	t: ls,
 	loading: translations_loading,
 	locales,
 	locale,
@@ -43,5 +43,5 @@ translations_loading.subscribe(async ($loading) => {
 });
 
 export {
-	load_translations, locale, locales, t, translations, translations_loading
+	load_translations, locale, locales, ls, translations, translations_loading
 };

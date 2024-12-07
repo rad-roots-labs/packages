@@ -5,7 +5,7 @@
         Fill,
         fmt_cl,
         type IEnvelopeTitledBasis,
-        t,
+        ls,
     } from "$lib";
     import type { ThemeLayer } from "@radroots/theme";
 
@@ -37,7 +37,7 @@
                 <p
                     class={`${fmt_cl(basis.previous?.label?.classes)} font-sans text-envelopeTitlePrevious text-layer-${layer}-glyph-hl group-active:opacity-40 el-re`}
                 >
-                    {basis.previous?.label?.value || `${$t(`common.cancel`)}`}
+                    {basis.previous?.label?.value || `${$ls(`common.cancel`)}`}
                 </p>
             </button>
         </div>
@@ -73,7 +73,8 @@
                         <p
                             class={`font-sans text-envelopeTitleAction ${classes_submit} el-re`}
                         >
-                            {basis.submit?.label.value || `${$t(`common.add`)}`}
+                            {basis.submit?.label.value ||
+                                `${$ls(`common.add`)}`}
                         </p>
                     {:else}
                         <Fill />

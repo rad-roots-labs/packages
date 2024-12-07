@@ -2,7 +2,7 @@
     import {
         app_layout,
         Fill,
-        t,
+        ls,
         type CallbackPromise,
         type IDisabledOpt,
     } from "$lib";
@@ -25,7 +25,7 @@
     <ButtonLayout
         basis={{
             disabled: basis.continue.disabled,
-            label: basis.continue.label || `${$t(`common.continue`)}`,
+            label: basis.continue.label || `${$ls(`common.continue`)}`,
             callback: basis.continue.callback,
         }}
     />
@@ -41,7 +41,7 @@
                     <p
                         class={`font-sans font-[600] tracking-wide text-layer-1-glyph-shade ${basis.back?.disabled ? `` : `group-active:text-layer-1-glyph/40`} el-re`}
                     >
-                        {basis.back?.label || `${$t(`common.back`)}`}
+                        {basis.back?.label || `${$ls(`common.back`)}`}
                     </p>
                 </button>
             {:else}

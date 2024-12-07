@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { envelope_visible, Fill, t, type CallbackPromise } from "$lib";
+    import { envelope_visible, Fill, ls, type CallbackPromise } from "$lib";
     import { quintInOut } from "svelte/easing";
     import { fly } from "svelte/transition";
 
@@ -66,7 +66,7 @@
                             >
                                 {typeof basis.label_close === `string`
                                     ? basis.label_close
-                                    : `${$t(`common.cancel`)}`}
+                                    : `${$ls(`common.cancel`)}`}
                             </p>
                         </button>
                     {:else}
