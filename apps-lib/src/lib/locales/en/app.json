@@ -11,13 +11,13 @@
         }
     },
     "name": "Radroots",
-    "page": {
-        "cfg": {
-            "init": {
-                "notification": {
-                    "no_profile_name": "Your profile will be created without a name. You can change this later in Settings > Profile",
-                    "welcome": "Welcome! Your device was configured. To view or change your configuration go to Settings > Configuration"
-                }
+    "cfg": {
+        "init": {
+            "greeting": "Welcome to Radroots!",
+            "message": "Your device will be configured by the setup wizard.",
+            "notification": {
+                "no_profile_name": "Your profile will be created without a name. You can change this later in Settings > Profile",
+                "welcome": "Welcome! Your device was configured. To view or change your configuration go to Settings > Configuration"
             }
         }
     }
