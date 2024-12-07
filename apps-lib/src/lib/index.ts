@@ -43,6 +43,7 @@ export { default as TrellisEnd } from "./components/trellis_end.svelte";
 export { default as ButtonGlyph } from "./components/button_glyph.svelte";
 export { default as Envelope } from "./components/envelope.svelte";
 export { default as DisplayLine } from "./components/display_line.svelte";
+export { default as GlyphTitleSelectLabel } from "./components/glyph_title_select_label.svelte";
 export { default as LayoutTrellis } from "./components/layout_trellis.svelte";
 export { default as Tabs } from "./components/tabs.svelte";
 export { default as ButtonArrow } from "./components/button_arrow.svelte";

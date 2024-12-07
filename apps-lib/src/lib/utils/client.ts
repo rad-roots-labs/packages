@@ -3,6 +3,13 @@ import { app_toast, locale, ls, nav_prev, TOAST_MS, type AnchorRoute, type AppCo
 import type { ColorMode, ThemeKey, ThemeLayer } from "@radroots/theme";
 import { get } from "svelte/store";
 
+export const ascii = {
+    bullet: '•',
+    dash: `—`,
+    up: `↑`,
+    down: `↓`
+}
+
 export const get_store = get;
 
 export const sleep = async (ms: number): Promise<void> => {

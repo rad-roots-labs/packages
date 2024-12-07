@@ -1,4 +1,18 @@
 {
+    "area": {
+        "ac": "Acre",
+        "ac_ab": "Ac.",
+        "ha": "Hectare",
+        "ha_ab": "Ha.",
+        "m2": "Square metre",
+        "m2_ab": "Sq. M."
+    },
+    "length": {
+        "ft": "Foot",
+        "ft_ab": "Ft.",
+        "m": "Metre",
+        "m_ab": "M."
+    },
     "mass": {
         "unit": {
             "g": "Gram",

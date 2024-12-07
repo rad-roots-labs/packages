@@ -1,5 +1,4 @@
 {
-    "using_public_key": "Using public key",
     "accept": "Accept",
     "activation": "Activation",
     "active": "Active",
@@ -151,6 +150,7 @@
     "upload_url": "Upload url",
     "url": "url",
     "username": "Username",
+    "using_public_key": "Using public key",
     "value": "Value",
     "view": "View",
     "wallet": "Wallet",

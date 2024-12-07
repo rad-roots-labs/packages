@@ -10,7 +10,6 @@
             "6": "Saturday"
         }
     },
-    "name": "Radroots",
     "cfg": {
         "init": {
             "greeting": "Welcome to Radroots!",
@@ -20,5 +19,6 @@
                 "welcome": "Welcome! Your device was configured. To view or change your configuration go to Settings > Configuration"
             }
         }
-    }
+    },
+    "name": "Radroots"
 }
