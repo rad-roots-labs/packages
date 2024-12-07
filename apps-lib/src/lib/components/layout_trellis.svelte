@@ -5,7 +5,7 @@
 </script>
 
 <div
-    class={`${fmt_cl(basis?.classes)} flex flex-col pt-4 pb-12 gap-4 justify-center items-center scroll-hide`}
+    class={`${fmt_cl(basis?.classes)} flex flex-col pb-12 gap-4 justify-center items-center scroll-hide`}
 >
     <slot />
 </div>
