@@ -144,7 +144,6 @@ export const view_effect = <T extends string>(view: T): void => {
         );
 };
 
-
 export const init_toast = (): void => {
     app_toast.set(false);
 };
