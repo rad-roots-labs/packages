@@ -30,7 +30,7 @@
     $: classes_layer =
         typeof basis?.layer === `boolean`
             ? ``
-            : `text-layer-${layer}-glyph placeholder:text-layer-${layer}-glyph_pl caret-layer-${layer}-glyph`;
+            : `bg-layer-${layer}-surface text-layer-${layer}-glyph placeholder:text-layer-${layer}-glyph_pl caret-layer-${layer}-glyph`;
     $: if (basis?.id && basis?.sync && value) {
         (async () => {
             try {
@@ -83,6 +83,9 @@
     }}
     on:blur={async ({ currentTarget: el }) => {
         if (basis.callback_blur) await basis.callback_blur({ el });
+    }}
+    on:focus={async ({ currentTarget: el }) => {
+        if (basis.callback_focus) await basis.callback_focus({ el });
     }}
     on:keydown={async (ev) => {
         if (basis?.callback_keydown)

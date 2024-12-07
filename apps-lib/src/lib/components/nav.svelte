@@ -7,6 +7,7 @@
         Fill,
         fmt_cl,
         Glyph,
+        Loading,
         nav_blur,
         nav_prev,
         nav_visible,
@@ -82,7 +83,13 @@
             <div
                 class={`col-span-4 flex flex-row w-full justify-start items-center`}
             >
-                {#if basis.prev.kind === `arrow`}
+                {#if basis.prev.loading}
+                    <div
+                        class={`flex flex-row pl-4 justify-center items-center`}
+                    >
+                        <Loading />
+                    </div>
+                {:else if basis.prev.kind === `arrow`}
                     <div
                         class={`flex flex-row w-full pl-8 justify-start items-center`}
                     >

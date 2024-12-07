@@ -29,12 +29,12 @@
 
 {#if img_src}
     <img
-        id={basis.id || null}
-        class={`${fmt_cl(basis.path)}`}
+        id={basis?.id || null}
+        class={`${fmt_cl(basis?.classes)}`}
         src={img_src}
-        alt={basis.alt || null}
+        alt={basis?.alt || null}
         on:click|stopPropagation={async (ev) => {
-            if (basis.callback) await basis.callback(ev);
+            if (basis?.callback) await basis.callback(ev);
         }}
     />
 {/if}

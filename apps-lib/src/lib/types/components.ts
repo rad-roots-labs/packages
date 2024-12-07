@@ -92,13 +92,18 @@ export type IEnvelopeTitledBasis = {
     }
 };
 
+export type INavBasisPrev = IClOpt & ICbG<
+    HTMLLabelElement | null
+> & IGlOpt & ILabelOpt & IDisabledOpt & {
+    loading?: boolean;
+};
 export type INavBasisOption = IClOpt & ICbG<
     HTMLLabelElement | null
 > & IGlOpt & ILabelOpt & IDisabledOpt & {
     loading?: boolean;
 };
 export type INavBasis = {
-    prev: ICbOpt & {
+    prev: ICbOpt & ILoadingOpt & {
         label?: string;
         route: NavigationRoute | [NavigationRoute, NavigationParamTuple[]];
         prevent_route?: {

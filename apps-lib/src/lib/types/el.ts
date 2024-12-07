@@ -4,6 +4,7 @@ import type { ThemeLayer } from "@radroots/theme";
 export type GlyphKeyCurrency = `dollar` | `eur`;
 
 export type GlyphKey = |
+    `images-square` |
     `bell` |
     `columns` |
     `bold` |
@@ -167,14 +168,11 @@ export type IInputElement = IId & IClOpt & ILyOptTs & {
     hidden?: boolean;
     validate?: RegExp;
     sync?: boolean;
-    // sync_init?: string;
     field?: IFormField;
-    /*notify_inline?: {
-        glyph: GlyphKey | IGlyph;
-    };*/
     callback?: CallbackPromiseGeneric<{ value: string; pass: boolean; }>;
     callback_keydown?: CallbackPromiseGeneric<{ key: string; el: HTMLInputElement }>;
     callback_blur?: CallbackPromiseGeneric<{ el: HTMLInputElement }>;
+    callback_focus?: CallbackPromiseGeneric<{ el: HTMLInputElement }>;
     on_mount?: CallbackPromiseGeneric<HTMLInputElement>;
 };
 
@@ -184,12 +182,10 @@ export type ITextAreaElement = IId & IClOpt & ILyOptTs & {
     hidden?: boolean;
     validate?: RegExp;
     sync?: true;
-    //sync_init?: true | string;
     field?: IFormField;
-    /*notify_inline?: {
-        glyph: GlyphKey | IGlyph;
-    };*/
     callback?: CallbackPromiseGeneric<{ value: string; pass: boolean; }>;
     callback_keydown?: CallbackPromiseGeneric<{ key: string; }>;
+    callback_blur?: CallbackPromiseGeneric<{ el: HTMLTextAreaElement }>;
+    callback_focus?: CallbackPromiseGeneric<{ el: HTMLTextAreaElement }>;
     on_mount?: CallbackPromiseGeneric<HTMLTextAreaElement>;
 };

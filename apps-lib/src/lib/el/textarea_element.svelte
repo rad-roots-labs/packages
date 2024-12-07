@@ -73,15 +73,21 @@
 <textarea
     bind:this={el}
     bind:value
-    {id}
-    contenteditable="true"
-    class={`${fmt_cl(basis.classes)} el-textarea w-full bg-layer-${layer}-surface text-layer-${layer}-glyph placeholder:text-layer-${layer}-glyph_pl caret-layer-${layer}-glyph`}
-    placeholder={basis.placeholder || ``}
     on:input={async ({ currentTarget: el }) => {
         await handle_on_input(el);
+    }}
+    on:blur={async ({ currentTarget: el }) => {
+        if (basis.callback_blur) await basis.callback_blur({ el });
+    }}
+    on:focus={async ({ currentTarget: el }) => {
+        if (basis.callback_focus) await basis.callback_focus({ el });
     }}
     on:keydown={async (ev) => {
         if (basis.callback_keydown)
             await basis.callback_keydown({ key: ev.key });
     }}
+    {id}
+    contenteditable="true"
+    class={`${fmt_cl(basis.classes)} el-textarea w-full bg-layer-${layer}-surface text-layer-${layer}-glyph placeholder:text-layer-${layer}-glyph_pl caret-layer-${layer}-glyph`}
+    placeholder={basis.placeholder || ``}
 />

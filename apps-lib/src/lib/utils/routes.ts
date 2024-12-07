@@ -12,6 +12,7 @@ export type NavigationRoute =
     | "/settings"
     | "/settings/nostr"
     | "/settings/profile"
+    | "/settings/profile/edit"
     | "/test"
     | "/cfg/error"
     | "/cfg/init";
@@ -31,6 +32,7 @@ export function parse_route(route: string): NavigationRoute {
         case "/settings":
         case "/settings/nostr":
         case "/settings/profile":
+        case "/settings/profile/edit":
         case "/test":
         case "/cfg/error":
         case "/cfg/init":
