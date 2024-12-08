@@ -2,7 +2,7 @@
     import { Glyph, LogoCircleSm, ls, route } from "$lib";
 </script>
 
-<div class={`flex flex-row h-12 w-full px-6 justify-between items-center`}>
+<div class={`flex flex-row h-12 w-full px-6 pb-4 justify-between items-center`}>
     <button
         class={`flex flex-row gap-2 justify-start items-center`}
         on:click={async () => {

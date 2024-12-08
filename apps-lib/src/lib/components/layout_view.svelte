@@ -7,6 +7,7 @@
         layout_view_cover,
         nav_blur,
         nav_visible,
+        ph_blur,
         tabs_blur,
         tabs_visible,
     } from "$lib";
@@ -48,6 +49,8 @@
         else nav_blur.set(false);
         if (Math.max(el?.scrollTop || 0, 0) > 10) tabs_blur.set(true);
         else tabs_blur.set(false);
+        if (Math.max(el?.scrollTop || 0, 0) > 50) ph_blur.set(true);
+        else ph_blur.set(false);
     };
 </script>
 

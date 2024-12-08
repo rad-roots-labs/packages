@@ -47,6 +47,8 @@ export const tabs_visible = writable<boolean>(false);
 export const tabs_blur = writable<boolean>(false);
 export const tabs_active = writable<number>(0);
 
+export const ph_blur = writable<boolean>(false);
+
 export const carousel_active = writable<boolean>(false);
 export const carousel_index = writable<number>(0);
 export const carousel_index_max = writable<number>(0);

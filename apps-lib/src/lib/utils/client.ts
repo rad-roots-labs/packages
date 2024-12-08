@@ -1,4 +1,5 @@
 import { goto } from "$app/navigation";
+import { page } from "$app/stores";
 import { app_toast, locale, ls, nav_prev, TOAST_MS, type AnchorRoute, type AppConfigType, type AppLayoutKey, type CallbackPromise, type CallbackPromiseGeneric, type GeolocationLatitudeFmtOption, type GlyphKey, type IToast, type LabelFieldKind, type LayerGlyphBasisKind, type NavigationParamTuple, type NavigationRoute, type NavigationRouteParamKey } from "$lib";
 import type { ColorMode, ThemeKey, ThemeLayer } from "@radroots/theme";
 import { get } from "svelte/store";
@@ -296,4 +297,14 @@ export const fmt_list_oxford = (list: string[], loc_key?: string): string => {
     if (list.length > 1 && loc_key) return `${list.slice(0, -1).map(i => `${loc_key}${i}`).join(', ')} ${`${get_store(ls)(`common.and`)}`} ${`${loc_key}${list[list.length - 1]}`}`;
     else if (list.length > 1) return `${list.slice(0, -1).join(', ')} ${`${get_store(ls)(`common.and`)}`} ${list[list.length - 1]}`;
     return list[0];
+};
+
+export const catch_err = async (e: unknown, fn_name: string): Promise<void> => {
+    const $page = get_store(page) as any;
+    if (e instanceof Error) {
+        const { name, message, stack, cause } = e
+        console.log(`(catch_err) ${$page.url.pathname} ${name} ${message} ${stack} ${cause}`)
+    } else {
+        console.log(`(catch_err) `, e)
+    }
 };
