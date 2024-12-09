@@ -22,7 +22,8 @@
     "geolocation": {
         "request": {
             "current": "Geolocation request failure"
-        }
+        },
+        "result_missing": "The geolocation data is not available"
     },
     "radroots": {
         "account_required_upload": "To post photos using Radroots hosting you must request a profile name registration. There is no cost to register, do you want to continue?",

@@ -15,12 +15,8 @@
     $: basis = basis;
 
     const handle_close = async (): Promise<void> => {
-        try {
-            envelope_visible.set(false);
-            await basis.close();
-        } catch (e) {
-            console.log(`(error) handle_close `, e);
-        }
+        envelope_visible.set(false);
+        await basis.close();
     };
 
     const handle_scroll = (): void => {

@@ -60,7 +60,6 @@ export { default as EnvelopeButtons } from "./components/envelope_buttons.svelte
 export { default as LayoutWindow } from "./components/layout_window.svelte";
 export { default as EntryMultiline } from "./components/entry_multiline.svelte";
 export { default as EntryWrap } from "./components/entry_wrap.svelte";
-export { default as ButtonGlyphPrimary } from "./components/button_glyph_primary.svelte";
 export { default as ButtonLayout } from "./components/button_layout.svelte";
 export { default as LayoutTrellisLine } from "./components/layout_trellis_line.svelte";
 export { default as PageHeader } from "./components/page_header.svelte";
@@ -81,4 +80,5 @@ export { default as LoadingView } from "./components/loading_view.svelte";
 export { default as NavOption } from "./components/nav_option.svelte";
 export { default as LogoCircle } from "./components/logo_circle.svelte";
 export { default as TrellisRowLabel } from "./components/trellis_row_label.svelte";
+export { default as ButtonGlyphSimple } from "./components/button_glyph_simple.svelte";
 export { default as LayoutView } from "./components/layout_view.svelte";

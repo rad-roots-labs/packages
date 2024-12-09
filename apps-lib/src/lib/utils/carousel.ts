@@ -74,7 +74,9 @@ export const carousel_dec = async <T extends string>(
     await exe_iter(async () => carousel_dec_handler(view), num, duration);
 };
 
-export const carousel_init = (num_max: number): void => {
+export const carousel_init = async <T extends string>(view: T, num_max: number,
+): Promise<void> => {
+    await carousel_dec(view);
     carousel_index.set(0);
     carousel_index_max.set(num_max);
     carousel_num.set(1);
