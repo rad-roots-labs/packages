@@ -32,7 +32,7 @@
     {:else if basis.label}
         {#if `value` in basis.label}
             <p
-                class={`${fmt_cl(basis.label.classes)} font-sans text-line_display_e line-clamp-1 text-layer-0-glyph-label el-re`}
+                class={`${fmt_cl(basis.label.classes)} font-sans text-line_d_e line-clamp-1 text-layer-0-glyph-label el-re`}
             >
                 {basis.label.value}
             </p>

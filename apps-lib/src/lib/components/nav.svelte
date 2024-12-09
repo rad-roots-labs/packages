@@ -120,7 +120,7 @@
                         />
                         {#if nav_prev_label || basis.prev.label}
                             <p
-                                class={`font-sans text-navPrevious text-layer-1-glyph-hl group-active:opacity-60 transition-opacity`}
+                                class={`font-sans text-nav_prev text-layer-1-glyph-hl group-active:opacity-60 transition-opacity`}
                             >
                                 {nav_prev_label || basis.prev.label}
                             </p>
@@ -143,7 +143,7 @@
                     >
                         {#if `value` in basis.title.label}
                             <p
-                                class={`${fmt_cl(basis.title.label.classes)} font-sans text-navCurrent text-layer-1-glyph`}
+                                class={`${fmt_cl(basis.title.label.classes)} font-sans text-nav_curr text-layer-1-glyph`}
                             >
                                 {basis.title.label.value}
                             </p>

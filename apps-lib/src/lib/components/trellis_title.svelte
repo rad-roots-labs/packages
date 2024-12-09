@@ -21,7 +21,7 @@
 			<Fill />
 		{:else}
 			<p
-				class={`font-sans text-trellisTitle text-layer-${layer}-glyph-label uppercase`}
+				class={`font-sans text-trellis_ti text-layer-${layer}-glyph-label uppercase`}
 			>
 				{basis.value || ``}
 			</p>
@@ -40,7 +40,7 @@
 					<LabelSwap basis={basis.link.label} />
 				{:else if `value` in basis.link.label}
 					<p
-						class={`${fmt_cl(basis.link.label.classes)} font-sans text-trellisTitle uppercase fade-in`}
+						class={`${fmt_cl(basis.link.label.classes)} font-sans text-trellis_ti uppercase fade-in`}
 					>
 						{basis.link.label.value || ``}
 					</p>

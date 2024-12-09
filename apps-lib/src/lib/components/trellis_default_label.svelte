@@ -8,10 +8,10 @@
 </script>
 
 <div class={`${fmt_cl(classes)} flex flex-row`}>
-    <p class={`font-sans text-trellisTitle text-layer-${layer}-glyph-shade`}>
+    <p class={`font-sans text-trellis_ti text-layer-${layer}-glyph-shade`}>
         {#each labels as label}
             <span
-                class={`${fmt_cl(label.classes)} font-sans text-trellisTitle`}
+                class={`${fmt_cl(label.classes)} font-sans text-trellis_ti`}
             >
                 {#if `route` in label}
                     <a href={label.route}>

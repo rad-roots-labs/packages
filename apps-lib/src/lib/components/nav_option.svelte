@@ -46,14 +46,14 @@
                     >
                         <div class="swap-on">
                             <p
-                                class={`${fmt_cl(basis?.label?.swap?.on.classes || `text-navPrevious text-layer-${layer}-glyph-hl group-active:opacity-70`)} font-sans -translate-y-[1px] el-re`}
+                                class={`${fmt_cl(basis?.label?.swap?.on.classes || `text-nav_prev text-layer-${layer}-glyph-hl group-active:opacity-70`)} font-sans -translate-y-[1px] el-re`}
                             >
                                 {basis?.label?.swap?.on.value}
                             </p>
                         </div>
                         <div class="swap-off">
                             <p
-                                class={`${fmt_cl(basis?.label?.swap?.off.classes || `text-navPrevious text-layer-${layer}-glyph-hl group-active:opacity-70`)} font-sans -translate-y-[1px] el-re`}
+                                class={`${fmt_cl(basis?.label?.swap?.off.classes || `text-nav_prev text-layer-${layer}-glyph-hl group-active:opacity-70`)} font-sans -translate-y-[1px] el-re`}
                             >
                                 {basis?.label?.swap?.off.value}
                             </p>
@@ -61,7 +61,7 @@
                     </label>
                 {:else if `value` in basis?.label}
                     <p
-                        class={`${fmt_cl(basis?.label.classes)} font-sans text-navPrevious text-layer-1-glyph-hl group-active:opacity-70 el-re`}
+                        class={`${fmt_cl(basis?.label.classes)} font-sans text-nav_prev text-layer-1-glyph-hl group-active:opacity-70 el-re`}
                     >
                         {basis?.label.value}
                     </p>

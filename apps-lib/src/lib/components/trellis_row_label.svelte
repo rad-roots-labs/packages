@@ -27,7 +27,7 @@
 						</div>
 					{:else if `value` in title_l}
 						<p
-							class={`${fmt_cl(title_l.classes)} font-sans text-line_display ${title_l.hide_truncate ? `` : `truncate`} el-re`}
+							class={`${fmt_cl(title_l.classes)} font-sans text-line_d ${title_l.hide_truncate ? `` : `truncate`} el-re`}
 						>
 							{title_l.value || ``}
 						</p>
@@ -48,7 +48,7 @@
 						<ButtonGlyph basis={{ ...title_r.glyph }} />
 					{:else if `value` in title_r}
 						<p
-							class={`${fmt_cl(title_r.classes)} font-sans text-line_display text-layer-${layer}-glyph_d ${title_r.hide_truncate ? `` : `truncate`} el-re`}
+							class={`${fmt_cl(title_r.classes)} font-sans text-line_d text-layer-${layer}-glyph_d ${title_r.hide_truncate ? `` : `truncate`} el-re`}
 						>
 							{title_r.value || ``}
 						</p>
