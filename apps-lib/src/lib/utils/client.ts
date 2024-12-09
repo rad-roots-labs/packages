@@ -308,3 +308,11 @@ export const catch_err = async (e: unknown, fn_name: string): Promise<void> => {
         console.log(`(catch_err) `, e)
     }
 };
+
+export const debounce_input = (func: Function, delay: number) => {
+    let timer: ReturnType<typeof setTimeout>;
+    return function (this: any, ...args: any) {
+        clearTimeout(timer);
+        timer = setTimeout(() => func.apply(this, args), delay);
+    };
+};

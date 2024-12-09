@@ -2,6 +2,7 @@ export type NavigationRoute =
     | "/"
     | "/farm/land"
     | "/farm/land/add"
+    | "/farm/land/view"
     | "/models/location-gcs"
     | "/models/nostr-profile"
     | "/models/nostr-profile/edit/field"
@@ -11,6 +12,8 @@ export type NavigationRoute =
     | "/models/trade-product"
     | "/models/trade-product/add"
     | "/models/trade-product/view"
+    | "/notifications"
+    | "/search"
     | "/settings"
     | "/settings/nostr"
     | "/settings/profile"
@@ -24,6 +27,7 @@ export function parse_route(route: string): NavigationRoute {
         case "/":
         case "/farm/land":
         case "/farm/land/add":
+        case "/farm/land/view":
         case "/models/location-gcs":
         case "/models/nostr-profile":
         case "/models/nostr-profile/edit/field":
@@ -33,6 +37,8 @@ export function parse_route(route: string): NavigationRoute {
         case "/models/trade-product":
         case "/models/trade-product/add":
         case "/models/trade-product/view":
+        case "/notifications":
+        case "/search":
         case "/settings":
         case "/settings/nostr":
         case "/settings/profile":

@@ -1,4 +1,5 @@
 {
+    "notifications": "Notifications",
     "accept": "Accept",
     "activation": "Activation",
     "active": "Active",
@@ -132,6 +133,7 @@
     "reset": "Reset",
     "return": "Return",
     "review": "Review",
+    "search": "Search",
     "secret_key": "Secret key",
     "settings": "Settings",
     "setup": "Setup",

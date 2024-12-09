@@ -27,14 +27,15 @@
             <button
                 class={`relative col-span-1 flex flex-row justify-center items-center`}
                 on:click={async () => {
-                    await route(`/`);
+                    await route(`/search`);
                 }}
             >
                 <Glyph
                     basis={{
                         classes: `text-[24px] text-layer-0-glyph/80`,
-                        weight:
-                            $page.url.pathname === `/search` ? `fill` : `bold`,
+                        weight: $page.url.pathname.startsWith(`/search`)
+                            ? `fill`
+                            : `bold`,
                         key: `magnifying-glass`,
                     }}
                 />
@@ -63,7 +64,9 @@
             </button>
             <button
                 class={`relative col-span-1 flex flex-row h-full justify-center items-center`}
-                on:click={async () => {}}
+                on:click={async () => {
+                    await route(`/notifications`);
+                }}
             >
                 <Glyph
                     basis={{

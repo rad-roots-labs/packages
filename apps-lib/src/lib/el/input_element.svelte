@@ -28,7 +28,7 @@
             ? parse_layer(0)
             : parse_layer(basis?.layer);
     $: classes_layer =
-        typeof basis?.layer === `boolean`
+        typeof basis?.layer === `boolean` || typeof basis?.layer === `undefined`
             ? ``
             : `bg-layer-${layer}-surface text-layer-${layer}-glyph placeholder:text-layer-${layer}-glyph_pl caret-layer-${layer}-glyph`;
     $: if (basis?.id && basis?.sync && value) {
