@@ -14,9 +14,9 @@ export class TauriClientGeolocation implements IClientGeolocation {
         const position: IClientGeolocationPosition = {
             lat: parse_location_coords(pos_coords.latitude),
             lng: parse_location_coords(pos_coords.longitude),
-            accuracy: pos_coords.accuracy || undefined,
-            altitude: pos_coords.altitude || undefined,
-            altitude_accuracy: pos_coords.altitudeAccuracy || undefined
+            accuracy: pos_coords.accuracy ?? undefined,
+            altitude: pos_coords.altitude ?? undefined,
+            altitude_accuracy: pos_coords.altitudeAccuracy ?? undefined
         };
         return position;
     }
