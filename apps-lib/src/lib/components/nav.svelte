@@ -55,7 +55,8 @@
                     ? basis.prev.route
                     : encode_qp_route(basis.prev.route[0], basis.prev.route[1]);
             if ($nav_prev.length) {
-                const nav_prev_li = $nav_prev.pop();
+                const nav_prev_li = $nav_prev[$nav_prev.length - 1];
+                $nav_prev = [...$nav_prev.slice(0, -1)];
                 if (nav_prev_li)
                     route_to = encode_qp_route(
                         nav_prev_li.route,

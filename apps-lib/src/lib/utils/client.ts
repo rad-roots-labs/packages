@@ -216,7 +216,8 @@ export const route_prev = async (route_fallback: NavigationRoute = `/`, params_f
         let route_to = encode_qp_route(route_fallback, params_fallback);
         const $nav_prev = get_store(nav_prev);
         if ($nav_prev.length) {
-            const nav_prev_li = $nav_prev.pop();
+            const nav_prev_li = $nav_prev[$nav_prev.length - 1];
+            nav_prev.set([...$nav_prev.slice(0, -1)]);
             if (nav_prev_li)
                 route_to = encode_qp_route(
                     nav_prev_li.route,

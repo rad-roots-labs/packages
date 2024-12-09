@@ -91,6 +91,7 @@
         if (basis?.callback_keydown)
             await basis?.callback_keydown({
                 key: ev.key,
+                key_s: ev.key === `Enter`,
                 el: ev.currentTarget,
             });
     }}

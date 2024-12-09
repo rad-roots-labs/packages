@@ -1,6 +1,6 @@
 <script lang="ts">
     import { page } from "$app/stores";
-    import { Fill, Glyph, nav_prev, route } from "$lib";
+    import { Fill, Glyph, route } from "$lib";
 </script>
 
 <div
@@ -43,10 +43,6 @@
             <button
                 class={`relative col-span-1 flex flex-row justify-center items-center`}
                 on:click={async () => {
-                    $nav_prev.push({
-                        route: `/`,
-                        label: `Home`,
-                    });
                     route(`/settings/profile`);
                 }}
             >
