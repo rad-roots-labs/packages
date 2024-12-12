@@ -1,14 +1,38 @@
 {
     "location_gcs": {
         "fields": {
+            "lat": {
+                "label": "Location Latitude"
+            },
+            "lng": {
+                "label": "Location Latitude"
+            },
+            "geohash": {
+                "label": "Location Geohash"
+            },
+            "kind": {
+                "label": "Location Kind"
+            },
+            "label": {
+                "label": "Location Label"
+            },
             "area": {
                 "label": "Location Area"
+            },
+            "elevation": {
+                "label": "Location Elevation"
+            },
+            "soil": {
+                "label": "Location Soil"
             },
             "climate": {
                 "label": "Location Climate"
             },
-            "elevation": {
-                "label": "Location Elevation"
+            "gc_id": {
+                "label": "Location Gc Id"
+            },
+            "gc_name": {
+                "label": "Location Gc Name"
             },
             "gc_admin1_id": {
                 "label": "Location Gc Admin1 Id"
@@ -21,89 +45,77 @@
             },
             "gc_country_name": {
                 "label": "Location Gc Country Name"
-            },
-            "gc_id": {
-                "label": "Location Gc Id"
-            },
-            "gc_name": {
-                "label": "Location Gc Name"
-            },
-            "geohash": {
-                "label": "Location Geohash"
-            },
-            "kind": {
-                "label": "Location Kind"
-            },
-            "label": {
-                "label": "Location Label"
-            },
-            "lat": {
-                "label": "Location Latitude"
-            },
-            "lng": {
-                "label": "Location Latitude"
-            },
-            "soil": {
-                "label": "Location Soil"
             }
         },
         "schema": {
-            "geohash.length": "The location geohash must be 9 characters",
-            "geohash.required": "The location geohash is required",
-            "kind.required": "The location kind is required",
-            "lat.max": "The location latitude must be less than 90",
-            "lat.min": "The location latitude must be greater than -90",
             "lat.required": "The location latitude is required",
-            "lng.max": "The location latitude must be less than 180",
+            "lat.min": "The location latitude must be greater than -90",
+            "lat.max": "The location latitude must be less than 90",
+            "lng.required": "The location latitude is required",
             "lng.min": "The location latitude must be greater than -180",
-            "lng.required": "The location latitude is required"
+            "lng.max": "The location latitude must be less than 180",
+            "geohash.required": "The location geohash is required",
+            "geohash.length": "The location geohash must be 9 characters",
+            "kind.required": "The location kind is required",
+            "label.type": "The location label is invalid",
+            "area.type": "The location area is invalid",
+            "area.nonnegative": "The location area nonnegative is incomplete",
+            "area.finite": "The location area must be a finite number",
+            "elevation.type": "The location elevation is invalid",
+            "elevation.int": "The location elevation must be an integer",
+            "elevation.nonnegative": "The location elevation nonnegative is incomplete",
+            "soil.type": "The location soil is invalid",
+            "climate.type": "The location climate is invalid",
+            "gc_id.type": "The location gc id is invalid",
+            "gc_name.type": "The location gc name is invalid",
+            "gc_admin1_id.type": "The location gc admin1 id is invalid",
+            "gc_admin1_name.type": "The location gc admin1 name is invalid",
+            "gc_country_id.type": "The location gc country id is invalid",
+            "gc_country_name.type": "The location gc country name is invalid"
         }
     },
     "log_error": {
         "fields": {
-            "app_system": {
-                "label": "Log App System"
-            },
-            "app_version": {
-                "label": "Log App Version"
-            },
-            "cause": {
-                "label": "Log Cause"
-            },
-            "data": {
-                "label": "Log Data"
-            },
             "error": {
                 "label": "Log Error"
             },
             "message": {
                 "label": "Log Message"
             },
+            "stack_trace": {
+                "label": "Log Stack Trace"
+            },
+            "cause": {
+                "label": "Log Cause"
+            },
+            "app_system": {
+                "label": "Log App System"
+            },
+            "app_version": {
+                "label": "Log App Version"
+            },
             "nostr_pubkey": {
                 "label": "Log Nostr Pubkey"
             },
-            "stack_trace": {
-                "label": "Log Stack Trace"
+            "data": {
+                "label": "Log Data"
             }
         },
         "schema": {
-            "app_system.required": "The log app system is required",
-            "app_version.required": "The log app version is required",
             "error.required": "The log error is required",
             "message.required": "The log message is required",
-            "nostr_pubkey.required": "The log nostr pubkey is required"
+            "stack_trace.type": "The log stack trace is invalid",
+            "cause.type": "The log cause is invalid",
+            "app_system.required": "The log app system is required",
+            "app_version.required": "The log app version is required",
+            "nostr_pubkey.required": "The log nostr pubkey is required",
+            "data.type": "The log data is invalid"
         }
     },
     "media_upload": {
         "fields": {
-            "description": {
-                "label": "Description"
-            },
             "file_path": {
                 "label": "File Path"
-            },
-            "label": {
-                "label": "Label"
             },
             "mime_type": {
                 "label": "Mime Type"
@@ -113,111 +125,161 @@
             },
             "res_path": {
                 "label": "Resource Path"
+            },
+            "label": {
+                "label": "Label"
+            },
+            "description": {
+                "label": "Description"
             }
         },
         "schema": {
             "file_path.required": "The media file path is required",
             "mime_type.required": "The media mime type is required",
-            "res_base.regex": "The media resource endpoint requires an http protocol",
             "res_base.required": "The media resource endpoint is required",
             "res_base.url": "The media resource endpoint is incorrectly formatted",
-            "res_path.required": "The media resource path is required"
+            "res_base.regex": "The media resource endpoint requires an http protocol",
+            "res_path.required": "The media resource path is required",
+            "label.type": "The media label is invalid",
+            "description.type": "The media description is invalid"
         }
     },
     "nostr_profile": {
         "fields": {
+            "public_key": {
+                "label": "Profile Public Key"
+            },
+            "name": {
+                "label": "Profile Name"
+            },
+            "display_name": {
+                "label": "Profile Display Name"
+            },
             "about": {
                 "label": "Profile About"
+            },
+            "website": {
+                "label": "Profile Website"
+            },
+            "picture": {
+                "label": "Profile Picture"
             },
             "banner": {
                 "label": "Profile Banner"
             },
-            "display_name": {
-                "label": "Profile Display Name"
+            "nip05": {
+                "label": "Profile Nip-05"
             },
             "lud06": {
                 "label": "Profile Lud-06"
             },
             "lud16": {
                 "label": "Profile Lud-16"
-            },
-            "name": {
-                "label": "Profile Name"
-            },
-            "nip05": {
-                "label": "Profile Nip-05"
-            },
-            "picture": {
-                "label": "Profile Picture"
-            },
-            "public_key": {
-                "label": "Profile Public Key"
-            },
-            "website": {
-                "label": "Profile Website"
             }
         },
         "schema": {
-            "banner.url": "The profile banner url is incomplete",
-            "nip05.email": "The profile nip-05 is incorrectly formatted",
-            "picture.url": "The profile picture url is incomplete",
-            "public_key.length": "The profile public key must be 64 characters",
             "public_key.required": "The profile public key is required",
-            "website.url": "The profile website url is incomplete"
+            "public_key.length": "The profile public key must be 64 characters",
+            "name.type": "The profile name is invalid",
+            "display_name.type": "The profile display name is invalid",
+            "about.type": "The profile about is invalid",
+            "website.type": "The profile website is invalid",
+            "website.url": "The profile website url is incomplete",
+            "picture.type": "The profile picture is invalid",
+            "picture.url": "The profile picture url is incomplete",
+            "banner.type": "The profile banner is invalid",
+            "banner.url": "The profile banner url is incomplete",
+            "nip05.type": "The profile nip-05 is invalid",
+            "nip05.email": "The profile nip-05 is incorrectly formatted",
+            "lud06.type": "The profile lud-06 is invalid",
+            "lud16.type": "The profile lud-16 is invalid"
         }
     },
     "nostr_relay": {
         "fields": {
-            "contact": {
-                "label": "Administrator Contact"
-            },
-            "data": {
-                "label": "Additional Information"
-            },
-            "description": {
-                "label": "Relay Description"
-            },
-            "name": {
-                "label": "Relay Name"
-            },
-            "pubkey": {
-                "label": "Administrator"
+            "url": {
+                "label": "Relay Endpoint"
             },
             "relay_id": {
                 "label": "Relay Id"
             },
-            "software": {
-                "label": "Software"
+            "name": {
+                "label": "Relay Name"
+            },
+            "description": {
+                "label": "Relay Description"
+            },
+            "pubkey": {
+                "label": "Administrator"
+            },
+            "contact": {
+                "label": "Administrator Contact"
             },
             "supported_nips": {
                 "label": "Supported Nips"
             },
-            "url": {
-                "label": "Relay Endpoint"
+            "software": {
+                "label": "Software"
             },
             "version": {
                 "label": "Software Version"
+            },
+            "data": {
+                "label": "Additional Information"
             }
         },
         "schema": {
-            "url.regex": "The relay relay endpoint requires a websocket protocol",
             "url.required": "The relay relay endpoint is required",
-            "url.url": "The relay relay endpoint is incorrectly formatted"
+            "url.url": "The relay relay endpoint is incorrectly formatted",
+            "url.regex": "The relay relay endpoint requires a websocket protocol",
+            "relay_id.type": "The relay relay id is invalid",
+            "name.type": "The relay name is invalid",
+            "description.type": "The relay description is invalid",
+            "pubkey.type": "The relay Administrator is invalid",
+            "contact.type": "The relay Administrator contact is invalid",
+            "supported_nips.type": "The relay supported nips is invalid",
+            "software.type": "The relay software is invalid",
+            "version.type": "The relay Software version is invalid",
+            "data.type": "The relay Additional information is invalid"
         }
     },
     "trade_product": {
         "fields": {
+            "key": {
+                "label": "Product Kind"
+            },
             "category": {
                 "label": "Product Category"
             },
-            "key": {
-                "label": "Product Kind"
+            "title": {
+                "label": "Product Title"
+            },
+            "summary": {
+                "label": "Product Description"
+            },
+            "process": {
+                "label": "Processing Method"
             },
             "lot": {
                 "label": "Product Lot"
             },
-            "notes": {
-                "label": "Notes"
+            "profile": {
+                "label": "Flavor Profile"
+            },
+            "year": {
+                "label": "Production Year"
+            },
+            "qty_amt": {
+                "label": "Quantity Amount"
+            },
+            "qty_unit": {
+                "label": "Quantity Unit"
+            },
+            "qty_label": {
+                "label": "Quantity Name"
+            },
+            "qty_avail": {
+                "label": "Quantity Available"
             },
             "price_amt": {
                 "label": "Price Amount"
@@ -231,61 +293,41 @@
             "price_qty_unit": {
                 "label": "Price Quantity Unit"
             },
-            "process": {
-                "label": "Processing Method"
-            },
-            "profile": {
-                "label": "Flavor Profile"
-            },
-            "qty_amt": {
-                "label": "Quantity Amount"
-            },
-            "qty_avail": {
-                "label": "Quantity Available"
-            },
-            "qty_label": {
-                "label": "Quantity Name"
-            },
-            "qty_unit": {
-                "label": "Quantity Unit"
-            },
-            "summary": {
-                "label": "Product Description"
-            },
-            "title": {
-                "label": "Product Title"
-            },
-            "year": {
-                "label": "Production Year"
+            "notes": {
+                "label": "Notes"
             }
         },
         "schema": {
-            "category.required": "The product category is required",
             "key.required": "The product kind is required",
-            "lot.max": "The product lot must be less than 120 characters",
-            "lot.min": "The product lot must be more than 1 character",
-            "lot.required": "The product lot is required",
-            "price_amt.positive": "The product price amount must be positive",
-            "price_amt.required": "The product price amount is required",
-            "price_currency.length": "The product price currency must be 3 characters",
-            "price_currency.required": "The product price currency is required",
-            "price_qty_amt.int": "The product price quantity must be an integer",
-            "price_qty_amt.positive": "The product price quantity must be positive",
-            "price_qty_amt.required": "The product price quantity is required",
-            "price_qty_unit.required": "The product price quantity unit is required",
-            "process.required": "The product processing method is required",
-            "profile.required": "The product flavor profile is required",
-            "qty_amt.int": "The product quantity amount must be an integer",
-            "qty_amt.positive": "The product quantity amount must be positive",
-            "qty_amt.required": "The product quantity amount is required",
-            "qty_avail.int": "The product quantity available must be an integer",
-            "qty_avail.positive": "The product quantity available must be positive",
-            "qty_unit.required": "The product quantity unit is required",
-            "summary.required": "The product description is required",
+            "category.required": "The product category is required",
             "title.required": "The product title is required",
+            "summary.required": "The product description is required",
+            "process.required": "The product processing method is required",
+            "lot.required": "The product lot is required",
+            "lot.min": "The product lot must be more than 1 character",
+            "lot.max": "The product lot must be less than 120 characters",
+            "profile.required": "The product flavor profile is required",
+            "year.required": "The product production year is required",
             "year.int": "The product production year must be an integer",
             "year.positive": "The product production year must be positive",
-            "year.required": "The product production year is required"
+            "qty_amt.required": "The product quantity amount is required",
+            "qty_amt.int": "The product quantity amount must be an integer",
+            "qty_amt.positive": "The product quantity amount must be positive",
+            "qty_unit.required": "The product quantity unit is required",
+            "qty_label.type": "The product quantity name is invalid",
+            "qty_avail.type": "The product quantity available is invalid",
+            "qty_avail.int": "The product quantity available must be an integer",
+            "qty_avail.positive": "The product quantity available must be positive",
+            "price_amt.required": "The product price amount is required",
+            "price_amt.positive": "The product price amount must be positive",
+            "price_amt.finite": "The product price amount must be a finite number",
+            "price_currency.required": "The product price currency is required",
+            "price_currency.length": "The product price currency must be 3 characters",
+            "price_qty_amt.required": "The product price quantity is required",
+            "price_qty_amt.int": "The product price quantity must be an integer",
+            "price_qty_amt.positive": "The product price quantity must be positive",
+            "price_qty_unit.required": "The product price quantity unit is required",
+            "notes.type": "The product notes is invalid"
         }
     }
 }

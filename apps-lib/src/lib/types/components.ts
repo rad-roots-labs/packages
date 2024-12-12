@@ -1,4 +1,4 @@
-import type { CallbackPromise, CallbackPromiseGeneric, GlyphKey, GlyphWeight, ICb, ICbG, ICbOpt, IClOpt, IDisabledOpt, IGl, IGlOpt, IGlyph, IIdOpt, IIdWrapOpt, IInputElement, ILabel, ILabelFieldsOpt, ILabelOpt, ILabelOptFieldsOpt, ILabelValue, ILoadingOpt, ILyOpt, ILyOptTs, ISelectElement, ITextAreaElement, NavigationParamTuple, NavigationRoute } from "$lib";
+import type { CallbackPromise, CallbackPromiseGeneric, CallbackPromiseReturn, GlyphKey, GlyphWeight, ICb, ICbG, ICbOpt, IClOpt, IDisabledOpt, IGl, IGlOpt, IGlyph, IIdOpt, IIdWrapOpt, IInputElement, ILabel, ILabelFieldsOpt, ILabelOpt, ILabelOptFieldsOpt, ILabelValue, ILoadingOpt, ILyOpt, ILyOptTs, ISelectElement, ITextAreaElement, NavigationParamTuple, NavigationRoute } from "$lib";
 import type { TransitionConfig } from "svelte/transition";
 
 export type ITabsBasisList = IClOpt & {
@@ -119,3 +119,16 @@ export type INavBasis = {
 export type IDisplayLine = IIdWrapOpt & IClOpt & ILabelValue & ILyOpt & {
     style?: IEntryStyle
 }
+
+export type IPageHeader = {
+    callback_route?: CallbackPromiseReturn<NavigationRoute | undefined>;
+    label:
+    | string
+    | [
+        string,
+        {
+            route: NavigationRoute;
+            route_param?: NavigationParamTuple[];
+        },
+    ];
+};

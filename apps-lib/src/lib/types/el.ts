@@ -121,6 +121,13 @@ export type GlyphKey = |
 
 export type GlyphWeight = `light` | `regular` | `fill` | `bold`;  // `thin` `duotone`
 
+export type ElementCallbackValue = CallbackPromiseGeneric<{ value: string; pass: boolean; }>;
+export type ElementCallbackValueKeydown<T extends HTMLElement> = CallbackPromiseGeneric<{ key: string; key_s: boolean; el: T }>;
+export type ElementCallbackValueBlur<T extends HTMLElement> = CallbackPromiseGeneric<{ el: T }>;
+export type ElementCallbackValueFocus<T extends HTMLElement> = CallbackPromiseGeneric<{ el: T }>;
+export type ElementCallbackMount<T extends HTMLElement> = CallbackPromiseGeneric<{ el: T }>;
+
+
 export type IGlyph = ICbOpt & IIdOpt & {
     layer?: ThemeLayer;
     classes?: string;
@@ -169,11 +176,11 @@ export type IInputElement = IId & IClOpt & ILyOptTs & {
     validate?: RegExp;
     sync?: boolean;
     field?: IFormField;
-    callback?: CallbackPromiseGeneric<{ value: string; pass: boolean; }>;
-    callback_keydown?: CallbackPromiseGeneric<{ key: string; key_s: boolean; el: HTMLInputElement }>;
-    callback_blur?: CallbackPromiseGeneric<{ el: HTMLInputElement }>;
-    callback_focus?: CallbackPromiseGeneric<{ el: HTMLInputElement }>;
-    on_mount?: CallbackPromiseGeneric<HTMLInputElement>;
+    callback?: ElementCallbackValue,
+    callback_keydown?: ElementCallbackValueKeydown<HTMLInputElement>,
+    callback_blur?: ElementCallbackValueBlur<HTMLInputElement>;
+    callback_focus?: ElementCallbackValueBlur<HTMLInputElement>;
+    on_mount?: ElementCallbackMount<HTMLInputElement>;
 };
 
 export type ITextAreaElement = IId & IClOpt & ILyOptTs & {
@@ -183,9 +190,9 @@ export type ITextAreaElement = IId & IClOpt & ILyOptTs & {
     validate?: RegExp;
     sync?: true;
     field?: IFormField;
-    callback?: CallbackPromiseGeneric<{ value: string; pass: boolean; }>;
-    callback_keydown?: CallbackPromiseGeneric<{ key: string; key_s: boolean; el: HTMLTextAreaElement }>;
-    callback_blur?: CallbackPromiseGeneric<{ el: HTMLTextAreaElement }>;
-    callback_focus?: CallbackPromiseGeneric<{ el: HTMLTextAreaElement }>;
-    on_mount?: CallbackPromiseGeneric<HTMLTextAreaElement>;
+    callback?: ElementCallbackValue,
+    callback_keydown?: ElementCallbackValueKeydown<HTMLTextAreaElement>,
+    callback_blur?: ElementCallbackValueBlur<HTMLTextAreaElement>;
+    callback_focus?: ElementCallbackValueBlur<HTMLTextAreaElement>;
+    on_mount?: ElementCallbackMount<HTMLTextAreaElement>;
 };

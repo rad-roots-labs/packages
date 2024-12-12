@@ -1,25 +1,8 @@
 <script lang="ts">
-    import {
-        app_layout,
-        Fill,
-        ph_blur,
-        route,
-        type NavigationParamTuple,
-        type NavigationRoute,
-    } from "$lib";
+    import { app_layout, Fill, ph_blur, route, type IPageHeader } from "$lib";
     import { fade } from "svelte/transition";
 
-    export let basis: {
-        label:
-            | string
-            | [
-                  string,
-                  {
-                      route: NavigationRoute;
-                      route_param?: NavigationParamTuple[];
-                  },
-              ];
-    };
+    export let basis: IPageHeader;
 </script>
 
 {#if $ph_blur}
@@ -45,11 +28,18 @@
             <button
                 class={`flex flex-row gap-1 justify-center items-center`}
                 on:click={async () => {
-                    if (typeof basis.label !== `string`)
+                    if (typeof basis.label !== `string`) {
+                        if (basis.callback_route) {
+                            const route_to = await basis.callback_route();
+                            if (!route_to) return;
+                            await route(route_to);
+                            return;
+                        }
                         await route(
                             basis.label[1].route,
                             basis.label[1].route_param || undefined,
                         );
+                    }
                 }}
             >
                 <p

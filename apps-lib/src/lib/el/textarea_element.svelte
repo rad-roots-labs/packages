@@ -41,7 +41,7 @@
                 if (kv_val && el) el.value = fmt_textarea_value(kv_val);
                 else await kv.set(basis?.id, ``);
             }
-            if (basis?.on_mount) await basis?.on_mount(el);
+            if (basis?.on_mount) await basis?.on_mount({ el });
         } catch (e) {
             console.log(`(error) kv_init `, e);
         }

@@ -276,6 +276,10 @@ export const fmt_geol_longitude = (lng: number, fmt_opt: GeolocationLatitudeFmtO
     }
 };
 
+export const fmt_geol_point = (lat: number, lng: number, precision: number = 4): [string, string] => {
+    return [fmt_geol_latitude(lat, `d`, precision), fmt_geol_longitude(lng, `d`, precision)];
+};
+
 export const exe_iter = async (callback: CallbackPromise, num: number = 1, delay: number = 400): Promise<void> => {
     try {
         const iter_fn = (count: number) => {

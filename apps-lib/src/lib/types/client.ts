@@ -30,7 +30,7 @@ export type GeometryGlyphDimension =
 
 //export type CallbackPromiseGenericReturn<T1, T2> = (value: T1) => Promise<T2>;
 export type CallbackPromiseGeneric<T> = (value: T) => Promise<void>;
-//export type CallbackPromiseReturn<T> = () => Promise<T>;
+export type CallbackPromiseReturn<T> = () => Promise<T>;
 export type CallbackPromise = () => Promise<void>;
 
 export type IRoute = {
