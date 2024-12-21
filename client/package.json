@@ -11,7 +11,7 @@
     },
     "dependencies": {
         "@noble/hashes": "^1.4.0",
-        "@nostr-dev-kit/ndk": "^2.10.6",
+        "@nostr-dev-kit/ndk": "^2.10.7",
         "@radroots/models": "workspace:*",
         "@radroots/utils": "workspace:*",
         "@tauri-apps/api": "2.0.3",
