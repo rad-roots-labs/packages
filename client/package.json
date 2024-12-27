@@ -24,7 +24,7 @@
         "@tauri-apps/plugin-notification": "^2.0.0",
         "@tauri-apps/plugin-os": "^2.0.0",
         "@tauri-apps/plugin-store": "^2.1.0",
-        "nostr-tools": "^2.7.2"
+        "nostr-tools": "^2.10.4"
     },
     "devDependencies": {
         "@types/debug": "^4.1.12",
