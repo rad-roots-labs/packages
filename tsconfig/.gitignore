@@ -27,6 +27,6 @@ yarn-error.log*
 # turbo
 .turbo
 
-_tmp
+.tmp*
 .vscode
 notes*.txt
