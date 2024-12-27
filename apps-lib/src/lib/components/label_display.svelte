@@ -1,7 +1,7 @@
 <script lang="ts">
-    import { fmt_cl, parse_layer, type IDisplayLine } from "$lib";
+    import { fmt_cl, parse_layer, type ILabelDisplay } from "$lib";
 
-    export let basis: IDisplayLine;
+    export let basis: ILabelDisplay;
     $: basis = basis;
 
     $: layer =

@@ -1,5 +1,7 @@
-<script>
-    import { Blur, app_tilt } from "$lib";
+<script lang="ts">
+    import { app_tilt } from "$lib";
+
+    //     <Blur />
 </script>
 
 <div
@@ -8,6 +10,4 @@
     <div class={`flex flex-col h-full w-full`}>
         <slot />
     </div>
-    <slot name="overlay" />
-    <Blur />
 </div>

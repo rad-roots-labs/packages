@@ -11,7 +11,7 @@
     let el: HTMLInputElement | null = null;
 
     export let value: string = ``;
-    export let basis: IInputElement;
+    export let basis: IInputElement<string>;
 
     onMount(async () => {
         try {
@@ -47,7 +47,7 @@
                 if (kv_val && el) el.value = kv_val;
                 else await kv.set(basis?.id, ``);
             }
-            if (basis?.on_mount) await basis?.on_mount({ el });
+            if (basis?.callback_mount) await basis?.callback_mount({ el });
         } catch (e) {
             console.log(`(error) kv_init `, e);
         }

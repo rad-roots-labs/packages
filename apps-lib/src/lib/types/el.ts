@@ -1,198 +1,30 @@
-import type { CallbackPromiseGeneric, GeometryCardinalDirection, GeometryDimension, GeometryGlyphDimension, ICbGOpt, ICbOpt, IClOpt, IFormField, IId, IIdOpt, ILyOptTs } from "$lib";
-import type { ThemeLayer } from "@radroots/theme";
+import type { ElementCallbackMount, ElementCallbackValue, ElementCallbackValueBlur, ElementCallbackValueKeydown, FormField, GeometryGlyphDimension, GeometryScreenPosition, GlyphKey, GlyphWeight, ICbOpt, IClOpt, IGlOpt, IIdGOpt, IIdOpt, ILabel, ILyOpt } from "$lib";
 
-export type GlyphKeyCurrency = `dollar` | `eur`;
+export type IToastKind = `simple`;
 
-export type GlyphKey = |
-    `images-square` |
-    `bell` |
-    `columns` |
-    `bold` |
-    `article` |
-    `grid-four` |
-    `link-simple` |
-    `seal-check` |
-    `selection-foreground` |
-    `image-square` |
-    `image-broken` |
-    `funnel` |
-    `users-three` |
-    `note-blank` |
-    `user-circle-plus` |
-    `user-circle` |
-    `receipt` |
-    `invoice` |
-    `note` |
-    `arrow-left` |
-    `arrows-down-up` |
-    `basket` |
-    `arrow-right` |
-    `upload-simple` |
-    `printer` |
-    `download-simple` |
-    `list` |
-    `asterisk` |
-    `asterisk-simple` |
-    `subtitles-slash` |
-    `cardholder` |
-    `globe-x` |
-    `exclamation-mark` |
-    `network-x` |
-    `x-circle` |
-    `address-book-tabs` |
-    `paper-plane-tilt` |
-    `note-pencil` |
-    `share-fat` |
-    `folder` |
-    `trash` |
-    `plus-circle` |
-    `currency-${GlyphKeyCurrency}` |
-    `arrow-down` |
-    `caret-circle-down` |
-    `caret-circle-up` |
-    `shopping-bag-open` |
-    `coffee-bean` |
-    `compass` |
-    `map-pin-simple` |
-    `handbag-simple` |
-    `devices` |
-    `lock-key` |
-    `gear` |
-    `gear-fine` |
-    `bell-simple` |
-    `envelope` |
-    `house-line` |
-    `arrows-left-right` |
-    `list-plus` |
-    `squares-four` |
-    `list-plus` |
-    `app-window` |
-    `circle-notch` |
-    `subtract-square` |
-    `device-tablet-speaker` |
-    `weather-cloud` |
-    `warning` |
-    `circle-notch` |
-    `minus` |
-    `key` |
-    `arrow-u-up-left` |
-    `arrow-counter-clockwise` |
-    `circle` |
-    `check-circle` |
-    `circle-dashed` |
-    `dots-three` |
-    `cards-three` |
-    `lightning` |
-    `cards` |
-    `note-pencil` |
-    `tray` |
-    `calendar-dots` |
-    `notepad` |
-    `network` |
-    `calendar-blank` |
-    `chats-circle` |
-    `plant` |
-    `farm` |
-    `magnifying-glass` |
-    `chat-circle-dots` |
-    `dots-three-outline` |
-    `copy` |
-    `circles-four` |
-    `waveform` |
-    `film-strip` |
-    `arrow-up` |
-    `arrow-circle-up` |
-    `plus` |
-    `funnel-simple` |
-    `user` |
-    `camera` |
-    `check` |
-    `file` |
-    `share-network` |
-    `question` |
-    `minus-circle` |
-    `globe-simple` |
-    `globe` |
-    `warning-circle` |
-    `x` |
-    `info` |
-    `caret-${GeometryCardinalDirection}` |
-    `caret-up-down`;
+export type IToast = IClOpt &
+    ILabel & IGlOpt & ILyOpt & {
+        styles?: IToastKind[];
+        position?: GeometryScreenPosition;
+    };
 
-export type GlyphWeight = `light` | `regular` | `fill` | `bold`;  // `thin` `duotone`
-
-export type ElementCallbackValue = CallbackPromiseGeneric<{ value: string; pass: boolean; }>;
-export type ElementCallbackValueKeydown<T extends HTMLElement> = CallbackPromiseGeneric<{ key: string; key_s: boolean; el: T }>;
-export type ElementCallbackValueBlur<T extends HTMLElement> = CallbackPromiseGeneric<{ el: T }>;
-export type ElementCallbackValueFocus<T extends HTMLElement> = CallbackPromiseGeneric<{ el: T }>;
-export type ElementCallbackMount<T extends HTMLElement> = CallbackPromiseGeneric<{ el: T }>;
-
-
-export type IGlyph = ICbOpt & IIdOpt & {
-    layer?: ThemeLayer;
-    classes?: string;
+export type IGlyph = ICbOpt & IIdOpt & ILyOpt & IClOpt & {
     weight?: GlyphWeight;
     key: GlyphKey;
     dim?: GeometryGlyphDimension;
 };
 
-export type IGlyphCircle = {
-    classes_wrap: string;
-    glyph: IGlyph
-};
 
-export type ILoadingBlades = 8 | 12;
-
-export type ILoadingDimension = GeometryDimension | `glyph-send-button`;
-
-export type ILoading = {
-    classes?: string;
-    color?: 'white';
-    blades?: ILoadingBlades;
-    dim?: ILoadingDimension;
-};
-
-export type IDisabledOpt = {
-    disabled?: boolean;
-}
-
-export type ISelectOption<T extends string> = IDisabledOpt & {
-    value: T;
-    label: string;
-};
-
-export type ISelectElement = IIdOpt & IClOpt & ILyOptTs &
-    ICbGOpt<ISelectOption<string>> & {
-        sync?: boolean;
-        sync_init?: boolean;
-        options: { group?: string | true; entries: ISelectOption<string>[] }[];
-        show_arrows?: 'l' | 'r';
-    };
-
-export type IInputElement = IId & IClOpt & ILyOptTs & {
+export type IInputElement<T extends string> = IIdGOpt<T> & IClOpt & ILyOpt & {
     placeholder?: string;
     label?: string;
     hidden?: boolean;
     validate?: RegExp;
     sync?: boolean;
-    field?: IFormField;
+    field?: FormField;
     callback?: ElementCallbackValue,
     callback_keydown?: ElementCallbackValueKeydown<HTMLInputElement>,
     callback_blur?: ElementCallbackValueBlur<HTMLInputElement>;
     callback_focus?: ElementCallbackValueBlur<HTMLInputElement>;
-    on_mount?: ElementCallbackMount<HTMLInputElement>;
-};
-
-export type ITextAreaElement = IId & IClOpt & ILyOptTs & {
-    placeholder?: string;
-    label?: string;
-    hidden?: boolean;
-    validate?: RegExp;
-    sync?: true;
-    field?: IFormField;
-    callback?: ElementCallbackValue,
-    callback_keydown?: ElementCallbackValueKeydown<HTMLTextAreaElement>,
-    callback_blur?: ElementCallbackValueBlur<HTMLTextAreaElement>;
-    callback_focus?: ElementCallbackValueBlur<HTMLTextAreaElement>;
-    on_mount?: ElementCallbackMount<HTMLTextAreaElement>;
+    callback_mount?: ElementCallbackMount<HTMLInputElement>;
 };

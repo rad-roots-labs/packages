@@ -1,4 +1,4 @@
-import type { AppLayoutKey, GeometryGlyphDimension, ILoadingDimension, IToastKind } from "$lib";
+import type { AppLayoutKey, GeometryGlyphDimension, IToastKind, LoadingDimension } from "$lib";
 
 export const glyph_style_map: Map<GeometryGlyphDimension, { gl_1: number; dim_1?: number; }> = new Map([
     ["xs--", { gl_1: 12 }],
@@ -17,7 +17,7 @@ export const glyph_style_map: Map<GeometryGlyphDimension, { gl_1: number; dim_1?
     ["xl+", { gl_1: 40 }],
 ]);
 
-export const loading_style_map: Map<ILoadingDimension, { dim_1: number; gl_2: number }> = new Map([
+export const loading_style_map: Map<LoadingDimension, { dim_1: number; gl_2: number }> = new Map([
     ["glyph-send-button", { dim_1: 20, gl_2: 20 }],
     ["xs", { dim_1: 12, gl_2: 12 }],
     ["sm", { dim_1: 16, gl_2: 16 }],

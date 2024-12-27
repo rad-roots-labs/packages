@@ -1,7 +1,7 @@
 <script lang="ts">
-    import { type ILoading, loading_style_map } from "$lib";
+    import { type ILoadSymbol, loading_style_map } from "$lib";
 
-    export let basis: ILoading | undefined = undefined;
+    export let basis: ILoadSymbol | undefined = undefined;
     $: basis = basis;
 
     $: styles = basis?.dim
@@ -18,47 +18,47 @@
     >
         <div
             class={`${num_blades === 12 ? `spinner12-blade` : `spinner8-blade`}`}
-        />
+        ></div>
         <div
             class={`${num_blades === 12 ? `spinner12-blade` : `spinner8-blade`}`}
-        />
+        ></div>
         <div
             class={`${num_blades === 12 ? `spinner12-blade` : `spinner8-blade`}`}
-        />
+        ></div>
         <div
             class={`${num_blades === 12 ? `spinner12-blade` : `spinner8-blade`}`}
-        />
+        ></div>
         <div
             class={`${num_blades === 12 ? `spinner12-blade` : `spinner8-blade`}`}
-        />
+        ></div>
         <div
             class={`${num_blades === 12 ? `spinner12-blade` : `spinner8-blade`}`}
-        />
+        ></div>
         <div
             class={`${num_blades === 12 ? `spinner12-blade` : `spinner8-blade`}`}
-        />
+        ></div>
         <div
             class={`${num_blades === 12 ? `spinner12-blade` : `spinner8-blade`}`}
-        />
+        ></div>
         {#if num_blades === 12}
             <div
                 class={`${num_blades === 12 ? `spinner12-blade` : `spinner8-blade`}`}
-            />
+            ></div>
             <div
                 class={`${num_blades === 12 ? `spinner12-blade` : `spinner8-blade`}`}
-            />
+            ></div>
             <div
                 class={`${num_blades === 12 ? `spinner12-blade` : `spinner8-blade`}`}
-            />
+            ></div>
             <div
                 class={`${num_blades === 12 ? `spinner12-blade` : `spinner8-blade`}`}
-            />
+            ></div>
             <div
                 class={`${num_blades === 12 ? `spinner12-blade` : `spinner8-blade`}`}
-            />
+            ></div>
             <div
                 class={`${num_blades === 12 ? `spinner12-blade` : `spinner8-blade`}`}
-            />
+            ></div>
         {/if}
     </div>
 </div>

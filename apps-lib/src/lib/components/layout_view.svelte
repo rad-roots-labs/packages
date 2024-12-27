@@ -1,7 +1,5 @@
 <script lang="ts">
     import {
-        type AppLayoutKey,
-        type IClOpt,
         app_layout,
         fmt_cl,
         layout_view_cover,
@@ -10,6 +8,8 @@
         ph_blur,
         tabs_blur,
         tabs_visible,
+        type AppLayoutKey,
+        type IClOpt,
     } from "$lib";
     import { onDestroy, onMount } from "svelte";
 
@@ -19,8 +19,6 @@
     };
 
     export let basis: (IClOpt & { fade?: boolean }) | undefined = undefined;
-    $: basis = basis;
-
     let el: HTMLElement | null;
 
     onMount(async () => {
@@ -39,11 +37,6 @@
         }
     });
 
-    $: classes_layout = $nav_visible
-        ? `pt-h_nav_${$app_layout} ${styles[$app_layout]}`
-        : styles[$app_layout];
-    $: classes_tabs = $tabs_visible ? `pb-h_tabs_${$app_layout}` : ``;
-
     const scrollChange = (): void => {
         if (Math.max(el?.scrollTop || 0, 0) > 10) nav_blur.set(true);
         else nav_blur.set(false);
@@ -56,7 +49,14 @@
 
 <div
     bind:this={el}
-    class={`${fmt_cl(basis?.classes)} absolute top-0 left-0 flex flex-col h-[100vh] w-full justify-start items-center overflow-y-scroll scroll-hide ${$layout_view_cover ? `` : classes_layout} ${$layout_view_cover ? `` : classes_tabs} ${basis?.fade ? `fade-in` : ``}`}
+    class={`${fmt_cl(basis?.classes)} absolute top-0 left-0 flex flex-col h-[100vh] w-full justify-start items-center overflow-y-scroll scroll-hide ${
+        $layout_view_cover
+            ? ``
+            : $nav_visible
+              ? `pt-h_nav_${$app_layout} ${styles[$app_layout]}`
+              : `` //styles[$app_layout]
+    } ${$layout_view_cover ? `` : $tabs_visible ? `pb-h_tabs_${$app_layout}` : ``} `}
+    class:fade-in={basis?.fade}
 >
     <slot />
 </div>

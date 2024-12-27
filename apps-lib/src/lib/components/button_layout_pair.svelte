@@ -1,16 +1,15 @@
 <script lang="ts">
     import {
         app_layout,
+        ButtonLayout,
         Fill,
-        ls,
         type CallbackPromise,
         type IDisabledOpt,
     } from "$lib";
-    import ButtonLayout from "./button_layout.svelte";
 
     export let basis: {
         continue: IDisabledOpt & {
-            label?: string;
+            label: string;
             callback: CallbackPromise;
         };
         back?: IDisabledOpt & {
@@ -25,13 +24,13 @@
     <ButtonLayout
         basis={{
             disabled: basis.continue.disabled,
-            label: basis.continue.label || `${$ls(`common.continue`)}`,
+            label: basis.continue.label,
             callback: basis.continue.callback,
         }}
     />
     {#if basis.back}
         <div class={`flex flex-col justify-center items-center el-re`}>
-            {#if basis.back?.visible}
+            {#if basis.back.visible}
                 <button
                     class={`group flex flex-row h-12 w-${$app_layout} justify-center items-center fade-in`}
                     on:click|stopPropagation={async () => {
@@ -41,7 +40,7 @@
                     <p
                         class={`font-sans font-[600] tracking-wide text-layer-1-glyph-shade ${basis.back?.disabled ? `` : `group-active:text-layer-1-glyph/40`} el-re`}
                     >
-                        {basis.back?.label || `${$ls(`common.back`)}`}
+                        {basis.back.label}
                     </p>
                 </button>
             {:else}

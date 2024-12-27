@@ -3,10 +3,10 @@
         EntryWrap,
         Glyph,
         InputElement,
-        Loading,
+        LoadSymbol,
         parse_layer,
         type IEntryLine,
-        type ILoadingDimension,
+        type LoadingDimension,
     } from "$lib";
 
     export let basis: IEntryLine;
@@ -20,7 +20,7 @@
         typeof basis.wrap?.layer === `boolean`
             ? ``
             : `text-layer-${layer}-glyph`;
-    let loading_dim: ILoadingDimension = `sm`;
+    let loading_dim: LoadingDimension = `sm`;
     $: loading_dim = basis.wrap?.style === `guide` ? `md` : `sm`;
 </script>
 
@@ -30,7 +30,7 @@
         <div
             class={`z-5 absolute right-0 top-0 flex flex-row h-full pr-4 justify-end items-center fade-in el-re`}
         >
-            <Loading
+            <LoadSymbol
                 basis={{
                     dim: loading_dim,
                 }}

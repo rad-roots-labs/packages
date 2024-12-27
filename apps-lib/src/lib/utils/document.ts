@@ -39,3 +39,11 @@ export const els_id_pref_index = (id_pref: string, num_index: number, orientatio
     return undefined;
 };
 
+export const view_effect = <T extends string>(view: T): void => {
+    for (const el of document.querySelectorAll(`[data-view]`))
+        el.classList.toggle(
+            `hidden`,
+            el.getAttribute(`data-view`) !== view,
+        );
+};
+

@@ -1,5 +1,4 @@
-import { type AppConfigType, type AppLayoutKey, type IToast, type NavigationPreviousParam, } from "$lib";
-import type { ColorMode, ThemeKey } from "@radroots/theme";
+import { type NavigationPreviousParam } from "$lib";
 import { writable } from "svelte/store";
 import { queryParam, queryParameters } from "sveltekit-search-params";
 
@@ -17,29 +16,12 @@ export const qp_lng = queryParam<string>("lng");
 export let kv: Keyva;
 if (typeof window !== 'undefined') kv = new Keyva({ name: kv_name });
 
-export const app_layout = writable<AppLayoutKey>(`mobile_base`);
-export const app_cfg_type = writable<AppConfigType>(`personal`);
-export const app_init = writable<boolean>(false);
-export const app_tilt = writable<boolean>(false);
-export const app_loading = writable<boolean>(false);
-export const app_splash = writable<boolean>(true);
-export const app_win = writable<{ h: number, w: number }>({ h: 0, w: 0 });
-export const app_notify = writable<string>(``);
-export const app_toast = writable<IToast | false>(false);
-export const app_submit_route = writable<NavigationPreviousParam | undefined>(undefined);
-export const app_blur = writable<boolean>(false);
-export const app_db = writable<boolean>(false);
-export const app_geoc = writable<boolean>(false);
-export const app_thc = writable<ColorMode>(`light`);
-export const app_th = writable<ThemeKey>(`os`);
-export const app_nostr_key = writable<string>(``);
-export const app_nostr_profiles = writable<string[]>([]);
 
 export const app_pwa_polyfills = writable<boolean>(false);
 
 export const nav_visible = writable<boolean>(false);
 export const nav_blur = writable<boolean>(false);
-export const nav_prev = writable<NavigationPreviousParam[]>([]);
+export const nav_prev = writable<NavigationPreviousParam<string>[]>([]);
 
 export const layout_view_cover = writable<boolean>(false);
 
