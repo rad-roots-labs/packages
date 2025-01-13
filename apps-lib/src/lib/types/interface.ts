@@ -1,4 +1,4 @@
-import type { CallbackPromise, EntryStyle, GlyphKey, IGlyph, IInputElement, LayerGlyphBasisKind, LoadingBlades, LoadingDimension } from "$lib";
+import type { CallbackPromise, CallbackPromiseGeneric, EntryStyle, GlyphKey, IGlyph, IInput, LayerGlyphBasisKind, LoadingBlades, LoadingDimension } from "$lib";
 import type { ThemeLayer } from "@radroots/theme";
 import type { TransitionConfig } from "svelte/transition";
 
@@ -15,6 +15,12 @@ export type ICb = {
 };
 
 export type ICbOpt = Partial<ICb>;
+
+export type ICbG<T> = {
+    callback: CallbackPromiseGeneric<T> | never;
+};
+
+export type ICbGOpt<T> = Partial<ICbG<T>>;
 
 export type ICl = {
     classes: string | never;
@@ -34,6 +40,10 @@ export type IGl = {
 };
 
 export type IGlOpt = Partial<IGl>;
+
+export type IGlyphKey = {
+    glyph: GlyphKey
+};
 
 export type ILy = {
     layer: ThemeLayer | never;
@@ -55,6 +65,17 @@ export type ILabelSwap = {
     swap: ILableFieldsSwap;
 }
 
+export type ILabelTupFields = {
+    left?: ILableFields[];
+    right?: ILableFields[];
+};
+
+export type ILabelTup = {
+    label: ILabelTupFields;
+};
+
+export type LabelFieldKind = `link` | `on` | `shade`;
+
 export type ILableFields = & {
     classes_wrap?: string
     classes?: string;
@@ -71,6 +92,8 @@ export type ILableFields = & {
 export type ILabel = {
     label: ILableFields;
 };
+
+export type ILabelOpt = Partial<ILabel>;
 
 export type ILoadSymbol = IClOpt & {
     color?: 'white';
@@ -126,7 +149,7 @@ export type IEntryWrap = IClOpt & IIdOpt & ILyOpt & {
 
 export type IEntryLine = ILoadingOpt & {
     wrap?: IEntryWrap;
-    el: IInputElement<string>;
+    el: IInput<string>;
     notify_inline?: {
         glyph: GlyphKey | IGlyph;
     };

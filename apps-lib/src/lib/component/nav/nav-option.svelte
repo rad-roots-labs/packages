@@ -1,0 +1,82 @@
+<!-- svelte-ignore a11y-label-has-associated-control -->
+<script lang="ts">
+    import {
+        fmt_cl,
+        Glyph,
+        LoadSymbol,
+        parse_layer,
+        type INavBasisOption,
+    } from "$lib";
+
+    let el_swap: HTMLLabelElement | null = null;
+
+    export let basis: INavBasisOption;
+    $: basis = basis;
+    $: layer = parse_layer(1);
+    $: classes_disabled = basis.disabled ? `opacity-40` : ``;
+</script>
+
+{#if basis?.loading}
+    <div class={`flex flex-row pr-4 justify-center items-center`}>
+        <LoadSymbol />
+    </div>
+{:else}
+    <button
+        class={`${fmt_cl(basis?.classes)} group col-span-4 flex flex-row h-full justify-end items-center ${classes_disabled}`}
+        on:click={async () => {
+            if (!basis.disabled) await basis?.callback(el_swap);
+        }}
+    >
+        {#if `glyph` in basis && basis?.glyph}
+            <Glyph
+                basis={{
+                    classes: `group-active:opacity-70  ${basis?.glyph?.classes}`,
+                    ...basis?.glyph,
+                }}
+            ></Glyph>
+        {/if}
+        {#if `label` in basis && basis?.label}
+            <div
+                class={`flex flex-row justify-start items-center ${basis?.label && `glyph` in basis?.label && basis.label?.glyph ? `pr-2` : `pr-4`}`}
+            >
+                {#if `swap` in basis?.label}
+                    <label
+                        bind:this={el_swap}
+                        class={`swap${basis?.label?.swap?.toggle ? ` swap-active` : ``}`}
+                    >
+                        <div class="swap-on">
+                            <p
+                                class={`${fmt_cl(basis?.label?.swap?.on.classes || `text-nav_prev text-layer-${layer}-glyph-hl group-active:opacity-70`)} font-sans -translate-y-[1px] el-re`}
+                            >
+                                {basis?.label?.swap?.on.value}
+                            </p>
+                        </div>
+                        <div class="swap-off">
+                            <p
+                                class={`${fmt_cl(basis?.label?.swap?.off.classes || `text-nav_prev text-layer-${layer}-glyph-hl group-active:opacity-70`)} font-sans -translate-y-[1px] el-re`}
+                            >
+                                {basis?.label?.swap?.off.value}
+                            </p>
+                        </div>
+                    </label>
+                {:else if `value` in basis?.label}
+                    <p
+                        class={`${fmt_cl(basis?.label.classes)} font-sans text-nav_prev text-layer-1-glyph-hl group-active:opacity-70 el-re`}
+                    >
+                        {basis?.label.value}
+                    </p>
+                {/if}
+                {#if `glyph` in basis?.label}
+                    <Glyph
+                        basis={{
+                            key: basis?.label?.glyph?.key,
+                            classes: `text-layer-1-glyph-hl group-active:opacity-70 ${basis?.label?.glyph?.classes}`,
+                            weight: `bold`,
+                            dim: `md`,
+                        }}
+                    ></Glyph>
+                {/if}
+            </div>
+        {/if}
+    </button>
+{/if}

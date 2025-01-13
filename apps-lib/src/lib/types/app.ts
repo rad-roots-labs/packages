@@ -1,3 +1,20 @@
+//%types%
+export type NavigationRoute = string;
+//%types%
+
+export type INavigationRoutePreventRouteNav = {
+    prevent_route?: {
+        callback: CallbackPromise;
+    };
+}
+
+export type INavigationRoutePreventRoute = {
+    prevent_route: CallbackPromise;
+}
+export type INavigationRoute = {
+    route: NavigationRoute | [NavigationRoute, NavigationParamTuple[]];
+};
+
 export type GlyphKey = |
     `images-square` |
     `bell` |
@@ -118,6 +135,7 @@ export type GlyphKeyCurrency = `dollar` | `eur`;
 export type AppConfigType = `farmer` | `personal`
 export type AppLayoutKey = 'mobile_base' | 'mobile_y';
 
+export type CallbackPromiseFull<Ti, Tr> = (value: Ti) => Promise<Tr>;
 export type CallbackPromiseGeneric<T> = (value: T) => Promise<void>;
 export type CallbackPromiseReturn<T> = () => Promise<T>;
 export type CallbackPromise = () => Promise<void>;
@@ -161,3 +179,5 @@ export type NavigationRouteParamLng = `lng`;
 export type NavigationRouteParamKey = NavigationRouteParamNostrPublicKey | NavigationRouteParamId | NavigationRouteParamRecordKey | NavigationRouteParamLat | NavigationRouteParamLng;
 export type NavigationParamTuple = [NavigationRouteParamKey, string];
 export type NavigationPreviousParam<T extends string> = { route: T, label?: string; params?: NavigationParamTuple[] }
+
+export type CallbackRoute = CallbackPromise | INavigationRoute;
