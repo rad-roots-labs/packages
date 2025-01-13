@@ -1,41 +1,70 @@
-import type { ILocationGcsAdd, ILocationGcsAddResolve, ILocationGcsDelete, ILocationGcsDeleteResolve, ILocationGcsGet, ILocationGcsGetResolve, ILocationGcsUpdate, ILocationGcsUpdateResolve, ILogErrorAdd, ILogErrorAddResolve, ILogErrorDelete, ILogErrorDeleteResolve, ILogErrorGet, ILogErrorGetResolve, IMediaUploadAdd, IMediaUploadAddResolve, IMediaUploadDelete, IMediaUploadDeleteResolve, IMediaUploadGet, IMediaUploadGetResolve, IMediaUploadUpdate, IMediaUploadUpdateResolve, INostrProfileAdd, INostrProfileAddResolve, INostrProfileDelete, INostrProfileDeleteResolve, INostrProfileGet, INostrProfileGetResolve, INostrProfileRelayRelation, INostrProfileRelayRelationResolve, INostrProfileRelayRelationResolveGetAll, INostrProfileUpdate, INostrProfileUpdateResolve, INostrRelayAdd, INostrRelayAddResolve, INostrRelayDelete, INostrRelayDeleteResolve, INostrRelayGet, INostrRelayGetResolve, INostrRelayUpdate, INostrRelayUpdateResolve, ITradeProductAdd, ITradeProductAddResolve, ITradeProductDelete, ITradeProductDeleteResolve, ITradeProductGet, ITradeProductGetResolve, ITradeProductLocationRelation, ITradeProductLocationRelationResolve, ITradeProductLocationRelationResolveGetAll, ITradeProductMediaRelation, ITradeProductMediaRelationResolve, ITradeProductMediaRelationResolveGetAll, ITradeProductUpdate, ITradeProductUpdateResolve } from "@radroots/models";
+import { type ILocationGcsCreate, type ILocationGcsCreateResolve, type ILocationGcsDelete, type ILocationGcsDeleteResolve, type ILocationGcsRead, type ILocationGcsReadList, type ILocationGcsReadListResolve, type ILocationGcsReadResolve, type ILocationGcsUpdate, type ILocationGcsUpdateResolve, type ILogErrorCreate, type ILogErrorCreateResolve, type ILogErrorDelete, type ILogErrorDeleteResolve, type ILogErrorRead, type ILogErrorReadList, type ILogErrorReadListResolve, type ILogErrorReadResolve, type ILogErrorUpdate, type ILogErrorUpdateResolve, type IMediaImageCreate, type IMediaImageCreateResolve, type IMediaImageDelete, type IMediaImageDeleteResolve, type IMediaImageRead, type IMediaImageReadList, type IMediaImageReadListResolve, type IMediaImageReadResolve, type IMediaImageUpdate, type IMediaImageUpdateResolve, type INostrProfileCreate, type INostrProfileCreateResolve, type INostrProfileDelete, type INostrProfileDeleteResolve, type INostrProfileRead, type INostrProfileReadList, type INostrProfileReadListResolve, type INostrProfileReadResolve, type INostrProfileUpdate, type INostrProfileUpdateResolve, type INostrRelayCreate, type INostrRelayCreateResolve, type INostrRelayDelete, type INostrRelayDeleteResolve, type INostrRelayRead, type INostrRelayReadList, type INostrRelayReadListResolve, type INostrRelayReadResolve, type INostrRelayUpdate, type INostrRelayUpdateResolve, type ITradeProductCreate, type ITradeProductCreateResolve, type ITradeProductDelete, type ITradeProductDeleteResolve, type ITradeProductRead, type ITradeProductReadList, type ITradeProductReadListResolve, type ITradeProductReadResolve, type ITradeProductUpdate, type ITradeProductUpdateResolve } from "@radroots/models";
+import type { IClientDatabase } from "@radroots/utils";
 
-export type IClientDatabaseMessage =
+export type IClientTauriDatabaseMessage =
     | string
     | "*-fields"
     | "*-result";
 
-export type IClientDatabase = {
-    location_gcs_add(opts: ILocationGcsAdd): Promise<ILocationGcsAddResolve<IClientDatabaseMessage>>;
-    location_gcs_get(opts: ILocationGcsGet): Promise<ILocationGcsGetResolve<IClientDatabaseMessage>>;
-    location_gcs_delete(opts: ILocationGcsDelete): Promise<ILocationGcsDeleteResolve<IClientDatabaseMessage>>;
-    location_gcs_update(opts: ILocationGcsUpdate): Promise<ILocationGcsUpdateResolve<IClientDatabaseMessage>>;
-    trade_product_add(opts: ITradeProductAdd): Promise<ITradeProductAddResolve<IClientDatabaseMessage>>;
-    trade_product_get(opts: ITradeProductGet): Promise<ITradeProductGetResolve<IClientDatabaseMessage>>;
-    trade_product_delete(opts: ITradeProductDelete): Promise<ITradeProductDeleteResolve<IClientDatabaseMessage>>;
-    trade_product_update(opts: ITradeProductUpdate): Promise<ITradeProductUpdateResolve<IClientDatabaseMessage>>;
-    nostr_profile_add(opts: INostrProfileAdd): Promise<INostrProfileAddResolve<IClientDatabaseMessage>>;
-    nostr_profile_get(opts: INostrProfileGet): Promise<INostrProfileGetResolve<IClientDatabaseMessage>>;
-    nostr_profile_delete(opts: INostrProfileDelete): Promise<INostrProfileDeleteResolve<IClientDatabaseMessage>>;
-    nostr_profile_update(opts: INostrProfileUpdate): Promise<INostrProfileUpdateResolve<IClientDatabaseMessage>>;
-    nostr_relay_add(opts: INostrRelayAdd): Promise<INostrRelayAddResolve<IClientDatabaseMessage>>;
-    nostr_relay_get(opts: INostrRelayGet): Promise<INostrRelayGetResolve<IClientDatabaseMessage>>;
-    nostr_relay_delete(opts: INostrRelayDelete): Promise<INostrRelayDeleteResolve<IClientDatabaseMessage>>;
-    nostr_relay_update(opts: INostrRelayUpdate): Promise<INostrRelayUpdateResolve<IClientDatabaseMessage>>;
-    media_upload_add(opts: IMediaUploadAdd): Promise<IMediaUploadAddResolve<IClientDatabaseMessage>>;
-    media_upload_get(opts: IMediaUploadGet): Promise<IMediaUploadGetResolve<IClientDatabaseMessage>>;
-    media_upload_delete(opts: IMediaUploadDelete): Promise<IMediaUploadDeleteResolve<IClientDatabaseMessage>>;
-    media_upload_update(opts: IMediaUploadUpdate): Promise<IMediaUploadUpdateResolve<IClientDatabaseMessage>>;
-    log_error_add(opts: ILogErrorAdd): Promise<ILogErrorAddResolve<IClientDatabaseMessage>>;
-    log_error_get(opts: ILogErrorGet): Promise<ILogErrorGetResolve<IClientDatabaseMessage>>;
-    log_error_delete(opts: ILogErrorDelete): Promise<ILogErrorDeleteResolve<IClientDatabaseMessage>>;
-    nostr_profile_relay_set(opts: INostrProfileRelayRelation): Promise<INostrProfileRelayRelationResolve<IClientDatabaseMessage>>;
-    nostr_profile_relay_unset(opts: INostrProfileRelayRelation): Promise<INostrProfileRelayRelationResolve<IClientDatabaseMessage>>;
-    nostr_profile_relay_get_all(opts: INostrProfileRelayRelation): Promise<INostrProfileRelayRelationResolveGetAll<IClientDatabaseMessage>>;
-    trade_product_location_set(opts: ITradeProductLocationRelation): Promise<ITradeProductLocationRelationResolve<IClientDatabaseMessage>>;
-    trade_product_location_unset(opts: ITradeProductLocationRelation): Promise<ITradeProductLocationRelationResolve<IClientDatabaseMessage>>;
-    trade_product_location_get_all(opts: ITradeProductLocationRelation): Promise<ITradeProductLocationRelationResolveGetAll<IClientDatabaseMessage>>;
-    trade_product_media_set(opts: ITradeProductMediaRelation): Promise<ITradeProductMediaRelationResolve<IClientDatabaseMessage>>;
-    trade_product_media_unset(opts: ITradeProductMediaRelation): Promise<ITradeProductMediaRelationResolve<IClientDatabaseMessage>>;
-    trade_product_media_get_all(opts: ITradeProductMediaRelation): Promise<ITradeProductMediaRelationResolveGetAll<IClientDatabaseMessage>>;
-};
+export type IClientTauriDatabase = IClientDatabase<
+    ILocationGcsCreate,
+    ILocationGcsCreateResolve<IClientTauriDatabaseMessage>,
+    ILocationGcsRead,
+    ILocationGcsReadResolve<IClientTauriDatabaseMessage>,
+    ILocationGcsReadList,
+    ILocationGcsReadListResolve<IClientTauriDatabaseMessage>,
+    ILocationGcsDelete,
+    ILocationGcsDeleteResolve<IClientTauriDatabaseMessage>,
+    ILocationGcsUpdate,
+    ILocationGcsUpdateResolve<IClientTauriDatabaseMessage>,
+    ITradeProductCreate,
+    ITradeProductCreateResolve<IClientTauriDatabaseMessage>,
+    ITradeProductRead,
+    ITradeProductReadResolve<IClientTauriDatabaseMessage>,
+    ITradeProductReadList,
+    ITradeProductReadListResolve<IClientTauriDatabaseMessage>,
+    ITradeProductDelete,
+    ITradeProductDeleteResolve<IClientTauriDatabaseMessage>,
+    ITradeProductUpdate,
+    ITradeProductUpdateResolve<IClientTauriDatabaseMessage>,
+    INostrProfileCreate,
+    INostrProfileCreateResolve<IClientTauriDatabaseMessage>,
+    INostrProfileRead,
+    INostrProfileReadResolve<IClientTauriDatabaseMessage>,
+    INostrProfileReadList,
+    INostrProfileReadListResolve<IClientTauriDatabaseMessage>,
+    INostrProfileDelete,
+    INostrProfileDeleteResolve<IClientTauriDatabaseMessage>,
+    INostrProfileUpdate,
+    INostrProfileUpdateResolve<IClientTauriDatabaseMessage>,
+    INostrRelayCreate,
+    INostrRelayCreateResolve<IClientTauriDatabaseMessage>,
+    INostrRelayRead,
+    INostrRelayReadResolve<IClientTauriDatabaseMessage>,
+    INostrRelayReadList,
+    INostrRelayReadListResolve<IClientTauriDatabaseMessage>,
+    INostrRelayDelete,
+    INostrRelayDeleteResolve<IClientTauriDatabaseMessage>,
+    INostrRelayUpdate,
+    INostrRelayUpdateResolve<IClientTauriDatabaseMessage>,
+    IMediaImageCreate,
+    IMediaImageCreateResolve<IClientTauriDatabaseMessage>,
+    IMediaImageRead,
+    IMediaImageReadResolve<IClientTauriDatabaseMessage>,
+    IMediaImageReadList,
+    IMediaImageReadListResolve<IClientTauriDatabaseMessage>,
+    IMediaImageDelete,
+    IMediaImageDeleteResolve<IClientTauriDatabaseMessage>,
+    IMediaImageUpdate,
+    IMediaImageUpdateResolve<IClientTauriDatabaseMessage>,
+    ILogErrorCreate,
+    ILogErrorCreateResolve<IClientTauriDatabaseMessage>,
+    ILogErrorRead,
+    ILogErrorReadResolve<IClientTauriDatabaseMessage>,
+    ILogErrorReadList,
+    ILogErrorReadListResolve<IClientTauriDatabaseMessage>,
+    ILogErrorDelete,
+    ILogErrorDeleteResolve<IClientTauriDatabaseMessage>,
+    ILogErrorUpdate,
+    ILogErrorUpdateResolve<IClientTauriDatabaseMessage>
+>;

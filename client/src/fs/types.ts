@@ -4,9 +4,14 @@ export type IClientFsOpenResult = FileHandle;
 
 export type IClientFsFileInfo = FileInfo;
 
+export type IClientFsExistsResolve = boolean;
+export type IClientFsOpenResolve = IClientFsOpenResult;
+export type IClientFsReadBinResolve = Uint8Array;
+export type IClientFsInfoResolve = IClientFsFileInfo;
+
 export type IClientFs = {
-    exists(path: string): Promise<boolean>;
-    open(path: string): Promise<IClientFsOpenResult | undefined>;
-    read_bin(path: string): Promise<Uint8Array | undefined>;
-    info(path: string): Promise<IClientFsFileInfo | undefined>;
+    exists(path: string): Promise<IClientFsExistsResolve>;
+    open(path: string): Promise<IClientFsOpenResolve>;
+    read_bin(path: string): Promise<IClientFsReadBinResolve>;
+    info(path: string): Promise<IClientFsInfoResolve>;
 };

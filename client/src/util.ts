@@ -11,7 +11,4 @@ export function parse_platform(str: string): IClientPlatform {
     };
 };
 
-export function parse_location_coords(number: number): number {
-    return Math.round(number * 1e7) / 1e7;
-};
 

@@ -1,7 +1,6 @@
-import { err_msg, type ErrorMessage, type FieldRecord } from '@radroots/utils';
-import { type ClientOptions, fetch } from '@tauri-apps/plugin-http';
-import type { IClientDeviceMetadata } from '../device/types';
-import type { IClientHttp, IClientHttpImageResponse, IClientHttpOpts, IClientHttpResponse } from './types';
+import { err_msg, http_fetch_opts, http_parse_response, type ErrorMessage, type FieldRecord, type IHttpImageResponse, type IHttpOpts, type IHttpResponse } from '@radroots/utils';
+import { fetch, type ClientOptions } from '@tauri-apps/plugin-http';
+import type { IClientHttp } from './types';
 
 const parse_headers = (headers: Headers): FieldRecord => {
     const acc: FieldRecord = {};
@@ -29,63 +28,33 @@ export class TauriClientHttp implements IClientHttp {
     private _headers: FieldRecord;
 
     constructor() {
-        this._headers = {};
-    }
-
-    public async init(opts: IClientDeviceMetadata): Promise<void> {
         this._headers = {
-            "User-Agent": `radroots-app/0.0.0`,
-            "X-Client-Version": opts.version,
-            "X-Client-Platform": opts.platform,
-            "X-Client-Locale": opts.locale,
+            "Content-Type": 'application/json',
+            "User-Agent": `radroots/1.0.0`,
+            "X-Radroots-Version": `radroots/*`,
         };
     }
 
-    public async fetch(opts: IClientHttpOpts): Promise<IClientHttpResponse | ErrorMessage<string>> {
+    public async init(opts?: {
+        app_version?: string;
+        app_hash?: string;
+    }): Promise<void> {
+        if (opts?.app_version) this._headers["User-Agent"] = `radroots/${opts.app_version}`;
+        if (opts?.app_hash) this._headers["X-Radroots-Version"] = `radroots/${opts.app_hash}`;
+    }
+
+    public async fetch(opts: IHttpOpts): Promise<IHttpResponse | ErrorMessage<string>> {
         try {
-            const { url } = opts;
-            const headers: FieldRecord = {
-                ...this._headers,
-                ...opts.headers,
-            };
-            if (opts.authorization) headers['Authorization'] = `Bearer ${encodeURIComponent(opts.authorization)}`;
-            const options: RequestInit & ClientOptions = {
-                method: opts.method ? opts.method.toUpperCase() : `GET`,
-                headers,
-            }
-            if (opts.data) options.body = to_bodyinit(opts.data);
-            if (opts.data_bin) options.body = opts.data_bin;
-            if (opts.connect_timeout) options.connectTimeout = opts.connect_timeout;
+            const { url, options } = http_fetch_opts(opts);
             const response = await fetch(url, options);
-            let data: any = null;
-            try {
-                const res_json = await response.json();
-                data = typeof res_json === `string` ? JSON.parse(res_json) : res_json;
-            } catch { }
-            if (!data) {
-                try {
-                    const res_text = await response.text();
-                    data = res_text;
-                } catch { }
-            }
-            return {
-                status: response.status,
-                url: response.url,
-                data: response.ok ? data : null,
-                error: !response.ok && `error` in data ? typeof data.error === `string` ? {
-                    message: data.error
-                } : {
-                    ...data.error
-                } : undefined,
-                headers: parse_headers(response.headers)
-            };
+            return http_parse_response(response);
         } catch (e) {
             console.log(`e fetch`, e)
             return err_msg(String(e));
         };
     }
 
-    public async fetch_image(url: string): Promise<IClientHttpImageResponse | ErrorMessage<string>> {
+    public async fetch_image(url: string): Promise<IHttpImageResponse | ErrorMessage<string>> {
         try {
             const headers: FieldRecord = {
                 ...this._headers,

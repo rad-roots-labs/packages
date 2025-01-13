@@ -1,27 +1,25 @@
-import { err_msg, handle_error, type ErrorMessage } from '@radroots/utils';
+import { err_msg, handle_error, parse_geol_coords, type ErrorMessage, type IClientGeolocation, type IClientGeolocationPosition, type IGeolocationErrorMessage } from '@radroots/utils';
 import {
     checkPermissions,
     getCurrentPosition,
     requestPermissions,
-    watchPosition,
+    type PermissionStatus,
     type Position
 } from '@tauri-apps/plugin-geolocation';
-import { parse_location_coords } from '../utils';
-import type { IClientGeolocation, IClientGeolocationPermission, IClientGeolocationPosition, IClientGeolocationWatchCallback, IClientGeolocationWatchOpts, IGeolocationErrorMessage } from './types';
 
 export class TauriClientGeolocation implements IClientGeolocation {
-    private parse_geolocation_position({ coords: pos_coords }: Position): IClientGeolocationPosition {
+    private parse_geolocation_position({ coords: geol_p }: Position): IClientGeolocationPosition {
         const position: IClientGeolocationPosition = {
-            lat: parse_location_coords(pos_coords.latitude),
-            lng: parse_location_coords(pos_coords.longitude),
-            accuracy: pos_coords.accuracy ?? undefined,
-            altitude: pos_coords.altitude ?? undefined,
-            altitude_accuracy: pos_coords.altitudeAccuracy ?? undefined
+            lat: parse_geol_coords(geol_p.latitude),
+            lng: parse_geol_coords(geol_p.longitude),
+            accuracy: geol_p.accuracy ?? undefined,
+            altitude: geol_p.altitude ?? undefined,
+            altitude_accuracy: geol_p.altitudeAccuracy ?? undefined
         };
         return position;
     }
 
-    private async request_permissions(): Promise<IClientGeolocationPermission> {
+    private async request_permissions(): Promise<PermissionStatus> {
         return await requestPermissions(['location']);
     }
 
@@ -32,13 +30,12 @@ export class TauriClientGeolocation implements IClientGeolocation {
                 const permission = await this.request_permissions();
                 if (permission.location !== `granted`) return false
             };
-            return true
+            return true;
         } catch (e) {
             console.log(`e has_permissions`, e);
             return false;
         }
     }
-
 
     public async current(): Promise<IClientGeolocationPosition | ErrorMessage<IGeolocationErrorMessage>> {
         try {
@@ -46,26 +43,9 @@ export class TauriClientGeolocation implements IClientGeolocation {
             const position = await getCurrentPosition()
             return this.parse_geolocation_position(position);
         } catch (e) {
+            console.log(`e current`, e)
             const { err } = handle_error(e);
             if (err.includes(`The operation couldn’t be completed`)) return err_msg(`*-permissions`);
-            return err_msg(`*`);
-        };
-    }
-
-    public async watch(opts: IClientGeolocationWatchOpts = {
-        timeout: 10000,
-        max_age: 0
-    }, callback: IClientGeolocationWatchCallback): Promise<number | ErrorMessage<IGeolocationErrorMessage>> {
-        try {
-            if (!(await this.has_permissions())) return err_msg(`*-permissions`);
-            const position_w = await watchPosition(
-                { enableHighAccuracy: true, timeout: opts.timeout, maximumAge: opts.max_age },
-                async (pos) => pos ? await callback(this.parse_geolocation_position(pos)) : null
-            )
-            return position_w;
-        } catch (e) {
-            const { err } = handle_error(e);
-            if (err.includes(`The operation couldn’t be completed`)) err_msg(`*-permissions`);
             return err_msg(`*`);
         };
     }
