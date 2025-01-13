@@ -1,6 +1,6 @@
-import { err_msg, type ErrorMessage, type GeolocationCoordinatesPoint, type ResultObj, type ResultsList } from "@radroots/utils";
+import { err_msg, type GeolocationCoordinatesPoint } from "@radroots/utils";
 import type { Database } from "sql.js";
-import type { GeocoderErrorMessage, GeocoderReverseResult, IGeocoder, IGeocoderCountryCenter, IGeocoderCountryListResult, IGeocoderReverse } from "./types";
+import type { GeocoderReverseResult, IGeocoder, IGeocoderConnectResolve, IGeocoderCountryCenter, IGeocoderCountryCenterResolve, IGeocoderCountryListResolve, IGeocoderCountryListResult, IGeocoderCountryResolve, IGeocoderReverseOpts, IGeocoderReverseResolve } from "./types";
 import { parse_geocode_country_center_result, parse_geocode_country_list_result, parse_geocode_reverse_result } from "./utils";
 
 const KM_PER_DEGREE_LATITUDE = 111;
@@ -9,12 +9,12 @@ export class Geocoder implements IGeocoder {
     private _db: Database | null = null;
     private _database_name: string;
 
-    constructor(database_name: string) {
-        if (database_name.charAt(0) !== `/`) throw new Error(`Error: database name must be a valid path`);
-        this._database_name = database_name;
+    constructor(database_name?: string) {
+        if (database_name && database_name.charAt(0) !== `/`) throw new Error(`Error: database name must be a valid path`);
+        this._database_name = database_name || `/geonames/geonames.db`;
     }
 
-    public async connect(): Promise<true | ErrorMessage<GeocoderErrorMessage>> {
+    public async connect(): Promise<IGeocoderConnectResolve> {
         try {
             const init_sqljs = await import("sql.js");
             const sql = await init_sqljs.default();
@@ -28,15 +28,15 @@ export class Geocoder implements IGeocoder {
         };
     }
 
-    public async reverse(opts: IGeocoderReverse): Promise<ResultsList<GeocoderReverseResult> | ErrorMessage<GeocoderErrorMessage>> {
+    public async reverse(point: GeolocationCoordinatesPoint, opts?: IGeocoderReverseOpts): Promise<IGeocoderReverseResolve> {
         try {
             if (!this._db) return err_msg(`*-db`);
-            const limit = typeof opts.limit === `boolean` ? `` : opts.limit ? Math.round(opts.limit) : `1`;
-            const deg_offset = opts.degree_offset || 0.5;
+            const limit = typeof opts?.limit === `boolean` ? `` : opts?.limit ? Math.round(opts.limit) : `1`;
+            const deg_offset = opts?.degree_offset || 0.5;
             const query = `SELECT * FROM geonames WHERE id IN (SELECT feature_id FROM coordinates WHERE latitude BETWEEN $lat - ${deg_offset} AND $lat + ${deg_offset} AND longitude BETWEEN $lng - ${deg_offset} AND $lng + ${deg_offset} ORDER BY (($lat - latitude) * ($lat - latitude) + ($lng - longitude) * ($lng - longitude) * $scale) ASC${limit ? ` LIMIT ${limit}` : ``});`
             const stmt = this._db.prepare(query);
             if (!stmt) return err_msg(`*-statement`);
-            const { lat: $lat, lng: $lng } = opts.point;
+            const { lat: $lat, lng: $lng } = point;
             const latScale = KM_PER_DEGREE_LATITUDE;
             const lngScale = KM_PER_DEGREE_LATITUDE * Math.cos($lat * (Math.PI / 180));
             const $scale = (latScale + lngScale) / 2;
@@ -53,7 +53,7 @@ export class Geocoder implements IGeocoder {
         };
     }
 
-    public async country(opts: IGeocoderCountryCenter): Promise<ResultsList<GeocoderReverseResult> | ErrorMessage<GeocoderErrorMessage>> {
+    public async country(opts: IGeocoderCountryCenter): Promise<IGeocoderCountryResolve> {
         try {
             if (!this._db) return err_msg(`*-db`);
             const query = `SELECT * FROM geonames WHERE country_id = $id;`
@@ -73,7 +73,7 @@ export class Geocoder implements IGeocoder {
         };
     }
 
-    public async country_list(): Promise<ResultsList<IGeocoderCountryListResult> | ErrorMessage<GeocoderErrorMessage>> {
+    public async country_list(): Promise<IGeocoderCountryListResolve> {
         try {
             if (!this._db) return err_msg(`*-db`);
             const query = `SELECT country_id, country_name, AVG(latitude) AS latitude_c, AVG(longitude) AS longitude_c FROM geonames GROUP BY country_id;`
@@ -92,7 +92,7 @@ export class Geocoder implements IGeocoder {
     }
 
 
-    public async country_center(opts: IGeocoderCountryCenter): Promise<ResultObj<GeolocationCoordinatesPoint> | ErrorMessage<GeocoderErrorMessage>> {
+    public async country_center(opts: IGeocoderCountryCenter): Promise<IGeocoderCountryCenterResolve> {
         try {
             if (!this._db) return err_msg(`*-db`);
             const query = `SELECT AVG(latitude) AS latitude_c, AVG(longitude) AS longitude_c FROM geonames WHERE country_id = $id;`;

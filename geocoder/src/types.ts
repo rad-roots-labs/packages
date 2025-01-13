@@ -19,8 +19,7 @@ export type GeocoderReverseResult = {
 
 export type GeocoderDegreeOffset = 0.5 | 1.0 | 1.5 | 2.0 | 2.5 | 3
 
-export type IGeocoderReverse = {
-    point: GeolocationCoordinatesPoint;
+export type IGeocoderReverseOpts = {
     degree_offset?: GeocoderDegreeOffset;
     limit?: number | false;
 };
@@ -31,10 +30,16 @@ export type IGeocoderCountryCenter = {
 
 export type IGeocoderCountryListResult = GeolocationCoordinatesPoint & { country_id: string; country: string };
 
+export type IGeocoderConnectResolve = true | ErrorMessage<GeocoderErrorMessage>;
+export type IGeocoderReverseResolve = ResultsList<GeocoderReverseResult> | ErrorMessage<GeocoderErrorMessage>;
+export type IGeocoderCountryResolve = ResultsList<GeocoderReverseResult> | ErrorMessage<GeocoderErrorMessage>;
+export type IGeocoderCountryListResolve = ResultsList<IGeocoderCountryListResult> | ErrorMessage<GeocoderErrorMessage>;
+export type IGeocoderCountryCenterResolve = ResultObj<GeolocationCoordinatesPoint> | ErrorMessage<GeocoderErrorMessage>;
+
 export type IGeocoder = {
-    connect(): Promise<true | ErrorMessage<GeocoderErrorMessage>>;
-    reverse(opts: IGeocoderReverse): Promise<ResultsList<GeocoderReverseResult> | ErrorMessage<GeocoderErrorMessage>>;
-    country(opts: IGeocoderCountryCenter): Promise<ResultsList<GeocoderReverseResult> | ErrorMessage<GeocoderErrorMessage>>;
-    country_list(): Promise<ResultsList<IGeocoderCountryListResult> | ErrorMessage<GeocoderErrorMessage>>;
-    country_center(opts: IGeocoderCountryCenter): Promise<ResultObj<GeolocationCoordinatesPoint> | ErrorMessage<GeocoderErrorMessage>>
+    connect(): Promise<IGeocoderConnectResolve>;
+    reverse(point: GeolocationCoordinatesPoint, opts?: IGeocoderReverseOpts): Promise<IGeocoderReverseResolve>;
+    country(opts: IGeocoderCountryCenter): Promise<IGeocoderCountryResolve>;
+    country_list(): Promise<IGeocoderCountryListResolve>;
+    country_center(opts: IGeocoderCountryCenter): Promise<IGeocoderCountryCenterResolve>;
 }
