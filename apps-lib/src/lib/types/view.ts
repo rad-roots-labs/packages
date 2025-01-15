@@ -1,4 +1,5 @@
 import { type CallbackPromise, type CallbackPromiseFull, type CallbackPromiseReturn, type IBasisOpt } from "..";
+import type { ModelLocationGcs, ModelNostrProfile, ModelNostrRelay, ModelTradeProduct } from "./model";
 
 export type ViewBasis<T extends object> = {
     kv_init_prevent?: boolean;
@@ -13,36 +14,28 @@ export type ViewBasisLoadData<TView extends object, TLoadData extends object> = 
     lc_handle_back?: CallbackPromise;
 };
 
-export type IFarmLoadData<
-    TLocationGcs extends object,
-> = IBasisOpt<{
-    location_gcs: TLocationGcs[];
+export type IFarmLoadData = IBasisOpt<{
+    location_gcs: ModelLocationGcs[];
 }>;
 
-export type IFarmViewLoadData<
-    TLocationGcs extends object,
-> = IBasisOpt<{
-    location_gcs: TLocationGcs;
+export type IFarmViewLoadData = IBasisOpt<{
+    location_gcs: ModelLocationGcs;
 }>;
 
-export type ISearchLoadData<
-    TLocationGcs extends object,
-    TNostrProfile extends object,
-    TNostrRelay extends object,
-    TTradeProduct extends object,
-> = IBasisOpt<{
-    location_gcs: TLocationGcs[];
-    nostr_profile: TNostrProfile[];
-    nostr_relay: TNostrRelay[];
-    trade_product: TTradeProduct[];
+export type ISearchLoadData = IBasisOpt<{
+    location_gcs: ModelLocationGcs[];
+    nostr_profile: ModelNostrProfile[];
+    nostr_relay: ModelNostrRelay[];
+    trade_product: ModelTradeProduct[];
 }>;
 
-export type ISettingsNostrProfileLoadData<TNostrProfile extends object> = IBasisOpt<{
-    nostr_profile: TNostrProfile;
+export type ISettingsNostrProfileLoadData = IBasisOpt<{
+    nostr_profile: ModelNostrProfile;
 }>;
 
-export type ISettingsNostrProfileEditLoadData<TNostrProfile extends object, TNostrProfileFieldKey extends string> = IBasisOpt<{
-    nostr_profile: TNostrProfile;
-    field_key: TNostrProfileFieldKey;
+export type ISettingsNostrProfileEditLoadData = IBasisOpt<{
+    nostr_profile: ModelNostrProfile;
+    field_key: string;
     field_val?: string;
 }>;
+

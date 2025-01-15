@@ -1,4 +1,5 @@
-import { type CallbackPromiseGeneric, type ModelLocationGcs, type ModelNostrProfile, type ModelNostrRelay } from "$lib";
+import type { CallbackPromiseGeneric } from "./app";
+import type { ModelLocationGcs, ModelNostrProfile, ModelNostrRelay } from "./model";
 
 export type ISearchResultDisplayCallbacks = {
     lc_handle_result_location_gcs: CallbackPromiseGeneric<ModelLocationGcs>;

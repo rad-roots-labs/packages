@@ -1,7 +1,4 @@
-<script
-    lang="ts"
-    generics="TLocationGcs extends ModelLocationGcs, TNostrProfile extends ModelNostrProfile, TNostrRelay extends ModelNostrRelay, TTradeProduct extends ModelTradeProduct"
->
+<script lang="ts">
     import {
         cfg_app,
         debounce_input,
@@ -17,21 +14,12 @@
         SearchService,
         type ISearchLoadData,
         type ISearchResultDisplayCallbacks,
-        type ModelLocationGcs,
-        type ModelNostrProfile,
-        type ModelNostrRelay,
-        type ModelTradeProduct,
         type SearchServiceResult,
         type ViewBasisLoadData,
     } from "$lib";
     import { onDestroy, onMount } from "svelte";
 
-    type LoadData = ISearchLoadData<
-        TLocationGcs,
-        TNostrProfile,
-        TNostrRelay,
-        TTradeProduct
-    >;
+    type LoadData = ISearchLoadData;
 
     export let basis: ViewBasisLoadData<
         ISearchResultDisplayCallbacks & {},

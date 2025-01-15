@@ -1,4 +1,4 @@
-<script lang="ts" generics="TLocationGcs extends ModelLocationGcs">
+<script lang="ts">
     import {
         Fade,
         FloatTabs,
@@ -12,11 +12,10 @@
         PageToolbar,
         type CallbackPromise,
         type IFarmLoadData,
-        type ModelLocationGcs,
         type ViewBasisLoadData,
     } from "$lib";
     import { onDestroy, onMount } from "svelte";
-    type LoadData = IFarmLoadData<TLocationGcs>;
+    type LoadData = IFarmLoadData;
 
     export let basis: ViewBasisLoadData<
         {

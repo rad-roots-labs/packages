@@ -1,4 +1,4 @@
-<script lang="ts" generics="TLocationGcs extends ModelLocationGcs">
+<script lang="ts">
     import {
         app_notify,
         GlyphButtonSimple,
@@ -9,11 +9,10 @@
         PageToolbar,
         qp_id,
         type IFarmViewLoadData,
-        type ModelLocationGcs,
         type ViewBasisLoadData,
     } from "$lib";
     import { onDestroy, onMount } from "svelte";
-    type LoadData = IFarmViewLoadData<TLocationGcs>;
+    type LoadData = IFarmViewLoadData;
 
     export let basis: ViewBasisLoadData<{}, LoadData>;
     let load_data: LoadData = undefined;

@@ -1,7 +1,4 @@
-<script
-    lang="ts"
-    generics="TModelNostrProfile extends ModelNostrProfile, TModelNostrProfileFieldsKey extends ModelNostrProfileFieldsKey"
->
+<script lang="ts">
     import {
         app_notify,
         fmt_id,
@@ -15,16 +12,11 @@
         TextArea,
         type CallbackPromise,
         type ISettingsNostrProfileEditLoadData,
-        type ModelNostrProfile,
-        type ModelNostrProfileFieldsKey,
         type ViewBasisLoadData,
     } from "$lib";
     import { onDestroy, onMount } from "svelte";
 
-    type LoadData = ISettingsNostrProfileEditLoadData<
-        TModelNostrProfile,
-        TModelNostrProfileFieldsKey
-    >;
+    type LoadData = ISettingsNostrProfileEditLoadData;
 
     export let basis: ViewBasisLoadData<
         {

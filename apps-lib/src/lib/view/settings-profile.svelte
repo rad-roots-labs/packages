@@ -1,4 +1,4 @@
-<script lang="ts" generics="TModelNostrProfile extends ModelNostrProfile">
+<script lang="ts">
     import {
         ascii,
         FloatPageButton,
@@ -13,14 +13,13 @@
         type CallbackPromiseFull,
         type CallbackPromiseReturn,
         type ISettingsNostrProfileLoadData,
-        type ModelNostrProfile,
         type ViewBasisLoadData,
     } from "$lib";
     import { onDestroy, onMount } from "svelte";
 
     export let bv_photo_path_opt = ``;
 
-    type LoadData = ISettingsNostrProfileLoadData<TModelNostrProfile>;
+    type LoadData = ISettingsNostrProfileLoadData;
 
     export let basis: ViewBasisLoadData<
         {
