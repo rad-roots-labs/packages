@@ -14,12 +14,14 @@ export class Geocoder implements IGeocoder {
         this._database_name = database_name || `/geonames/geonames.db`;
     }
 
-    public async connect(): Promise<IGeocoderConnectResolve> {
+    public async connect(wasm_dir: `/assets`): Promise<IGeocoderConnectResolve> {
         try {
-            const init_sqljs = await import("sql.js");
-            const sql = await init_sqljs.default();
-            const database_resposne = await fetch(this._database_name);
-            const database_buffer = await database_resposne.arrayBuffer();
+            const init_sqljs = await import(`sql.js`);
+            const sql = await init_sqljs.default({
+                locateFile: wasm_file => `${wasm_dir}/${wasm_file}`
+            });
+            const database_res = await fetch(this._database_name);
+            const database_buffer = await database_res.arrayBuffer();
             this._db = new sql.Database(new Uint8Array(database_buffer));
             return true;
         } catch (e) {
