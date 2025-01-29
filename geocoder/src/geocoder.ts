@@ -14,7 +14,7 @@ export class Geocoder implements IGeocoder {
         this._database_name = database_name || `/geonames/geonames.db`;
     }
 
-    public async connect(wasm_dir: `/assets`): Promise<IGeocoderConnectResolve> {
+    public async connect(wasm_dir: string = `/assets`): Promise<IGeocoderConnectResolve> {
         try {
             const init_sqljs = await import(`sql.js`);
             const sql = await init_sqljs.default({
