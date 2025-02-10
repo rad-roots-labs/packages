@@ -1,51 +1,76 @@
 <script lang="ts">
     import {
-        cfg_app,
-        debounce_input,
-        FloatTabs,
         fmt_id,
         Glyph,
+        handle_err,
         Input,
         kv_init_page,
+        LayoutPage,
         LayoutView,
         lls,
+        NavigationTabs,
         PageToolbar,
         SearchResultDisplay,
+    } from "$root";
+    import {
+        cfg_app,
+        debounce_callback,
         SearchService,
-        type ISearchLoadData,
-        type ISearchResultDisplayCallbacks,
+        type CallbackPromise,
+        type CallbackPromiseGeneric,
+        type IViewBasis,
+        type IViewSearchData,
+        type ResolveGeolocationInfo,
+        type ResolveProfileInfo,
         type SearchServiceResult,
-        type ViewBasisLoadData,
-    } from "$lib";
+    } from "@radroots/util";
     import { onDestroy, onMount } from "svelte";
 
-    type LoadData = ISearchLoadData;
+    let {
+        basis,
+    }: {
+        basis: IViewBasis<{
+            data: IViewSearchData;
+            lc_handle_back: CallbackPromise;
+            lc_handle_search_geolocation: CallbackPromiseGeneric<ResolveGeolocationInfo>;
+            lc_handle_search_profile: CallbackPromiseGeneric<ResolveProfileInfo>;
+            lc_handle_search_nostr_relay: CallbackPromiseGeneric<{
+                id: string;
+            }>;
+        }>;
+    } = $props();
 
-    export let basis: ViewBasisLoadData<
-        ISearchResultDisplayCallbacks & {},
-        LoadData
-    >;
-    let load_data: LoadData = undefined;
+    $effect(() => {
+        console.log(JSON.stringify(basis.data, null, 4), `basis.data`);
+    });
 
-    let client_search: SearchService | undefined = undefined;
-    let search_val = ``;
-    let search_results: SearchServiceResult[] = [];
+    let search_service: SearchService | undefined = undefined;
+    let search_val = $state(``);
+    let search_results: SearchServiceResult[] = $state([]);
 
     onMount(async () => {
-        search_val = ``;
-        if (!basis.kv_init_prevent) await kv_init_page();
-        if (basis.lc_on_mount) await basis.lc_on_mount();
-        load_data = await basis.lc_load_data();
-        if (load_data) client_search = new SearchService(load_data);
+        try {
+            search_val = ``;
+            if (!basis.kv_init_prevent) await kv_init_page();
+            if (basis.lc_on_mount) await basis.lc_on_mount();
+            search_service = new SearchService(basis.data);
+        } catch (e) {
+            handle_err(e, `on_mount`);
+        }
     });
+
+    const handle_search_input = debounce_callback((val: string) => {
+        console.log(`val `, val);
+        if (search_service) search_results = search_service.search(val);
+    }, cfg_app.debounce.search);
 
     onDestroy(async () => {
-        if (basis.lc_on_destroy) await basis.lc_on_destroy();
+        try {
+            if (basis.lc_on_destroy) await basis.lc_on_destroy();
+        } catch (e) {
+            handle_err(e, `on_destroy`);
+        }
     });
-
-    const handle_search_input = debounce_input((val: string) => {
-        if (client_search) search_results = client_search.search(val);
-    }, cfg_app.debounce.search);
 </script>
 
 <LayoutView>
@@ -55,7 +80,7 @@
             callback: basis.lc_handle_back,
         }}
     />
-    <div class={`flex flex-col w-full px-4 gap-6 justify-center items-center`}>
+    <LayoutPage>
         <div
             class={`relative flex flex-row w-full justify-center items-center bg-layer-1-surface rounded-2xl`}
         >
@@ -63,10 +88,10 @@
                 basis={{
                     classes: `absolute left-4 text-layer-0-glyph-shade`,
                     dim: `sm`,
-                    weight: `bold`,
+
                     key: `magnifying-glass`,
                 }}
-            ></Glyph>
+            />
             <Input
                 bind:value={search_val}
                 basis={{
@@ -76,23 +101,23 @@
                     placeholder: `Enter search query`,
                     callback: async ({ value }) => handle_search_input(value),
                 }}
-            ></Input>
+            />
         </div>
         <div class={`flex flex-col w-full gap-4 justify-center items-center`}>
             {#each search_results as li (li.id)}
                 <SearchResultDisplay
                     basis={{
                         result: li,
-                        lc_handle_result_location_gcs:
-                            basis.lc_handle_result_location_gcs,
-                        lc_handle_result_nostr_profile:
-                            basis.lc_handle_result_nostr_profile,
-                        lc_handle_result_nostr_relay:
-                            basis.lc_handle_result_nostr_relay,
+                        lc_handle_search_geolocation:
+                            basis.lc_handle_search_geolocation,
+                        lc_handle_search_profile:
+                            basis.lc_handle_search_profile,
+                        lc_handle_search_nostr_relay:
+                            basis.lc_handle_search_nostr_relay,
                     }}
                 />
             {/each}
         </div>
-    </div>
+    </LayoutPage>
 </LayoutView>
-<FloatTabs />
+<NavigationTabs />

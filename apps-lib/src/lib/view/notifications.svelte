@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { FloatTabs, LayoutView, lls, PageToolbar } from "$lib";
+    import { LayoutView, lls, NavigationTabs, PageToolbar } from "$root";
 
     let notifications: any[] = [];
 </script>
@@ -28,4 +28,4 @@
         {/if}
     </div>
 </LayoutView>
-<FloatTabs />
+<NavigationTabs />

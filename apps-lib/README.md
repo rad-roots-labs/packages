@@ -1,1 +1,1 @@
-# svelte-lib
+# lib-app

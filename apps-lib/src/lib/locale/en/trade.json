@@ -10,6 +10,13 @@
                 "err_invalid": "Enter the price"
             }
         },
+        "default": {
+            "process": {
+                "natural": "Natural",
+                "dried": "Dried",
+                "roasted": "Roasted"
+            }
+        },
         "key": {
             "cacao": {
                 "name": "Cacao",

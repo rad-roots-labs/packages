@@ -1,26 +1,37 @@
 <script lang="ts">
     import {
-        FloatTabs,
+        ButtonSimple,
+        handle_err,
         kv_init_page,
+        LayoutPage,
         LayoutView,
         lls,
+        NavigationTabs,
         PageToolbar,
+    } from "$root";
+    import {
         type CallbackPromise,
-        type ViewBasis,
-    } from "$lib";
-    import { onDestroy, onMount } from "svelte";
+        type IViewBasis,
+        type ResolveAccountInfo,
+    } from "@radroots/util";
+    import { onMount } from "svelte";
 
-    export let basis: ViewBasis<{
-        lc_handle_farm: CallbackPromise;
-    }>;
+    let {
+        basis,
+    }: {
+        basis: IViewBasis<{
+            data?: ResolveAccountInfo;
+            lc_handle_farms: CallbackPromise;
+            lc_handle_products: CallbackPromise;
+        }>;
+    } = $props();
 
     onMount(async () => {
-        if (!basis.kv_init_prevent) await kv_init_page();
-        if (basis.lc_on_mount) await basis.lc_on_mount();
-    });
-
-    onDestroy(async () => {
-        if (basis.lc_on_destroy) await basis.lc_on_destroy();
+        try {
+            if (!basis.kv_init_prevent) await kv_init_page();
+        } catch (e) {
+            handle_err(e, `on_mount`);
+        }
     });
 </script>
 
@@ -32,19 +43,25 @@
             },
         }}
     />
-    <div class={`flex flex-col w-full px-4 gap-4 justify-center items-center`}>
-        <div class={`flex flex-col w-full gap-5 justify-center items-center`}>
-            <button
-                class={`group flex flex-row h-[3.5rem] w-full justify-center items-center rounded-touch bg-layer-1-surface layer-1-active-surface layer-1-active-ring`}
-                on:click={basis.lc_handle_farm}
-            >
-                <p
-                    class={`font-sans font-[700] text-xl text-layer-0-glyph capitalize tracking-wider opacity-active`}
-                >
-                    {`${$lls(`common.farm_land`)}`}
-                </p>
-            </button>
-        </div>
-    </div>
+    <LayoutPage>
+        <ButtonSimple
+            basis={{
+                label: `${$lls(`common.farms`)}`,
+                callback: async () => {
+                    await basis.lc_handle_farms();
+                },
+            }}
+        />
+        {#if basis.data?.farms?.length}
+            <ButtonSimple
+                basis={{
+                    label: `${$lls(`common.products`)}`,
+                    callback: async () => {
+                        await basis.lc_handle_products();
+                    },
+                }}
+            />
+        {/if}
+    </LayoutPage>
 </LayoutView>
-<FloatTabs />
+<NavigationTabs />

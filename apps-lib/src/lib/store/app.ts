@@ -1,8 +1,8 @@
-import type { AppConfigType, AppLayoutKey, IToast } from "$lib";
 import type { ColorMode, ThemeKey } from "@radroots/theme";
+import type { AppConfigType, AppLayoutKey, IToast } from "@radroots/util";
 import { writable } from "svelte/store";
 
-export const app_layout = writable<AppLayoutKey>(`mobile_base`);
+export const app_lo = writable<AppLayoutKey>();
 export const app_cfg_type = writable<AppConfigType>(`personal`);
 export const app_init = writable<boolean>(false);
 export const app_tilt = writable<boolean>(false);
@@ -15,6 +15,8 @@ export const app_blur = writable<boolean>(false);
 export const app_db = writable<boolean>(false);
 export const app_geoc = writable<boolean>(false);
 export const app_thc = writable<ColorMode>(`light`);
-export const app_th = writable<ThemeKey>(`os`);
+export const app_th = writable<ThemeKey>();
 export const key_nostr = writable<string>(``);
 export const app_nostr_profiles = writable<string[]>([]);
+
+export const search_results = writable<any[]>([]);

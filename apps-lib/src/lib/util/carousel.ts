@@ -3,9 +3,10 @@ import {
     carousel_index,
     carousel_index_max,
     carousel_num,
-    exe_iter,
     get_store
-} from "$lib";
+} from "$root";
+import { exe_iter } from "@radroots/util";
+
 const CAROUSEL_DELAY_MS = 150;
 
 const get_slide_container = <T extends string>(

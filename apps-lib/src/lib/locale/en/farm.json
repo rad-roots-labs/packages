@@ -1,0 +1,15 @@
+{
+    "product": {
+        "validation": {
+            "key": {
+                "required": "Enter the product"
+            },
+            "process": {
+                "required": "Enter the product process"
+            },
+            "summary": {
+                "required": "Enter the product description"
+            }
+        }
+    }
+}

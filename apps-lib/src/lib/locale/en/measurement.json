@@ -1,11 +1,17 @@
 {
     "area": {
         "ac": "Acre",
+        "ac_pl": "Acres",
         "ac_ab": "Ac.",
         "ha": "Hectare",
+        "ha_pl": "Hectares",
         "ha_ab": "Ha.",
         "m2": "Square metre",
-        "m2_ab": "Sq. M."
+        "m2_pl": "Square metres",
+        "m2_ab": "Sq. M.",
+        "ft2": "Square foot",
+        "ft2_pl": "Square feet",
+        "ft2_ab": "Sq. Ft."
     },
     "length": {
         "ft": "Foot",

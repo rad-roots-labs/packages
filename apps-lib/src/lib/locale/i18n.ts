@@ -19,7 +19,7 @@ const config: Config<LanguageConfig> = {
     translations: libtranslations,
     parser: parser(),
     loaders: [
-        ...Object.keys(libtranslations).map((locale) => [`common`, `icu`, `measurement`, `model`, `trade`].map(key => ({
+        ...Object.keys(libtranslations).map((locale) => [`common`, `farm`, `icu`, `measurement`, `model`, `trade`].map(key => ({
             locale,
             key,
             loader: async () => (await import(`./${locale}/${key}.json`)).default

@@ -1,0 +1,249 @@
+<script lang="ts">
+    import { lls } from "$lib/locale/i18n";
+    import {
+        FloatPageButton,
+        Glyph,
+        handle_err,
+        ImagePath,
+        ImageUploadAddPhoto,
+        kv_init_page,
+        NavigationTabs,
+    } from "$root";
+    import {
+        ascii,
+        type CallbackPromise,
+        type CallbackPromiseFull,
+        type CallbackPromiseGeneric,
+        type CallbackPromiseReturn,
+        type IViewBasis,
+        type LcPhotoAddCallback,
+        type ResolveProfileInfo,
+    } from "@radroots/util";
+    import { onMount } from "svelte";
+
+    let {
+        basis,
+        photo_path_opt = $bindable(``),
+        loading_photo_upload = $bindable(false),
+    }: {
+        basis: IViewBasis<{
+            data?: ResolveProfileInfo;
+            lc_handle_back: CallbackPromiseGeneric<string>;
+            lc_handle_photo_add: LcPhotoAddCallback;
+            lc_handle_photo_options: CallbackPromise;
+            lc_fs_read_bin: CallbackPromiseFull<string, Uint8Array | undefined>;
+            lc_handle_edit_profile_name: CallbackPromise;
+            lc_handle_edit_profile_name_confirm: CallbackPromiseReturn<boolean>;
+            lc_handle_edit_profile_display_name: CallbackPromise;
+            lc_handle_edit_profile_about: CallbackPromise;
+        }>;
+        photo_path_opt: string;
+        loading_photo_upload: boolean;
+    } = $props();
+
+    type ViewDisplay = `photos` | `following` | `followers`;
+    let view_display: ViewDisplay = $state(`photos`);
+
+    onMount(async () => {
+        try {
+            if (!basis.kv_init_prevent) await kv_init_page();
+            if (basis.lc_on_mount) await basis.lc_on_mount();
+        } catch (e) {
+            handle_err(e, `on_mount`);
+        }
+    });
+
+    const profile_photo = $derived(
+        basis.data?.profile_photos?.find((i) => i.primary),
+    );
+
+    const photo_overlay_visible = $derived(!!(profile_photo || photo_path_opt));
+
+    const classes_photo_overlay_glyph = $derived(
+        photo_overlay_visible ? `text-white` : `text-layer-0-glyph`,
+    );
+
+    const classes_photo_overlay_glyph_opt = $derived(
+        photo_overlay_visible ? `text-gray-300` : `text-layer-0-glyph`,
+    );
+
+    const classes_photo_overlay_glyph_opt_selected = $derived(
+        photo_overlay_visible ? `text-white` : `text-layer-1-glyph_d`,
+    );
+</script>
+
+<div
+    class={`relative flex flex-col min-h-[525px] h-[525px] w-full justify-center items-center bg-layer-2-surface fade-in`}
+>
+    <FloatPageButton
+        basis={{
+            posx: `left`,
+            glyph: `arrow-left`,
+            loading: loading_photo_upload,
+            callback: async () => {
+                if (basis.data) await basis.lc_handle_back(basis.data.id);
+            },
+        }}
+    />
+    <FloatPageButton
+        basis={{
+            posx: `right`,
+            glyph: `images-square`,
+            loading: loading_photo_upload,
+            callback: basis.lc_handle_photo_options,
+        }}
+    />
+    {#if profile_photo}
+        <ImagePath
+            basis={{
+                path: profile_photo.media_image.url,
+            }}
+        />
+    {:else if photo_path_opt}
+        <ImagePath basis={{ path: photo_path_opt }} />
+    {:else}
+        <div class={`flex flex-row justify-start items-center -translate-y-8`}>
+            <ImageUploadAddPhoto
+                bind:photo_path={photo_path_opt}
+                basis={{
+                    lc_handle_photo_add: basis.lc_handle_photo_add,
+                }}
+            />
+        </div>
+    {/if}
+    <div
+        class={`absolute bottom-0 left-0 flex flex-col h-[calc(100%-100%/1.618)] w-full px-6 gap-2 justify-end items-center`}
+    >
+        <div
+            class={`flex flex-col w-full gap-[2px] justify-center items-center`}
+        >
+            <div class={`flex flex-row h-10 w-full justify-start items-center`}>
+                <button
+                    class={`group flex flex-row justify-center items-center`}
+                    onclick={basis.lc_handle_edit_profile_display_name}
+                >
+                    <p
+                        class={`font-sansd font-[600] text-[2rem] ${classes_photo_overlay_glyph} ${basis.data?.name ? `` : `capitalize opacity-active`} el-re`}
+                    >
+                        {basis.data?.name
+                            ? basis.data.name
+                            : `+ ${`${$lls(`icu.add_*`, { value: `${$lls(`common.profile_name`)}` })}`}`}
+                    </p>
+                </button>
+            </div>
+            <div
+                class={`flex flex-row w-full gap-[6px] justify-start items-center`}
+            >
+                <button
+                    class={`group flex flex-row justify-center items-center`}
+                    onclick={async () => {
+                        if (basis.data?.name) {
+                            const confirm =
+                                basis.lc_handle_edit_profile_name_confirm();
+                            if (!confirm) return;
+                        }
+                        await basis.lc_handle_edit_profile_name();
+                    }}
+                >
+                    <p
+                        class={`font-sansd font-[600] text-[1.1rem] ${classes_photo_overlay_glyph} ${basis.data?.name ? `` : `capitalize opacity-active`} el-re`}
+                    >
+                        {basis.data?.name
+                            ? `@${basis.data.name}`
+                            : `+ ${`${$lls(`icu.add_*`, { value: `${$lls(`common.username`)}` })}`}`}
+                    </p>
+                </button>
+                <p
+                    class={`font-sans font-[400] ${classes_photo_overlay_glyph}`}
+                >
+                    {ascii.bullet}
+                </p>
+                <button
+                    class={`flex flex-row justify-center items-center`}
+                    onclick={async () => {
+                        alert(`@todo!`);
+                    }}
+                >
+                    <Glyph
+                        basis={{
+                            classes: `${classes_photo_overlay_glyph}`,
+                            dim: `xs`,
+
+                            key: `link-simple`,
+                        }}
+                    />
+                </button>
+            </div>
+            <div class={`flex flex-row w-full justify-start items-center`}>
+                <button
+                    class={`group flex flex-row justify-center items-center`}
+                    onclick={basis.lc_handle_edit_profile_about}
+                >
+                    <p
+                        class={`font-sansd font-[400] text-[1.1rem] ${classes_photo_overlay_glyph} ${basis.data?.about ? `` : `capitalize opacity-active`}`}
+                    >
+                        {basis.data?.about
+                            ? `@${basis.data.about}`
+                            : `+ ${`${$lls(`icu.add_*`, { value: `${$lls(`common.bio`)}` })}`}`}
+                    </p>
+                </button>
+            </div>
+        </div>
+        <div
+            class={`flex flex-row w-full pt-2 pb-6 gap-2 justify-start items-center`}
+        >
+            <button
+                class={`flex flex-row justify-center items-center`}
+                onclick={async () => {
+                    view_display = `photos`;
+                }}
+            >
+                <p
+                    class={`font-sans text-[1.1rem] font-[600] capitalize ${view_display === `photos` ? classes_photo_overlay_glyph_opt_selected : classes_photo_overlay_glyph_opt} el-re`}
+                >
+                    {`photos`}
+                </p>
+            </button>
+            <button
+                class={`flex flex-row justify-center items-center`}
+                onclick={async () => {
+                    view_display = `following`;
+                }}
+            >
+                <p
+                    class={`font-sans text-[1.1rem] font-[600] capitalize ${view_display === `following` ? classes_photo_overlay_glyph_opt_selected : classes_photo_overlay_glyph_opt} el-re`}
+                >
+                    {`following`}
+                </p>
+            </button>
+            <button
+                class={`flex flex-row justify-center items-center`}
+                onclick={async () => {
+                    view_display = `followers`;
+                }}
+            >
+                <p
+                    class={`font-sans text-[1.1rem] font-[600] capitalize ${view_display === `followers` ? classes_photo_overlay_glyph_opt_selected : classes_photo_overlay_glyph_opt} el-re`}
+                >
+                    {`followers`}
+                </p>
+            </button>
+        </div>
+    </div>
+</div>
+<div class={`flex flex-col w-full min-h-[500px] justify-start items-center`}>
+    {#if view_display === `photos`}
+        <p class={`font-sans font-[400] text-layer-0-glyph`}>
+            {view_display}
+        </p>
+    {:else if view_display === `following`}
+        <p class={`font-sans font-[400] text-layer-0-glyph`}>
+            {view_display}
+        </p>
+    {:else if view_display === `followers`}
+        <p class={`font-sans font-[400] text-layer-0-glyph`}>
+            {view_display}
+        </p>
+    {/if}
+</div>
+<NavigationTabs />

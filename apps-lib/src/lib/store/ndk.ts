@@ -15,10 +15,10 @@ if (!ndk_client_name) throw new Error('Error: VITE_PUBLIC_NDK_CLIENT_NAME is req
 let cacheAdapter: NDKCacheAdapter | undefined;
 if (typeof window !== `undefined`) cacheAdapter = new NDKCacheAdapterDexie({ dbName: ndk_cache_name });
 
-const _ndk = new NDKSvelte({
+const ndk_svelte = new NDKSvelte({
   cacheAdapter,
   clientName: ndk_client_name,
 });
 
-export const ndk = writable<NDKSvelte>(_ndk);
+export const ndk = writable<NDKSvelte>(ndk_svelte);
 export const ndk_user = writable<NDKUser>();
