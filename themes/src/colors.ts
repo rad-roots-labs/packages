@@ -36,6 +36,8 @@ export const theme_colors = {
 	"layer-2-glyph-hl": "hsl(var(--layer-2-glyph-hl) / <alpha-value>)",
 	"layer-2-glyph-hl_a": "hsl(var(--layer-2-glyph-hl_a) / <alpha-value>)",
 	"layer-2-glyph-shade": "hsl(var(--layer-2-glyph-shade) / <alpha-value>)",
+	"radroots-accent-focus": "hsl(var(--radroots-accent-focus) / <alpha-value>)",
+
 };
 
 export type ThemeLayer0 = {

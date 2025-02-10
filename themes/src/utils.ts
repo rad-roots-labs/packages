@@ -5,7 +5,7 @@ export const hsl_lighten = (c: HslTuple, amt: number = 25): string => hsl([c[0],
 export const hsl_darken = (c: HslTuple, amt: number = 25): string => hsl([c[0], c[1], c[2] - amt]);
 export const hsl_css = (c: HslTuple): string => `hsl(${hsl(c)})`;
 export const write_daisy = (obj_c: ThemeDaisy): Record<string, string> => Object.fromEntries(
-    Object.entries(obj_c).map(([key, val]) => [key, hsl_css(val)])
+    Object.entries(obj_c).map(([key, val]) => [key, typeof val === `string` ? val : hsl_css(val)])
 );
 
 export const parse_theme_key = (key?: string): ThemeKey => {
@@ -29,6 +29,7 @@ export const parse_color_mode = (color_mode?: string): ColorMode => {
 };
 
 export const write_layers = ({ layer_0: { surface: l0_s, glyphs: l0_g }, layer_1: { surface: l1_s, glyphs: l1_g }, layer_2: { surface: l2_s, glyphs: l2_g }}: ThemeLayers): Record<string, string> => ({
+	"--radroots-accent-focus": hsl([331, 68, 48]),
 	"--layer-0-surface": hsl(l0_s._),
 	"--layer-0-surface_a": hsl(l0_s._a),
 	"--layer-0-surface_w": hsl(l0_s._w),
