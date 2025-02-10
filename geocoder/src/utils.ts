@@ -1,4 +1,4 @@
-import type { GeolocationCoordinatesPoint } from "@radroots/utils";
+import type { GeolocationCoordinatesPoint } from "@radroots/util";
 import type { GeocoderReverseResult, IGeocoderCountryListResult } from "./types";
 
 export const parse_geocode_reverse_result = (obj: any): GeocoderReverseResult | undefined => {

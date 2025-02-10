@@ -1,21 +1,26 @@
 {
     "compilerOptions": {
         "strict": true,
+        "target": "es2021",
         "lib": [
             "es2021",
-            "WebWorker",
+            "WebWorker"
         ],
-        "target": "es2021",
-        "module": "CommonJS",
+        "module": "ESNext",
+        "moduleResolution": "node",
+        "declaration": true,
+        "declarationMap": true,
         "outDir": "./dist",
-        "rootDir": "./src",
-        "noEmit": true,
+        "esModuleInterop": true,
         "skipLibCheck": true,
+        "baseUrl": ".",
+        "rootDir": "./src",
     },
     "include": [
         "src"
     ],
     "exclude": [
-        "node_modules"
+        "node_modules",
+        "dist"
     ],
 }

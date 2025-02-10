@@ -1,4 +1,4 @@
-import type { ErrorMessage, GeolocationCoordinatesPoint, ResultObj, ResultsList } from "@radroots/utils";
+import type { ErrorMessage, GeolocationCoordinatesPoint, ResultObj, ResultsList } from "@radroots/util";
 
 export type GeocoderErrorMessage =
     | `*-result`
