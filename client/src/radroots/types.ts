@@ -1,4 +1,4 @@
-import { type ErrorMessage, type FilePath, type ResultObj, type ResultPass } from '@radroots/utils';
+import { type ErrorMessage, type FilePath, type ResultObj, type ResultPass } from '@radroots/util';
 
 export type IClientRadrootsFetchProfileRequestMessage =
     | string

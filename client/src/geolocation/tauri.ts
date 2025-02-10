@@ -1,4 +1,4 @@
-import { err_msg, handle_error, parse_geol_coords, type ErrorMessage, type IClientGeolocation, type IClientGeolocationPosition, type IGeolocationErrorMessage } from '@radroots/utils';
+import { err_msg, handle_error, parse_geol_coords, type ErrorMessage, type IClientGeolocation, type IClientGeolocationPosition, type IGeolocationErrorMessage } from '@radroots/util';
 import {
     checkPermissions,
     getCurrentPosition,
@@ -39,13 +39,13 @@ export class TauriClientGeolocation implements IClientGeolocation {
 
     public async current(): Promise<IClientGeolocationPosition | ErrorMessage<IGeolocationErrorMessage>> {
         try {
-            if (!(await this.has_permissions())) return err_msg(`*-permissions`);
+            if (!(await this.has_permissions())) return err_msg(`error.client.geolocation.permission_denied`);
             const position = await getCurrentPosition()
             return this.parse_geolocation_position(position);
         } catch (e) {
             console.log(`e current`, e)
             const { err } = handle_error(e);
-            if (err.includes(`The operation couldn’t be completed`)) return err_msg(`*-permissions`);
+            if (err.includes(`The operation couldn’t be completed`)) return err_msg(`error.client.geolocation.location_unavailable`);
             return err_msg(`*`);
         };
     }

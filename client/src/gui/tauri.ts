@@ -1,5 +1,5 @@
 
-import { type IClientGui, type IClientGuiDialogConfirmOpts, type IClientGuiDialogKind, type IClientGuiDialogResolve, type IClientGuiNotifyPermission, type IClientGuiNotifySendOptions } from '@radroots/utils';
+import { type IClientGui, type IClientGuiDialogConfirmOpts, type IClientGuiDialogKind, type IClientGuiDialogResolve, type IClientGuiNotifyPermission, type IClientGuiNotifySendOptions } from '@radroots/util';
 import { confirm, type ConfirmDialogOptions, message, open, type OpenDialogOptions } from '@tauri-apps/plugin-dialog';
 import {
     isPermissionGranted as isPermissionGrantedNotification,

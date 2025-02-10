@@ -1,5 +1,5 @@
 
-import { err_msg, type IHttpResponse, is_err_response, is_error_response, lib_nostr_event_sign_attest } from '@radroots/utils';
+import { err_msg, type IHttpResponse, is_err_response, is_error_response, lib_nostr_event_sign_attest } from '@radroots/util';
 import { lib_http } from '../lib';
 import type { IClientRadroots, IClientRadrootsFetchMediaImageUpload, IClientRadrootsFetchMediaImageUploadResolve, IClientRadrootsFetchProfileActivate, IClientRadrootsFetchProfileActivateResolve, IClientRadrootsFetchProfileCreate, IClientRadrootsFetchProfileCreateResolve, IClientRadrootsFetchProfileRequest, IClientRadrootsFetchProfileRequestResolve } from './types';
 

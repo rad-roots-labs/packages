@@ -1,4 +1,4 @@
-import type { ErrorMessage, ResultPass, ResultPublicKey, ResultSecretKey, ResultsList } from "@radroots/utils";
+import type { ErrorMessage, ResultPass, ResultPublicKey, ResultSecretKey, ResultsList } from "@radroots/util";
 
 export type ICoreDeviceMetadata = {
     os_arch: string;

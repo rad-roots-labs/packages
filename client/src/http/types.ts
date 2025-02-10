@@ -1,4 +1,4 @@
-import type { ErrorMessage, IHttpImageResponse, IHttpOpts, IHttpResponse } from "@radroots/utils";
+import type { ErrorMessage, IHttpImageResponse, IHttpOpts, IHttpResponse } from "@radroots/util";
 
 export type IClientHttp = {
     fetch(opts: IHttpOpts): Promise<IHttpResponse | ErrorMessage<string>>;

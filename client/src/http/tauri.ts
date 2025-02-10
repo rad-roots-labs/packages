@@ -1,4 +1,4 @@
-import { err_msg, http_fetch_opts, http_parse_response, type ErrorMessage, type FieldRecord, type IHttpImageResponse, type IHttpOpts, type IHttpResponse } from '@radroots/utils';
+import { err_msg, http_fetch_opts, http_parse_response, type ErrorMessage, type FieldRecord, type IHttpImageResponse, type IHttpOpts, type IHttpResponse } from '@radroots/util';
 import { fetch, type ClientOptions } from '@tauri-apps/plugin-http';
 import type { IClientHttp } from './types';
 
