@@ -3,7 +3,7 @@ import { err_msg, is_pass_response, is_result_response, is_results_response, lib
 import { invoke } from '@tauri-apps/api/core';
 import type { IClientKeys, IClientKeysNostrAddResolve, IClientKeysNostrCreateResolve, IClientKeysNostrDeleteResolve, IClientKeysNostrKeystoreResetResolve, IClientKeysNostrReadAllResolve, IClientKeysNostrReadResolve } from './types';
 
-export class TaurIClientKeys implements IClientKeys {
+export class TauriClientKeys implements IClientKeys {
     private async command(cmd: string, opts?: any): Promise<any> {
         return await invoke<any>(cmd, opts ? opts : undefined);
     };
