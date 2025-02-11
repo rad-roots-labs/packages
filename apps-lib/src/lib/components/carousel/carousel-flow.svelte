@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { casl_i } from "@radroots/lib-app";
+    import { casl_i } from "$root";
     import { fmt_cl, type IClOpt } from "@radroots/util";
     import { onMount, type Snippet } from "svelte";
 
