@@ -2,10 +2,10 @@
     import {
         app_lo,
         app_tilt,
-        app_toast,
-        app_win,
         envelope_tilt,
         envelope_visible,
+        handle_err,
+        window_set,
     } from "$root";
     import { onMount } from "svelte";
 
@@ -13,11 +13,9 @@
 
     onMount(async () => {
         try {
-            app_win.set({ h: window.innerHeight, w: window.innerWidth });
-            app_toast.set(false);
+            window_set();
         } catch (e) {
-            console.log(`(layout mount) `, e);
-        } finally {
+            handle_err(e, `on_mount`);
         }
     });
 

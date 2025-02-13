@@ -8,7 +8,6 @@ export const app_init = writable<boolean>(false);
 export const app_tilt = writable<boolean>(false);
 export const app_loading = writable<boolean>(false);
 export const app_splash = writable<boolean>(true);
-export const app_win = writable<{ h: number, w: number }>({ h: 0, w: 0 });
 export const app_notify = writable<string>(``);
 export const app_toast = writable<IToast | false>(false);
 export const app_blur = writable<boolean>(false);
@@ -20,3 +19,8 @@ export const key_nostr = writable<string>(``);
 export const app_nostr_profiles = writable<string[]>([]);
 
 export const search_results = writable<any[]>([]);
+
+export const win_h = writable<number>(0);
+export const win_w = writable<number>(0);
+
+//export const app_win = writable<{ h: number, w: number }>();

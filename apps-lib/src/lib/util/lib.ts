@@ -1,7 +1,7 @@
 import { browser } from "$app/environment";
 import { goto } from "$app/navigation";
 import { page } from "$app/state";
-import { liblocale } from "$root";
+import { liblocale, win_h, win_w } from "$root";
 import type { ColorMode, ThemeKey } from "@radroots/theme";
 import { encode_qp_route, fmt_geometry_point_coords, fmt_price, parse_currency_marker, type CallbackRoute, type GeometryPoint, type IErrorCatchCallback } from "@radroots/util";
 import { get } from "svelte/store";
@@ -82,4 +82,10 @@ export const view_effect = <T extends string>(view: T): void => {
         if (el.getAttribute(`data-view`) !== view) el.classList.add(`hidden`)
         else el.classList.remove(`hidden`)
     }
+};
+
+export const window_set = (): void => {
+    if (!browser) return;
+    win_h.set(window.innerHeight);
+    win_w.set(window.innerWidth);
 };
