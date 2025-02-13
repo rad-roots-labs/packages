@@ -1,36 +1,52 @@
 <script lang="ts">
-    import { casl_i } from "$root";
+    import { browser } from "$app/environment";
+    import { handle_err } from "$root";
     import { fmt_cl, type IClOpt } from "@radroots/util";
-    import { onMount, type Snippet } from "svelte";
+    import { onDestroy, onMount, type Snippet } from "svelte";
 
     let {
         basis,
-        el_parent = $bindable(null),
         children,
     }: {
-        basis?: IClOpt;
-        el_parent?: HTMLDivElement | null;
+        basis: IClOpt & {
+            index: number;
+            slide_duration?: number;
+        };
         children: Snippet;
     } = $props();
 
-    let offset_w = $state(0);
+    let el_parent: HTMLDivElement | null = $state(null);
+    let duration: number = $state(basis.slide_duration ?? 500);
+    let offset_w: number = $state(0);
 
-    onMount(() => {
-        if (el_parent && el_parent.children.length > 0)
-            offset_w = (el_parent.children[0] as HTMLElement).offsetWidth;
+    onMount(async () => {
+        try {
+            handle_resize();
+            if (browser) window.addEventListener(`resize`, handle_resize);
+        } catch (e) {
+            handle_err(e, `on_mount`);
+        }
     });
 
-    window.addEventListener("resize", () => {
+    onDestroy(async () => {
+        try {
+            if (browser) window.removeEventListener(`resize`, handle_resize);
+        } catch (e) {
+            handle_err(e, `on_destroy`);
+        }
+    });
+
+    const handle_resize = (): void => {
         if (el_parent && el_parent.children.length > 0)
             offset_w = (el_parent.children[0] as HTMLElement).offsetWidth;
-    });
+    };
 </script>
 
 <div class={`${fmt_cl(basis?.classes)}relative flex flex-col h-full w-full`}>
     <div
         bind:this={el_parent}
-        class="flex flex-grow transition-transform duration-500"
-        style={`transform: translateX(-${Math.max($casl_i, 0) * offset_w}px)`}
+        class={`flex flex-grow transition-transform`}
+        style={`transform: translateX(-${Math.max(basis?.index, 0) * offset_w}px); transition: transform ${duration}ms ease-out;`}
     >
         {@render children()}
     </div>

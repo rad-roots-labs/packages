@@ -113,7 +113,6 @@
             basis={{
                 key: `caret-up-down`,
                 dim: `xs`,
-
                 classes: `text-layer-${layer}-glyph`,
             }}
         />
