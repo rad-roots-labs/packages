@@ -1,5 +1,8 @@
 <script lang="ts">
+    import LayoutBottomButton from "$lib/components/layout/layout-bottom-button.svelte";
+    import Fade from "$lib/components/lib/fade.svelte";
     import {
+        app_platform,
         ButtonLayoutPair,
         Carousel,
         casl_dec,
@@ -8,6 +11,7 @@
         casl_init,
         FarmsAddCasliDetail,
         FarmsAddCasliMap,
+        Glyph,
         handle_err,
         LayoutView,
         liblocale,
@@ -78,9 +82,15 @@
         parse_geocode_address(map_geoc),
     );
 
+    const handle_continue_0 = async (): Promise<void> => {
+        await casl_inc();
+    };
+
     const handle_continue_1 = async (): Promise<void> => {
-        if (!map_geop) return; //@todo
-        if (!farm_geolocation_address) return; //@todo
+        if (!map_geop)
+            return void basis.lc_gui_alert(`No farm location provided.`); //@todo
+        if (!farm_geolocation_address)
+            return void basis.lc_gui_alert(`No farm address provided.`); //@todo
 
         const vp_obj_submit = vs_view_farms_add_submission.safeParse({
             farm_name: val_farmname,
@@ -94,7 +104,7 @@
         if (!vp_obj_submit.success) {
             return void basis.lc_gui_alert(
                 `Please correct the following errors: ${vp_obj_submit.error}`,
-            );
+            ); //@todo
         }
         loading = true;
         await basis.lc_submit({ data_s: vp_obj_submit.data });
@@ -103,15 +113,18 @@
 
     const handle_continue = async (): Promise<void> => {
         switch ($casl_i) {
+            case 0:
+                return await handle_continue_0();
             case 1:
-                return handle_continue_1();
-            default:
-                return await casl_inc();
+                return await handle_continue_1();
         }
     };
 
     const handle_back = async (): Promise<void> => {
-        await casl_dec();
+        switch ($casl_i) {
+            default:
+                return await casl_dec();
+        }
     };
 </script>
 
@@ -123,7 +136,43 @@
                 callback_route: basis.callback_route,
             },
         }}
-    />
+    >
+        {#snippet header_option()}
+            {#if $casl_i > 0}
+                <Fade>
+                    <button
+                        class={`flex flex-row pr-3 justify-center items-center`}
+                        onclick={async () => {
+                            await handle_back();
+                        }}
+                    >
+                        <p
+                            class={`font-sans font-[600] text-lg text-layer-0-glyph`}
+                        >
+                            {`${$lls(`common.back`)}`}
+                        </p>
+                    </button>
+                </Fade>
+            {/if}
+            <button
+                class={`flex flex-row justify-center items-center`}
+                onclick={async () => {
+                    await handle_continue();
+                }}
+            >
+                <p class={`font-sans font-[600] text-lg text-layer-0-glyph-hl`}>
+                    {`${$lls(`common.details`)}`}
+                </p>
+                <Glyph
+                    basis={{
+                        classes: `text-layer-0-glyph-hl`,
+                        dim: `md`,
+                        key: `caret-right`,
+                    }}
+                />
+            </button>
+        {/snippet}
+    </PageToolbar>
     <Carousel>
         <FarmsAddCasliMap
             bind:map_geop
@@ -144,9 +193,9 @@
             {farm_geop_lng}
         />
     </Carousel>
-    <div
-        class="absolute bottom-4 left-0 flex flex-row w-full gap-1 justify-center items-center"
-    >
+</LayoutView>
+{#if $app_platform?.browser !== `safari`}
+    <LayoutBottomButton>
         <ButtonLayoutPair
             basis={{
                 continue: {
@@ -161,5 +210,10 @@
                 },
             }}
         />
-    </div>
-</LayoutView>
+    </LayoutBottomButton>
+{/if}
+<!--<div
+        class={`absolute bottom-lo_bottom_button_${$app_lo} left-0 flex flex-row w-full gap-1 justify-center items-center`}
+    >
+        
+    </div>-->

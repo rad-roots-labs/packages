@@ -2,7 +2,7 @@
     import { app_lo } from "$root";
     import {
         fmt_cl,
-        get_layout,
+        get_layout_default,
         parse_layer,
         toast_layout_map,
         toast_style_map,
@@ -15,7 +15,7 @@
     const styles: IToastKind[] = $derived(
         basis?.styles ? basis.styles : [`simple`],
     );
-    const layout = $derived(get_layout($app_lo));
+    const layout = $derived(get_layout_default($app_lo));
     const layer = $derived(basis.layer ? parse_layer(basis.layer) : 1);
 </script>
 

@@ -2,11 +2,21 @@
     import { app_lo } from "$lib/store/app";
     import type { Snippet } from "svelte";
 
-    let { children }: { children: Snippet } = $props();
+    let {
+        basis,
+        children,
+    }: {
+        basis?: {
+            hidden: boolean;
+        };
+        children: Snippet;
+    } = $props();
 </script>
 
-<div
-    class={`z-10 absolute bottom-0 h-lo_bottom_button_${$app_lo} flex flex-row w-full px-4 justify-center items-center`}
->
-    {@render children()}
-</div>
+{#if !basis?.hidden}
+    <div
+        class={`z-10 absolute bottom-0 h-lo_bottom_button_${$app_lo} flex flex-col w-full px-4 gap-1 justify-start items-center`}
+    >
+        {@render children()}
+    </div>
+{/if}

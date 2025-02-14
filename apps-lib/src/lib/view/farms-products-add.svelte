@@ -1,6 +1,5 @@
 <script lang="ts">
     import {
-        app_lo,
         ButtonHorizontalPairSlide,
         ButtonRound,
         Carousel,
@@ -385,7 +384,7 @@
     };
 </script>
 
-<LayoutView basis={{ classes: `pb-h_lo_bottom_button_${$app_lo}` }}>
+<LayoutView basis={{ classes: `` }}>
     <PageToolbar
         basis={{
             header: {
@@ -441,7 +440,6 @@
                 }}
             />
         </div>
-
         <Carousel>
             <CarouselItem basis={{ classes: `gap-4` }}>
                 <FormEntrySelectInput

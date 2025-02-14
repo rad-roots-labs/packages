@@ -4,6 +4,7 @@
         Map,
         MapMarkerArea,
         WrapBorder,
+        app_lo,
         handle_err,
     } from "$root";
     import {
@@ -52,7 +53,7 @@
     <div
         class={`flex flex-col h-[100vh] w-full px-6 gap-4 justify-start items-center`}
     >
-        <WrapBorder basis={{ classes: `h-[24rem] m_1:h-[80%]` }}>
+        <WrapBorder basis={{ classes: `h-lo_view_main_${$app_lo}` }}>
             <Map bind:map>
                 {#if map_geop}
                     <MapMarkerArea
@@ -73,10 +74,14 @@
                 <div
                     class={`flex flex-row w-full gap-2 justify-center items-center`}
                 >
-                    <p class={`font-sans font-[500] text-layer-0-glyph`}>
+                    <p
+                        class={`font-sans font-[500] text-layer-0-glyph tracking-tightest`}
+                    >
                         {farm_geop_lat}
                     </p>
-                    <p class={`font-sans font-[500] text-layer-0-glyph`}>
+                    <p
+                        class={`font-sans font-[500] text-layer-0-glyph tracking-tightest`}
+                    >
                         {farm_geop_lng}
                     </p>
                 </div>

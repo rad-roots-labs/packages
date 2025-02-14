@@ -21,7 +21,7 @@
 
 <CarouselItem>
     <div
-        class={`flex flex-col h-[100vh] w-full px-6 gap-4 justify-start items-center`}
+        class={`flex flex-col h-[100vh] w-full px-6 pt-2 gap-4 justify-start items-center`}
     >
         <FormLineLedger
             basis={{

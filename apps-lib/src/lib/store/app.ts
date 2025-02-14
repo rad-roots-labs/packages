@@ -1,8 +1,9 @@
 import type { ColorMode, ThemeKey } from "@radroots/theme";
-import type { AppConfigType, AppLayoutKey, IToast } from "@radroots/util";
+import type { AppConfigType, AppLayoutKey, BrowserPlatformInfo, IToast } from "@radroots/util";
 import { writable } from "svelte/store";
 
 export const app_lo = writable<AppLayoutKey>();
+export const app_platform = writable<BrowserPlatformInfo | undefined>(undefined);
 export const app_cfg_type = writable<AppConfigType>(`personal`);
 export const app_init = writable<boolean>(false);
 export const app_tilt = writable<boolean>(false);

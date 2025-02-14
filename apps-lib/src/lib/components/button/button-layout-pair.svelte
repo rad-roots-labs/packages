@@ -33,7 +33,7 @@
             label: basis.continue.label,
             callback: basis.continue.callback,
         }}
-    ></ButtonLayout>
+    />
     {#if basis.back}
         <div class={`flex flex-col justify-center items-center el-re`}>
             {#if basis.back.visible}
