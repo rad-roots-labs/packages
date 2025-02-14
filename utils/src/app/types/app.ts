@@ -6,15 +6,16 @@ export type AppConfigType = `farmer` | `personal`
 
 export type AppLayoutKeyIOS = `ios0` | `ios1`;
 export type AppLayoutKeyWeb = `web_mobile` | `web_desktop`;
-export type AppLayoutKeyWebPwa = `webm0` | `webm1`;
+export type AppLayoutKeyWebPwa = `web_ios0` | `web_ios1` | `web0`;
 
 export type AppLayoutKey = AppLayoutKeyIOS | AppLayoutKeyWeb | AppLayoutKeyWebPwa;
 
 export type AppLayoutIOS<T extends string> = `${T}_${AppLayoutKeyIOS}`;
 export type AppLayoutWeb<T extends string> = `${T}_${AppLayoutKeyWeb}`;
-export type AppLayoutWebPwa<T extends string> = `${T}_${AppLayoutKeyWeb}`;
+export type AppLayoutWebPwa<T extends string> = `${T}_${AppLayoutKeyWebPwa}`;
 
 export type AppLayoutKeyHeight =
+    | `lo_view_main`
     | `lo_bottom_button`
     | `nav_tabs`
     | `nav_page_header`
@@ -30,7 +31,7 @@ export type AppHeightsResponsiveWebPwa = AppLayoutWebPwa<AppLayoutKeyHeight>;
 
 export type AppWidthsResponsiveIOS = AppLayoutIOS<AppLayoutKeyWidth>;
 export type AppWidthsResponsiveWeb = AppLayoutWeb<AppLayoutKeyWidth>;
-export type AppWidthsResponsiveWebPwa = AppLayoutWebPwa<AppLayoutKeyHeight>;
+export type AppWidthsResponsiveWebPwa = AppLayoutWebPwa<AppLayoutKeyWidth>;
 
 export type CallbackPromiseFigureResult<Ti, Tr> = (value: Ti) => Promise<Tr | undefined>;
 export type CallbackPromiseFull<Ti, Tr> = (value: Ti) => Promise<Tr>;

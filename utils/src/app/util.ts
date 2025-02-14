@@ -4,49 +4,66 @@ export const fmt_cl = (classes?: string): string => {
     return classes ? classes : ``;
 };
 
-export const get_layout = (val: string | false): AppLayoutKey => {
+export const get_layout = (val?: string): AppLayoutKey | undefined => {
+    const lo_ios = get_ios_layout(val);
+    if (lo_ios) return lo_ios;
+    const lo_web = get_web_layout(val);
+    if (lo_web) return lo_web;
+    const lo_web_pwa = get_web_pwa_layout(val);
+    if (lo_web_pwa) return lo_web_pwa;
+    return undefined;
+};
+
+export const get_layout_default = (val?: string): AppLayoutKey => {
+    const res = get_layout(val);
+    return res || `web0`;
+};
+
+export const get_ios_layout = (val?: string): AppLayoutKeyIOS | undefined => {
     switch (val) {
         case `ios0`:
         case `ios1`:
-        case `webm0`:
-        case `webm1`:
+            return val;
+        default:
+            return undefined;
+    };
+};
+
+export const get_ios_layout_default = (val?: string): AppLayoutKeyIOS => {
+    const res = get_ios_layout(val);
+    return res || `ios0`;
+};
+
+export const get_web_layout = (val?: string): AppLayoutKeyWeb | undefined => {
+    switch (val) {
         case `web_mobile`:
         case `web_desktop`:
             return val;
         default:
-            return `ios0`;
+            return undefined;
     };
 };
 
-export const get_ios_layout = (val: string | false): AppLayoutKeyIOS => {
-    switch (val) {
-        case `ios0`:
-        case `ios1`:
-            return val;
-        default:
-            return `ios0`;
-    };
-};
-
-export const get_web_layout = (val: string | false): AppLayoutKeyWeb => {
-    switch (val) {
-        case `web_mobile`:
-        case `web_desktop`:
-            return val;
-        default:
-            return `web_desktop`;
-    };
+export const get_web_layout_default = (val?: string): AppLayoutKeyWeb => {
+    const res = get_web_layout(val);
+    return res || `web_desktop`;
 };
 
 
-export const get_web_pwa_layout = (val: string | false): AppLayoutKeyWebPwa => {
+export const get_web_pwa_layout = (val?: string): AppLayoutKeyWebPwa | undefined => {
     switch (val) {
-        case `webm0`:
-        case `webm1`:
+        case `web_ios0`:
+        case `web_ios1`:
+        case `web0`:
             return val;
         default:
-            return `webm0`;
+            return undefined;
     };
+};
+
+export const get_web_pwa_layout_default = (val?: string): AppLayoutKeyWebPwa => {
+    const res = get_web_pwa_layout(val);
+    return res || `web0`;
 };
 
 export const parse_layer = (layer?: number, layer_default?: ThemeLayer): ThemeLayer => {

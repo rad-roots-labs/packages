@@ -29,8 +29,11 @@ export const loading_style_map: Map<LoadingDimension, { dim_1: number; gl_2: num
 export const toast_layout_map: Map<AppLayoutKey, string> = new Map([
     [`ios0`, `pt-8`],
     [`ios1`, `pt-16`],
-    [`webm0`, `pt-8`],
-    [`webm1`, `pt-16`],
+    [`web_mobile`, `pt-8`],
+    [`web_desktop`, `pt-16`],
+    [`web_ios0`, `pt-8`],
+    [`web_ios1`, `pt-16`],
+    [`web0`, `pt-8`],
 ]);
 
 export const toast_style_map: Map<IToastKind, { inner: string; outer: string }> = new Map([
