@@ -42,7 +42,7 @@
     };
 </script>
 
-<div class={`${fmt_cl(basis?.classes)}relative flex flex-col h-full w-full`}>
+<div class={`${fmt_cl(basis?.classes)}relative flex flex-col w-full`}>
     <div
         bind:this={el_parent}
         class={`flex flex-grow transition-transform`}

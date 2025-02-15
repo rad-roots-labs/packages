@@ -7,7 +7,6 @@
         ImagePath,
         ImageUploadAddPhoto,
         kv_init_page,
-        NavigationTabs,
     } from "$root";
     import {
         ascii,
@@ -80,6 +79,7 @@
             posx: `left`,
             glyph: `arrow-left`,
             loading: loading_photo_upload,
+            disabled: loading_photo_upload,
             callback: async () => {
                 if (basis.data) await basis.lc_handle_back(basis.data.id);
             },
@@ -89,7 +89,8 @@
         basis={{
             posx: `right`,
             glyph: `images-square`,
-            loading: loading_photo_upload,
+            loading: false,
+            disabled: loading_photo_upload,
             callback: basis.lc_handle_photo_options,
         }}
     />
@@ -246,4 +247,3 @@
         </p>
     {/if}
 </div>
-<NavigationTabs />

@@ -18,6 +18,7 @@ export const app_thc = writable<ColorMode>(`light`);
 export const app_th = writable<ThemeKey>();
 export const key_nostr = writable<string>(``);
 export const app_nostr_profiles = writable<string[]>([]);
+export const app_load = writable<boolean>(false);
 
 export const search_results = writable<any[]>([]);
 
