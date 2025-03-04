@@ -92,5 +92,4 @@ export type IClientDatabase<
     log_error_read_list(opts: TILogErrorReadList): Promise<TLogErrorReadListResolve>; 
     log_error_delete(opts: TILogErrorDelete): Promise<TLogErrorDeleteResolve>; 
     log_error_update(opts: TILogErrorUpdate): Promise<TLogErrorUpdateResolve>; 
-
 }; 
