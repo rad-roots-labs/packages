@@ -44,3 +44,4 @@ vite.config.ts.timestamp-*
 notes*.txt
 notes*.md
 git-diff.txt
+justfile
