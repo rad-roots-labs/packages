@@ -3,12 +3,12 @@ import { writable } from "svelte/store";
 import { queryParam, queryParameters } from "sveltekit-search-params";
 
 export const qp = queryParameters();
-export const qp_nostr_pk = queryParam<string>("nostr_pk");
-export const qp_rkey = queryParam<string>("rkey");
 export const qp_id = queryParam<string>("id");
 export const qp_ref = queryParam<string>("ref");
 export const qp_lat = queryParam<string>("lat");
 export const qp_lng = queryParam<string>("lng");
+export const qp_field = queryParam<string>("field");
+export const qp_keynostr = queryParam<string>("key_nostr");
 
 export const app_pwa_polyfills = writable<boolean>(false);
 

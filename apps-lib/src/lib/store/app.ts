@@ -16,7 +16,6 @@ export const app_db = writable<boolean>(false);
 export const app_geoc = writable<boolean>(false);
 export const app_thc = writable<ColorMode>(`light`);
 export const app_th = writable<ThemeKey>();
-export const key_nostr = writable<string>(``);
 export const app_nostr_profiles = writable<string[]>([]);
 export const app_load = writable<boolean>(false);
 
@@ -24,5 +23,3 @@ export const search_results = writable<any[]>([]);
 
 export const win_h = writable<number>(0);
 export const win_w = writable<number>(0);
-
-//export const app_win = writable<{ h: number, w: number }>();
