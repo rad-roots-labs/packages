@@ -1,7 +1,8 @@
 
-import { err_msg, type IHttpResponse, is_err_response, is_error_response, lib_nostr_event_sign_attest } from '@radroots/util';
+import { err_msg, type IHttpResponse, is_err_response, is_error_response } from '@radroots/util';
 import { lib_http } from '../lib';
 import type { IClientRadroots, IClientRadrootsFetchMediaImageUpload, IClientRadrootsFetchMediaImageUploadResolve, IClientRadrootsFetchProfileActivate, IClientRadrootsFetchProfileActivateResolve, IClientRadrootsFetchProfileCreate, IClientRadrootsFetchProfileCreateResolve, IClientRadrootsFetchProfileRequest, IClientRadrootsFetchProfileRequestResolve } from './types';
+import { lib_nostr_event_sign_attest } from '@radroots/nostr-util';
 
 export class TauriClientRadroots implements IClientRadroots {
     private _base_url: string;

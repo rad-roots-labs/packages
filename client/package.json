@@ -10,9 +10,8 @@
         "dev": "tsc -w"
     },
     "dependencies": {
-        "@noble/hashes": "^1.4.0",
-        "@nostr-dev-kit/ndk": "^2.10.7",
         "@radroots/models": "workspace:*",
+        "@radroots/nostr-util": "workspace:*",
         "@radroots/util": "workspace:*",
         "@tauri-apps/api": "2.0.3",
         "@tauri-apps/plugin-dialog": "^2.0.1",
@@ -23,8 +22,7 @@
         "@tauri-apps/plugin-log": "^2.0.0",
         "@tauri-apps/plugin-notification": "^2.0.0",
         "@tauri-apps/plugin-os": "^2.0.0",
-        "@tauri-apps/plugin-store": "^2.1.0",
-        "nostr-tools": "^2.10.4"
+        "@tauri-apps/plugin-store": "^2.1.0"
     },
     "devDependencies": {
         "@types/debug": "^4.1.12",
