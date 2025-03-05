@@ -3,9 +3,26 @@
   "version": "0.0.0",
   "private": true,
   "license": "GPLv3",
-  "files": [
-    "iso-639_1.json"
-  ],
+  "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "watch": "tsc -w"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.1",
+    "tsup": "^6.2.3",
+    "typescript": "^5.3.3"
+  },
   "publishConfig": {
     "access": "public"
   }

@@ -1,0 +1,31 @@
+{
+    "area": {
+        "ac": "Acre",
+        "ac_ab": "Ac.",
+        "ft2": "Square foot",
+        "ft2_ab": "ft²",
+        "ha": "Hectare",
+        "ha_ab": "Ha.",
+        "m2": "Square metre",
+        "m2_ab": "m²"
+    },
+    "length": {
+        "ft": "Foot",
+        "ft_ab": "Ft.",
+        "m": "Metre",
+        "m_ab": "M."
+    },
+    "mass": {
+        "unit": {
+            "g": "Gram",
+            "g_ab": "g.",
+            "g_pl": "Grams",
+            "kg": "Kilogram",
+            "kg_ab": "kg.",
+            "kg_pl": "Kilograms",
+            "lb": "Pound",
+            "lb_ab": "lb.",
+            "lb_pl": "Pounds"
+        }
+    }
+}
