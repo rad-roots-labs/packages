@@ -18,9 +18,10 @@
         type CallbackPromiseGeneric,
         type I18nTranslateFunction,
         type IViewBasis,
+        type IViewOnDestroy,
         type LcPhotoAddCallback,
     } from "@radroots/util";
-    import { onMount } from "svelte";
+    import { onDestroy, onMount } from "svelte";
 
     let {
         basis,
@@ -28,7 +29,7 @@
         photo_path_opt = $bindable(``),
     }: {
         basis: IViewBasis<{
-            data?: IViewProfileData;
+            data: IViewProfileData;
             loading_photo_upload: boolean;
             lc_handle_back: CallbackPromise;
             lc_handle_photo_add: LcPhotoAddCallback;
@@ -37,10 +38,8 @@
             lc_handle_edit_profile_field: CallbackPromiseGeneric<{
                 field: ViewProfileEditFieldKey;
             }>;
-            //lc_handle_edit_profile_name_confirm: CallbackPromiseReturn<boolean>;
-            //lc_handle_edit_profile_display_name: CallbackPromise;
-            //lc_handle_edit_profile_about: CallbackPromise;
-        }>;
+        }> &
+            IViewOnDestroy<{ public_key: string }>;
         ls: I18nTranslateFunction;
         photo_path_opt: string;
     } = $props();
@@ -51,9 +50,16 @@
     onMount(async () => {
         try {
             if (!basis.kv_init_prevent) await idb_init_page();
-            if (basis.lc_on_mount) await basis.lc_on_mount();
         } catch (e) {
             handle_err(e, `on_mount`);
+        }
+    });
+
+    onDestroy(async () => {
+        try {
+            await basis.lc_on_destroy({ public_key: basis.data.public_key });
+        } catch (e) {
+            handle_err(e, `on_destroy`);
         }
     });
 
@@ -136,9 +142,9 @@
                         class={`font-sansd font-[600] text-[2rem] ${classes_photo_overlay_glyph} ${basis.data?.name ? `` : `capitalize opacity-active`} el-re`}
                     >
                         {#if basis.data?.display_name}
-                            {`@${basis.data?.display_name}`}
+                            {`${basis.data?.display_name}`}
                         {:else if basis.data?.name}
-                            {`@${basis.data?.display_name || basis.data?.name || ``}`}
+                            {`${basis.data?.display_name || basis.data?.name || ``}`}
                         {:else}
                             {`+ ${`${$ls(`icu.add_*`, { value: `${$ls(`common.profile_name`)}` })}`}`}
                         {/if}
@@ -200,7 +206,7 @@
                         class={`font-sansd font-[400] text-[1.1rem] ${classes_photo_overlay_glyph} ${basis.data?.about ? `` : `capitalize opacity-active`}`}
                     >
                         {#if basis.data?.about}
-                            {`@${basis.data.about}`}
+                            {`${basis.data.about}`}
                         {:else}
                             {`+ ${`${$ls(`icu.add_*`, { value: `${$ls(`common.bio`)}` })}`}`}
                         {/if}

@@ -10,3 +10,8 @@ export type IViewProfileData = {
 };
 
 export type ViewProfileEditFieldKey = `name` | `display_name` | `about`;
+
+export type IViewProfileEditData = {
+    public_key: string;
+    field: ViewProfileEditFieldKey;
+};

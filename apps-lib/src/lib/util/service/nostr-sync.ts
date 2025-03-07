@@ -31,10 +31,10 @@ export class NostrSyncService implements INostrSyncService {
                 metadata,
             });
             if (ev) return ev;
-            return err_msg(`*-ev`);
+            return err_msg(`error.nostr.sync.metadata.missing_event`);
         } catch (e) {
             await handle_err(e, `metadata`);
-            return err_msg(`*`);
+            return err_msg(`error.nostr.sync.failure`); //@todo
         }
     }
 }

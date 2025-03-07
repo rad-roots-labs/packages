@@ -24,7 +24,7 @@
         type ResolveProfileInfo,
         type SearchServiceResult,
     } from "@radroots/util";
-    import { onDestroy, onMount } from "svelte";
+    import { onMount } from "svelte";
 
     let {
         basis,
@@ -54,7 +54,6 @@
         try {
             search_val = ``;
             if (!basis.kv_init_prevent) await idb_init_page();
-            if (basis.lc_on_mount) await basis.lc_on_mount();
             search_service = new SearchService(basis.data);
         } catch (e) {
             handle_err(e, `on_mount`);
@@ -65,14 +64,6 @@
         console.log(`val `, val);
         if (search_service) search_results = search_service.search(val);
     }, cfg_app.debounce.search);
-
-    onDestroy(async () => {
-        try {
-            if (basis.lc_on_destroy) await basis.lc_on_destroy();
-        } catch (e) {
-            handle_err(e, `on_destroy`);
-        }
-    });
 </script>
 
 <LayoutView>
