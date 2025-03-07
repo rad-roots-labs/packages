@@ -20,3 +20,15 @@ export const i18n_conf = <T extends string>(opts: {
     };
     return new i18n(config);
 };
+
+
+const lib_config: Config<LanguageConfig> = {
+    initLocale: `en`,
+    fallbackLocale: `en`,
+    translations: {},
+    loaders: [],
+};
+const lib_i18n = new i18n(lib_config);
+
+export type I18nTranslateFunction = typeof lib_i18n.t;
+export type I18nTranslateLocale = typeof lib_i18n.locale;

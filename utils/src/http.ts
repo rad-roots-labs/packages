@@ -34,7 +34,7 @@ export type IHttpOpts = {
     connect_timeout?: number;
 };
 
-const lib_http_to_bodyinit = (data: any): BodyInit => {
+export const lib_http_to_bodyinit = (data: any): BodyInit => {
     if (typeof data === 'string') return data;
     else if (data instanceof FormData) return data;
     else if (data instanceof Blob) return data;
@@ -43,7 +43,7 @@ const lib_http_to_bodyinit = (data: any): BodyInit => {
     return JSON.stringify(data);
 }
 
-const lib_http_parse_headers = (headers: Headers): FieldRecord => {
+export const lib_http_parse_headers = (headers: Headers): FieldRecord => {
     const acc: FieldRecord = {};
     headers.forEach((value, key) => acc[key] = value);
     return acc;
