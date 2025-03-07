@@ -96,14 +96,21 @@ export const value_constrain_textarea = (regex_charset: RegExp, value: string): 
         .join("\n");
 };
 
-export const encode_qp = (params_list?: NavigationParamTuple[]): string => {
-    const params = (params_list || []).filter(i => i[0] && i[1])
-    if (!params.length) return ``;
-    return params.map(([k, v], index) => `${index === 0 ? `?` : ``}&${k.trim()}=${encodeURI(v.trim())}`).join(``).trim();
+export const encode_query_params = (params_list: NavigationParamTuple[] = []): string => {
+    let query = "";
+    for (const [k, v] of params_list) {
+        if (k && v) {
+            if (query) query += `&`;
+            query += `${k.trim()}=${encodeURIComponent(v.trim())}`;
+        }
+    }
+    return query ? `?${query}` : ``;
 };
 
-export const encode_qp_route = <T extends string>(route: T, params_list?: NavigationParamTuple[]): string => {
-    return `${route}/${encode_qp(params_list)}`.replaceAll(`//`, `/`)
+export const encode_route = <T extends string>(route: T, params_list?: NavigationParamTuple[]): string => {
+    const query = encode_query_params(params_list);
+    if (!query) return route;
+    return `${route === `/` ? `/` : route.replace(/\/+$/, ``)}${query}`;
 };
 
 export const fmt_trellis = (hide_border_t: boolean, hide_border_b: boolean): string => {

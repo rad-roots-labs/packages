@@ -52,12 +52,14 @@ export type LoadingDimension = GeometryDimension | `glyph-send-button`; //@todo 
 
 export type LayerGlyphBasisKind = `_a` | `_d` | `_pl`;
 
-export type NavigationRouteParamNostrPublicKey = `nostr_pk`;
-export type NavigationRouteParamRecordKey = `rkey`;
+
 export type NavigationRouteParamId = `id`;
+export type NavigationRouteParamField = `field`;
+export type NavigationRouteParamRef = `ref`;
 export type NavigationRouteParamLat = `lat`;
 export type NavigationRouteParamLng = `lng`;
-export type NavigationRouteParamKey = NavigationRouteParamNostrPublicKey | NavigationRouteParamId | NavigationRouteParamRecordKey | NavigationRouteParamLat | NavigationRouteParamLng;
+export type NavigationRouteParamNostrPublicKey = `key_nostr`;
+export type NavigationRouteParamKey = NavigationRouteParamId | NavigationRouteParamField | NavigationRouteParamRef | NavigationRouteParamLat | NavigationRouteParamLng | NavigationRouteParamNostrPublicKey;
 export type NavigationParamTuple = [NavigationRouteParamKey, string];
 export type NavigationPreviousParam<T extends string> = { route: T, label?: string; params?: NavigationParamTuple[] }
 
