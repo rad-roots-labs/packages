@@ -8,3 +8,5 @@ export type IViewProfileData = {
         primary: boolean;
     }[];
 };
+
+export type ViewProfileEditFieldKey = `name` | `display_name` | `about`;

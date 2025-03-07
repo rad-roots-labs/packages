@@ -9,12 +9,13 @@
         ImageUploadAddPhoto,
         NavigationTabs,
         type IViewProfileData,
+        type ViewProfileEditFieldKey,
     } from "$root";
     import {
         ascii,
         type CallbackPromise,
         type CallbackPromiseFull,
-        type CallbackPromiseReturn,
+        type CallbackPromiseGeneric,
         type I18nTranslateFunction,
         type IViewBasis,
         type LcPhotoAddCallback,
@@ -33,10 +34,12 @@
             lc_handle_photo_add: LcPhotoAddCallback;
             lc_handle_photo_options: CallbackPromise;
             lc_fs_read_bin: CallbackPromiseFull<string, Uint8Array | undefined>;
-            lc_handle_edit_profile_name: CallbackPromise;
-            lc_handle_edit_profile_name_confirm: CallbackPromiseReturn<boolean>;
-            lc_handle_edit_profile_display_name: CallbackPromise;
-            lc_handle_edit_profile_about: CallbackPromise;
+            lc_handle_edit_profile_field: CallbackPromiseGeneric<{
+                field: ViewProfileEditFieldKey;
+            }>;
+            //lc_handle_edit_profile_name_confirm: CallbackPromiseReturn<boolean>;
+            //lc_handle_edit_profile_display_name: CallbackPromise;
+            //lc_handle_edit_profile_about: CallbackPromise;
         }>;
         ls: I18nTranslateFunction;
         photo_path_opt: string;
@@ -123,7 +126,11 @@
             <div class={`flex flex-row h-10 w-full justify-start items-center`}>
                 <button
                     class={`group flex flex-row justify-center items-center`}
-                    onclick={basis.lc_handle_edit_profile_display_name}
+                    onclick={async () => {
+                        await basis.lc_handle_edit_profile_field({
+                            field: `display_name`,
+                        });
+                    }}
                 >
                     <p
                         class={`font-sansd font-[600] text-[2rem] ${classes_photo_overlay_glyph} ${basis.data?.name ? `` : `capitalize opacity-active`} el-re`}
@@ -144,12 +151,9 @@
                 <button
                     class={`group flex flex-row justify-center items-center`}
                     onclick={async () => {
-                        if (basis.data?.name) {
-                            const confirm =
-                                basis.lc_handle_edit_profile_name_confirm();
-                            if (!confirm) return;
-                        }
-                        await basis.lc_handle_edit_profile_name();
+                        await basis.lc_handle_edit_profile_field({
+                            field: `name`,
+                        });
                     }}
                 >
                     <p
@@ -186,7 +190,11 @@
             <div class={`flex flex-row w-full justify-start items-center`}>
                 <button
                     class={`group flex flex-row justify-center items-center`}
-                    onclick={basis.lc_handle_edit_profile_about}
+                    onclick={async () => {
+                        await basis.lc_handle_edit_profile_field({
+                            field: `about`,
+                        });
+                    }}
                 >
                     <p
                         class={`font-sansd font-[400] text-[1.1rem] ${classes_photo_overlay_glyph} ${basis.data?.about ? `` : `capitalize opacity-active`}`}
