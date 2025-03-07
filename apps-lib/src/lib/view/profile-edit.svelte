@@ -1,7 +1,8 @@
 <script lang="ts">
+    import ButtonRoundNav from "$lib/components/button/button-round-nav.svelte";
+    import FloatPage from "$lib/components/float/float-page.svelte";
     import Empty from "$lib/components/lib/empty.svelte";
     import {
-        FloatPageButton,
         fmt_id,
         handle_err,
         idb_init_page,
@@ -81,16 +82,21 @@
         {/if}
     </LayoutPage>
 </LayoutView>
-<FloatPageButton
+<FloatPage
     basis={{
         posx: `left`,
-        glyph: `arrow-left`,
-        callback: async () => {
-            await basis.lc_handle_back({
-                field: basis.data.field,
-                public_key: basis.data.public_key,
-            });
-        },
     }}
-/>
+>
+    <ButtonRoundNav
+        basis={{
+            glyph: `arrow-left`,
+            callback: async () => {
+                await basis.lc_handle_back({
+                    field: basis.data.field,
+                    public_key: basis.data.public_key,
+                });
+            },
+        }}
+    />
+</FloatPage>
 <NavigationTabs />

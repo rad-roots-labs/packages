@@ -3,10 +3,7 @@ export type IViewProfileData = {
     name?: string;
     display_name?: string;
     about?: string;
-    photos?: {
-        src: string;
-        primary: boolean;
-    }[];
+    picture?: string;
 };
 
 export type ViewProfileEditFieldKey = `name` | `display_name` | `about`;

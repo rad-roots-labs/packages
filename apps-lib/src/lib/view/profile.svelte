@@ -1,7 +1,9 @@
 <script lang="ts">
+    import ButtonRoundNav from "$lib/components/button/button-round-nav.svelte";
+    import FloatPage from "$lib/components/float/float-page.svelte";
     import ImageBlob from "$lib/components/lib/image-blob.svelte";
+    import SelectMenu from "$lib/components/lib/select-menu.svelte";
     import {
-        FloatPageButton,
         Glyph,
         handle_err,
         idb_init_page,
@@ -26,11 +28,12 @@
     let {
         basis,
         ls,
-        photo_path_opt = $bindable(``),
+        photo_path = $bindable(``),
     }: {
         basis: IViewBasis<{
             data: IViewProfileData;
             loading_photo_upload: boolean;
+            loading_photo_upload_open: boolean;
             lc_handle_back: CallbackPromise;
             lc_handle_photo_add: LcPhotoAddCallback;
             lc_handle_photo_options: CallbackPromise;
@@ -41,11 +44,13 @@
         }> &
             IViewOnDestroy<{ public_key: string }>;
         ls: I18nTranslateFunction;
-        photo_path_opt: string;
+        photo_path: string;
     } = $props();
 
     type ViewDisplay = `photos` | `following` | `followers`;
     let view_display: ViewDisplay = $state(`photos`);
+
+    let val_sel_options_button = $state(``);
 
     onMount(async () => {
         try {
@@ -63,9 +68,9 @@
         }
     });
 
-    const profile_photo = $derived(basis.data?.photos?.find((i) => i.primary));
-
-    const photo_overlay_visible = $derived(!!(profile_photo || photo_path_opt));
+    const photo_overlay_visible = $derived(
+        !!(basis.data.picture || photo_path),
+    );
 
     const classes_photo_overlay_glyph = $derived(
         photo_overlay_visible ? `text-white` : `text-layer-0-glyph`,
@@ -83,41 +88,64 @@
 <div
     class={`relative flex flex-col min-h-[525px] h-[525px] w-full justify-center items-center bg-layer-2-surface fade-in`}
 >
-    <FloatPageButton
+    <FloatPage
         basis={{
             posx: `left`,
-            glyph: `arrow-left`,
-            callback: basis.lc_handle_back,
         }}
-    />
-    <FloatPageButton
-        basis={{
-            posx: `right`,
-            glyph: `images-square`,
-            callback: basis.lc_handle_photo_options,
-        }}
-    />
-    {#if profile_photo}
-        <ImagePath
+    >
+        <ButtonRoundNav
             basis={{
-                path: profile_photo.src,
+                glyph: `arrow-left`,
+                loading: basis.loading_photo_upload,
+                callback: basis.lc_handle_back,
             }}
         />
-    {:else if photo_path_opt}
-        {#if photo_path_opt.startsWith(`file://`)}
-            {#await basis.lc_fs_read_bin(photo_path_opt) then data}
+    </FloatPage>
+    <FloatPage
+        basis={{
+            posx: `right`,
+        }}
+    >
+        <SelectMenu
+            bind:value={val_sel_options_button}
+            basis={{
+                layer: 0,
+                options: [
+                    {
+                        entries: [
+                            {
+                                value: `*add-new`,
+                                label: `Add new photo`,
+                            },
+                        ],
+                    },
+                ],
+            }}
+        >
+            <ButtonRoundNav
+                basis={{
+                    glyph: `images-square`,
+                    callback: basis.lc_handle_photo_options,
+                }}
+            />
+        </SelectMenu>
+    </FloatPage>
+    {#if basis.data.picture || photo_path}
+        {@const img_path = photo_path || basis.data.picture || ``}
+        {#if img_path.startsWith(`file://`)}
+            {#await basis.lc_fs_read_bin(img_path) then data}
                 <ImageBlob basis={{ data }} />
             {/await}
-        {:else if photo_path_opt.startsWith(`https://`)}
-            <ImagePath basis={{ path: photo_path_opt }} />
+        {:else if img_path.startsWith(`http://`) || img_path.startsWith(`https://`)}
+            <ImagePath basis={{ path: img_path }} />
         {/if}
     {:else}
         <div class={`flex flex-row justify-start items-center -translate-y-8`}>
             <ImageUploadAddPhoto
-                bind:photo_path={photo_path_opt}
+                bind:photo_path
                 {ls}
                 basis={{
-                    loading: basis.loading_photo_upload,
+                    loading: basis.loading_photo_upload_open,
                     lc_handle_photo_add: basis.lc_handle_photo_add,
                 }}
             />
