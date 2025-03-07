@@ -17,7 +17,6 @@
         type ElementCallbackValue,
         type I18nTranslateFunction,
         type IViewBasis,
-        type IViewOnMount,
     } from "@radroots/util";
     import { onMount } from "svelte";
 
@@ -33,8 +32,7 @@
                 public_key: string;
             }>;
             lc_handle_input: ElementCallbackValue;
-        }> &
-            IViewOnMount<{ field: ViewProfileEditFieldKey }>;
+        }>;
         ls: I18nTranslateFunction;
         val_field: string;
     } = $props();
@@ -54,7 +52,6 @@
     onMount(async () => {
         try {
             if (!basis.kv_init_prevent) await idb_init_page();
-            await basis.lc_on_mount({ field: basis.data.field });
         } catch (e) {
             handle_err(e, `on_mount`);
         }
@@ -63,10 +60,6 @@
     const input_placeholder = $derived(
         basis.data?.field ? param[basis.data.field]?.placeholder : ``,
     );
-
-    $effect(() => {
-        console.log(`input_placeholder `, input_placeholder);
-    });
 </script>
 
 <LayoutView>
