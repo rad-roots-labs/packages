@@ -1,4 +1,4 @@
-import type { AppLayoutKey, AppLayoutKeyIOS, AppLayoutKeyWeb, AppLayoutKeyWebPwa, LabelFieldKind, NavigationParamTuple, ThemeLayer } from "$root";
+import type { AppLayoutKey, AppLayoutKeyIOS, AppLayoutKeyWeb, LabelFieldKind, NavigationParamTuple, ThemeLayer } from "$root";
 
 export const fmt_cl = (classes?: string): string => {
     return classes ? classes : ``;
@@ -9,14 +9,12 @@ export const get_layout = (val?: string): AppLayoutKey | undefined => {
     if (lo_ios) return lo_ios;
     const lo_web = get_web_layout(val);
     if (lo_web) return lo_web;
-    const lo_web_pwa = get_web_pwa_layout(val);
-    if (lo_web_pwa) return lo_web_pwa;
     return undefined;
 };
 
 export const get_layout_default = (val?: string): AppLayoutKey => {
     const res = get_layout(val);
-    return res || `web0`;
+    return res || `webm0`;
 };
 
 export const get_ios_layout = (val?: string): AppLayoutKeyIOS | undefined => {
@@ -36,8 +34,8 @@ export const get_ios_layout_default = (val?: string): AppLayoutKeyIOS => {
 
 export const get_web_layout = (val?: string): AppLayoutKeyWeb | undefined => {
     switch (val) {
-        case `web_mobile`:
-        case `web_desktop`:
+        case `webm0`:
+        case `webm1`:
             return val;
         default:
             return undefined;
@@ -46,24 +44,7 @@ export const get_web_layout = (val?: string): AppLayoutKeyWeb | undefined => {
 
 export const get_web_layout_default = (val?: string): AppLayoutKeyWeb => {
     const res = get_web_layout(val);
-    return res || `web_desktop`;
-};
-
-
-export const get_web_pwa_layout = (val?: string): AppLayoutKeyWebPwa | undefined => {
-    switch (val) {
-        case `web_ios0`:
-        case `web_ios1`:
-        case `web0`:
-            return val;
-        default:
-            return undefined;
-    };
-};
-
-export const get_web_pwa_layout_default = (val?: string): AppLayoutKeyWebPwa => {
-    const res = get_web_pwa_layout(val);
-    return res || `web0`;
+    return res || `webm0`;
 };
 
 export const parse_layer = (layer?: number, layer_default?: ThemeLayer): ThemeLayer => {

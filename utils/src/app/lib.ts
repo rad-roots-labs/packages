@@ -3,7 +3,6 @@ import type { AppLayoutKey } from "$root";
 type ConfigWindow = {
     layout: Record<AppLayoutKey, {
         h: number;
-        w?: number;
     }>;
     debounce: {
         search: number;
@@ -13,32 +12,16 @@ type ConfigWindow = {
 export const cfg_app: ConfigWindow = {
     layout: {
         ios0: {
-            h: 600,
-            w: 300,
+            h: 600
         },
         ios1: {
-            h: 750,
-            w: 350,
+            h: 750
         },
-        web0: {
-            h: 600,
-            w: 300,
+        webm0: {
+            h: 600
         },
-        web_ios0: {
-            h: 600,
-            w: 300,
-        },
-        web_ios1: {
-            h: 750,
-            w: 800,
-        },
-        web_mobile: {
-            h: 600,
-            w: 300,
-        },
-        web_desktop: {
-            h: 600,
-            w: 300,
+        webm1: {
+            h: 750
         }
     },
     debounce: {
