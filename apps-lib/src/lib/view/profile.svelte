@@ -1,4 +1,5 @@
 <script lang="ts">
+    import ImageBlob from "$lib/components/lib/image-blob.svelte";
     import {
         FloatPageButton,
         Glyph,
@@ -6,17 +7,17 @@
         idb_init_page,
         ImagePath,
         ImageUploadAddPhoto,
+        NavigationTabs,
+        type IViewProfileData,
     } from "$root";
     import {
         ascii,
         type CallbackPromise,
         type CallbackPromiseFull,
-        type CallbackPromiseGeneric,
         type CallbackPromiseReturn,
         type I18nTranslateFunction,
         type IViewBasis,
         type LcPhotoAddCallback,
-        type ResolveProfileInfo,
     } from "@radroots/util";
     import { onMount } from "svelte";
 
@@ -24,11 +25,11 @@
         basis,
         ls,
         photo_path_opt = $bindable(``),
-        loading_photo_upload = $bindable(false),
     }: {
         basis: IViewBasis<{
-            data?: ResolveProfileInfo;
-            lc_handle_back: CallbackPromiseGeneric<string>;
+            data?: IViewProfileData;
+            loading_photo_upload: boolean;
+            lc_handle_back: CallbackPromise;
             lc_handle_photo_add: LcPhotoAddCallback;
             lc_handle_photo_options: CallbackPromise;
             lc_fs_read_bin: CallbackPromiseFull<string, Uint8Array | undefined>;
@@ -39,7 +40,6 @@
         }>;
         ls: I18nTranslateFunction;
         photo_path_opt: string;
-        loading_photo_upload: boolean;
     } = $props();
 
     type ViewDisplay = `photos` | `following` | `followers`;
@@ -54,9 +54,7 @@
         }
     });
 
-    const profile_photo = $derived(
-        basis.data?.profile_photos?.find((i) => i.primary),
-    );
+    const profile_photo = $derived(basis.data?.photos?.find((i) => i.primary));
 
     const photo_overlay_visible = $derived(!!(profile_photo || photo_path_opt));
 
@@ -80,36 +78,37 @@
         basis={{
             posx: `left`,
             glyph: `arrow-left`,
-            loading: loading_photo_upload,
-            disabled: loading_photo_upload,
-            callback: async () => {
-                if (basis.data) await basis.lc_handle_back(basis.data.id);
-            },
+            callback: basis.lc_handle_back,
         }}
     />
     <FloatPageButton
         basis={{
             posx: `right`,
             glyph: `images-square`,
-            loading: false,
-            disabled: loading_photo_upload,
             callback: basis.lc_handle_photo_options,
         }}
     />
     {#if profile_photo}
         <ImagePath
             basis={{
-                path: profile_photo.media_image.url,
+                path: profile_photo.src,
             }}
         />
     {:else if photo_path_opt}
-        <ImagePath basis={{ path: photo_path_opt }} />
+        {#if photo_path_opt.startsWith(`file://`)}
+            {#await basis.lc_fs_read_bin(photo_path_opt) then data}
+                <ImageBlob basis={{ data }} />
+            {/await}
+        {:else if photo_path_opt.startsWith(`https://`)}
+            <ImagePath basis={{ path: photo_path_opt }} />
+        {/if}
     {:else}
         <div class={`flex flex-row justify-start items-center -translate-y-8`}>
             <ImageUploadAddPhoto
                 bind:photo_path={photo_path_opt}
                 {ls}
                 basis={{
+                    loading: basis.loading_photo_upload,
                     lc_handle_photo_add: basis.lc_handle_photo_add,
                 }}
             />
@@ -129,9 +128,13 @@
                     <p
                         class={`font-sansd font-[600] text-[2rem] ${classes_photo_overlay_glyph} ${basis.data?.name ? `` : `capitalize opacity-active`} el-re`}
                     >
-                        {basis.data?.name
-                            ? basis.data.name
-                            : `+ ${`${$ls(`icu.add_*`, { value: `${$ls(`common.profile_name`)}` })}`}`}
+                        {#if basis.data?.display_name}
+                            {`@${basis.data?.display_name}`}
+                        {:else if basis.data?.name}
+                            {`@${basis.data?.display_name || basis.data?.name || ``}`}
+                        {:else}
+                            {`+ ${`${$ls(`icu.add_*`, { value: `${$ls(`common.profile_name`)}` })}`}`}
+                        {/if}
                     </p>
                 </button>
             </div>
@@ -152,9 +155,11 @@
                     <p
                         class={`font-sansd font-[600] text-[1.1rem] ${classes_photo_overlay_glyph} ${basis.data?.name ? `` : `capitalize opacity-active`} el-re`}
                     >
-                        {basis.data?.name
-                            ? `@${basis.data.name}`
-                            : `+ ${`${$ls(`icu.add_*`, { value: `${$ls(`common.username`)}` })}`}`}
+                        {#if basis.data?.name}
+                            {`@${basis.data.name}`}
+                        {:else}
+                            {`+ ${`${$ls(`icu.add_*`, { value: `${$ls(`common.username`)}` })}`}`}
+                        {/if}
                     </p>
                 </button>
                 <p
@@ -186,9 +191,11 @@
                     <p
                         class={`font-sansd font-[400] text-[1.1rem] ${classes_photo_overlay_glyph} ${basis.data?.about ? `` : `capitalize opacity-active`}`}
                     >
-                        {basis.data?.about
-                            ? `@${basis.data.about}`
-                            : `+ ${`${$ls(`icu.add_*`, { value: `${$ls(`common.bio`)}` })}`}`}
+                        {#if basis.data?.about}
+                            {`@${basis.data.about}`}
+                        {:else}
+                            {`+ ${`${$ls(`icu.add_*`, { value: `${$ls(`common.bio`)}` })}`}`}
+                        {/if}
                     </p>
                 </button>
             </div>
@@ -205,7 +212,7 @@
                 <p
                     class={`font-sans text-[1.1rem] font-[600] capitalize ${view_display === `photos` ? classes_photo_overlay_glyph_opt_selected : classes_photo_overlay_glyph_opt} el-re`}
                 >
-                    {`photos`}
+                    {`${$ls(`common.photos`)}`}
                 </p>
             </button>
             <button
@@ -217,7 +224,7 @@
                 <p
                     class={`font-sans text-[1.1rem] font-[600] capitalize ${view_display === `following` ? classes_photo_overlay_glyph_opt_selected : classes_photo_overlay_glyph_opt} el-re`}
                 >
-                    {`following`}
+                    {`${$ls(`common.following`)}`}
                 </p>
             </button>
             <button
@@ -229,7 +236,7 @@
                 <p
                     class={`font-sans text-[1.1rem] font-[600] capitalize ${view_display === `followers` ? classes_photo_overlay_glyph_opt_selected : classes_photo_overlay_glyph_opt} el-re`}
                 >
-                    {`followers`}
+                    {`${$ls(`common.followers`)}`}
                 </p>
             </button>
         </div>
@@ -250,3 +257,4 @@
         </p>
     {/if}
 </div>
+<NavigationTabs />

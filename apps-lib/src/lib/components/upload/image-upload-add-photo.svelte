@@ -1,8 +1,8 @@
 <script lang="ts">
-    import { Glyph } from "$root";
-    import type {
-        I18nTranslateFunction,
-        LcPhotoAddCallback,
+    import { Glyph, LoadSymbol } from "$root";
+    import {
+        type I18nTranslateFunction,
+        type LcPhotoAddCallback,
     } from "@radroots/util";
 
     let {
@@ -11,10 +11,11 @@
         photo_path = $bindable(``),
     }: {
         basis: {
+            loading?: boolean;
             lc_handle_photo_add: LcPhotoAddCallback;
         };
-        photo_path: string;
         ls: I18nTranslateFunction;
+        photo_path: string;
     } = $props();
 </script>
 
@@ -26,13 +27,18 @@
             if (photo_path_add) photo_path = photo_path_add;
         }}
     >
-        <Glyph
-            basis={{
-                classes: `text-[40px] text-layer-2-glyph`,
-                dim: `sm`,
-                key: `camera`,
-            }}
-        />
+        {#if basis.loading}
+            <LoadSymbol basis={{ dim: `md` }} />
+        {:else}
+            <Glyph
+                basis={{
+                    classes: `text-[40px] text-layer-2-glyph`,
+                    dim: `sm`,
+                    key: `camera`,
+                }}
+            />
+        {/if}
+
         <div
             class={`absolute -bottom-[1.8rem] flex flex-row justify-start items-center`}
         >

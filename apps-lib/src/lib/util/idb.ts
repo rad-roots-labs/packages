@@ -12,7 +12,6 @@ export const idb_init = async (): Promise<void> => {
     if (!browser) return;
     const range = Keyva.prefix(`*`);
     const idb_list = await idb.each({ range }, `keys`);
-    console.log(`idb_list `, idb_list)
     await Promise.all(idb_list.map((i) => idb.delete(i)));
 };
 
@@ -20,9 +19,7 @@ export const idb_init_page = async (): Promise<void> => {
     if (!browser) return;
     const idb_pref = fmt_id();
     const range = Keyva.prefix(idb_pref);
-    console.log(`idb_init_page range `, range)
     const idb_list = await idb.each({ range }, `keys`);
-    console.log(`idb_list `, idb_list)
     await Promise.all(idb_list.map((i) => idb.delete(i)));
 };
 
