@@ -1,14 +1,14 @@
-import type { NavigationPreviousParam } from "@radroots/util";
+import type { NavigationPreviousParam, NavigationRouteParamField, NavigationRouteParamId, NavigationRouteParamLat, NavigationRouteParamLng, NavigationRouteParamNostrPublicKey, NavigationRouteParamRef } from "@radroots/util";
 import { writable } from "svelte/store";
 import { queryParam, queryParameters } from "sveltekit-search-params";
 
 export const qp = queryParameters();
-export const qp_id = queryParam<string>("id");
-export const qp_ref = queryParam<string>("ref");
-export const qp_lat = queryParam<string>("lat");
-export const qp_lng = queryParam<string>("lng");
-export const qp_field = queryParam<string>("field");
-export const qp_keynostr = queryParam<string>("key_nostr");
+export const qp_id = queryParam<NavigationRouteParamId>("id");
+export const qp_field = queryParam<NavigationRouteParamField>("field");
+export const qp_ref = queryParam<NavigationRouteParamRef>("ref");
+export const qp_lat = queryParam<NavigationRouteParamLat>("lat");
+export const qp_lng = queryParam<NavigationRouteParamLng>("lng");
+export const qp_keynostr = queryParam<NavigationRouteParamNostrPublicKey>("key_nostr");
 
 export const app_pwa_polyfills = writable<boolean>(false);
 

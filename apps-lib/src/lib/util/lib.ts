@@ -3,7 +3,7 @@ import { goto } from "$app/navigation";
 import { page } from "$app/state";
 import { win_h, win_w } from "$root";
 import type { ColorMode, ThemeKey } from "@radroots/theme";
-import { encode_qp_route, fmt_geometry_point_coords, fmt_price, parse_currency_marker, type CallbackRoute, type GeometryPoint, type IErrorCatchCallback } from "@radroots/util";
+import { encode_route, fmt_geometry_point_coords, fmt_price, parse_currency_marker, type CallbackRoute, type GeometryPoint, type IErrorCatchCallback } from "@radroots/util";
 import { get } from "svelte/store";
 
 export const get_store = get;
@@ -48,7 +48,7 @@ export const callback_route = async <T extends string>(callback_route: CallbackR
     if (`route` in callback_route) {
         if (typeof callback_route.route === `string`) return void await goto(callback_route.route);
         else return void await goto(
-            encode_qp_route(
+            encode_route(
                 callback_route.route[0],
                 callback_route.route[1],
             ),
