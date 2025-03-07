@@ -1,20 +1,16 @@
 <script lang="ts">
-    import {
-        EntryLine,
-        EntrySelect,
-        fmt_id,
-        LayoutTrellisLine,
-        lls,
-    } from "$root";
+    import { EntryLine, EntrySelect, fmt_id, LayoutTrellisLine } from "$root";
     import {
         type CallbackPromiseGeneric,
         type ElementCallbackSelect,
         type FormField,
+        type I18nTranslateFunction,
         type ISelectOption,
     } from "@radroots/util";
 
     let {
         basis,
+        ls,
         val_sel = $bindable(``),
         val_sel_input = $bindable(``),
     }: {
@@ -28,6 +24,7 @@
             input_field?: FormField;
             entry_label?: string;
         };
+        ls: I18nTranslateFunction;
         val_sel: string;
         val_sel_input: string;
     } = $props();
@@ -41,7 +38,7 @@
         notify: basis.visible_input
             ? {
                   label: {
-                      value: `${$lls(`common.close`)}`,
+                      value: `${$ls(`common.close`)}`,
                   },
                   callback: async () => {
                       await basis.callback_visible(false);

@@ -1,6 +1,10 @@
 <script lang="ts">
-    import { CarouselItem, FormLineLedger, lls } from "$root";
-    import { area_units, form_fields } from "@radroots/util";
+    import { CarouselItem, FormLineLedger } from "$root";
+    import {
+        area_units,
+        form_fields,
+        type I18nTranslateFunction,
+    } from "@radroots/util";
 
     let {
         val_farmname = $bindable(``),
@@ -9,6 +13,7 @@
         val_farmcontact = $bindable(``),
         farm_geop_lat,
         farm_geop_lng,
+        ls,
     }: {
         val_farmname: string;
         val_farmarea: string;
@@ -16,6 +21,7 @@
         val_farmcontact: string;
         farm_geop_lat: string;
         farm_geop_lng: string;
+        ls: I18nTranslateFunction;
     } = $props();
 </script>
 
@@ -26,7 +32,7 @@
         <FormLineLedger
             basis={{
                 id: `farm_location`,
-                label: `${$lls(`common.farm_location`)}`,
+                label: `${$ls(`common.farm_location`)}`,
                 display_value: `${farm_geop_lat}, ${farm_geop_lng}`,
             }}
         />
@@ -34,9 +40,9 @@
             bind:value={val_farmname}
             basis={{
                 id: `farm_name`,
-                label: `${$lls(`common.farm_name`)}`,
+                label: `${$ls(`common.farm_name`)}`,
                 input: {
-                    placeholder: `${$lls(`icu.enter_*`, { value: `${$lls(`common.farm_name`)}`.toLowerCase() })}`,
+                    placeholder: `${$ls(`icu.enter_*`, { value: `${$ls(`common.farm_name`)}`.toLowerCase() })}`,
                 },
             }}
         />
@@ -45,16 +51,16 @@
             bind:value_label_sel={val_farmarea_unit}
             basis={{
                 id: `farm_size`,
-                label: `${$lls(`common.farm_size`)}`,
+                label: `${$ls(`common.farm_size`)}`,
                 label_select: {
-                    label: `${$lls(`measurement.area.${val_farmarea_unit}_ab`)}`,
+                    label: `${$ls(`measurement.area.${val_farmarea_unit}_ab`)}`,
                     entries: area_units.map((i) => ({
                         value: i,
-                        label: `${$lls(`measurement.area.${i}`)}`,
+                        label: `${$ls(`measurement.area.${i}`)}`,
                     })),
                 },
                 input: {
-                    placeholder: `${`${$lls(`icu.enter_*`, { value: `${$lls(`common.farm_size`)}`.toLowerCase() })}`} ${`${$lls(`measurement.area.${val_farmarea_unit}_pl`)}`.toLowerCase()}`,
+                    placeholder: `${`${$ls(`icu.enter_*`, { value: `${$ls(`common.farm_size`)}`.toLowerCase() })}`} ${`${$ls(`measurement.area.${val_farmarea_unit}_pl`)}`.toLowerCase()}`,
                     field: form_fields.farm_size,
                 },
             }}
@@ -63,9 +69,9 @@
             bind:value={val_farmcontact}
             basis={{
                 id: `farm_contact`,
-                label: `${$lls(`common.farm_contact`)}`,
+                label: `${$ls(`common.farm_contact`)}`,
                 input: {
-                    placeholder: `${$lls(`icu.enter_*`, { value: `${$lls(`common.contact_name`)}`.toLowerCase() })}`,
+                    placeholder: `${$ls(`icu.enter_*`, { value: `${$ls(`common.contact_name`)}`.toLowerCase() })}`,
                 },
             }}
         />

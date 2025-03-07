@@ -1,20 +1,21 @@
 <script lang="ts">
-    import ButtonLabelDashed from "$lib/components/button/button-label-dashed.svelte";
     import {
+        ButtonLabelDashed,
         Fade,
         FarmsDisplayLiEl,
         GlyphButtonSimple,
         handle_err,
-        kv_init_page,
+        idb_init_page,
         LayoutPage,
         LayoutView,
-        lls,
         PageToolbar,
     } from "$root";
     import {
         type CallbackPromise,
         type CallbackPromiseGeneric,
         type CallbackRoute,
+        type I18nTranslateFunction,
+        type I18nTranslateLocale,
         type IViewBasis,
         type LcGeocodeCallback,
         type ResolveFarmInfo,
@@ -23,6 +24,8 @@
 
     let {
         basis,
+        ls,
+        locale,
     }: {
         basis: IViewBasis<{
             data?: ResolveFarmInfo[];
@@ -31,11 +34,13 @@
             lc_handle_farm_add: CallbackPromise;
             lc_handle_farm_view: CallbackPromiseGeneric<string>;
         }>;
+        ls: I18nTranslateFunction;
+        locale: I18nTranslateLocale;
     } = $props();
 
     onMount(async () => {
         try {
-            if (!basis.kv_init_prevent) await kv_init_page();
+            if (!basis.kv_init_prevent) await idb_init_page();
         } catch (e) {
             handle_err(e, `on_mount`);
         }
@@ -46,7 +51,7 @@
     <PageToolbar
         basis={{
             header: {
-                label: `${$lls(`common.farms`)}`,
+                label: `${$ls(`common.farms`)}`,
                 callback_route: basis.callback_route,
             },
         }}
@@ -56,7 +61,7 @@
                 <Fade>
                     <GlyphButtonSimple
                         basis={{
-                            label: `${$lls(`icu.add_*`, { value: `${$lls(`common.farm`)}` })}`,
+                            label: `${$ls(`icu.add_*`, { value: `${$ls(`common.farm`)}` })}`,
                             callback: async () => {
                                 await basis.lc_handle_farm_add();
                             },
@@ -73,6 +78,8 @@
                     basis={li}
                     lc_geocode={basis.lc_geocode}
                     lc_handle_farm_view={basis.lc_handle_farm_view}
+                    {ls}
+                    {locale}
                 />
             {/each}
         {:else}

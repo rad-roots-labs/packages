@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { liblocale, lls, Map, MapMarkerArea } from "$root";
+    import { Map, MapMarkerArea } from "$root";
     import {
         geol_lat_fmt,
         geol_lng_fmt,
@@ -8,6 +8,8 @@
         parse_tup_geop_point,
         type CallbackPromiseGeneric,
         type GeolocationPointTuple,
+        type I18nTranslateFunction,
+        type I18nTranslateLocale,
         type LcGeocodeCallback,
         type ResolveFarmInfo,
     } from "@radroots/util";
@@ -17,10 +19,14 @@
         basis,
         lc_geocode,
         lc_handle_farm_view,
+        ls,
+        locale,
     }: {
         basis: ResolveFarmInfo;
         lc_geocode: LcGeocodeCallback;
         lc_handle_farm_view: CallbackPromiseGeneric<string>;
+        ls: I18nTranslateFunction;
+        locale: I18nTranslateLocale;
     } = $props();
 
     let map: maplibregl.Map | undefined = $state(undefined);
@@ -48,7 +54,7 @@
             ? geol_lat_fmt(
                   basis.geolocation.point.coordinates[1],
                   `dms`,
-                  $liblocale,
+                  $locale,
                   3,
               )
             : ``,
@@ -59,7 +65,7 @@
             ? geol_lng_fmt(
                   basis.geolocation.point.coordinates[0],
                   `dms`,
-                  $liblocale,
+                  $locale,
                   3,
               )
             : ``,
@@ -82,7 +88,7 @@
                 class={`flex flex-row h-6 px-2 py-1 justify-center items-center bg-lime-400 rounded-lg`}
             >
                 <p class={`font-sans font-[700] text-white`}>
-                    {`${$lls(`common.farm`)}`}
+                    {`${$ls(`common.farm`)}`}
                 </p>
             </div>
         </div>

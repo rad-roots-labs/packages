@@ -4,23 +4,25 @@
         LayoutPage,
         LayoutView,
         PageToolbar,
-        lls,
     } from "$root";
     import {
         type CallbackPromise,
         type CallbackRoute,
+        type I18nTranslateFunction,
         type IViewBasis,
         type ResolveFarmProductInfo,
     } from "@radroots/util";
 
     let {
         basis,
+        ls,
     }: {
         basis: IViewBasis<{
             data: ResolveFarmProductInfo[];
             callback_route?: CallbackRoute<string>;
             lc_handle_farm_product_add: CallbackPromise;
         }>;
+        ls: I18nTranslateFunction;
     } = $props();
 </script>
 
@@ -28,7 +30,7 @@
     <PageToolbar
         basis={{
             header: {
-                label: `${$lls(`common.products`)}`,
+                label: `${$ls(`common.products`)}`,
                 callback_route: basis.callback_route || { route: `/farms` },
             },
         }}

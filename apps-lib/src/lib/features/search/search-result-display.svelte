@@ -1,8 +1,9 @@
 <script lang="ts">
-    import { Glyph, lls, SearchResultContainer } from "$root";
+    import { Glyph, SearchResultContainer } from "$root";
     import {
         ascii,
         type CallbackPromiseGeneric,
+        type I18nTranslateFunction,
         type ResolveGeolocationInfo,
         type ResolveProfileInfo,
         type SearchServiceResult,
@@ -10,6 +11,7 @@
 
     let {
         basis,
+        ls,
     }: {
         basis: {
             result: SearchServiceResult;
@@ -19,6 +21,7 @@
                 id: string;
             }>;
         };
+        ls: I18nTranslateFunction;
     } = $props();
 </script>
 
@@ -52,7 +55,7 @@
                     <p
                         class={`font-sans font-[900] text-[0.7rem] text-white uppercase`}
                     >
-                        {`${$lls(`common.location`)}`}
+                        {`${$ls(`common.location`)}`}
                     </p>
                 </div>
                 <p
@@ -68,7 +71,7 @@
                         <p
                             class={`font-sans font-[900] text-[0.7rem] text-white uppercase`}
                         >
-                            {`${$lls(`common.farm_land`)}`}
+                            {`${$ls(`common.farm_land`)}`}
                         </p>
                     </div>
                 {/if}
@@ -122,7 +125,7 @@
                     <p
                         class={`font-sans font-[900] text-[0.7rem] text-white uppercase`}
                     >
-                        {`${$lls(`common.profile`)}`}
+                        {`${$ls(`common.profile`)}`}
                     </p>
                 </div>
                 <p
@@ -137,7 +140,7 @@
                         class={`font-sans font-[900] text-[0.7rem] text-white uppercase`}
                     >
                         {#if basis.result.result_k === `name`}
-                            {`${$lls(`common.name`)}`}
+                            {`${$ls(`common.name`)}`}
                         {:else}
                             {`@todo`}
                         {/if}
@@ -193,7 +196,7 @@
                     <p
                         class={`font-sans font-[900] text-[0.7rem] text-white uppercase`}
                     >
-                        {`${$lls(`common.relay`)}`}
+                        {`${$ls(`common.relay`)}`}
                     </p>
                 </div>
                 <p
@@ -207,7 +210,7 @@
                     <p
                         class={`font-sans font-[900] text-[0.7rem] text-white uppercase`}
                     >
-                        {`${$lls(`common.url`)}`}
+                        {`${$ls(`common.url`)}`}
                     </p>
                 </div>
             </div>

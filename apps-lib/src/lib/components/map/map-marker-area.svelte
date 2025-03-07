@@ -1,11 +1,11 @@
 <script lang="ts">
     import { MapMarkerAreaDisplay } from "$root";
-    import { Marker, Popup } from "svelte-maplibre";
     import {
         type GeocoderReverseResult,
         type GeolocationPoint,
         type IMapMarkerArea,
     } from "@radroots/util";
+    import { Marker, Popup } from "svelte-maplibre";
 
     let {
         basis,

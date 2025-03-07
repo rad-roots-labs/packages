@@ -1,14 +1,17 @@
 <script lang="ts">
-    import { LayoutView, lls, NavigationTabs, PageToolbar } from "$root";
+    import { LayoutView, NavigationTabs, PageToolbar } from "$root";
+    import type { I18nTranslateFunction } from "@radroots/util";
 
     let notifications: any[] = [];
+
+    let { basis, ls }: { basis: {}; ls: I18nTranslateFunction } = $props();
 </script>
 
 <LayoutView>
     <PageToolbar
         basis={{
             header: {
-                label: `${$lls(`common.notifications`)} (${notifications.length})`,
+                label: `${$ls(`common.notifications`)} (${notifications.length})`,
             },
         }}
     />
@@ -22,7 +25,7 @@
         {:else}
             <div class={`flex flex-row w-full justify-center items-center`}>
                 <p class={`font-sans font-[500] text-layer-0-glyph capitalize`}>
-                    {`${$lls(`icu.no_*`, { value: `${$lls(`common.notifications`)}` })}`}
+                    {`${$ls(`icu.no_*`, { value: `${$ls(`common.notifications`)}` })}`}
                 </p>
             </div>
         {/if}

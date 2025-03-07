@@ -6,7 +6,6 @@
         LayoutTrellisLine,
         lib_fmt_price,
         lib_parse_currency_marker,
-        lls,
         Select,
     } from "$root";
     import {
@@ -14,11 +13,15 @@
         form_fields,
         mass_units,
         type ElementCallbackValue,
+        type I18nTranslateFunction,
+        type I18nTranslateLocale,
         type IIdOpt,
     } from "@radroots/util";
 
     let {
         basis,
+        ls,
+        locale,
         val_input_price = $bindable(``),
         val_sel_currency = $bindable(``),
         val_sel_quantity_unit = $bindable(``),
@@ -29,6 +32,8 @@
             input_placeholder?: string;
             callback_input?: ElementCallbackValue;
         };
+        ls: I18nTranslateFunction;
+        locale: I18nTranslateLocale;
         val_input_price: string;
         val_sel_currency: string;
         val_sel_quantity_unit: string;
@@ -61,9 +66,11 @@
                 callback: basis.callback_input,
                 callback_blur: async ({ el }) => {
                     if (!el.value) return;
-                    el.value = lib_fmt_price(el.value, val_sel_currency).slice(
-                        1,
-                    );
+                    el.value = lib_fmt_price(
+                        $locale,
+                        el.value,
+                        val_sel_currency,
+                    ).slice(1);
                     //@todo fmt handles 'en' only
                 },
             }}
@@ -83,7 +90,7 @@
                             entries: fiat_currencies.map((i) => ({
                                 value: i,
                                 label: basis.display_symbol
-                                    ? lib_parse_currency_marker(i)
+                                    ? lib_parse_currency_marker($locale, i)
                                     : i.toUpperCase(),
                             })),
                         },
@@ -107,7 +114,7 @@
                         {
                             entries: mass_units.map((i) => ({
                                 value: i,
-                                label: `${$lls(`measurement.mass.unit.${i}_ab`)}`.toLowerCase(),
+                                label: `${$ls(`measurement.mass.unit.${i}_ab`)}`.toLowerCase(),
                             })),
                         },
                     ],

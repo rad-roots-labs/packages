@@ -14,8 +14,6 @@
         Glyph,
         handle_err,
         LayoutView,
-        liblocale,
-        lls,
         PageToolbar,
     } from "$root";
     import {
@@ -29,6 +27,8 @@
         type GeocoderReverseResult,
         type GeolocationAddress,
         type GeolocationPoint,
+        type I18nTranslateFunction,
+        type I18nTranslateLocale,
         type IViewFarmsAddSubmission,
         type LcGeocodeCallback,
         type LcGeocodeCurrentCallback,
@@ -38,6 +38,8 @@
 
     let {
         basis,
+        ls,
+        locale,
     }: {
         basis: {
             callback_route?: CallbackRoute<string>;
@@ -48,6 +50,8 @@
                 data_s: IViewFarmsAddSubmission;
             }>;
         };
+        ls: I18nTranslateFunction;
+        locale: I18nTranslateLocale;
     } = $props();
 
     let loading = $state(false);
@@ -71,11 +75,11 @@
     });
 
     const farm_geop_lat = $derived(
-        map_geop ? geol_lat_fmt(map_geop.lat, `dms`, $liblocale, 3) : ``,
+        map_geop ? geol_lat_fmt(map_geop.lat, `dms`, $locale, 3) : ``,
     );
 
     const farm_geop_lng = $derived(
-        map_geop ? geol_lng_fmt(map_geop.lng, `dms`, $liblocale, 3) : ``,
+        map_geop ? geol_lng_fmt(map_geop.lng, `dms`, $locale, 3) : ``,
     );
 
     const farm_geolocation_address: GeolocationAddress | undefined = $derived(
@@ -149,7 +153,7 @@
                         <p
                             class={`font-sans font-[600] text-lg text-layer-0-glyph`}
                         >
-                            {`${$lls(`common.back`)}`}
+                            {`${$ls(`common.back`)}`}
                         </p>
                     </button>
                 </Fade>
@@ -161,7 +165,7 @@
                 }}
             >
                 <p class={`font-sans font-[600] text-lg text-layer-0-glyph-hl`}>
-                    {`${$lls(`common.details`)}`}
+                    {`${$ls(`common.details`)}`}
                 </p>
                 <Glyph
                     basis={{
@@ -191,6 +195,7 @@
             bind:val_farmarea_unit
             {farm_geop_lat}
             {farm_geop_lng}
+            {ls}
         />
     </Carousel>
 </LayoutView>
@@ -199,12 +204,12 @@
         <ButtonLayoutPair
             basis={{
                 continue: {
-                    label: `${$lls(`common.continue`)}`,
+                    label: `${$ls(`common.continue`)}`,
                     disabled: disabled_submit,
                     callback: handle_continue,
                 },
                 back: {
-                    label: `${$lls(`common.back`)}`,
+                    label: `${$ls(`common.back`)}`,
                     visible: $casl_i > 0,
                     callback: handle_back,
                 },

@@ -1,7 +1,7 @@
 import { browser } from "$app/environment";
 import { goto } from "$app/navigation";
 import { page } from "$app/state";
-import { liblocale, win_h, win_w } from "$root";
+import { win_h, win_w } from "$root";
 import type { ColorMode, ThemeKey } from "@radroots/theme";
 import { encode_qp_route, fmt_geometry_point_coords, fmt_price, parse_currency_marker, type CallbackRoute, type GeometryPoint, type IErrorCatchCallback } from "@radroots/util";
 import { get } from "svelte/store";
@@ -61,19 +61,16 @@ export const query_params_clear = async (): Promise<void> => {
     page.url && await goto(page.url.pathname, { replaceState: true })
 };
 
-export const lib_fmt_price = (value: string, currency: string): string => {
-    const $locale = get_store(liblocale);
-    return fmt_price($locale, value, currency);
+export const lib_fmt_price = (locale: string, value: string, currency: string): string => {
+    return fmt_price(locale, value, currency);
 };
 
-export const lib_parse_currency_marker = (currency: string): string => {
-    const $locale = get_store(liblocale);
-    return parse_currency_marker($locale, currency);
+export const lib_parse_currency_marker = (locale: string, currency: string): string => {
+    return parse_currency_marker(locale, currency);
 };
 
-export const lib_fmt_geometry_point_coords = (point: GeometryPoint): string => {
-    const $locale = get_store(liblocale);
-    return fmt_geometry_point_coords(point, $locale);
+export const lib_fmt_geometry_point_coords = (locale: string, point: GeometryPoint): string => {
+    return fmt_geometry_point_coords(point, locale);
 };
 
 export const view_effect = <T extends string>(view: T): void => {

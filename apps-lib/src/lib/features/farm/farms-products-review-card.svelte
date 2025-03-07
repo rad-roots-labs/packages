@@ -1,22 +1,22 @@
 <script lang="ts">
-    import {
-        app_lo,
-        Glyph,
-        ImagePath,
-        lib_parse_currency_marker,
-        lls,
-    } from "$root";
+    import { app_lo, Glyph, ImagePath, lib_parse_currency_marker } from "$root";
     import {
         ascii,
+        type I18nTranslateFunction,
+        type I18nTranslateLocale,
         type IViewFarmsProductsAddSubmission,
     } from "@radroots/util";
 
     let {
         basis,
+        ls,
+        locale,
     }: {
         basis: {
             data: IViewFarmsProductsAddSubmission | undefined;
         };
+        ls: I18nTranslateFunction;
+        locale: I18nTranslateLocale;
     } = $props();
 
     //@todo
@@ -65,13 +65,13 @@
                     class={`flex flex-row gap-[2px] justify-start items-center`}
                 >
                     <p class={`font-sans font-[600] text-xl text-th-black`}>
-                        {`${lib_parse_currency_marker(basis.data.price_currency)}${basis.data.price_amount}`}
+                        {`${lib_parse_currency_marker($locale, basis.data.price_currency)}${basis.data.price_amount}`}
                     </p>
                     <p class={`font-sans font-[600] text-xl text-th-black`}>
                         {`/`}
                     </p>
                     <p class={`font-sans font-[600] text-xl text-th-black`}>
-                        {`${$lls(`measurement.mass.unit.${basis.data.price_quantity_unit}_ab`)}`}
+                        {`${$ls(`measurement.mass.unit.${basis.data.price_quantity_unit}_ab`)}`}
                     </p>
                 </div>
             </div>
@@ -90,7 +90,7 @@
                     <p
                         class={`font-sans font-[600] text-lg text-layer-1-glyph`}
                     >
-                        {`${basis.data.quantity_amount} ${$lls(`measurement.mass.unit.${basis.data.quantity_unit}_ab`)} ${basis.data.quantity_label}`}
+                        {`${basis.data.quantity_amount} ${$ls(`measurement.mass.unit.${basis.data.quantity_unit}_ab`)} ${basis.data.quantity_label}`}
                     </p>
                 </div>
             </div>

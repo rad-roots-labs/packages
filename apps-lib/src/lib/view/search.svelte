@@ -3,11 +3,10 @@
         fmt_id,
         Glyph,
         handle_err,
+        idb_init_page,
         Input,
-        kv_init_page,
         LayoutPage,
         LayoutView,
-        lls,
         NavigationTabs,
         PageToolbar,
         SearchResultDisplay,
@@ -18,6 +17,7 @@
         SearchService,
         type CallbackPromise,
         type CallbackPromiseGeneric,
+        type I18nTranslateFunction,
         type IViewBasis,
         type IViewSearchData,
         type ResolveGeolocationInfo,
@@ -28,6 +28,7 @@
 
     let {
         basis,
+        ls,
     }: {
         basis: IViewBasis<{
             data: IViewSearchData;
@@ -38,6 +39,7 @@
                 id: string;
             }>;
         }>;
+        ls: I18nTranslateFunction;
     } = $props();
 
     $effect(() => {
@@ -51,7 +53,7 @@
     onMount(async () => {
         try {
             search_val = ``;
-            if (!basis.kv_init_prevent) await kv_init_page();
+            if (!basis.kv_init_prevent) await idb_init_page();
             if (basis.lc_on_mount) await basis.lc_on_mount();
             search_service = new SearchService(basis.data);
         } catch (e) {
@@ -76,7 +78,7 @@
 <LayoutView>
     <PageToolbar
         basis={{
-            header: { label: `${$lls(`common.search`)}` },
+            header: { label: `${$ls(`common.search`)}` },
             callback: basis.lc_handle_back,
         }}
     />
@@ -115,6 +117,7 @@
                         lc_handle_search_nostr_relay:
                             basis.lc_handle_search_nostr_relay,
                     }}
+                    {ls}
                 />
             {/each}
         </div>

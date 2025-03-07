@@ -1,7 +1,6 @@
 <script lang="ts">
     import {
         app_lo,
-        lls,
         TrellisDefaultLabel,
         TrellisInput,
         TrellisOffset,
@@ -9,7 +8,12 @@
         TrellisTitle,
         TrellisTouch,
     } from "$root";
-    import { fmt_cl, parse_layer, type ITrellis } from "@radroots/util";
+    import {
+        fmt_cl,
+        parse_layer,
+        type I18nTranslateFunction,
+        type ITrellis,
+    } from "@radroots/util";
     import type { Snippet } from "svelte";
 
     let {
@@ -17,11 +21,13 @@
         el_default,
         el_offset,
         el_append,
+        ls,
     }: {
         basis: ITrellis;
         el_default?: Snippet;
         el_offset?: Snippet;
         el_append?: Snippet;
+        ls: I18nTranslateFunction;
     } = $props();
 
     const hide_border_t = $derived(
@@ -80,7 +86,7 @@
                             ? basis.default_el.labels
                             : [
                                   {
-                                      label: `${$lls(`common.no_items_to_display`)}.`,
+                                      label: `${$ls(`common.no_items_to_display`)}.`,
                                   },
                               ]}
                     />

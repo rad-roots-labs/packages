@@ -1,12 +1,11 @@
 <script lang="ts">
-    import { lls } from "$lib/locale/i18n";
     import {
         FloatPageButton,
         Glyph,
         handle_err,
+        idb_init_page,
         ImagePath,
         ImageUploadAddPhoto,
-        kv_init_page,
     } from "$root";
     import {
         ascii,
@@ -14,6 +13,7 @@
         type CallbackPromiseFull,
         type CallbackPromiseGeneric,
         type CallbackPromiseReturn,
+        type I18nTranslateFunction,
         type IViewBasis,
         type LcPhotoAddCallback,
         type ResolveProfileInfo,
@@ -22,6 +22,7 @@
 
     let {
         basis,
+        ls,
         photo_path_opt = $bindable(``),
         loading_photo_upload = $bindable(false),
     }: {
@@ -36,6 +37,7 @@
             lc_handle_edit_profile_display_name: CallbackPromise;
             lc_handle_edit_profile_about: CallbackPromise;
         }>;
+        ls: I18nTranslateFunction;
         photo_path_opt: string;
         loading_photo_upload: boolean;
     } = $props();
@@ -45,7 +47,7 @@
 
     onMount(async () => {
         try {
-            if (!basis.kv_init_prevent) await kv_init_page();
+            if (!basis.kv_init_prevent) await idb_init_page();
             if (basis.lc_on_mount) await basis.lc_on_mount();
         } catch (e) {
             handle_err(e, `on_mount`);
@@ -106,6 +108,7 @@
         <div class={`flex flex-row justify-start items-center -translate-y-8`}>
             <ImageUploadAddPhoto
                 bind:photo_path={photo_path_opt}
+                {ls}
                 basis={{
                     lc_handle_photo_add: basis.lc_handle_photo_add,
                 }}
@@ -128,7 +131,7 @@
                     >
                         {basis.data?.name
                             ? basis.data.name
-                            : `+ ${`${$lls(`icu.add_*`, { value: `${$lls(`common.profile_name`)}` })}`}`}
+                            : `+ ${`${$ls(`icu.add_*`, { value: `${$ls(`common.profile_name`)}` })}`}`}
                     </p>
                 </button>
             </div>
@@ -151,7 +154,7 @@
                     >
                         {basis.data?.name
                             ? `@${basis.data.name}`
-                            : `+ ${`${$lls(`icu.add_*`, { value: `${$lls(`common.username`)}` })}`}`}
+                            : `+ ${`${$ls(`icu.add_*`, { value: `${$ls(`common.username`)}` })}`}`}
                     </p>
                 </button>
                 <p
@@ -185,7 +188,7 @@
                     >
                         {basis.data?.about
                             ? `@${basis.data.about}`
-                            : `+ ${`${$lls(`icu.add_*`, { value: `${$lls(`common.bio`)}` })}`}`}
+                            : `+ ${`${$ls(`icu.add_*`, { value: `${$ls(`common.bio`)}` })}`}`}
                     </p>
                 </button>
             </div>

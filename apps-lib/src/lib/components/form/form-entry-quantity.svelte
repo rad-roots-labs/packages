@@ -1,21 +1,16 @@
 <script lang="ts">
-    import {
-        EntryWrap,
-        fmt_id,
-        Input,
-        LayoutTrellisLine,
-        lls,
-        Select,
-    } from "$root";
+    import { EntryWrap, fmt_id, Input, LayoutTrellisLine, Select } from "$root";
     import {
         form_fields,
         mass_units,
         type ElementCallbackValue,
+        type I18nTranslateFunction,
         type IIdOpt,
     } from "@radroots/util";
 
     let {
         basis,
+        ls,
         val_input_quantity = $bindable(``),
         val_sel_quantity_unit = $bindable(``),
         val_sel_quantity_label = $bindable(``),
@@ -26,6 +21,7 @@
             input_placeholder?: string;
             callback_input?: ElementCallbackValue;
         };
+        ls: I18nTranslateFunction;
         val_input_quantity: string;
         val_sel_quantity_unit: string;
         val_sel_quantity_label: string;
@@ -72,7 +68,7 @@
                         {
                             entries: mass_units.map((i) => ({
                                 value: i,
-                                label: `${$lls(`measurement.mass.unit.${i}_ab`)}`.toLowerCase(),
+                                label: `${$ls(`measurement.mass.unit.${i}_ab`)}`.toLowerCase(),
                             })),
                         },
                     ],
@@ -91,7 +87,7 @@
                             entries: [
                                 {
                                     value: `bag`,
-                                    label: `${$lls(`common.bag`)}`.toLowerCase(),
+                                    label: `${$ls(`common.bag`)}`.toLowerCase(),
                                 },
                             ],
                         },

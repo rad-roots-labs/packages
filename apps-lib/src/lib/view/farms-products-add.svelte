@@ -21,7 +21,6 @@
         LayoutBottomButton,
         LayoutView,
         lib_fmt_geometry_point_coords,
-        lls,
         MapLocationSelectEnvelope,
         MarkerIndexedView,
         PageToolbar,
@@ -50,6 +49,8 @@
         type GeocoderReverseResult,
         type GeolocationAddress,
         type GeolocationPoint,
+        type I18nTranslateFunction,
+        type I18nTranslateLocale,
         type ISelectOption,
         type IViewBasis,
         type IViewFarmsProductsAddSubmission,
@@ -92,6 +93,8 @@
 
     let {
         basis,
+        ls,
+        locale,
     }: {
         basis: IViewBasis<{
             data: ResolveFarmInfo;
@@ -112,6 +115,8 @@
                 geolocation_id?: string;
             }>;
         }>;
+        ls: I18nTranslateFunction;
+        locale: I18nTranslateLocale;
     } = $props();
 
     let loading_submit = $state(false);
@@ -207,6 +212,7 @@
                               basis.data.geolocation.address,
                           ) ||
                           lib_fmt_geometry_point_coords(
+                              $locale,
                               basis.data.geolocation.point,
                           ) ||
                           ``,
@@ -288,7 +294,7 @@
             const geop = await basis.lc_geop_current();
             if (!geop) {
                 return void (await basis.lc_gui_alert(
-                    `${$lls(`icu.failure_*`, { value: `${$lls(`icu.reading_*`, { value: `${$lls(`common.geocode`)}`.toLowerCase() })}` })}`,
+                    `${$ls(`icu.failure_*`, { value: `${$ls(`icu.reading_*`, { value: `${$ls(`common.location`)}`.toLowerCase() })}` })}`,
                 ));
             }
             const geoc = await basis.lc_geocode(geop);
@@ -305,7 +311,7 @@
             const val = await idb.get(fmt_id(kv_id));
             if (!val)
                 return void basis.lc_gui_alert(
-                    `${$lls(`farm.product.validation.${kv_id}.required`)}`,
+                    `${$ls(`farm.product.validation.${kv_id}.required`)}`,
                 );
         }
         await casl_inc();
@@ -388,7 +394,7 @@
     <PageToolbar
         basis={{
             header: {
-                label: `${`${$lls(`common.farm`)}`} / ${`${$lls(`common.product`)}`}`,
+                label: `${`${$ls(`common.farm`)}`} / ${`${$ls(`common.product`)}`}`,
                 callback_route: basis.callback_route || { route: `/farms` },
             },
         }}
@@ -398,8 +404,8 @@
             <ButtonHorizontalPairSlide
                 bind:toggle={toggle_opt_addexisting}
                 basis={{
-                    label_l: `${$lls(`common.create_product`)}`,
-                    label_r: `${$lls(`common.add_from_existing`)}`,
+                    label_l: `${$ls(`common.create_product`)}`,
+                    label_r: `${$ls(`common.add_from_existing`)}`,
                 }}
             />
         </div>
@@ -412,8 +418,8 @@
                     loading: loading_submit,
                     label:
                         $casl_i === $casl_imax
-                            ? `${$lls(`common.post`)}`
-                            : `${$lls(`common.continue`)}`,
+                            ? `${$ls(`common.post`)}`
+                            : `${$ls(`common.continue`)}`,
                     callback: async () => {
                         handle_continue();
                     },
@@ -445,11 +451,12 @@
                 <FormEntrySelectInput
                     bind:val_sel={product_key_sel}
                     bind:val_sel_input={product_key_sel_input}
+                    {ls}
                     basis={{
                         id: `key`,
-                        entry_label: `${$lls(`common.product`)}`,
+                        entry_label: `${$ls(`common.product`)}`,
                         visible_input: product_key_sel_toggle,
-                        input_placeholder: `${$lls(`icu.enter_the_*`, { value: `${$lls(`icu.*_name`, { value: `${$lls(`common.product`)}` })}`.toLowerCase() })}`,
+                        input_placeholder: `${$ls(`icu.enter_the_*`, { value: `${$ls(`icu.*_name`, { value: `${$ls(`common.product`)}` })}`.toLowerCase() })}`,
                         input_field: form_fields.product_key,
                         callback_visible: handle_tradepr_key_toggle,
                         callback_select: async ({ value }) =>
@@ -457,16 +464,16 @@
                         select_entries: [
                             {
                                 value: ``,
-                                label: `${$lls(`icu.choose_*`, { value: `${$lls(`common.product`)}`.toLowerCase() })}`,
+                                label: `${$ls(`icu.choose_*`, { value: `${$ls(`common.product`)}`.toLowerCase() })}`,
                                 disabled: true,
                             },
                             ...trade_keys.map((i) => ({
                                 value: i,
-                                label: `${$lls(`trade.product.key.${i}.name`)}`,
+                                label: `${$ls(`trade.product.key.${i}.name`)}`,
                             })),
                             {
                                 value: `*other`,
-                                label: `${$lls(`common.other`)}`,
+                                label: `${$ls(`common.other`)}`,
                             },
                         ],
                     }}
@@ -474,11 +481,12 @@
                 <FormEntrySelectInput
                     bind:val_sel={product_process_sel}
                     bind:val_sel_input={product_process_sel_input}
+                    {ls}
                     basis={{
                         id: `process`,
-                        entry_label: `${$lls(`common.process`)}`,
+                        entry_label: `${$ls(`common.process`)}`,
                         visible_input: product_process_sel_toggle,
-                        input_placeholder: `${$lls(`icu.enter_the_*`, { value: `${$lls(`common.process`)}`.toLowerCase() })}`,
+                        input_placeholder: `${$ls(`icu.enter_the_*`, { value: `${$ls(`common.process`)}`.toLowerCase() })}`,
                         input_field: form_fields.product_process,
                         callback_visible: handle_product_process_toggle,
                         callback_select: async ({ value }) =>
@@ -487,27 +495,27 @@
                             ? [
                                   {
                                       value: ``,
-                                      label: `${$lls(`icu.choose_*`, { value: `${$lls(`common.process`)}`.toLowerCase() })}`,
+                                      label: `${$ls(`icu.choose_*`, { value: `${$ls(`common.process`)}`.toLowerCase() })}`,
                                       disabled: true,
                                   },
                                   ...product_process_list.map((i) => ({
                                       value: i,
-                                      label: `${$lls(`trade.product.key.${tradepr_key_parsed}.process.${i}`)}`,
+                                      label: `${$ls(`trade.product.key.${tradepr_key_parsed}.process.${i}`)}`,
                                   })),
                                   {
                                       value: `*other`,
-                                      label: `${$lls(`common.other`)}`,
+                                      label: `${$ls(`common.other`)}`,
                                   },
                               ]
                             : [
                                   {
                                       value: ``,
-                                      label: `${$lls(`icu.choose_*`, { value: `${$lls(`common.process`)}`.toLowerCase() })}`,
+                                      label: `${$ls(`icu.choose_*`, { value: `${$ls(`common.process`)}`.toLowerCase() })}`,
                                       disabled: true,
                                   },
                                   {
                                       value: `*choose-product`,
-                                      label: `${$lls(`icu.choose_*`, { value: `${$lls(`common.product`)}`.toLowerCase() })}`,
+                                      label: `${$ls(`icu.choose_*`, { value: `${$ls(`common.product`)}`.toLowerCase() })}`,
                                   },
                               ].concat(
                                   product_key_sel === `*other`
@@ -515,12 +523,12 @@
                                             ...trade.default.process.map(
                                                 (i) => ({
                                                     value: i,
-                                                    label: `${$lls(`trade.product.default.process.${i}`)}`,
+                                                    label: `${$ls(`trade.product.default.process.${i}`)}`,
                                                 }),
                                             ),
                                             {
                                                 value: `*other`,
-                                                label: `${$lls(`common.other`)}`,
+                                                label: `${$ls(`common.other`)}`,
                                             },
                                         ]
                                       : [],
@@ -531,9 +539,9 @@
                     bind:val={product_description_input}
                     basis={{
                         id: `description`,
-                        entry_label: `${$lls(`common.description`)}`,
+                        entry_label: `${$ls(`common.description`)}`,
                         field: form_fields.product_description,
-                        placeholder: `${$lls(`common.describe_your_product`)}`,
+                        placeholder: `${$ls(`common.describe_your_product`)}`,
                     }}
                 />
             </CarouselItem>
@@ -550,6 +558,8 @@
                     bind:val_input_price={product_price_input}
                     bind:val_sel_currency={product_price_cur_sel}
                     bind:val_sel_quantity_unit={product_price_qty_unit_sel}
+                    {ls}
+                    {locale}
                     basis={{
                         id: `price`,
                         entry_label: `price`,
@@ -560,6 +570,7 @@
                     bind:val_input_quantity={product_quantity_input}
                     bind:val_sel_quantity_unit={product_quantity_unit_sel}
                     bind:val_sel_quantity_label={product_quantity_label_sel}
+                    {ls}
                     basis={{
                         id: `quantity`,
                         entry_label: `quantity`,
@@ -572,19 +583,19 @@
                     bind:val={product_location_sel}
                     basis={{
                         id: `location`,
-                        entry_label: `${$lls(`common.location`)}`,
+                        entry_label: `${$ls(`common.location`)}`,
                         callback: async ({ value }) =>
                             await handle_product_location_sel_map(value),
                         entries: tradepr_lgc_map_geoc
                             ? [
                                   {
                                       value: ``,
-                                      label: `${$lls(`icu.choose_*`, { value: `${$lls(`common.location`)}`.toLowerCase() })}`,
+                                      label: `${$ls(`icu.choose_*`, { value: `${$ls(`common.location`)}`.toLowerCase() })}`,
                                       disabled: true,
                                   },
                                   {
                                       value: `*map`,
-                                      label: `${$lls(`icu.choose_on_*`, { value: `${$lls(`common.map`)}`.toLowerCase() })}`,
+                                      label: `${$ls(`icu.choose_on_*`, { value: `${$ls(`common.map`)}`.toLowerCase() })}`,
                                   },
                                   {
                                       value: `*map-location`,
@@ -596,14 +607,14 @@
                             : [
                                   {
                                       value: ``,
-                                      label: `${$lls(`icu.choose_*`, { value: `${$lls(`common.location`)}`.toLowerCase() })}`,
+                                      label: `${$ls(`icu.choose_*`, { value: `${$ls(`common.location`)}`.toLowerCase() })}`,
                                       disabled: true,
                                   },
                                   ...entries_farm_location,
                                   ...entries_farm_lots_locations,
                                   {
                                       value: `*map`,
-                                      label: `${$lls(`icu.choose_on_*`, { value: `${$lls(`common.map`)}`.toLowerCase() })}`,
+                                      label: `${$ls(`icu.choose_on_*`, { value: `${$ls(`common.map`)}`.toLowerCase() })}`,
                                   },
                               ],
                     }}
@@ -615,6 +626,8 @@
                         basis={{
                             data: data_s,
                         }}
+                        {ls}
+                        {locale}
                     />
                 </div>
             </CarouselItem>

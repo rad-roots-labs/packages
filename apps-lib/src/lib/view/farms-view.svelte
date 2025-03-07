@@ -6,8 +6,6 @@
         handle_err,
         LayoutPage,
         LayoutView,
-        liblocale,
-        lls,
         Map,
         MapMarkerArea,
         PageToolbar,
@@ -21,6 +19,8 @@
         type CallbackPromiseGeneric,
         type CallbackRoute,
         type GeolocationPointTuple,
+        type I18nTranslateFunction,
+        type I18nTranslateLocale,
         type IViewBasis,
         type LcGeocodeCallback,
         type ResolveFarmInfo,
@@ -29,6 +29,8 @@
 
     let {
         basis,
+        ls,
+        locale,
     }: {
         basis: IViewBasis<{
             data: ResolveFarmInfo;
@@ -38,6 +40,8 @@
             lc_handle_farm_products_view: CallbackPromiseGeneric<string>;
             lc_handle_farm_orders_view: CallbackPromiseGeneric<string>;
         }>;
+        ls: I18nTranslateFunction;
+        locale: I18nTranslateLocale;
     } = $props();
 
     let map: maplibregl.Map | undefined = $state(undefined);
@@ -68,7 +72,7 @@
             ? geol_lat_fmt(
                   basis.data.geolocation.point.coordinates[1],
                   `dms`,
-                  $liblocale,
+                  $locale,
                   3,
               )
             : ``,
@@ -79,7 +83,7 @@
             ? geol_lng_fmt(
                   basis.data.geolocation.point.coordinates[0],
                   `dms`,
-                  $liblocale,
+                  $locale,
                   3,
               )
             : ``,
@@ -90,7 +94,7 @@
     <PageToolbar
         basis={{
             header: {
-                label: `${$lls(`common.farms`)} / ${basis.data.name || ``}`,
+                label: `${$ls(`common.farms`)} / ${basis.data.name || ``}`,
                 callback_route: basis.callback_route,
             },
         }}

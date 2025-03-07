@@ -1,15 +1,20 @@
 <script lang="ts">
-    import { Glyph, lls } from "$root";
-    import type { LcPhotoAddCallback } from "@radroots/util";
+    import { Glyph } from "$root";
+    import type {
+        I18nTranslateFunction,
+        LcPhotoAddCallback,
+    } from "@radroots/util";
 
     let {
         basis,
+        ls,
         photo_path = $bindable(``),
     }: {
         basis: {
             lc_handle_photo_add: LcPhotoAddCallback;
         };
         photo_path: string;
+        ls: I18nTranslateFunction;
     } = $props();
 </script>
 
@@ -34,7 +39,7 @@
             <p
                 class={`font-arch font-[600] text-sm text-layer-0-glyph capitalize`}
             >
-                {`${$lls(`icu.add_*`, { value: `${$lls(`common.photo`)}` })}`}
+                {`${$ls(`icu.add_*`, { value: `${$ls(`common.photo`)}` })}`}
             </p>
         </div>
     </button>

@@ -90,7 +90,6 @@ export { default as FarmsDisplayLiEl } from "./features/farm/farms-display-li-el
 export { default as FarmsProductsReviewCard } from "./features/farm/farms-products-review-card.svelte"
 export { default as SearchResultContainer } from "./features/search/search-result-container.svelte"
 export { default as SearchResultDisplay } from "./features/search/search-result-display.svelte"
-export * from "./locale/i18n.js"
 export * from "./store/app.js"
 export * from "./store/client.js"
 export * from "./store/component.js"
@@ -110,3 +109,4 @@ export { default as Notifications } from "./view/notifications.svelte"
 export { default as Profile } from "./view/profile.svelte"
 export { default as Search } from "./view/search.svelte"
 export { default as Settings } from "./view/settings.svelte"
+

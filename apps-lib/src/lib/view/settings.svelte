@@ -2,10 +2,9 @@
     import {
         app_thc,
         handle_err,
-        kv_init_page,
+        idb_init_page,
         LayoutTrellis,
         LayoutView,
-        lls,
         PageToolbar,
         Trellis,
     } from "$root";
@@ -13,6 +12,7 @@
         ascii,
         type CallbackPromise,
         type CallbackPromiseGeneric,
+        type I18nTranslateFunction,
         type ISelectOption,
         type IViewBasis,
     } from "@radroots/util";
@@ -20,17 +20,19 @@
 
     let {
         basis,
+        ls,
     }: {
         basis: IViewBasis<{
             lc_color_mode: CallbackPromiseGeneric<ISelectOption<string>>;
             lc_settings_nostr: CallbackPromise;
             lc_logout: CallbackPromise;
         }>;
+        ls: I18nTranslateFunction;
     } = $props();
 
     onMount(async () => {
         try {
-            if (!basis.kv_init_prevent) await kv_init_page();
+            if (!basis.kv_init_prevent) await idb_init_page();
         } catch (e) {
             handle_err(e, `on_mount`);
         }
@@ -41,12 +43,13 @@
     <PageToolbar
         basis={{
             header: {
-                label: `${$lls(`common.settings`)}`,
+                label: `${$ls(`common.settings`)}`,
             },
         }}
     />
     <LayoutTrellis>
         <Trellis
+            {ls}
             basis={{
                 layer: 1,
                 title: {
@@ -59,7 +62,7 @@
                             label: {
                                 left: [
                                     {
-                                        value: `${$lls(`common.color_mode`)}`,
+                                        value: `${$ls(`common.color_mode`)}`,
                                         classes: `capitalize`,
                                     },
                                 ],
@@ -77,16 +80,16 @@
                                         entries: [
                                             {
                                                 value: ascii.bullet,
-                                                label: `${$lls(`icu.choose_*`, { value: `${$lls(`common.color_mode`)}`.toLowerCase() })}`,
+                                                label: `${$ls(`icu.choose_*`, { value: `${$ls(`common.color_mode`)}`.toLowerCase() })}`,
                                                 disabled: true,
                                             },
                                             {
                                                 value: `light`,
-                                                label: `${$lls(`common.light`)}`,
+                                                label: `${$ls(`common.light`)}`,
                                             },
                                             {
                                                 value: `dark`,
-                                                label: `${$lls(`common.dark`)}`,
+                                                label: `${$ls(`common.dark`)}`,
                                             },
                                         ],
                                     },
@@ -104,6 +107,7 @@
             }}
         />
         <Trellis
+            {ls}
             basis={{
                 layer: 1,
                 list: [
@@ -113,7 +117,7 @@
                             label: {
                                 left: [
                                     {
-                                        value: `${$lls(`common.logout`)}`,
+                                        value: `${$ls(`common.logout`)}`,
                                         classes: `capitalize`,
                                     },
                                 ],

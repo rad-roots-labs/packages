@@ -6,7 +6,6 @@
         LayoutTrellisLine,
         lib_fmt_price,
         lib_parse_currency_marker,
-        lls,
         Select,
     } from "$root";
     import {
@@ -15,10 +14,14 @@
         num_str,
         type ElementCallbackValue,
         type FormField,
+        type I18nTranslateFunction,
+        type I18nTranslateLocale,
     } from "@radroots/util";
 
     let {
         basis,
+        ls,
+        locale,
         val_input_price = $bindable(``),
         val_sel_currency = $bindable(``),
         val_sel_qty_unit = $bindable(``),
@@ -28,6 +31,8 @@
             input_field?: FormField;
             callback_input: ElementCallbackValue;
         };
+        ls: I18nTranslateFunction;
+        locale: I18nTranslateLocale;
         val_input_price: string;
         val_sel_currency: string;
         val_sel_qty_unit: string;
@@ -39,7 +44,7 @@
 <LayoutTrellisLine
     basis={{
         label: {
-            value: `${$lls(`icu.*_price`, { value: `${$lls(`common.product`)}` })} (${val_sel_currency}/${`${$lls(`measurement.mass.unit.${val_sel_qty_unit}_ab`)}`})`,
+            value: `${$ls(`icu.*_price`, { value: `${$ls(`common.product`)}` })} (${val_sel_currency}/${`${$ls(`measurement.mass.unit.${val_sel_qty_unit}_ab`)}`})`,
         },
     }}
 >
@@ -61,7 +66,7 @@
                         {
                             entries: fiat_currencies.map((i) => ({
                                 value: `${i}`,
-                                label: lib_parse_currency_marker(i),
+                                label: lib_parse_currency_marker($locale, i),
                             })),
                         },
                     ],
@@ -74,14 +79,16 @@
                 id: id ? fmt_id(`${id}_input_price`) : undefined,
                 layer: 1,
                 sync: true,
-                placeholder: `${$lls(`icu.enter_the_*`, { value: `${$lls(`common.price`)}`.toLowerCase() })}`,
+                placeholder: `${$ls(`icu.enter_the_*`, { value: `${$ls(`common.price`)}`.toLowerCase() })}`,
                 field: basis.input_field,
                 callback: basis.callback_input,
                 callback_blur: async ({ el }) => {
                     if (!el.value) return;
-                    el.value = lib_fmt_price(el.value, val_sel_currency).slice(
-                        1,
-                    );
+                    el.value = lib_fmt_price(
+                        $locale,
+                        el.value,
+                        val_sel_currency,
+                    ).slice(1);
                     //@todo fmt handles 'en' only
                 },
             }}
@@ -102,7 +109,7 @@
                         {
                             entries: mass_units.map((i) => ({
                                 value: i,
-                                label: `${$lls(`measurement.mass.unit.${i}_ab`)}`.toLowerCase(),
+                                label: `${$ls(`measurement.mass.unit.${i}_ab`)}`.toLowerCase(),
                             })),
                         },
                     ],
