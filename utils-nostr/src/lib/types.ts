@@ -1,6 +1,6 @@
 import { type EventTemplate as NostrToolsEventTemplate } from "nostr-tools";
 
-export type NostrMetadataTmp = {
+export type NostrMetadata = {
     name?: string;
     display_name?: string;
     about?: string;
