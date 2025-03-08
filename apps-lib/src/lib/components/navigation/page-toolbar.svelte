@@ -15,7 +15,7 @@
 </script>
 
 <div
-    class={`flex flex-row min-h-nav_page_toolbar_${$app_lo} h-nav_page_toolbar_${$app_lo} w-full px-6 justify-between items-center`}
+    class={`flex flex-row min-h-nav_page_toolbar_${$app_lo} h-nav_page_toolbar_${$app_lo} w-full px-6 justify-between items-end`}
 >
     <button
         class={`flex flex-row gap-2 justify-start items-center`}

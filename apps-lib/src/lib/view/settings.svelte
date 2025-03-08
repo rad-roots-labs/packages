@@ -14,6 +14,7 @@
         type CallbackPromiseGeneric,
         type I18nTranslateFunction,
         type ISelectOption,
+        type ITrellisKind,
         type IViewBasis,
     } from "@radroots/util";
     import { onMount } from "svelte";
@@ -23,6 +24,7 @@
         ls,
     }: {
         basis: IViewBasis<{
+            trellis_2?: (ITrellisKind | undefined)[];
             lc_color_mode: CallbackPromiseGeneric<ISelectOption<string>>;
             lc_settings_nostr: CallbackPromise;
             lc_logout: CallbackPromise;
@@ -110,29 +112,7 @@
             {ls}
             basis={{
                 layer: 1,
-                list: [
-                    {
-                        hide_active: true,
-                        touch: {
-                            label: {
-                                left: [
-                                    {
-                                        value: `${$ls(`common.logout`)}`,
-                                        classes: `capitalize`,
-                                    },
-                                ],
-                            },
-                            end: {
-                                glyph: {
-                                    key: `caret-right`,
-                                },
-                            },
-                            callback: async () => {
-                                await basis.lc_logout();
-                            },
-                        },
-                    },
-                ],
+                list: basis.trellis_2,
             }}
         />
     </LayoutTrellis>

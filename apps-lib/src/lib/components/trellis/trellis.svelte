@@ -150,3 +150,6 @@
         </div>
     {/if}
 </div>
+<div
+    class={`hidden group-first:border-t-0 group-first:border-t-line group-first:border-b-0 group-first:border-b-line`}
+></div>
