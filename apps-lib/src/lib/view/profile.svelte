@@ -34,7 +34,9 @@
             data: IViewProfileData;
             loading_photo_upload: boolean;
             loading_photo_upload_open: boolean;
-            lc_handle_back: CallbackPromise;
+            lc_handle_back: CallbackPromiseGeneric<{
+                is_photo_existing: boolean;
+            }>;
             lc_handle_photo_add: LcPhotoAddCallback;
             lc_handle_photo_options: CallbackPromise;
             lc_fs_read_bin: CallbackPromiseFull<string, Uint8Array | undefined>;
@@ -97,7 +99,11 @@
             basis={{
                 glyph: `arrow-left`,
                 loading: basis.loading_photo_upload,
-                callback: basis.lc_handle_back,
+                callback: async () => {
+                    await basis.lc_handle_back({
+                        is_photo_existing: photo_overlay_visible,
+                    });
+                },
             }}
         />
     </FloatPage>
