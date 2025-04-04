@@ -1,3 +1,5 @@
+import { type CallbackPromise } from "./types";
+
 export const ascii = {
     bullet: '•',
     dash: `—`,
@@ -28,7 +30,12 @@ export const str_trunc = (val: string, max_length: number = 28): string => {
     return `${val.slice(0, max_length - 3)}...`;
 };
 
-export const exe_iter = async (callback: () => Promise<void>, num: number = 1, delay: number = 400): Promise<void> => {
+export const str_capitalize_words = (val?: string): string => {
+    if (!val) return ``;
+    return val.split(` `).map(i => i ? `${i[0].toUpperCase()}${i.slice(1)}` : ``).filter(i => !!i).join(` `);
+};
+
+export const exe_iter = async (callback: CallbackPromise, num: number = 1, delay: number = 400): Promise<void> => {
     try {
         const iter_fn = (count: number) => {
             if (count > 0) {
