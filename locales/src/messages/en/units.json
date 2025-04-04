@@ -3,11 +3,11 @@
         "ac": "Acre",
         "ac_ab": "Ac.",
         "ft2": "Square foot",
-        "ft2_ab": "ft²",
+        "ft2_ab": "Sq. Ft.",
         "ha": "Hectare",
         "ha_ab": "Ha.",
         "m2": "Square metre",
-        "m2_ab": "m²"
+        "m2_ab": "Sq. M."
     },
     "length": {
         "ft": "Foot",
@@ -18,13 +18,13 @@
     "mass": {
         "unit": {
             "g": "Gram",
-            "g_ab": "g.",
+            "g_ab": "G.",
             "g_pl": "Grams",
             "kg": "Kilogram",
-            "kg_ab": "kg.",
+            "kg_ab": "Kg.",
             "kg_pl": "Kilograms",
             "lb": "Pound",
-            "lb_ab": "lb.",
+            "lb_ab": "Lb.",
             "lb_pl": "Pounds"
         }
     }

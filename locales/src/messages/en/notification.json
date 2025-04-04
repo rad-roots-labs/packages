@@ -1,0 +1,18 @@
+{
+    "device": {
+        "reset": "You are about to reset this device, which will erase all data including keys, profiles, and personal files",
+        "reset_complete": "The device has been reset"
+    },
+    "init": {
+        "greeting_header": "Welcome to Radroots!",
+        "greeting_subheader": "Your device will be configured by the setup wizard",
+        "no_profile_option": "Your profile will be created without a name. You can change this later in Settings > Profile",
+        "on_complete": "Success. Your device was configured. To view or change your configuration go to Settings > Profile",
+        "on_first_load": "Notifications are enabled"
+    },
+    "profile": {
+        "update_name_confirmation": "Updating your username will result in public links on your profile being updated",
+        "handle_back_with_selected_photo_no_existing": "Do you want to use this photo or leave the page?",
+        "handle_back_with_selected_photo": "Do you want to use this photo or keep your existing one?"
+    }
+}
