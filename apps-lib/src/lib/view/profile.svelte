@@ -1,8 +1,4 @@
 <script lang="ts">
-    import ButtonRoundNav from "$lib/components/button/button-round-nav.svelte";
-    import FloatPage from "$lib/components/float/float-page.svelte";
-    import ImageBlob from "$lib/components/lib/image-blob.svelte";
-    import SelectMenu from "$lib/components/lib/select-menu.svelte";
     import {
         Glyph,
         handle_err,
@@ -10,6 +6,11 @@
         ImagePath,
         ImageUploadAddPhoto,
         NavigationTabs,
+        SelectMenu,
+        ImageBlob,
+        FloatPage,
+        ButtonRoundNav,
+        type IViewOnDestroy,
         type IViewProfileData,
         type ViewProfileEditFieldKey,
     } from "$root";
@@ -20,7 +21,6 @@
         type CallbackPromiseGeneric,
         type I18nTranslateFunction,
         type IViewBasis,
-        type IViewOnDestroy,
         type LcPhotoAddCallback,
     } from "@radroots/util";
     import { onDestroy, onMount } from "svelte";

@@ -50,12 +50,12 @@
         "@nostr-dev-kit/ndk": "^2.11.0",
         "@nostr-dev-kit/ndk-cache-dexie": "^2.5.9",
         "@nostr-dev-kit/ndk-svelte": "^2.4.0",
-        "@radroots/nostr-util": "workspace:*",
         "@radroots/locales": "workspace:*",
+        "@radroots/nostr-util": "workspace:*",
         "@radroots/theme": "workspace:*",
         "@radroots/util": "workspace:*",
-        "svelte-maplibre": "workspace:*",
         "luxon": "^3.5.0",
+        "svelte-maplibre": "1.0.0-next.12",
         "sveltekit-search-params": "^3.0.0"
     }
 }

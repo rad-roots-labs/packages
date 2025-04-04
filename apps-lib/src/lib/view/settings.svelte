@@ -10,7 +10,6 @@
     } from "$root";
     import {
         ascii,
-        type CallbackPromise,
         type CallbackPromiseGeneric,
         type I18nTranslateFunction,
         type ISelectOption,
@@ -26,8 +25,6 @@
         basis: IViewBasis<{
             trellis_2?: (ITrellisKind | undefined)[];
             lc_color_mode: CallbackPromiseGeneric<ISelectOption<string>>;
-            lc_settings_nostr: CallbackPromise;
-            lc_logout: CallbackPromise;
         }>;
         ls: I18nTranslateFunction;
     } = $props();
