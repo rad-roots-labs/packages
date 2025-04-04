@@ -1,5 +1,3 @@
-import { FormField } from "$root";
-
 export const util_rxp = {
     product_key: /^[A-Za-z_]+$/,
     product_key_ch: /^[A-Za-z_]$/,
@@ -67,6 +65,10 @@ export type FormFieldsKey =
     | `contact_name`
     | `profile_name`
 
+export type FormField = {
+    validate: RegExp;
+    charset: RegExp;
+};
 
 export const form_fields: Record<FormFieldsKey, FormField> = {
     profile_name: {

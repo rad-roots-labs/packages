@@ -1,7 +1,11 @@
-import { GeolocationPointTuple, GeometryPoint, ResolveAddressInfo, ResolveGeometryPoint } from "$root";
+import { GeolocationPointTuple, GeometryPoint } from "$root";
 import { decodeBase32, encodeBase32 } from "geohashing";
 
-export type GeolocationAddress = Omit<ResolveAddressInfo, "id" | "created_at" | "updated_at">;
+export type GeolocationAddress = {
+    primary: string;
+    admin: string;
+    country: string;
+};
 
 export type GeolocationPoint = {
     lat: number;
@@ -75,13 +79,13 @@ export const parse_geol_coords = (number: number): number => {
     return Math.round(number * 1e7) / 1e7;
 };
 
-export const parse_geolocation_address = (addr?: ResolveAddressInfo): GeolocationAddress | undefined => {
+export const parse_geolocation_address = (addr?: GeolocationAddress): GeolocationAddress | undefined => {
     if (!addr) return undefined;
     const { primary, admin, country } = addr;
     return { primary, admin, country };
 };
 
-export const parse_geolocation_point = (point?: ResolveGeometryPoint): GeolocationPoint | undefined => {
+export const parse_geolocation_point = (point?: GeometryPoint): GeolocationPoint | undefined => {
     if (!point) return undefined;
     return {
         lat: point.coordinates[1],
@@ -100,11 +104,11 @@ export const fmt_geocode_address = (geoc: GeocoderReverseResult): string => {
     return addr ? `${addr.primary}, ${addr.admin}, ${addr.country}` : ``;
 };
 
-export const fmt_geolocation_address = (addr: ResolveAddressInfo): string => {
+export const fmt_geolocation_address = (addr: GeolocationAddress): string => {
     return `${addr.primary}, ${addr.admin}, ${addr.country}`;
 };
 
-export const fmt_geometry_point_coords = (point: ResolveGeometryPoint, locale: string): string => {
+export const fmt_geometry_point_coords = (point: GeometryPoint, locale: string): string => {
     const lat = geol_lat_fmt(point.coordinates[0], `dms`, locale, 3);
     const lng = geol_lng_fmt(point.coordinates[1], `dms`, locale, 3);
     return `${lat}, ${lng}`;

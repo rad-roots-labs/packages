@@ -1,5 +1,3 @@
-import { CallbackPromise } from "$root";
-
 export const ascii = {
     bullet: '•',
     dash: `—`,
@@ -30,7 +28,7 @@ export const str_trunc = (val: string, max_length: number = 28): string => {
     return `${val.slice(0, max_length - 3)}...`;
 };
 
-export const exe_iter = async (callback: CallbackPromise, num: number = 1, delay: number = 400): Promise<void> => {
+export const exe_iter = async (callback: () => Promise<void>, num: number = 1, delay: number = 400): Promise<void> => {
     try {
         const iter_fn = (count: number) => {
             if (count > 0) {

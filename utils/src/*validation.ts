@@ -1,23 +1,14 @@
-import { GeolocationAddress, GeolocationPoint, parse_int, ResolveEnumArea_Unit, ResolveEnumQuantity_Unit, util_rxp } from "$root";
+import { GeolocationAddress, GeolocationPoint, parse_int, util_rxp } from "$root";
 import { z } from "zod";
 
-export const vunion_area_unit: z.ZodUnion<[
-    z.ZodLiteral<ResolveEnumArea_Unit>,
-    z.ZodLiteral<ResolveEnumArea_Unit>,
-    z.ZodLiteral<ResolveEnumArea_Unit>,
-    z.ZodLiteral<ResolveEnumArea_Unit>,
-]> = z.union([
+export const vu_area_unit = z.union([
     z.literal(`ac`),
     z.literal(`ft2`),
     z.literal(`ha`),
     z.literal(`m2`),
 ]);
 
-export const vunion_mass_unit: z.ZodUnion<[
-    z.ZodLiteral<ResolveEnumQuantity_Unit>,
-    z.ZodLiteral<ResolveEnumQuantity_Unit>,
-    z.ZodLiteral<ResolveEnumQuantity_Unit>,
-]> = z.union([
+export const vu_mass_unit = z.union([
     z.literal(`kg`),
     z.literal(`lb`),
     z.literal(`g`),

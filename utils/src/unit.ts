@@ -1,10 +1,10 @@
-import type { vunion_area_unit, vunion_mass_unit } from "$root";
+import type { vu_area_unit, vu_mass_unit } from "$root";
 import { z } from "zod";
 
-export type AreaUnit = z.infer<typeof vunion_area_unit>;
+export type AreaUnit = z.infer<typeof vu_area_unit>;
 export const area_units: AreaUnit[] = [`ac`, `ha`, `ft2`, `m2`] as const;
 
-export type MassUnit = z.infer<typeof vunion_mass_unit>;
+export type MassUnit = z.infer<typeof vu_mass_unit>;
 export const mass_units: MassUnit[] = [`kg`, `lb`, `g`] as const;
 
 export function parse_mass_unit_default(val?: string): MassUnit {

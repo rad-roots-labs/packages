@@ -1,6 +1,8 @@
 import type { GeometryCardinalDirection } from "$root";
 
 export type GlyphKey = |
+    `video-camera` |
+    `device-mobile-camera` |
     `crop` |
     `map-trifold` |
     `trash-simple` |
