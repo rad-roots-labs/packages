@@ -1,6 +1,6 @@
-import { INostrEventEventSign, INostrEventService, INostrEventServiceFormatTagsBasisNip99, INostrEventServiceNeventEncode, lib_nostr_event_sign, lib_nostr_event_sign_attest, lib_nostr_event_verify, lib_nostr_event_verify_serialized, lib_nostr_nevent_encode, NostrEventTagClient, NostrEventTagLocation, NostrEventTagMediaUpload, NostrEventTagPrice, NostrEventTagQuantity } from "$root";
-import { type NDKEvent } from "@nostr-dev-kit/ndk";
-import ngeotags, { type GeoTags as NostrGeotagsGeotags, type InputData as NostrGeotagsInputData } from "nostr-geotags";
+import { INostrEventEventSign, INostrEventService, INostrEventServiceFormatTagsBasisNip99, INostrEventServiceNeventEncode, lib_nostr_event_sign, lib_nostr_event_sign_attest, lib_nostr_event_verify, lib_nostr_event_verify_serialized, lib_nostr_nevent_encode, ndk_event, NostrEventTagClient, NostrEventTagLocation, NostrEventTagMediaUpload, NostrEventTagPrice, NostrEventTagQuantity, NostrMetadata } from "$root";
+import NDK, { NDKKind, type NDKEvent } from "@nostr-dev-kit/ndk";
+import { ngeotags, type GeoTags as NostrGeotagsGeotags, type InputData as NostrGeotagsInputData } from "nostr-geotags";
 import { type NostrEvent as NostrToolsEvent } from "nostr-tools";
 
 export class NostrEventService implements INostrEventService {
@@ -13,7 +13,6 @@ export class NostrEventService implements INostrEventService {
         const tag = [`price`, opts.amt, opts.currency, opts.qty_amt, opts.qty_unit];
         return tag;
     };
-
 
     private fmt_tag_quantity = (opts: NostrEventTagQuantity): string[] => {
         const tag = [`quantity`, opts.amt, opts.unit];
@@ -93,4 +92,34 @@ export class NostrEventService implements INostrEventService {
     public nevent_encode = (opts: INostrEventServiceNeventEncode): string => {
         return lib_nostr_nevent_encode(opts);
     };
+
+    public metadata = async ($ndk: NDK, opts: NostrMetadata): Promise<NDKEvent | undefined> => {
+        const $ndk_user = await $ndk.signer?.user();
+        if (!$ndk_user) return undefined;
+        const ev = await ndk_event({
+            $ndk,
+            $ndk_user,
+            basis: {
+                kind: NDKKind.Metadata,
+                content: JSON.stringify(opts),
+            },
+        });
+        return ev;
+    }
+
+    public classified = async ($ndk: NDK, opts: INostrEventServiceFormatTagsBasisNip99): Promise<NDKEvent | undefined> => {
+        const $ndk_user = await $ndk.signer?.user();
+        if (!$ndk_user) return undefined;
+        const ev = await ndk_event({
+            $ndk,
+            $ndk_user,
+            basis: {
+                kind: NDKKind.Classified,
+                content: ``,
+                tags: this.fmt_tags_basis_nip99(opts),
+            },
+        });
+        return ev;
+    }
 }
+

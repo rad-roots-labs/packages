@@ -29,7 +29,7 @@
         "@noble/curves": "^1.6.0",
         "@noble/hashes": "^1.4.0",
         "@nostr-dev-kit/ndk": "^2.11.0",
-        "nostr-geotags": "^0.7.1",
+        "nostr-geotags": "workspace:*",
         "nostr-tools": "^2.10.4",
         "uuid": "^10.0.0"
     }

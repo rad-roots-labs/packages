@@ -1,5 +1,5 @@
-import type { INostrEventEventSign } from "$root";
-import { NDKEvent } from "@nostr-dev-kit/ndk";
+import type { INostrEventEventSign, NostrMetadata } from "$root";
+import NDK, { NDKEvent } from "@nostr-dev-kit/ndk";
 import { type NostrEvent as NostrToolsEvent } from "nostr-tools";
 
 export type INostrEventServiceFormatTagsBasisNip99 = {
@@ -27,6 +27,8 @@ export type INostrEventService = {
     nostr_event_verify_serialized: (event_serialized: string) => boolean;
     nostr_event_verify: (event: NostrToolsEvent) => boolean;
     nevent_encode: (opts: INostrEventServiceNeventEncode) => string;
+    metadata: (ndk: NDK, opts: NostrMetadata) => Promise<NDKEvent | undefined>;
+    classified: (ndk: NDK, opts: INostrEventServiceFormatTagsBasisNip99) => Promise<NDKEvent | undefined>;
 };
 
 export type NostrEventTagListing = {
