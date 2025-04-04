@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { casl_i } from "$root";
-    import { fmt_cl, type IBasisOpt, type IClOpt } from "@radroots/util";
+    import { casl_i, type IBasisOpt, type IClOpt } from "$root";
+    import { fmt_cl } from "@radroots/util";
     import type { Snippet } from "svelte";
 
     let {

@@ -1,7 +1,7 @@
 <script lang="ts">
     import { browser } from "$app/environment";
-    import { handle_err } from "$root";
-    import { fmt_cl, type IClOpt } from "@radroots/util";
+    import { handle_err, type IClOpt } from "$root";
+    import { fmt_cl } from "@radroots/util";
     import { onDestroy, onMount, type Snippet } from "svelte";
 
     let {

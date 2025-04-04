@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { Glyph } from "$root";
-    import { type GlyphKey, type ICb } from "@radroots/util";
+    import { Glyph, type ICb } from "$root";
+    import { type GlyphKey } from "@radroots/util";
     import type { Snippet } from "svelte";
 
     let {

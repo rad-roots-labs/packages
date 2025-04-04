@@ -1,8 +1,7 @@
 <script lang="ts">
     import { browser } from "$app/environment";
-    import { handle_err, idb } from "$root";
+    import { handle_err, idb, type ITextArea } from "$root";
     import {
-        type ITextArea,
         fmt_cl,
         fmt_textarea_value,
         parse_layer,

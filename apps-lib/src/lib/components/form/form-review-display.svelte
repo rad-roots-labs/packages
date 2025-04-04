@@ -1,11 +1,6 @@
 <script lang="ts">
-    import { Glyph } from "$root";
-    import {
-        fmt_cl,
-        type CallbackPromise,
-        type IClOpt,
-        type IClOptWrap,
-    } from "@radroots/util";
+    import { Glyph, type IClOpt, type IClOptWrap } from "$root";
+    import { fmt_cl, type CallbackPromise } from "@radroots/util";
 
     let {
         basis,

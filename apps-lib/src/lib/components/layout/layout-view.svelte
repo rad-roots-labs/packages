@@ -1,6 +1,12 @@
 <script lang="ts">
-    import { nav_blur, ph_blur, tabs_blur } from "$root";
-    import { fmt_cl, type IBasisOpt, type IClOpt } from "@radroots/util";
+    import {
+        nav_blur,
+        ph_blur,
+        tabs_blur,
+        type IBasisOpt,
+        type IClOpt,
+    } from "$root";
+    import { fmt_cl } from "@radroots/util";
     import { onDestroy, onMount, type Snippet } from "svelte";
 
     let {

@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { type IImageBlob } from "@radroots/util";
+    import { type IImageBlob } from "$root";
     import { onDestroy, onMount } from "svelte";
 
     let { basis }: { basis: IImageBlob } = $props();

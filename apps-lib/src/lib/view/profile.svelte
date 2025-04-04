@@ -13,15 +13,15 @@
         type IViewOnDestroy,
         type IViewProfileData,
         type ViewProfileEditFieldKey,
+        type LcPhotoAddCallback,
     } from "$root";
     import {
         ascii,
         type CallbackPromise,
         type CallbackPromiseFull,
         type CallbackPromiseGeneric,
-        type I18nTranslateFunction,
         type IViewBasis,
-        type LcPhotoAddCallback,
+        type I18nTranslateFunction,
     } from "@radroots/util";
     import { onDestroy, onMount } from "svelte";
 

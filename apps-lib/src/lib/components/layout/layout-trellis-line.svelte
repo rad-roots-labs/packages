@@ -1,10 +1,6 @@
 <script lang="ts">
-    import { Glyph } from "$root";
-    import {
-        fmt_cl,
-        type IBasisOpt,
-        type ILayoutTrellisLine,
-    } from "@radroots/util";
+    import { Glyph, type IBasisOpt, type ILayoutTrellisLine } from "$root";
+    import { fmt_cl } from "@radroots/util";
     import type { Snippet } from "svelte";
     import { fade } from "svelte/transition";
 

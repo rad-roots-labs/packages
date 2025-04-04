@@ -1,11 +1,14 @@
 <script lang="ts">
-    import { Empty, Glyph, GlyphCircle, LoadSymbol } from "$root";
-    import type { ThemeLayer } from "@radroots/theme";
     import {
-        fmt_cl,
+        Empty,
+        Glyph,
+        GlyphCircle,
+        LoadSymbol,
         type ITrellisBasisOffset,
         type ITrellisBasisOffsetMod,
-    } from "@radroots/util";
+    } from "$root";
+    import type { ThemeLayer } from "@radroots/theme";
+    import { fmt_cl } from "@radroots/util";
 
     let {
         basis = undefined,

@@ -7,12 +7,12 @@
         TrellisSelect,
         TrellisTitle,
         TrellisTouch,
+        type ITrellis,
     } from "$root";
     import {
         fmt_cl,
         parse_layer,
         type I18nTranslateFunction,
-        type ITrellis,
     } from "@radroots/util";
     import type { Snippet } from "svelte";
 

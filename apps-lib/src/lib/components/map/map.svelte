@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { app_thc } from "$lib/store/app";
-    import { cfg_map, fmt_cl, type IClOpt } from "@radroots/util";
+    import { app_thc, type IClOpt } from "$root";
+    import { cfg_map, fmt_cl } from "@radroots/util";
     import type { Snippet } from "svelte";
     import { MapLibre } from "svelte-maplibre";
 

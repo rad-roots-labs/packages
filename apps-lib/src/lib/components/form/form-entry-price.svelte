@@ -7,6 +7,7 @@
         lib_fmt_price,
         lib_parse_currency_marker,
         Select,
+        type IIdOpt,
     } from "$root";
     import {
         fiat_currencies,
@@ -15,7 +16,6 @@
         type ElementCallbackValue,
         type I18nTranslateFunction,
         type I18nTranslateLocale,
-        type IIdOpt,
     } from "@radroots/util";
 
     let {

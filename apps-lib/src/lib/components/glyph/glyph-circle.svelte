@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { GlyphButton } from "$root";
-    import { type IGlyphCircle, fmt_cl, glyph_style_map } from "@radroots/util";
+    import { GlyphButton, glyph_style_map, type IGlyphCircle } from "$root";
+    import { fmt_cl } from "@radroots/util";
 
     let { basis }: { basis: IGlyphCircle } = $props();
 

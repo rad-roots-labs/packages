@@ -1,7 +1,7 @@
 <script lang="ts">
     import { browser } from "$app/environment";
-    import { Glyph, handle_err, idb } from "$root";
-    import { fmt_cl, parse_layer, type ISelect } from "@radroots/util";
+    import { Glyph, handle_err, idb, type ISelect } from "$root";
+    import { fmt_cl, parse_layer } from "@radroots/util";
     import { onMount } from "svelte";
 
     let {

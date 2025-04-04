@@ -1,11 +1,7 @@
 <script lang="ts">
-    import { Glyph } from "$root";
+    import { Glyph, type ITrellisKindDisplayValue } from "$root";
     import type { ThemeLayer } from "@radroots/theme";
-    import {
-        fmt_cl,
-        get_label_classes_kind,
-        type ITrellisKindDisplayValue,
-    } from "@radroots/util";
+    import { fmt_cl, get_label_classes_kind } from "@radroots/util";
 
     let {
         basis,

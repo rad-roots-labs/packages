@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { Empty, Glyph, LabelSwap } from "$root";
+	import { Empty, Glyph, LabelSwap, type ITrellisTitle } from "$root";
 	import type { ThemeLayer } from "@radroots/theme";
-	import { type ITrellisTitle, fmt_cl } from "@radroots/util";
+	import { fmt_cl } from "@radroots/util";
 
 	let {
 		basis,

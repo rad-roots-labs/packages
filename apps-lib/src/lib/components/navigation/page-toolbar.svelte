@@ -1,7 +1,13 @@
 <script lang="ts">
     import { goto } from "$app/navigation";
-    import { app_lo, Glyph, LogoCircleSm, PageHeader } from "$root";
-    import type { IBasisOpt, IPageToolbar } from "@radroots/util";
+    import {
+        app_lo,
+        Glyph,
+        LogoCircleSm,
+        PageHeader,
+        type IBasisOpt,
+        type IPageToolbar,
+    } from "$root";
     import type { Snippet } from "svelte";
     import LogoLetters from "../lib/logo-letters.svelte";
 

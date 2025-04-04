@@ -1,10 +1,6 @@
 <script lang="ts">
-    import {
-        type IInputValue,
-        fmt_cl,
-        parse_layer,
-        value_constrain,
-    } from "@radroots/util";
+    import { type IInputValue } from "$root";
+    import { fmt_cl, parse_layer, value_constrain } from "@radroots/util";
 
     let {
         basis,

@@ -1,5 +1,6 @@
 <script lang="ts">
-    import { fmt_cl, type IImagePath } from "@radroots/util";
+    import { type IImagePath } from "$root";
+    import { fmt_cl } from "@radroots/util";
     import { onMount } from "svelte";
 
     let { basis }: { basis: IImagePath } = $props();

@@ -1,17 +1,17 @@
 <script lang="ts">
-    import { Map, MapMarkerArea } from "$root";
+    import { Map, MapMarkerArea, type LcGeocodeCallback } from "$root";
     import {
+        fmt_geolocation_address,
         geol_lat_fmt,
         geol_lng_fmt,
-        lib_address_fmt,
         parse_geom_point_tup,
         parse_tup_geop_point,
         type CallbackPromiseGeneric,
+        type GeolocationAddress,
         type GeolocationPointTuple,
+        type GeometryPoint,
         type I18nTranslateFunction,
         type I18nTranslateLocale,
-        type LcGeocodeCallback,
-        type ResolveFarmInfo,
     } from "@radroots/util";
     import { onMount } from "svelte";
 
@@ -22,7 +22,14 @@
         ls,
         locale,
     }: {
-        basis: ResolveFarmInfo;
+        basis: {
+            id: string;
+            name: string;
+            geolocation?: {
+                point: GeometryPoint;
+                address: GeolocationAddress;
+            };
+        };
         lc_geocode: LcGeocodeCallback;
         lc_handle_farm_view: CallbackPromiseGeneric<string>;
         ls: I18nTranslateFunction;
@@ -45,7 +52,7 @@
 
     const farm_addr_fmt = $derived(
         basis.geolocation?.address
-            ? lib_address_fmt(basis.geolocation.address)
+            ? fmt_geolocation_address(basis.geolocation.address)
             : ``,
     );
 

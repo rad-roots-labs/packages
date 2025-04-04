@@ -1,5 +1,6 @@
 <script lang="ts">
-    import { fmt_cl, parse_layer, type ILabelDisplay } from "@radroots/util";
+    import { type ILabelDisplay } from "$root";
+    import { fmt_cl, parse_layer } from "@radroots/util";
 
     let { basis }: { basis: ILabelDisplay } = $props();
 

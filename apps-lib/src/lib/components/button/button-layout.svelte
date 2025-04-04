@@ -1,13 +1,6 @@
 <script lang="ts">
-    import { app_lo } from "$lib/store/app";
-    import {
-        fmt_cl,
-        parse_layer,
-        type CallbackPromise,
-        type IClOpt,
-        type IDisabledOpt,
-        type ILyOpt,
-    } from "@radroots/util";
+    import { app_lo, type IClOpt, type IDisabledOpt, type ILyOpt } from "$root";
+    import { fmt_cl, parse_layer, type CallbackPromise } from "@radroots/util";
 
     let {
         basis,

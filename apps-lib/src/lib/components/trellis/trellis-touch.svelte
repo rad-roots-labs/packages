@@ -4,8 +4,9 @@
         TrellisLine,
         TrellisRowDisplayValue,
         TrellisRowLabel,
+        type ITrellisBasisTouch,
     } from "$root";
-    import type { ITrellisBasisTouch, ThemeLayer } from "@radroots/util";
+    import type { ThemeLayer } from "@radroots/util";
 
     let {
         basis,

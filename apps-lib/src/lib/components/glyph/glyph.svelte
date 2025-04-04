@@ -1,5 +1,6 @@
 <script lang="ts">
-    import { fmt_cl, glyph_style_map, type IGlyph } from "@radroots/util";
+    import { glyph_style_map, type IGlyph } from "$root";
+    import { fmt_cl } from "@radroots/util";
 
     let { basis }: { basis: IGlyph } = $props();
 

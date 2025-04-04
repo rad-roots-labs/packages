@@ -1,9 +1,13 @@
 <script lang="ts">
-    import { EntryMultiline, LayoutTrellisLine, fmt_id } from "$root";
+    import {
+        EntryMultiline,
+        LayoutTrellisLine,
+        fmt_id,
+        type IIdOpt,
+    } from "$root";
     import {
         type ElementCallbackValueKeydown,
         type FormField,
-        type IIdOpt,
     } from "@radroots/util";
 
     let {

@@ -1,11 +1,7 @@
 <script lang="ts">
-	import { GlyphButton } from "$root";
+	import { GlyphButton, type ILabelTupFields } from "$root";
 	import type { ThemeLayer } from "@radroots/theme";
-	import {
-		fmt_cl,
-		get_label_classes_kind,
-		type ILabelTupFields,
-	} from "@radroots/util";
+	import { fmt_cl, get_label_classes_kind } from "@radroots/util";
 
 	let {
 		basis,

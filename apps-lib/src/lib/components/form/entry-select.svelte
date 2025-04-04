@@ -1,6 +1,12 @@
 <script lang="ts">
-    import { EntryWrap, Glyph, LoadSymbol, Select } from "$root";
-    import { fmt_cl, parse_layer, type IEntrySelect } from "@radroots/util";
+    import {
+        EntryWrap,
+        Glyph,
+        LoadSymbol,
+        Select,
+        type IEntrySelect,
+    } from "$root";
+    import { fmt_cl, parse_layer } from "@radroots/util";
 
     let {
         basis,

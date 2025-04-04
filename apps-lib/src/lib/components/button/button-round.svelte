@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { LoadSymbol } from "$root";
-    import { fmt_cl, type IButtonRound } from "@radroots/util";
+    import { LoadSymbol, type IButtonRound } from "$root";
+    import { fmt_cl } from "@radroots/util";
 
     let {
         basis,

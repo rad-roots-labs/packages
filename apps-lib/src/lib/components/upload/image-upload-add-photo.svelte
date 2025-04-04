@@ -1,9 +1,6 @@
 <script lang="ts">
-    import { Glyph, LoadSymbol } from "$root";
-    import {
-        type I18nTranslateFunction,
-        type LcPhotoAddCallback,
-    } from "@radroots/util";
+    import { Glyph, LoadSymbol, type LcPhotoAddCallback } from "$root";
+    import { type I18nTranslateFunction } from "@radroots/util";
 
     let {
         basis,

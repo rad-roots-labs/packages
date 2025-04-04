@@ -1,5 +1,6 @@
 <script lang="ts">
-    import { parse_layer, type IButtonSimple } from "@radroots/util";
+    import { type IButtonSimple } from "$root";
+    import { parse_layer } from "@radroots/util";
 
     let { basis }: { basis: IButtonSimple } = $props();
 

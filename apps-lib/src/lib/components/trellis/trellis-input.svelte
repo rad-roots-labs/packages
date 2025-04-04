@@ -1,11 +1,7 @@
 <script lang="ts">
-    import { Glyph, Input, LoadSymbol } from "$root";
+    import { Glyph, Input, LoadSymbol, type ITrellisBasisInput } from "$root";
     import type { ThemeLayer } from "@radroots/theme";
-    import {
-        fmt_cl,
-        fmt_trellis,
-        type ITrellisBasisInput,
-    } from "@radroots/util";
+    import { fmt_cl, fmt_trellis } from "@radroots/util";
 
     let {
         basis,

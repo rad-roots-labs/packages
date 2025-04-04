@@ -1,6 +1,5 @@
 <script lang="ts">
-    import { Fade, Glyph } from "$root";
-    import type { IBasisOpt } from "@radroots/util";
+    import { Fade, Glyph, type IBasisOpt } from "$root";
 
     let {
         basis = undefined,

@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { Glyph, TextArea } from "$root";
-    import { fmt_cl, parse_layer, type IEntryMultiLine } from "@radroots/util";
+    import { Glyph, TextArea, type IEntryMultiLine } from "$root";
+    import { fmt_cl, parse_layer } from "@radroots/util";
 
     let {
         basis,

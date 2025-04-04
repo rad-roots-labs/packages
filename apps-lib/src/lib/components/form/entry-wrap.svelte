@@ -1,10 +1,6 @@
 <script lang="ts">
-    import {
-        fmt_cl,
-        parse_layer,
-        type IBasisOpt,
-        type IEntryWrap,
-    } from "@radroots/util";
+    import { type IBasisOpt, type IEntryWrap } from "$root";
+    import { fmt_cl, parse_layer } from "@radroots/util";
     import type { Snippet } from "svelte";
 
     let {

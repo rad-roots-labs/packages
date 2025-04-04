@@ -7,12 +7,12 @@
         LayoutView,
         NavigationTabs,
         PageToolbar,
+        type IHomeViewData,
     } from "$root";
     import {
         type CallbackPromise,
         type I18nTranslateFunction,
         type IViewBasis,
-        type ResolveAccountInfo,
     } from "@radroots/util";
     import { onMount } from "svelte";
 
@@ -21,7 +21,7 @@
         basis,
     }: {
         basis: IViewBasis<{
-            data?: ResolveAccountInfo;
+            data: IHomeViewData;
             lc_handle_farms: CallbackPromise;
             lc_handle_products: CallbackPromise;
         }>;
@@ -54,16 +54,6 @@
                 },
             }}
         />
-        {#if basis.data?.farms?.length}
-            <ButtonSimple
-                basis={{
-                    label: `${$ls(`common.products`)}`,
-                    callback: async () => {
-                        await basis.lc_handle_products();
-                    },
-                }}
-            />
-        {/if}
     </LayoutPage>
 </LayoutView>
 <NavigationTabs />

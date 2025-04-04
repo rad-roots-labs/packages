@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { type ILoadSymbol, loading_style_map } from "@radroots/util";
+    import { type ILoadSymbol, loading_style_map } from "$root";
 
     let {
         basis = undefined,

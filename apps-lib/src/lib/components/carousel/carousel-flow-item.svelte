@@ -1,5 +1,6 @@
 <script lang="ts">
-    import { fmt_cl, type IClOpt } from "@radroots/util";
+    import { type IClOpt } from "$root";
+    import { fmt_cl } from "@radroots/util";
     import type { Snippet } from "svelte";
 
     let {

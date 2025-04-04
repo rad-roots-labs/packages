@@ -1,6 +1,7 @@
 <script lang="ts">
+    import { type ITrellisDefaultLabel } from "$root";
     import type { ThemeLayer } from "@radroots/theme";
-    import { fmt_cl, type ITrellisDefaultLabel } from "@radroots/util";
+    import { fmt_cl } from "@radroots/util";
 
     let {
         layer,

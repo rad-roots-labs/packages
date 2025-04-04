@@ -1,11 +1,13 @@
 <script lang="ts">
-    import { fmt_id, Input, Select } from "$root";
     import {
-        type ElementCallbackSelect,
-        type ElementCallbackValueKeydown,
+        fmt_id,
+        Input,
+        Select,
         type IIdOpt,
+        type ISelectCallback,
         type ISelectOption,
-    } from "@radroots/util";
+    } from "$root";
+    import { type ElementCallbackValueKeydown } from "@radroots/util";
 
     let {
         basis,
@@ -23,7 +25,7 @@
             };
             select: {
                 entries: ISelectOption<string>[];
-                callback?: ElementCallbackSelect;
+                callback?: ISelectCallback;
             };
         };
         value_input?: string;

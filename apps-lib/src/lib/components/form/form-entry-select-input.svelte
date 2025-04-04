@@ -1,11 +1,16 @@
 <script lang="ts">
-    import { EntryLine, EntrySelect, fmt_id, LayoutTrellisLine } from "$root";
+    import {
+        EntryLine,
+        EntrySelect,
+        fmt_id,
+        LayoutTrellisLine,
+        type ISelectCallback,
+        type ISelectOption,
+    } from "$root";
     import {
         type CallbackPromiseGeneric,
-        type ElementCallbackSelect,
         type FormField,
         type I18nTranslateFunction,
-        type ISelectOption,
     } from "@radroots/util";
 
     let {
@@ -17,7 +22,7 @@
         basis: {
             id: string;
             visible_input: boolean;
-            callback_select: ElementCallbackSelect;
+            callback_select: ISelectCallback;
             callback_visible: CallbackPromiseGeneric<boolean>;
             select_entries: ISelectOption<string>[];
             input_placeholder?: string;

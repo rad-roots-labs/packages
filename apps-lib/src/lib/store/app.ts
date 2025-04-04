@@ -1,5 +1,6 @@
+import { type IToast } from "$root";
 import type { ColorMode, ThemeKey } from "@radroots/theme";
-import type { AppConfigType, AppLayoutKey, BrowserPlatformInfo, IToast } from "@radroots/util";
+import type { AppConfigType, AppLayoutKey, BrowserPlatformInfo } from "@radroots/util";
 import { writable } from "svelte/store";
 
 export const app_lo = writable<AppLayoutKey>();

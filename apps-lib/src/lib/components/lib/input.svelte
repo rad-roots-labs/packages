@@ -1,12 +1,7 @@
 <script lang="ts">
     import { browser } from "$app/environment";
-    import { idb } from "$root";
-    import {
-        type IInput,
-        fmt_cl,
-        parse_layer,
-        value_constrain,
-    } from "@radroots/util";
+    import { idb, type IInput } from "$root";
+    import { fmt_cl, parse_layer, value_constrain } from "@radroots/util";
     import { onMount } from "svelte";
 
     let {

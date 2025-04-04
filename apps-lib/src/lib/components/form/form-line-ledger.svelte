@@ -1,10 +1,14 @@
 <script lang="ts">
-    import { fmt_id, Input, SelectMenu } from "$root";
+    import {
+        fmt_id,
+        Input,
+        SelectMenu,
+        type IIdOpt,
+        type ISelectOption,
+    } from "$root";
     import {
         type ElementCallbackValueKeydown,
         type FormField,
-        type IIdOpt,
-        type ISelectOption,
     } from "@radroots/util";
     import FormLineLedgerLabelSelectLabel from "./form-line-ledger-label-select-label.svelte";
 

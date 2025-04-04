@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { ICb } from "@radroots/util";
+    import { type ICb } from "$root";
 
     let {
         basis,

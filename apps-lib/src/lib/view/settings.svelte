@@ -7,13 +7,13 @@
         LayoutView,
         PageToolbar,
         Trellis,
+        type ISelectOption,
+        type ITrellisKind,
     } from "$root";
     import {
         ascii,
         type CallbackPromiseGeneric,
         type I18nTranslateFunction,
-        type ISelectOption,
-        type ITrellisKind,
         type IViewBasis,
     } from "@radroots/util";
     import { onMount } from "svelte";

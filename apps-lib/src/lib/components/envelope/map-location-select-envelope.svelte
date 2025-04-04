@@ -1,13 +1,17 @@
 <script lang="ts">
-    import { ButtonSimple, EnvelopeLowerFull, Map, MapMarkerArea } from "$root";
     import {
+        ButtonSimple,
+        EnvelopeLowerFull,
+        Map,
+        MapMarkerArea,
+        type LcGeocodeCallback,
+    } from "$root";
+    import {
+        cfg_map,
+        parse_geol_point_tup,
         type CallbackPromiseGeneric,
         type GeocoderReverseResult,
         type GeolocationPoint,
-        type LcGeocodeCallback,
-        type ResolveFarmInfo,
-        cfg_map,
-        parse_geol_point_tup,
     } from "@radroots/util";
 
     let {
@@ -16,7 +20,6 @@
         map_geoc = $bindable(undefined),
     }: {
         basis: {
-            farm_info: ResolveFarmInfo;
             visible: boolean;
             lc_geocode: LcGeocodeCallback;
             lc_submit: CallbackPromiseGeneric<{

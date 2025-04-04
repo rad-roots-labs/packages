@@ -1,6 +1,11 @@
 <script lang="ts">
-    import { app_lo, callback_route, Empty, ph_blur } from "$root";
-    import type { IPageHeader } from "@radroots/util";
+    import {
+        app_lo,
+        callback_route,
+        Empty,
+        ph_blur,
+        type IPageHeader,
+    } from "$root";
     import type { Snippet } from "svelte";
     import { fade } from "svelte/transition";
 

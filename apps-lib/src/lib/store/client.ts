@@ -1,4 +1,4 @@
-import type { NavigationPreviousParam, NavigationRouteParamField, NavigationRouteParamId, NavigationRouteParamLat, NavigationRouteParamLng, NavigationRouteParamNostrPublicKey, NavigationRouteParamRef } from "@radroots/util";
+import type { NavigationPreviousParam, NavigationRouteParamField, NavigationRouteParamId, NavigationRouteParamLat, NavigationRouteParamLng, NavigationRouteParamNostrPublicKey, NavigationRouteParamRef } from "$root";
 import { writable } from "svelte/store";
 import { queryParam, queryParameters } from "sveltekit-search-params";
 

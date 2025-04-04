@@ -1,7 +1,6 @@
 <script lang="ts">
-    import { Glyph } from "$root";
+    import { Glyph, type ITrellisBasisTouchEnd } from "$root";
     import type { ThemeLayer } from "@radroots/theme";
-    import { type ITrellisBasisTouchEnd } from "@radroots/util";
 
     let {
         basis,

@@ -1,9 +1,11 @@
 <script lang="ts">
-    import { Glyph, ImagePath, ImageUploadButtonsAspect } from "$root";
     import {
-        list_assign,
+        Glyph,
+        ImagePath,
+        ImageUploadButtonsAspect,
         type LcPhotoAddMultipleCallback,
-    } from "@radroots/util";
+    } from "$root";
+    import { list_assign } from "@radroots/util";
 
     let {
         basis,

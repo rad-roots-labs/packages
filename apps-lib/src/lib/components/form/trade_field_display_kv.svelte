@@ -1,11 +1,6 @@
 <script lang="ts">
-    import { fmt_id, Glyph, idb } from "$root";
-    import {
-        el_focus,
-        fmt_cl,
-        type CallbackPromise,
-        type IClOpt,
-    } from "@radroots/util";
+    import { fmt_id, Glyph, idb, type IClOpt } from "$root";
+    import { el_focus, fmt_cl, type CallbackPromise } from "@radroots/util";
 
     let {
         basis,

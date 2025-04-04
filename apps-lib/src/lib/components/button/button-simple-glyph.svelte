@@ -1,9 +1,6 @@
 <script lang="ts">
-    import {
-        parse_layer,
-        type CallbackPromise,
-        type ILyOpt,
-    } from "@radroots/util";
+    import { type ILyOpt } from "$root";
+    import { parse_layer, type CallbackPromise } from "@radroots/util";
 
     let {
         basis,

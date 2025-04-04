@@ -1,10 +1,12 @@
 <script lang="ts">
-    import { EntryWrap, Glyph, Input, LoadSymbol } from "$root";
     import {
-        parse_layer,
+        EntryWrap,
+        Glyph,
+        Input,
+        LoadSymbol,
         type IEntryLineIdb,
-        type LoadingDimension,
-    } from "@radroots/util";
+    } from "$root";
+    import { parse_layer, type LoadingDimension } from "@radroots/util";
 
     let {
         basis,

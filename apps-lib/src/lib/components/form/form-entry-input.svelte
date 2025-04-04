@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { EntryLine, fmt_id, LayoutTrellisLine } from "$root";
-    import type { FormField, IIdOpt } from "@radroots/util";
+    import { EntryLine, fmt_id, LayoutTrellisLine, type IIdOpt } from "$root";
+    import { type FormField } from "@radroots/util";
 
     let {
         basis,

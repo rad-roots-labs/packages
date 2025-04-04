@@ -1,10 +1,9 @@
 <script lang="ts">
-    import { Glyph } from "$root";
+    import { Glyph, type IClOpt } from "$root";
     import {
         fmt_cl,
         type CallbackPromise,
         type GlyphKey,
-        type IClOpt,
     } from "@radroots/util";
 
     let {

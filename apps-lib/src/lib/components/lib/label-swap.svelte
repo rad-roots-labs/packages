@@ -1,10 +1,6 @@
 <script lang="ts">
-    import {
-        fmt_cl,
-        parse_layer,
-        type ILabelSwap,
-        type ILyOpt,
-    } from "@radroots/util";
+    import { type ILabelSwap, type ILyOpt } from "$root";
+    import { fmt_cl, parse_layer } from "@radroots/util";
 
     let {
         basis,

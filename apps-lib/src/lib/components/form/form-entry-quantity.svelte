@@ -1,11 +1,17 @@
 <script lang="ts">
-    import { EntryWrap, fmt_id, Input, LayoutTrellisLine, Select } from "$root";
+    import {
+        EntryWrap,
+        fmt_id,
+        Input,
+        LayoutTrellisLine,
+        Select,
+        type IIdOpt,
+    } from "$root";
     import {
         form_fields,
         mass_units,
         type ElementCallbackValue,
         type I18nTranslateFunction,
-        type IIdOpt,
     } from "@radroots/util";
 
     let {

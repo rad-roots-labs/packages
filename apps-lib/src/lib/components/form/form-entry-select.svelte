@@ -1,11 +1,13 @@
 <script lang="ts">
-    import { EntrySelect, fmt_id, LayoutTrellisLine } from "$root";
     import {
-        type ElementCallbackSelect,
+        EntrySelect,
+        fmt_id,
+        LayoutTrellisLine,
         type IClOpt,
         type IIdOpt,
+        type ISelectCallback,
         type ISelectOption,
-    } from "@radroots/util";
+    } from "$root";
 
     let {
         basis,
@@ -13,7 +15,7 @@
     }: {
         basis: IIdOpt &
             IClOpt & {
-                callback?: ElementCallbackSelect;
+                callback?: ISelectCallback;
                 entries: ISelectOption<string>[];
                 entry_label?: string;
             };

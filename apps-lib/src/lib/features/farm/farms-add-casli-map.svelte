@@ -6,12 +6,12 @@
         WrapBorder,
         app_lo,
         handle_err,
+        type LcGeocodeCallback,
+        type LcGeocodeCurrentCallback,
     } from "$root";
     import {
         type GeocoderReverseResult,
         type GeolocationPoint,
-        type LcGeocodeCallback,
-        type LcGeocodeCurrentCallback,
     } from "@radroots/util";
     import { onMount } from "svelte";
 

@@ -1,5 +1,6 @@
 <script lang="ts">
-    import { fmt_cl, parse_layer, type ISelect } from "@radroots/util";
+    import { type ISelect } from "$root";
+    import { fmt_cl, parse_layer } from "@radroots/util";
     import type { Snippet } from "svelte";
 
     let {

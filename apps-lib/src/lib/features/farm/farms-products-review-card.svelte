@@ -1,10 +1,15 @@
 <script lang="ts">
-    import { app_lo, Glyph, ImagePath, lib_parse_currency_marker } from "$root";
+    import {
+        app_lo,
+        Glyph,
+        ImagePath,
+        lib_parse_currency_marker,
+        type IViewFarmsProductsAddSubmission,
+    } from "$root";
     import {
         ascii,
         type I18nTranslateFunction,
         type I18nTranslateLocale,
-        type IViewFarmsProductsAddSubmission,
     } from "@radroots/util";
 
     let {
