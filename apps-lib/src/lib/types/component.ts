@@ -35,7 +35,7 @@ export type IInput<T extends string> = IIdGOpt<T> & IClOpt & ILyOpt & IDisabledO
     callback_mount?: ElementCallbackMount<HTMLInputElement>;
 };
 
-export type IInputValue<T extends string> = Omit<IInput<T>, `id` | `sync`>;
+export type IInputValue<T extends string> = Omit<IInput<T>, `sync`>;
 
 export type ISelectOption<T extends string> = IDisabledOpt & {
     value: T;

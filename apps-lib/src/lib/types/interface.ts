@@ -1,4 +1,4 @@
-import type { IGlyph, IInput, IInputValue, ITextArea } from "$root";
+import type { IGlyph, IInput, IInputValue, ISelect, ITextArea } from "$root";
 import type { CallbackPromise, CallbackPromiseGeneric, EntryStyle, GlyphKey, LayerGlyphBasisKind, LoadingBlades, LoadingDimension, SvelteTransitionConfig, ThemeLayer } from "@radroots/util";
 
 export type IDisabled = {
@@ -160,6 +160,15 @@ export type IEntryLineIdb = ILoadingOpt & {
     notify_inline?: {
         glyph: GlyphKey | IGlyph;
     };
+};
+
+export type IEntryLineSelectIdb = ILoadingOpt & {
+    wrap?: IEntryWrap;
+    el_input: IInput<string>;
+    el_sel: ISelect;
+    /*notify_inline?: {
+        glyph: GlyphKey | IGlyph;
+    };*/
 };
 
 export type IEntryMultiLine = {

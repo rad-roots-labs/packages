@@ -6,7 +6,7 @@
         LoadSymbol,
         type IEntryLineIdb,
     } from "$root";
-    import { parse_layer, type LoadingDimension } from "@radroots/util";
+    import { fmt_cl, parse_layer, type LoadingDimension } from "@radroots/util";
 
     let {
         basis,
@@ -35,7 +35,7 @@
     <Input
         basis={{
             ...basis.el,
-            classes: `h-entry_line ${basis.el.classes}`,
+            classes: `h-entry_line ${fmt_cl(basis.el.classes)}`,
         }}
     />
     {#if basis.loading}

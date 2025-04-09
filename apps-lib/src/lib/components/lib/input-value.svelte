@@ -9,7 +9,7 @@
     }: {
         basis: IInputValue<string>;
         el?: HTMLInputElement | null;
-        value?: string;
+        value: string;
     } = $props();
 
     const layer = $derived(
@@ -24,39 +24,27 @@
             : `bg-layer-${layer}-surface text-layer-${layer}-glyph placeholder:text-layer-${layer}-glyph_pl caret-layer-${layer}-glyph`,
     );
 
-    const handle_on_input = async (el: HTMLInputElement): Promise<void> => {
+    const handle_on_input = async (): Promise<void> => {
         try {
+            let val_cur = value;
             let pass = true;
-            let val = el?.value;
-            if (basis?.field && el) {
-                val = value_constrain(basis?.field.charset, val);
-                el.value = val;
-                if (
-                    !basis?.field.validate.test(val) &&
-                    basis?.field_constrain
-                ) {
-                    //@todo set styles
-                }
-                pass = basis?.field.validate.test(val);
+            if (basis?.field) {
+                val_cur = value_constrain(basis.field.charset, val_cur);
+                if (val_cur !== value) value = val_cur;
+                pass = basis.field.validate.test(val_cur);
             }
-            if (basis?.callback) await basis?.callback({ value: val, pass });
+            if (basis?.callback) await basis.callback({ value: val_cur, pass });
         } catch (e) {
-            console.log(`(error) handle_on_input `, e);
+            console.error(`(error) handle_on_input`, e);
         }
     };
-
-    $effect(() => {
-        console.log(`value `, value);
-    });
 </script>
 
 <input
     bind:this={el}
     bind:value
     disabled={!!basis.disabled}
-    oninput={async ({ currentTarget: el }) => {
-        await handle_on_input(el);
-    }}
+    oninput={handle_on_input}
     onblur={async ({ currentTarget: el }) => {
         if (basis.callback_blur) await basis.callback_blur({ el });
     }}
@@ -65,7 +53,7 @@
     }}
     onkeydown={async (ev) => {
         if (basis?.callback_keydown)
-            await basis?.callback_keydown({
+            await basis.callback_keydown({
                 key: ev.key,
                 key_s: ev.key === `Enter`,
                 el: ev.currentTarget,

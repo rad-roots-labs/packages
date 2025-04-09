@@ -75,17 +75,17 @@
 
     const handle_on_input = async (): Promise<void> => {
         try {
-            let val_cur = value_local;
+            let updatedVal = value_local;
             let pass = true;
             if (basis?.field) {
-                val_cur = value_constrain(basis.field.charset, val_cur);
-                if (val_cur !== value_local) {
-                    value_local = val_cur;
+                updatedVal = value_constrain(basis.field.charset, updatedVal);
+                if (updatedVal !== value_local) {
+                    value_local = updatedVal;
                 }
-                pass = basis.field.validate.test(val_cur);
+                pass = basis.field.validate.test(updatedVal);
             }
             if (basis?.callback) {
-                await basis.callback({ value: val_cur, pass });
+                await basis.callback({ value: updatedVal, pass });
             }
         } catch (e) {
             handle_err(e, `handle_on_input`);
@@ -97,7 +97,7 @@
     bind:this={el}
     bind:value={value_local}
     disabled={!!basis.disabled}
-    oninput={handle_on_input}
+    oninput={async () => await handle_on_input()}
     onblur={async ({ currentTarget: el }) => {
         if (basis.callback_blur) await basis.callback_blur({ el });
     }}

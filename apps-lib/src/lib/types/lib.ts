@@ -10,7 +10,8 @@ export type NavigationRouteParamLat = `lat`;
 export type NavigationRouteParamLng = `lng`;
 export type NavigationRouteParamNostrPublicKey = `key_nostr`;
 export type NavigationRouteParamKey = NavigationRouteParamId | NavigationRouteParamField | NavigationRouteParamRef | NavigationRouteParamLat | NavigationRouteParamLng | NavigationRouteParamNostrPublicKey;
-export type NavigationPreviousParam<T extends string> = { route: T, label?: string; params?: NavigationParamTuple<NavigationRouteParamKey>[] }
+export type NavigationRouteParamTuple = NavigationParamTuple<NavigationRouteParamKey>;
+export type NavigationPreviousParam<T extends string> = { route: T, label?: string; params?: NavigationRouteParamTuple[] }
 
 export type LcGuiAlertCallback = CallbackPromiseFull<string, boolean>;
 export type LcGuiConfirmCallback = CallbackPromiseFull<string | { message: string; ok?: string; cancel?: string }, boolean>;
