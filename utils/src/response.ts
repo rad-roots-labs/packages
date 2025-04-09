@@ -17,7 +17,7 @@ export const is_results_response = (response: any): response is { results: strin
 }
 
 export const is_error_response = (response: any): response is { error: string } => {
-    return "error" in response && typeof response.result === "string";
+    return "error" in response && response.error;
 }
 
 export const is_message_response = (response: any): response is NotifyMessage => {

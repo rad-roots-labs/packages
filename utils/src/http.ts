@@ -51,17 +51,17 @@ export const lib_http_parse_headers = (headers: Headers): FieldRecord => {
 
 export const http_fetch_opts = (opts: IHttpOpts): { url: string; options: RequestInit; } => {
     const { url } = opts;
-    const headers: FieldRecord = {
-        ...opts.headers,
-    };
-    if (opts.authorization) headers['Authorization'] = `Bearer ${encodeURIComponent(opts.authorization)}`;
+    const method = opts.method ? opts.method.toUpperCase() : `GET`;
+    const headers = new Headers();
+    if (method === `POST`) headers.append(`Content-Type`, `application/json`);
+    if (opts.authorization) headers.append(`Authorization`, `Bearer ${encodeURIComponent(opts.authorization)}`);
+    if (opts.headers) Object.entries(opts.headers).forEach(([k, v]) => headers.append(k, v))
     const options: RequestInit = {
-        method: opts.method ? opts.method.toUpperCase() : `GET`,
+        method,
         headers,
     }
     if (opts.data) options.body = lib_http_to_bodyinit(opts.data);
     if (opts.data_bin) options.body = opts.data_bin;
-
     return {
         url,
         options

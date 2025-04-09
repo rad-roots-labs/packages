@@ -1,4 +1,4 @@
-import { Loader } from '@sveltekit-i18n/base';
+import { type Loader } from '@sveltekit-i18n/base';
 import type { Config as ConfigIcu, Parser as ParserIcu } from "@sveltekit-i18n/parser-icu";
 import parser_icu from "@sveltekit-i18n/parser-icu";
 import i18n, { type Config } from 'sveltekit-i18n';

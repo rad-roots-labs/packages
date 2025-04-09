@@ -1,4 +1,4 @@
-import { GeolocationPointTuple, GeometryPoint } from "$root";
+import { type GeolocationPointTuple, type GeometryPoint } from "$root";
 import { decodeBase32, encodeBase32 } from "geohashing";
 
 export type GeolocationAddress = {

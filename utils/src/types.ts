@@ -1,3 +1,5 @@
+import { ErrorMessage } from "$root";
+
 export type FieldRecord = Record<string, string>;
 export type NotifyMessage = {
     message: string;
@@ -23,6 +25,9 @@ export type ResultsList<T> = { results: T[]; };
 export type ResultObj<T> = { result: T; };
 export type ResultPublicKey = { public_key: string; };
 export type ResultSecretKey = { secret_key: string; };
+
+export type ResolveError<T> = T | ErrorMessage<string>;
+export type ResolveErrorMsg<TRes, TMsg extends string> = TRes | ErrorMessage<TMsg>;
 
 export type FileBytesFormat = `kb` | `mb` | `gb`;
 export type FileMimeType = string;

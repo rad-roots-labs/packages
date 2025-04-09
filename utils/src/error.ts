@@ -12,7 +12,7 @@ export const err_msg = <T extends string>(err: T): ErrorMessage<T> => {
     return { err };
 };
 
-export const throw_err = (param: string | ErrorMessage<string>): undefined => {
+export const throw_err = (param: string | ErrorMessage<string>): never => {
     if (typeof param === `string`) throw new Error(param);
     else throw new Error(param.err);
 };

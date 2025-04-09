@@ -88,7 +88,7 @@ export const encode_query_params = <T extends string>(params_list: NavigationPar
     return query ? `?${query}` : ``;
 };
 
-export const encode_route = <T extends string>(route: T, params_list?: NavigationParamTuple<T>[]): string => {
+export const encode_route = <TRoute extends string, TParam extends string>(route: TRoute, params_list?: NavigationParamTuple<TParam>[]): string => {
     const query = encode_query_params(params_list);
     if (!query) return route;
     return `${route === `/` ? `/` : route.replace(/\/+$/, ``)}${query}`;

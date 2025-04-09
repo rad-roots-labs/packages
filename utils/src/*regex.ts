@@ -49,6 +49,7 @@ export const util_rxp = {
 };
 
 export type FormFieldsKey =
+    | `nostr_secret_key`
     | `product_title`
     | `product_key`
     | `product_process`
@@ -131,4 +132,8 @@ export const form_fields: Record<FormFieldsKey, FormField> = {
         charset: util_rxp.alpha_ch,
         validate: util_rxp.alpha,
     },
+    nostr_secret_key: {
+        charset: util_rxp.alpha_ch,
+        validate: util_rxp.alpha,
+    }
 };

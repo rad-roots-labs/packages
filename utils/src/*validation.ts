@@ -1,4 +1,4 @@
-import { GeolocationAddress, GeolocationPoint, parse_int, util_rxp } from "$root";
+import { type GeolocationAddress, type GeolocationPoint, parse_int, util_rxp } from "$root";
 import { z } from "zod";
 
 export const vu_area_unit = z.union([
