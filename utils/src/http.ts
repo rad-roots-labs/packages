@@ -68,7 +68,7 @@ export const http_fetch_opts = (opts: IHttpOpts): { url: string; options: Reques
     }
 };
 
-export const http_parse_response = async (res: Response): Promise<Promise<IHttpResponse>> => {
+export const lib_http_parse_response = async (res: Response): Promise<Promise<IHttpResponse>> => {
     let data: any = null;
     try {
         const res_json = await res.json();
