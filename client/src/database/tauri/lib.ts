@@ -6,12 +6,10 @@ import type { IClientTauriDatabase, IClientTauriDatabaseMessage } from "./types"
 
 export class TauriClientDatabase implements IClientTauriDatabase {
     private append_logs(scope: string, opts: any, error: any): IClientTauriDatabaseMessage {
-        console.log('[database:tauri] append logs')
-        console.log('scope ', scope)
-        console.log('opts ', opts)
-        console.log('error ', error)
+        console.log('[radroots] append_logs (scope, opts, error)');
+        console.log(scope, opts, error);
         const error_msg = String(error);
-        return `append-logs-${error_msg}`;
+        return `append_logs::${error_msg}`;
     }
 
     private handle_errors(scope: string, opts: any, e: any): ErrorMessage<IClientTauriDatabaseMessage> {

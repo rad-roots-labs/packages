@@ -1,28 +1,6 @@
-import { err_msg, http_fetch_opts, http_parse_response, type ErrorMessage, type FieldRecord, type IHttpImageResponse, type IHttpOpts, type IHttpResponse } from '@radroots/util';
+import { err_msg, http_fetch_opts, lib_http_parse_headers, lib_http_parse_response, type ErrorMessage, type FieldRecord, type IHttpImageResponse, type IHttpOpts, type IHttpResponse } from '@radroots/util';
 import { fetch, type ClientOptions } from '@tauri-apps/plugin-http';
 import type { IClientHttp } from './types';
-
-const parse_headers = (headers: Headers): FieldRecord => {
-    const acc: FieldRecord = {};
-    headers.forEach((value, key) => acc[key] = value);
-    return acc;
-};
-
-const to_bodyinit = (data: any): BodyInit => {
-    if (typeof data === 'string') {
-        return data;
-    } else if (data instanceof FormData) {
-        return data;
-    } else if (data instanceof Blob) {
-        return data;
-    } else if (data instanceof ArrayBuffer) {
-        return data;
-    } else if (data instanceof URLSearchParams) {
-        return data;
-    } else {
-        return JSON.stringify(data);
-    }
-}
 
 export class TauriClientHttp implements IClientHttp {
     private _headers: FieldRecord;
@@ -47,7 +25,8 @@ export class TauriClientHttp implements IClientHttp {
         try {
             const { url, options } = http_fetch_opts(opts);
             const response = await fetch(url, options);
-            return http_parse_response(response);
+            console.log(`response `, response)
+            return lib_http_parse_response(response);
         } catch (e) {
             console.log(`e fetch`, e)
             return err_msg(String(e));
@@ -72,14 +51,14 @@ export class TauriClientHttp implements IClientHttp {
                         status: response.status,
                         url: response.url,
                         blob,
-                        headers: parse_headers(response.headers)
+                        headers: lib_http_parse_headers(response.headers)
                     };
                 }
                 case false: {
                     return {
                         status: response.status,
                         url: response.url,
-                        headers: parse_headers(response.headers)
+                        headers: lib_http_parse_headers(response.headers)
                     };
                 }
             }

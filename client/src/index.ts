@@ -1,6 +1,5 @@
-
-export * from "./database/tauri"
-export * from "./database/types"
+export * from "./database/tauri/lib"
+export * from "./database/tauri/types"
 export * from "./datastore/tauri"
 export * from "./fs/tauri"
 export * from "./fs/types"
@@ -17,4 +16,3 @@ export * from "./radroots/tauri"
 export * from "./radroots/types"
 export * from "./types"
 export * from "./util"
-

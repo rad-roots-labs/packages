@@ -1,7 +1,21 @@
-import { ds_map, ds_map_param, err_msg, type IClientDatastore, type IClientDatastoreEntriesResolve, type IClientDatastoreGetPResolve, type IClientDatastoreGetResolve, type IClientDatastoreKeysResolve, type IClientDatastoreRemoveResolve, type IClientDatastoreSetPResolve, type IClientDatastoreSetResolve } from '@radroots/util';
+import { err_msg, type IClientDatastore, type IClientDatastoreEntriesResolve, type IClientDatastoreGetPResolve, type IClientDatastoreGetResolve, type IClientDatastoreKeysResolve, type IClientDatastoreRemoveResolve, type IClientDatastoreSetPResolve, type IClientDatastoreSetResolve } from '@radroots/util';
 import { load, Store } from '@tauri-apps/plugin-store';
 
-export class TauriClientDatastore implements IClientDatastore {
+const ds_map_param = {
+    radroots_profile: (public_key: string) => `radroots:profile:${public_key}`
+} as const;
+
+const ds_map = {
+    key_nostr: `nostr:publickey`,
+    role: `config:role`,
+    is_setup: `config:is_setup`,
+    eula: `eula:date`
+} as const;
+
+export class TauriClientDatastore implements IClientDatastore<
+    typeof ds_map,
+    typeof ds_map_param
+> {
     private _store: Store | null = null;
     private _store_path: string;
 

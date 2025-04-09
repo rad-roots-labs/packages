@@ -1,8 +1,8 @@
 
+import { lib_nostr_event_sign_attest } from '@radroots/nostr-util';
 import { err_msg, type IHttpResponse, is_err_response, is_error_response } from '@radroots/util';
 import { lib_http } from '../lib';
 import type { IClientRadroots, IClientRadrootsFetchMediaImageUpload, IClientRadrootsFetchMediaImageUploadResolve, IClientRadrootsFetchProfileActivate, IClientRadrootsFetchProfileActivateResolve, IClientRadrootsFetchProfileCreate, IClientRadrootsFetchProfileCreateResolve, IClientRadrootsFetchProfileRequest, IClientRadrootsFetchProfileRequestResolve } from './types';
-import { lib_nostr_event_sign_attest } from '@radroots/nostr-util';
 
 export class TauriClientRadroots implements IClientRadroots {
     private _base_url: string;
@@ -32,7 +32,7 @@ export class TauriClientRadroots implements IClientRadroots {
             }
         });
         if (is_err_response(res)) return res;
-        if (is_error_response(res)) err_msg(res.error);
+        if (is_error_response(res)) return err_msg(res.error);
         else if (this.is_res_pass(res)) {
             const tok = this.parse_res_field(res.data.tok);
             if (tok) return { result: res.data.tok };
@@ -51,7 +51,7 @@ export class TauriClientRadroots implements IClientRadroots {
             authorization: tok,
         });
         if (is_err_response(res)) return res;
-        if (is_error_response(res)) err_msg(res.error);
+        if (is_error_response(res)) return err_msg(res.error);
         else if (this.is_res_pass(res)) {
             const id = this.parse_res_field(res.data.id);
             if (id) return { result: id };
@@ -72,7 +72,7 @@ export class TauriClientRadroots implements IClientRadroots {
             }
         });
         if (is_err_response(res)) return res;
-        if (is_error_response(res)) err_msg(res.error);
+        if (is_error_response(res)) return err_msg(res.error);
         else if (this.is_res_pass(res)) return { pass: true };
         return err_msg(`error.client.request_failure`);
     }
@@ -89,7 +89,7 @@ export class TauriClientRadroots implements IClientRadroots {
             data_bin: file_data,
         });
         if (is_err_response(res)) return res;
-        if (is_error_response(res)) err_msg(res.error);
+        if (is_error_response(res)) return err_msg(res.error);
         else if (
             this.is_res_pass(res) &&
             `res_base` in res.data &&
