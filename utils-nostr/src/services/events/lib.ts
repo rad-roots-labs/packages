@@ -1,76 +1,24 @@
-import { INostrEventEventSign, INostrEventService, INostrEventServiceFormatTagsBasisNip99, INostrEventServiceNeventEncode, lib_nostr_event_sign, lib_nostr_event_sign_attest, lib_nostr_event_verify, lib_nostr_event_verify_serialized, lib_nostr_nevent_encode, ndk_event, NostrEventTagClient, NostrEventTagLocation, NostrEventTagMediaUpload, NostrEventTagPrice, NostrEventTagQuantity, NostrMetadata } from "$root";
-import NDK, { NDKKind, type NDKEvent } from "@nostr-dev-kit/ndk";
-import { ngeotags, type GeoTags as NostrGeotagsGeotags, type InputData as NostrGeotagsInputData } from "nostr-geotags";
+import { INostrClassified, INostrEventEventSign, INostrEventService, INostrEventServiceEventResolve, INostrEventServiceNeventEncode, INostrFollow, INostrMetadata, lib_nostr_event_sign, lib_nostr_event_sign_attest, lib_nostr_event_verify, lib_nostr_event_verify_serialized, lib_nostr_nevent_encode, ndk_event, ndk_event_classified, ndk_event_follows } from "$root";
+import NDK, { NDKKind, NDKUser, type NDKEvent } from "@nostr-dev-kit/ndk";
+import { err_msg, ErrorMessage } from "@radroots/util";
 import { type NostrEvent as NostrToolsEvent } from "nostr-tools";
 
 export class NostrEventService implements INostrEventService {
+    private resolve_ndk_user = async (ndk: NDK): Promise<NDKUser | ErrorMessage<string>> => {
+        const user = await ndk.signer?.user();
+        if (!user) return err_msg(`error.ndk.user_undefined`);
+        return user;
+    }
+
+    private resolve_ndk_event = (ev?: NDKEvent) => {
+        if (!ev) return err_msg(`error.event_undefined`);
+        return ev;
+    }
+
     public first_tag_value = (event: NDKEvent, tag_name: string): string => {
         const tag = event.getMatchingTags(tag_name)[0];
         return tag ? tag[1] : "";
     }
-
-    private fmt_tag_price = (opts: NostrEventTagPrice): string[] => {
-        const tag = [`price`, opts.amt, opts.currency, opts.qty_amt, opts.qty_unit];
-        return tag;
-    };
-
-    private fmt_tag_quantity = (opts: NostrEventTagQuantity): string[] => {
-        const tag = [`quantity`, opts.amt, opts.unit];
-        if (opts.label) tag.push(opts.label);
-        return tag;
-    };
-
-    private fmt_tag_location = (opts: NostrEventTagLocation): string[] => {
-        const tag = [`location`];
-        if (opts.city) tag.push(opts.city);
-        if (opts.region_code && !isNaN(parseInt(opts.region_code))) tag.push(opts.region_code);
-        else if (opts.region) tag.push(opts.region); //@todo 
-        if (opts.country_code) tag.push(opts.country_code);
-        return tag;
-    };
-
-    private fmt_tag_image = (opts: NostrEventTagMediaUpload): string[] => {
-        const tag = [`image`, opts.url];
-        if (opts.size) tag.push(`${opts.size.w}x${opts.size.h}`)
-        return tag;
-    };
-
-    private fmt_tag_client = (opts: NostrEventTagClient, d_tag?: string): string[] => {
-        const tag = [`client`, opts.name];
-        if (d_tag) tag.push(`31990:${opts.pubkey}:${d_tag}`);
-        tag.push(opts.relay);
-        return tag;
-    };
-
-    private fmt_tag_geotags = (opts: NostrEventTagLocation): NostrGeotagsGeotags[] => {
-        const data: NostrGeotagsInputData = {
-            lat: opts.lat,
-            lon: opts.lng,
-            city: opts.city,
-            regionName: opts.region,
-            countryName: opts.country,
-            countryCode: opts.country_code
-        };
-        return ngeotags(data, {
-            geohash: true,
-            gps: true,
-            city: true,
-            iso31662: true,
-        });
-    };
-
-    public fmt_tags_basis_nip99 = (opts: INostrEventServiceFormatTagsBasisNip99): string[][] => {
-        const { d_tag, listing, quantity, price, location } = opts;
-        const tags: string[][] = [[`d`, d_tag]];
-        if (opts.client) tags.push(this.fmt_tag_client(opts.client, opts.d_tag));
-        for (const [k, v] of Object.entries(listing)) if (v) tags.push([k, v]);
-        tags.push(this.fmt_tag_quantity(quantity));
-        tags.push(this.fmt_tag_price(price));
-        tags.push(this.fmt_tag_location(location));
-        if (opts.images) for (const image of opts.images) tags.push(this.fmt_tag_image(image));
-        tags.push(...this.fmt_tag_geotags(location));
-        return tags;
-    };
 
     public nostr_event_sign = (opts: INostrEventEventSign): NostrToolsEvent => {
         return lib_nostr_event_sign(opts);
@@ -93,9 +41,9 @@ export class NostrEventService implements INostrEventService {
         return lib_nostr_nevent_encode(opts);
     };
 
-    public metadata = async ($ndk: NDK, opts: NostrMetadata): Promise<NDKEvent | undefined> => {
-        const $ndk_user = await $ndk.signer?.user();
-        if (!$ndk_user) return undefined;
+    public metadata = async ($ndk: NDK, opts: INostrMetadata): Promise<INostrEventServiceEventResolve> => {
+        const $ndk_user = await this.resolve_ndk_user($ndk);
+        if (`err` in $ndk_user) return $ndk_user;
         const ev = await ndk_event({
             $ndk,
             $ndk_user,
@@ -104,22 +52,29 @@ export class NostrEventService implements INostrEventService {
                 content: JSON.stringify(opts),
             },
         });
-        return ev;
+        return this.resolve_ndk_event(ev);
     }
 
-    public classified = async ($ndk: NDK, opts: INostrEventServiceFormatTagsBasisNip99): Promise<NDKEvent | undefined> => {
-        const $ndk_user = await $ndk.signer?.user();
-        if (!$ndk_user) return undefined;
-        const ev = await ndk_event({
+    public follows = async ($ndk: NDK, list: INostrFollow[]): Promise<INostrEventServiceEventResolve> => {
+        const $ndk_user = await this.resolve_ndk_user($ndk);
+        if (`err` in $ndk_user) return $ndk_user;
+        const ev = await ndk_event_follows({
             $ndk,
             $ndk_user,
-            basis: {
-                kind: NDKKind.Classified,
-                content: ``,
-                tags: this.fmt_tags_basis_nip99(opts),
-            },
+            list
         });
-        return ev;
+        return this.resolve_ndk_event(ev);
+    }
+
+    public classified = async ($ndk: NDK, classified: INostrClassified): Promise<INostrEventServiceEventResolve> => {
+        const $ndk_user = await this.resolve_ndk_user($ndk);
+        if (`err` in $ndk_user) return $ndk_user;
+        const ev = await ndk_event_classified({
+            $ndk,
+            $ndk_user,
+            classified
+        });
+        return this.resolve_ndk_event(ev);
     }
 }
 
