@@ -42,10 +42,3 @@ const fn_carousel_num = (num_i: number, num_min: number) => {
 export const carousel_num = fn_carousel_num(1, 1);
 export const envelope_visible = writable<boolean>(false);
 export const envelope_tilt = writable<boolean>(true);
-
-export const nostr_ndk_configured = writable<boolean>(false);
-export const nostr_relays_poll_documents = writable<boolean>(false);
-export const nostr_relays_poll_documents_count = writable<number>(0);
-export const nostr_relays_connected = writable<string[]>([]);
-export const nostr_sync_prevent = writable<boolean>(false);
-

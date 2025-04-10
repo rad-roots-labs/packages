@@ -12,6 +12,7 @@
         value: string;
     } = $props();
 
+    const id = $derived(basis?.id ? basis.id : null);
     const layer = $derived(
         typeof basis?.layer === `boolean`
             ? parse_layer(0)
@@ -59,6 +60,7 @@
                 el: ev.currentTarget,
             });
     }}
+    {id}
     type="text"
     class={`${fmt_cl(basis?.classes)} el-input ${classes_layer} el-re`}
     placeholder={basis?.placeholder || ``}
