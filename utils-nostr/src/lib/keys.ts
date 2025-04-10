@@ -1,4 +1,5 @@
 import { bytesToHex, hexToBytes } from "@noble/hashes/utils";
+import { NDKPrivateKeySigner } from "@nostr-dev-kit/ndk";
 import { generateSecretKey, getPublicKey, nip19 } from "nostr-tools";
 
 export const lib_nostr_get_key_bytes = (hex: string): Uint8Array => {
@@ -34,9 +35,10 @@ export const lib_nostr_public_key = (secret_key_hex: string): string => {
 };
 
 export const lib_nostr_secret_key_validate = (secret_key: string): string | undefined => {
-    const is_valid_hex = lib_nostr_public_key(secret_key);
-    if (is_valid_hex) return secret_key;
-    const is_valid_nsec = lib_nostr_nsec_decode(secret_key);
-    if (is_valid_nsec) return is_valid_nsec;
-    return undefined;
+    try {
+        const signer = new NDKPrivateKeySigner(secret_key);
+        return signer.privateKey;
+    } catch {
+        return undefined;
+    }
 };
