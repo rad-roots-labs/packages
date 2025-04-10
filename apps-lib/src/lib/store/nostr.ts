@@ -21,7 +21,6 @@ export const nostr_sync_retry_handler = async (callback: () => Promise<any>) => 
 
     const exe = async () => {
         if (get_store(nostr_sync_failure)) return;
-        console.log(`[nostr_sync] running... ${current_count}`)
         try {
             await callback();
         } catch (e) {
