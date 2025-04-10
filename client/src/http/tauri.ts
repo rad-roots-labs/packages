@@ -25,7 +25,6 @@ export class TauriClientHttp implements IClientHttp {
         try {
             const { url, options } = http_fetch_opts(opts);
             const response = await fetch(url, options);
-            console.log(`response `, response)
             return lib_http_parse_response(response);
         } catch (e) {
             console.log(`e fetch`, e)
@@ -46,7 +45,6 @@ export class TauriClientHttp implements IClientHttp {
             switch (response.ok) {
                 case true: {
                     const blob = await response.blob();
-
                     return {
                         status: response.status,
                         url: response.url,

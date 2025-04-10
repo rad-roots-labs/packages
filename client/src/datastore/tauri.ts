@@ -6,6 +6,7 @@ const ds_map_param = {
 } as const;
 
 const ds_map = {
+    init_nostr: `init:nostr:publickey`,
     key_nostr: `nostr:publickey`,
     role: `config:role`,
     is_setup: `config:is_setup`,
