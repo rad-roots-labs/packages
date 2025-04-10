@@ -14,7 +14,7 @@ export type NostrRelayInformationDocument = {
 export type NostrRelayInformationDocumentFields = { [K in keyof NostrRelayInformationDocument]: string; };
 
 export const lib_nostr_relay_parse_information_document = (data: any): NostrRelayInformationDocument | undefined => {
-    const obj = JSON.parse(data);
+    const obj = typeof data === `string` ? JSON.parse(data) : data;
     return {
         id: typeof obj.id === 'string' ? obj.id : undefined,
         name: typeof obj.name === 'string' ? obj.name : undefined,
