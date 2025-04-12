@@ -22,8 +22,8 @@ export type INostrFollow = {
 export type INostrClassified = {
     d_tag: string;
     listing: NostrEventTagListing;
-    quantity: NostrEventTagQuantity;
-    price: NostrEventTagPrice;
+    quantity: NostrEventTagQuantity[];
+    price: NostrEventTagPrice[];
     location: NostrEventTagLocation;
     images?: NostrEventTagMediaUpload[];
     client?: NostrEventTagClient;

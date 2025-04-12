@@ -67,10 +67,10 @@ export const tags_classified = (opts: INostrClassified): NostrEventTags => {
     const tags: NostrEventTags = [[`d`, d_tag]];
     if (opts.client) tags.push(tag_client(opts.client, opts.d_tag));
     for (const [k, v] of Object.entries(listing)) if (v) tags.push([k, v]);
-    tags.push(tag_classified_quantity(quantity));
-    tags.push(tag_classified_price(price));
+    for (const quantity_tags of quantity) tags.push(tag_classified_quantity(quantity_tags));
+    for (const price_tags of price) tags.push(tag_classified_price(price_tags));
     tags.push(tag_classified_location(location));
-    if (opts.images) for (const image of opts.images) tags.push(tag_classified_image(image));
+    if (opts.images) for (const image_tags of opts.images) tags.push(tag_classified_image(image_tags));
     tags.push(...tags_classified_location_geotags(location));
     return tags;
 };
