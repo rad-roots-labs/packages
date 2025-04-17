@@ -29,6 +29,45 @@ export type INostrClassified = {
     client?: NostrEventTagClient;
 };
 
+export type NostrJobRequestMassUnit = 'g' | 'kg' | 'lb';
+
+export type INostrJobRequestOrderQuantity = {
+    amount: number;
+    unit: string;
+    count: number;
+    mass_g: number;
+    label: string;
+};
+
+export type INostrJobRequestOrderPrice = {
+    amount: number;
+    currency: string;
+    quantity_amount: number;
+    quantity_unit: NostrJobRequestMassUnit;
+};
+
+export type INostrJobRequestOrder = {
+    price: INostrJobRequestOrderPrice;
+    quantity: INostrJobRequestOrderQuantity;
+}
+
+export type INostrJobRequestInput = {
+    tags?: string[];
+} & ({
+    classified: {
+        id: string;
+        relay: string;
+        marker?: ({
+            order: INostrJobRequestOrder;
+        });
+    }
+})
+
+export type INostrJobRequest = {
+    input: INostrJobRequestInput;
+    tags?: string[][];
+};
+
 export type INostrEventEventSign = {
     secret_key: string;
     event: NostrToolsEventTemplate;

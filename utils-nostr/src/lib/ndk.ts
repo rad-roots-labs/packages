@@ -1,4 +1,4 @@
-import { INostrClassified, INostrFollow, NostrEventTags, tags_classified, tags_follow_list, time_now_ms, type INostrMetadata } from '$root';
+import { INostrClassified, INostrFollow, INostrJobRequest, NostrEventTags, tags_classified, tags_follow_list, tags_job_request, time_now_ms, type INostrMetadata } from '$root';
 import NDK, { NDKEvent, NDKKind, NDKPrivateKeySigner, NDKUser } from '@nostr-dev-kit/ndk';
 
 export type NDKEventFigure<T extends object> = {
@@ -33,6 +33,7 @@ export const ndk_event = async (opts: NDKEventFigure<{
 }>): Promise<NDKEvent | undefined> => {
     try {
         const { $ndk: ndk, $ndk_user: ndk_user, basis } = opts;
+        console.log(JSON.stringify(basis, null, 4), `basis`)
         const time_now = time_now_ms();
         const tags: NostrEventTags = [
             ['published_at', time_now.toString()],
@@ -54,13 +55,13 @@ export const ndk_event = async (opts: NDKEventFigure<{
 export const ndk_event_metadata = async (opts: NDKEventFigure<{
     metadata: INostrMetadata
 }>): Promise<NDKEvent | undefined> => {
-    const { $ndk, $ndk_user, metadata: param } = opts;
+    const { $ndk, $ndk_user, metadata: data } = opts;
     return await ndk_event({
         $ndk,
         $ndk_user,
         basis: {
             kind: 0,
-            content: JSON.stringify(param),
+            content: JSON.stringify(data),
         },
     });
 };
@@ -68,14 +69,14 @@ export const ndk_event_metadata = async (opts: NDKEventFigure<{
 export const ndk_event_follows = async (opts: NDKEventFigure<{
     list: INostrFollow[];
 }>): Promise<NDKEvent | undefined> => {
-    const { $ndk, $ndk_user, list: param } = opts;
+    const { $ndk, $ndk_user, list: data } = opts;
     return await ndk_event({
         $ndk,
         $ndk_user,
         basis: {
             kind: 3,
             content: ``,
-            tags: tags_follow_list(param),
+            tags: tags_follow_list(data),
         },
     });
 };
@@ -83,14 +84,29 @@ export const ndk_event_follows = async (opts: NDKEventFigure<{
 export const ndk_event_classified = async (opts: NDKEventFigure<{
     classified: INostrClassified;
 }>): Promise<NDKEvent | undefined> => {
-    const { $ndk, $ndk_user, classified: param } = opts;
+    const { $ndk, $ndk_user, classified: data } = opts;
     return await ndk_event({
         $ndk,
         $ndk_user,
         basis: {
             kind: NDKKind.Classified,
             content: ``,
-            tags: tags_classified(param),
+            tags: tags_classified(data),
+        },
+    });
+};
+
+export const ndk_event_job_request = async (opts: NDKEventFigure<{
+    data: INostrJobRequest;
+}>): Promise<NDKEvent | undefined> => {
+    const { $ndk, $ndk_user, data } = opts;
+    return await ndk_event({
+        $ndk,
+        $ndk_user,
+        basis: {
+            kind: NDKKind.DVMReqDiscoveryNostrContent,
+            content: ``,
+            tags: tags_job_request(data)
         },
     });
 };

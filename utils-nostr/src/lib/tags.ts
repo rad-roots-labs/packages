@@ -1,4 +1,4 @@
-import { INostrClassified, NostrEventTagClient, NostrEventTagLocation, NostrEventTagMediaUpload, NostrEventTagPrice, NostrEventTagQuantity, type INostrFollow, type NostrEventTag, type NostrEventTags } from "$root";
+import { INostrClassified, INostrJobRequest, NostrEventTagClient, NostrEventTagLocation, NostrEventTagMediaUpload, NostrEventTagPrice, NostrEventTagQuantity, type INostrFollow, type NostrEventTag, type NostrEventTags } from "$root";
 import { ngeotags, type InputData as NostrGeotagsInputData } from "nostr-geotags";
 
 export const tag_client = (opts: NostrEventTagClient, d_tag?: string): NostrEventTag => {
@@ -72,5 +72,24 @@ export const tags_classified = (opts: INostrClassified): NostrEventTags => {
     tags.push(tag_classified_location(location));
     if (opts.images) for (const image_tags of opts.images) tags.push(tag_classified_image(image_tags));
     tags.push(...tags_classified_location_geotags(location));
+    return tags;
+};
+
+export const tags_job_request = (opts: INostrJobRequest): NostrEventTags => {
+    const tag_i: string[] = [`i`];
+    if (`classified` in opts.input && opts.input?.classified) {
+        const { classified: event_request } = opts.input;
+        let marker = `*`;
+        let data = `*`;
+        if (event_request.marker && `order` in event_request.marker) {
+            marker = `order`;
+            data = JSON.stringify({ event: { id: event_request.id }, order: event_request.marker.order });
+        }
+        tag_i.push(...[data, `text`, event_request.relay, marker]);
+        tag_i.push(...(opts.input.tags || []))
+    }
+
+    const tags: NostrEventTags = [tag_i];
+    tags.push(...(opts.tags || []))
     return tags;
 };
