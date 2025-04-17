@@ -75,7 +75,7 @@ export const tags_classified = (opts: INostrClassified): NostrEventTags => {
         const quantity_key = `${quantity.amt}-${quantity.unit}${quantity.label ? `-${quantity.label}` : ``}`.toLowerCase();
         tags.push(tag_classified_quantity(quantity));
         for (const price of quantity.prices) {
-            const price_key = `${price.amt}-${price.currency}${quantity.amt}-${quantity.unit}`.toLowerCase();
+            const price_key = `${price.amt}-${price.currency}-${quantity.amt}-${quantity.unit}`.toLowerCase();
             tags.push(tag_classified_price(price, quantity, quantity_key));
             for (const tier of price.tiers || []) {
                 tags.push(tag_classified_price_tier(tier, price_key));
