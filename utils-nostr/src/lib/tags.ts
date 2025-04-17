@@ -1,4 +1,4 @@
-import { INostrClassified, INostrJobRequest, NostrEventTagClient, NostrEventTagLocation, NostrEventTagMediaUpload, NostrEventTagPrice, NostrEventTagQuantity, type INostrFollow, type NostrEventTag, type NostrEventTags } from "$root";
+import { INostrClassified, INostrJobRequest, NostrEventTagClient, NostrEventTagLocation, NostrEventTagMediaUpload, NostrEventTagPrice, NostrEventTagPriceTier, NostrEventTagQuantity, type INostrFollow, type NostrEventTag, type NostrEventTags } from "$root";
 import { ngeotags, type InputData as NostrGeotagsInputData } from "nostr-geotags";
 
 export const tag_client = (opts: NostrEventTagClient, d_tag?: string): NostrEventTag => {
@@ -22,9 +22,13 @@ export const tag_classified_quantity = (opts: NostrEventTagQuantity): NostrEvent
     if (opts.label) tag.push(opts.label);
     return tag;
 };
+export const tag_classified_price_tier = (tier: NostrEventTagPriceTier, price_key: string): NostrEventTag => {
+    const tag = [`price-tier`, tier.type, tier.value, price_key, tier.qty_min.toString()];
+    return tag;
+};
 
-export const tag_classified_price = (opts: NostrEventTagPrice): NostrEventTag => {
-    const tag = [`price`, opts.amt, opts.currency, opts.qty_amt, opts.qty_unit];
+export const tag_classified_price = (tag_price: NostrEventTagPrice, tag_qty: NostrEventTagQuantity, quantity_key: string): NostrEventTag => {
+    const tag = [`price`, tag_price.amt, tag_price.currency, tag_qty.amt, tag_qty.unit, quantity_key];
     return tag;
 };
 
@@ -63,12 +67,21 @@ export const tags_classified_location_geotags = (opts: NostrEventTagLocation): N
 
 
 export const tags_classified = (opts: INostrClassified): NostrEventTags => {
-    const { d_tag, listing, quantity, price, location } = opts;
+    const { d_tag, listing, quantities, location } = opts;
     const tags: NostrEventTags = [[`d`, d_tag]];
     if (opts.client) tags.push(tag_client(opts.client, opts.d_tag));
     for (const [k, v] of Object.entries(listing)) if (v) tags.push([k, v]);
-    for (const quantity_tags of quantity) tags.push(tag_classified_quantity(quantity_tags));
-    for (const price_tags of price) tags.push(tag_classified_price(price_tags));
+    for (const quantity of quantities) {
+        const quantity_key = `${quantity.amt}-${quantity.unit}${quantity.label ? `-${quantity.label}` : ``}`.toLowerCase();
+        tags.push(tag_classified_quantity(quantity));
+        for (const price of quantity.prices) {
+            const price_key = `${price.amt}-${price.currency}${quantity.amt}-${quantity.unit}`.toLowerCase();
+            tags.push(tag_classified_price(price, quantity, quantity_key));
+            for (const tier of price.tiers || []) {
+                tags.push(tag_classified_price_tier(tier, price_key));
+            }
+        }
+    }
     tags.push(tag_classified_location(location));
     if (opts.images) for (const image_tags of opts.images) tags.push(tag_classified_image(image_tags));
     tags.push(...tags_classified_location_geotags(location));

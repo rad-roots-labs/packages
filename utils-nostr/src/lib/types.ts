@@ -19,11 +19,28 @@ export type INostrFollow = {
     contact_name?: string;
 };
 
+export type NostrEventTagQuantity = {
+    amt: string;
+    unit: string;
+    label?: string;
+    prices: NostrEventTagPrice[];
+};
+
+export type NostrEventTagPriceTier = {
+    type: string;
+    value: string;
+    qty_min: number;
+}
+export type NostrEventTagPrice = {
+    amt: string;
+    currency: string;
+    tiers?: NostrEventTagPriceTier[];
+};
+
 export type INostrClassified = {
     d_tag: string;
     listing: NostrEventTagListing;
-    quantity: NostrEventTagQuantity[];
-    price: NostrEventTagPrice[];
+    quantities: NostrEventTagQuantity[];
     location: NostrEventTagLocation;
     images?: NostrEventTagMediaUpload[];
     client?: NostrEventTagClient;
@@ -83,19 +100,6 @@ export type NostrEventTagListing = {
     location?: string;
     profile?: string;
     year?: string;
-};
-
-export type NostrEventTagPrice = {
-    amt: string;
-    currency: string;
-    qty_amt: string;
-    qty_unit: string;
-};
-
-export type NostrEventTagQuantity = {
-    amt: string;
-    unit: string;
-    label?: string;
 };
 
 export type NostrEventTagLocation = {
