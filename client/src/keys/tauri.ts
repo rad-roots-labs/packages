@@ -1,6 +1,6 @@
 
 import { lib_nostr_secret_key_validate } from '@radroots/nostr-util';
-import { err_msg, ErrorMessage, is_pass_response, is_result_response, is_results_response } from '@radroots/util';
+import { err_msg, type ErrorMessage, is_pass_response, is_result_response, is_results_response } from '@radroots/util';
 import { invoke } from '@tauri-apps/api/core';
 import type { IClientKeys, IClientKeysNostrAddResolve, IClientKeysNostrCreateResolve, IClientKeysNostrDeleteResolve, IClientKeysNostrKeystoreResetResolve, IClientKeysNostrReadAllResolve, IClientKeysNostrReadResolve } from './types';
 
