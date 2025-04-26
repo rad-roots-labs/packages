@@ -1,3 +1,4 @@
+import { ListingOrder } from "@radroots/radroots-common-bindings";
 import { type EventTemplate as NostrToolsEventTemplate } from "nostr-tools";
 
 export type INostrMetadata = {
@@ -23,50 +24,63 @@ export type NostrEventTagQuantity = {
     amt: string;
     unit: string;
     label?: string;
-    prices: NostrEventTagPrice[];
 };
 
-export type NostrEventTagPriceTier = {
-    type: string;
-    value: string;
-    qty_min: number;
-}
+export type NostrEventTagPriceDiscount = (
+    {
+        quantity: {
+            ref_quantity: string;
+            threshold: string;
+            value: string;
+            currency: string;
+        }
+    } |
+    {
+        mass: {
+            unit: string;
+            threshold: string;
+            threshold_unit: string;
+            value: string;
+            currency: string;
+        }
+    } |
+    {
+        subtotal: {
+            threshold: string;
+            currency: string;
+            value: string;
+            measure: string;
+        }
+    } |
+    {
+        total: {
+            total_min: string;
+            value: string;
+            measure: string;
+        }
+    }
+);
+
 export type NostrEventTagPrice = {
     amt: string;
     currency: string;
-    tiers?: NostrEventTagPriceTier[];
+    qty_amt: string;
+    qty_unit: string;
+    qty_key: string;
 };
 
 export type INostrClassified = {
     d_tag: string;
     listing: NostrEventTagListing;
     quantities: NostrEventTagQuantity[];
-    location: NostrEventTagLocation;
+    prices: NostrEventTagPrice[];
+    discounts?: NostrEventTagPriceDiscount[];
+    location?: NostrEventTagLocation;
     images?: NostrEventTagMediaUpload[];
     client?: NostrEventTagClient;
 };
 
 export type NostrJobRequestMassUnit = 'g' | 'kg' | 'lb';
-
-export type INostrJobRequestOrderQuantity = {
-    amount: number;
-    unit: string;
-    count: number;
-    mass_g: number;
-    label: string;
-};
-
-export type INostrJobRequestOrderPrice = {
-    amount: number;
-    currency: string;
-    quantity_amount: number;
-    quantity_unit: NostrJobRequestMassUnit;
-};
-
-export type INostrJobRequestOrder = {
-    price: INostrJobRequestOrderPrice;
-    quantity: INostrJobRequestOrderQuantity;
-}
 
 export type INostrJobRequestInput = {
     tags?: string[];
@@ -75,7 +89,7 @@ export type INostrJobRequestInput = {
         id: string;
         relay: string;
         marker?: ({
-            order: INostrJobRequestOrder;
+            order: ListingOrder;
         });
     }
 })
@@ -108,8 +122,8 @@ export type NostrEventTagLocation = {
     region_code?: string;
     country?: string;
     country_code?: string;
-    lat: number;
-    lng: number;
+    lat?: number;
+    lng?: number;
     geohash: string;
 };
 

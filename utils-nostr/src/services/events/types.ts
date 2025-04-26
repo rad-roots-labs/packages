@@ -1,6 +1,5 @@
-import type { INostrClassified, INostrEventEventSign, INostrFollow, INostrMetadata } from "$root";
+import type { INostrClassified, INostrEventEventSign, INostrFollow, INostrMetadata, ResolveError } from "$root";
 import NDK, { NDKEvent } from "@nostr-dev-kit/ndk";
-import { type ResolveError } from "@radroots/util";
 import { type NostrEvent as NostrToolsEvent } from "nostr-tools";
 
 export type INostrEventServiceNeventEncode = {

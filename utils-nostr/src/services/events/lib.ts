@@ -1,6 +1,5 @@
-import { INostrClassified, INostrEventEventSign, INostrEventService, INostrEventServiceEventResolve, INostrEventServiceNeventEncode, INostrFollow, INostrMetadata, lib_nostr_event_sign, lib_nostr_event_sign_attest, lib_nostr_event_verify, lib_nostr_event_verify_serialized, lib_nostr_nevent_encode, ndk_event, ndk_event_classified, ndk_event_follows } from "$root";
+import { err_msg, ErrorMessage, INostrClassified, INostrEventEventSign, INostrEventService, INostrEventServiceEventResolve, INostrEventServiceNeventEncode, INostrFollow, INostrMetadata, lib_nostr_event_sign, lib_nostr_event_sign_attest, lib_nostr_event_verify, lib_nostr_event_verify_serialized, lib_nostr_nevent_encode, ndk_event, ndk_event_classified, ndk_event_follows } from "$root";
 import NDK, { NDKKind, NDKUser, type NDKEvent } from "@nostr-dev-kit/ndk";
-import { err_msg, ErrorMessage } from "@radroots/util";
 import { type NostrEvent as NostrToolsEvent } from "nostr-tools";
 
 export class NostrEventService implements INostrEventService {

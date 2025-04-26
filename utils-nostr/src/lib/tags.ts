@@ -1,4 +1,4 @@
-import { INostrClassified, INostrJobRequest, NostrEventTagClient, NostrEventTagLocation, NostrEventTagMediaUpload, NostrEventTagPrice, NostrEventTagPriceTier, NostrEventTagQuantity, type INostrFollow, type NostrEventTag, type NostrEventTags } from "$root";
+import { INostrClassified, INostrJobRequest, NostrEventTagClient, NostrEventTagLocation, NostrEventTagMediaUpload, NostrEventTagPrice, NostrEventTagPriceDiscount, NostrEventTagQuantity, type INostrFollow, type NostrEventTag, type NostrEventTags } from "$root";
 import { ngeotags, type InputData as NostrGeotagsInputData } from "nostr-geotags";
 
 export const tag_client = (opts: NostrEventTagClient, d_tag?: string): NostrEventTag => {
@@ -20,16 +20,21 @@ export const tags_follow_list = (list: INostrFollow[]): NostrEventTags => {
 export const tag_classified_quantity = (opts: NostrEventTagQuantity): NostrEventTag => {
     const tag = [`quantity`, opts.amt, opts.unit];
     if (opts.label) tag.push(opts.label);
-    return tag;
-};
-export const tag_classified_price_tier = (tier: NostrEventTagPriceTier, price_key: string): NostrEventTag => {
-    const tag = [`price-tier`, tier.type, tier.value, price_key, tier.qty_min.toString()];
-    return tag;
+    return tag.map(i => i.toLowerCase());
 };
 
-export const tag_classified_price = (tag_price: NostrEventTagPrice, tag_qty: NostrEventTagQuantity, quantity_key: string): NostrEventTag => {
-    const tag = [`price`, tag_price.amt, tag_price.currency, tag_qty.amt, tag_qty.unit, quantity_key];
-    return tag;
+export const tag_classified_price_discount = (discount: NostrEventTagPriceDiscount): NostrEventTag => {
+    const tag = [`price-discount-${Object.keys(discount)[0]}`];
+    if (`mass` in discount) tag.push(...Object.values(discount.mass));
+    else if (`quantity` in discount) tag.push(...Object.values(discount.quantity));
+    else if (`subtotal` in discount) tag.push(...Object.values(discount.subtotal));
+    else if (`total` in discount) tag.push(...Object.values(discount.total));
+    return tag.map(i => i.toLowerCase());
+};
+
+export const tag_classified_price = (price: NostrEventTagPrice): NostrEventTag => {
+    const tag = [`price`, price.amt, price.currency, price.qty_amt, price.qty_unit, price.qty_key];
+    return tag.map(i => i.toLowerCase());
 };
 
 export const tag_classified_image = (opts: NostrEventTagMediaUpload): NostrEventTag => {
@@ -48,43 +53,29 @@ export const tag_classified_location = (opts: NostrEventTagLocation): NostrEvent
 };
 
 export const tags_classified_location_geotags = (opts: NostrEventTagLocation): NostrEventTags => {
-    return ngeotags(
-        {
-            lat: opts.lat,
-            lon: opts.lng,
-            city: opts.city,
-            regionName: opts.region,
-            countryName: opts.country,
-            countryCode: opts.country_code
-        } satisfies NostrGeotagsInputData,
-        {
-            geohash: true,
-            gps: true,
-            city: true,
-            iso31662: true,
-        });
+    const { lat, lng: lon, city, region: regionName, country: countryName, country_code: countryCode } = opts;
+    return ngeotags({ lat, lon, city, regionName, countryName, countryCode } satisfies NostrGeotagsInputData, { geohash: true, gps: true, city: true, iso31662: true });
 };
 
-
 export const tags_classified = (opts: INostrClassified): NostrEventTags => {
-    const { d_tag, listing, quantities, location } = opts;
+    const { d_tag, listing, quantities, prices } = opts;
     const tags: NostrEventTags = [[`d`, d_tag]];
     if (opts.client) tags.push(tag_client(opts.client, opts.d_tag));
     for (const [k, v] of Object.entries(listing)) if (v) tags.push([k, v]);
     for (const quantity of quantities) {
-        const quantity_key = `${quantity.amt}-${quantity.unit}${quantity.label ? `-${quantity.label}` : ``}`.toLowerCase();
         tags.push(tag_classified_quantity(quantity));
-        for (const price of quantity.prices) {
-            const price_key = `${price.amt}-${price.currency}-${quantity.amt}-${quantity.unit}`.toLowerCase();
-            tags.push(tag_classified_price(price, quantity, quantity_key));
-            for (const tier of price.tiers || []) {
-                tags.push(tag_classified_price_tier(tier, price_key));
-            }
-        }
     }
-    tags.push(tag_classified_location(location));
+    for (const price of prices) {
+        tags.push(tag_classified_price(price));
+    }
+    for (const discount of opts.discounts || []) {
+        tags.push(tag_classified_price_discount(discount));
+    }
+    if (opts.location) {
+        tags.push(tag_classified_location(opts.location));
+        //tags.push(...tags_classified_location_geotags(opts.location));
+    }
     if (opts.images) for (const image_tags of opts.images) tags.push(tag_classified_image(image_tags));
-    tags.push(...tags_classified_location_geotags(location));
     return tags;
 };
 
