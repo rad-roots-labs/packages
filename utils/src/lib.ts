@@ -1,10 +1,11 @@
 import { type CallbackPromise } from "./types";
 
-export const ascii = {
+export const symbols = {
     bullet: '•',
     dash: `—`,
     up: `↑`,
-    down: `↓`
+    down: `↓`,
+    percent: `%`
 }
 
 export const root_symbol = "»--`--,---";
@@ -51,4 +52,16 @@ export const exe_iter = async (callback: CallbackPromise, num: number = 1, delay
     } catch (e) {
         console.log(`(error) exe_iter `, e);
     }
+};
+
+
+export const fmt_tags_key = (...args: (string | number | undefined)[]) =>
+    args.filter(Boolean).join("-").toLowerCase();
+
+export const compare_str_eq = (a: string, b: string): boolean => {
+    return a.toLowerCase() === b.toLowerCase();
+};
+
+export const compare_str_ne = (a: string, b: string): boolean => {
+    return a.toLowerCase() !== b.toLowerCase();
 };

@@ -23,6 +23,21 @@ export function parse_mass_unit(val?: string): MassUnit | undefined {
     };
 };
 
+export function mass_to_g(val: number, unit: string): number {
+    const mass_unit = parse_mass_unit(unit);
+    switch (mass_unit) {
+        case `kg`:
+            return val * 1000;
+        case `lb`:
+            return val * 453.592;
+        case `g`:
+            return val;
+        default:
+            throw new Error(`unsupported unit ${unit}`);
+    }
+}
+
+
 export function parse_area_unit_default(val?: string): AreaUnit {
     const unit = parse_area_unit(val);
     return unit ?? `ac`

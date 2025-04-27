@@ -3,6 +3,9 @@ import { util_rxp } from "$root";
 export type FiatCurrency = `usd` | `eur`;
 export const fiat_currencies: FiatCurrency[] = [`usd`, `eur`] as const;
 
+// @todo 
+export const price_to_formatted = (n: number, _currency: string) => Math.round(n * 100) / 100;
+
 export const parse_currency = (val?: string): FiatCurrency => {
     const cur = val?.trim().toLowerCase()
     switch (cur) {
