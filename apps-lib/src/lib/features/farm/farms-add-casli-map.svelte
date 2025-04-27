@@ -1,10 +1,13 @@
 <script lang="ts">
+    import Fade from "$lib/components/lib/fade.svelte";
     import {
         CarouselItem,
         Map,
         MapMarkerArea,
         WrapBorder,
         app_lo,
+        focus_map_marker,
+        geop_is_valid,
         handle_err,
         type LcGeocodeCallback,
         type LcGeocodeCurrentCallback,
@@ -34,6 +37,8 @@
 
     let map: maplibregl.Map | undefined = $state(undefined);
 
+    const is_valid_geop = $derived(geop_is_valid(map_geop));
+
     onMount(async () => {
         try {
             const geop = await basis.lc_geop_current();
@@ -43,6 +48,7 @@
             if (!geoc) return;
             map_geoc = geoc;
             if (map) map.setCenter([map_geop.lng, map_geop.lat]);
+            focus_map_marker();
         } catch (e) {
             handle_err(e, `on_mount`);
         }
@@ -67,25 +73,27 @@
                 {/if}
             </Map>
         </WrapBorder>
-        {#if map_geop}
-            <div
-                class={`flex flex-col w-full gap-1 justify-center items-center`}
-            >
+        {#if is_valid_geop}
+            <Fade>
                 <div
-                    class={`flex flex-row w-full gap-2 justify-center items-center`}
+                    class={`flex flex-col w-full gap-1 justify-center items-center`}
                 >
-                    <p
-                        class={`font-sans font-[500] text-layer-0-glyph tracking-tightest`}
+                    <div
+                        class={`flex flex-row w-full gap-2 justify-center items-center`}
                     >
-                        {farm_geop_lat}
-                    </p>
-                    <p
-                        class={`font-sans font-[500] text-layer-0-glyph tracking-tightest`}
-                    >
-                        {farm_geop_lng}
-                    </p>
+                        <p
+                            class={`font-sans font-[500] text-layer-0-glyph tracking-tightest`}
+                        >
+                            {farm_geop_lat}
+                        </p>
+                        <p
+                            class={`font-sans font-[500] text-layer-0-glyph tracking-tightest`}
+                        >
+                            {farm_geop_lng}
+                        </p>
+                    </div>
                 </div>
-            </div>
+            </Fade>
         {/if}
     </div>
 </CarouselItem>

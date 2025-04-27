@@ -26,7 +26,7 @@
 </script>
 
 <div
-    class={`${fmt_cl(basis.classes)} flex flex-col gap-1 justify-center items-center ${basis?.back?.visible ? `-translate-y-1` : ``}`}
+    class={`${fmt_cl(basis.classes)} flex flex-col gap-1 justify-center items-center ${basis?.back?.visible ? `-translate-y-8` : ``} el-re`}
 >
     <ButtonLayout
         basis={{

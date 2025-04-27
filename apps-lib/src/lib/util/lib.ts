@@ -3,7 +3,7 @@ import { goto } from "$app/navigation";
 import { page } from "$app/state";
 import { win_h, win_w, type CallbackRoute, type NavigationRouteParamKey } from "$root";
 import type { ColorMode, ThemeKey } from "@radroots/theme";
-import { encode_route, fmt_geometry_point_coords, fmt_price, parse_currency_marker, type GeometryPoint, type IErrorCatchCallback } from "@radroots/util";
+import { encode_route, fmt_geometry_point_coords, fmt_price, parse_currency_marker, type GeolocationPoint, type GeometryPoint, type IErrorCatchCallback } from "@radroots/util";
 import { get } from "svelte/store";
 
 export const get_store = get;
@@ -85,4 +85,15 @@ export const window_set = (): void => {
     if (!browser) return;
     win_h.set(window.innerHeight);
     win_w.set(window.innerWidth);
+};
+
+export const geop_is_valid = (point?: GeolocationPoint): boolean => {
+    if (!point) return false;
+    return !(point.lat === 0 && point.lng === 0);
+};
+export const geop_init = (): GeolocationPoint => ({ lat: 0, lng: 0 });
+
+export const focus_map_marker = (): void => {
+    const el = document.querySelector(".maplibregl-marker");
+    if (el instanceof HTMLElement) el.click();
 };

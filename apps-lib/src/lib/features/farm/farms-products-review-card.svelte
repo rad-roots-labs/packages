@@ -76,7 +76,7 @@
                         {`/`}
                     </p>
                     <p class={`font-sans font-[600] text-xl text-th-black`}>
-                        {`${$ls(`measurement.mass.unit.${basis.data.price_quantity_unit}_ab`)}`}
+                        {`${$ls(`units.mass.unit.${basis.data.price_quantity_unit}_ab`)}`}
                     </p>
                 </div>
             </div>
@@ -95,7 +95,7 @@
                     <p
                         class={`font-sans font-[600] text-lg text-layer-1-glyph`}
                     >
-                        {`${basis.data.quantity_amount} ${$ls(`measurement.mass.unit.${basis.data.quantity_unit}_ab`)} ${basis.data.quantity_label}`}
+                        {`${basis.data.quantity_amount} ${$ls(`units.mass.unit.${basis.data.quantity_unit}_ab`)} ${basis.data.quantity_label}`}
                     </p>
                 </div>
             </div>

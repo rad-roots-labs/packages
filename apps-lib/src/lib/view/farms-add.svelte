@@ -1,6 +1,5 @@
 <script lang="ts">
     import LayoutBottomButton from "$lib/components/layout/layout-bottom-button.svelte";
-    import Fade from "$lib/components/lib/fade.svelte";
     import { schema_view_farms_add_submission } from "$lib/util/validation/farm";
     import {
         app_platform,
@@ -12,6 +11,10 @@
         casl_init,
         FarmsAddCasliDetail,
         FarmsAddCasliMap,
+        fmt_id,
+        focus_map_marker,
+        geop_init,
+        geop_is_valid,
         Glyph,
         handle_err,
         LayoutView,
@@ -23,6 +26,7 @@
         type LcGuiAlertCallback,
     } from "$root";
     import {
+        el_id,
         geol_lat_fmt,
         geol_lng_fmt,
         parse_float,
@@ -56,10 +60,11 @@
 
     let loading = $state(false);
 
-    let map_geop: GeolocationPoint = $state({ lat: 0, lng: 0 });
+    let map_geop: GeolocationPoint = $state(geop_init());
     let map_geoc: GeocoderReverseResult | undefined = $state(undefined);
 
     let val_farmname = $state(``);
+    let val_farmaddress = $state(``);
     let val_farmcontact = $state(``);
     let val_farmarea = $state(``);
     let val_farmarea_unit = $state(`ac`);
@@ -75,18 +80,37 @@
     });
 
     const farm_geop_lat = $derived(
-        map_geop ? geol_lat_fmt(map_geop.lat, `dms`, $locale, 3) : ``,
+        geop_is_valid(map_geop)
+            ? geol_lat_fmt(map_geop.lat, `dms`, $locale, 3)
+            : ``,
     );
 
     const farm_geop_lng = $derived(
-        map_geop ? geol_lng_fmt(map_geop.lng, `dms`, $locale, 3) : ``,
+        geop_is_valid(map_geop)
+            ? geol_lng_fmt(map_geop.lng, `dms`, $locale, 3)
+            : ``,
     );
 
     const farm_geolocation_address: GeolocationAddress | undefined = $derived(
         parse_geocode_address(map_geoc),
     );
 
+    $effect(() => {
+        if (farm_geolocation_address)
+            val_farmaddress = `${farm_geolocation_address.primary}, ${farm_geolocation_address.admin}, ${farm_geolocation_address.country}`;
+    });
+
+    const handle_enter_location = async (): Promise<void> => {
+        map_geoc = undefined;
+        map_geop = geop_init();
+        val_farmaddress = ``;
+        await handle_continue();
+        el_id(fmt_id(`farm_location`))?.focus();
+    };
+
     const handle_continue_0 = async (): Promise<void> => {
+        console.log(JSON.stringify(map_geop, null, 4), `map_geop`);
+        console.log(JSON.stringify(map_geoc, null, 4), `map_geoc`);
         await casl_inc();
     };
 
@@ -98,9 +122,14 @@
         const farms_add_submission = schema_view_farms_add_submission.safeParse(
             {
                 farm_name: val_farmname,
-                farm_area: parse_float(val_farmarea),
-                farm_area_unit: val_farmarea_unit,
-                farm_contact_name: val_farmcontact,
+                farm_area: val_farmarea ? parse_float(val_farmarea) : undefined,
+                farm_area_unit:
+                    val_farmarea && val_farmarea_unit
+                        ? val_farmarea_unit
+                        : undefined,
+                farm_contact_name: val_farmcontact
+                    ? val_farmcontact
+                    : undefined,
                 geolocation_point: map_geop,
                 geolocation_address: farm_geolocation_address,
             } satisfies IViewFarmsAddSubmission,
@@ -127,6 +156,17 @@
 
     const handle_back = async (): Promise<void> => {
         switch ($casl_i) {
+            case 1: {
+                if (!geop_is_valid(map_geop)) {
+                    const geop_cur = await basis.lc_geop_current();
+                    if (geop_cur) {
+                        map_geop = geop_cur;
+                        const geoc_cur = await basis.lc_geocode(geop_cur);
+                        if (geoc_cur) map_geoc = geoc_cur;
+                        focus_map_marker();
+                    }
+                }
+            }
             default:
                 return await casl_dec();
         }
@@ -143,39 +183,27 @@
         }}
     >
         {#snippet header_option()}
-            {#if $casl_i > 0}
-                <Fade>
-                    <button
-                        class={`flex flex-row pr-3 justify-center items-center`}
-                        onclick={async () => {
-                            await handle_back();
-                        }}
-                    >
-                        <p
-                            class={`font-sans font-[600] text-lg text-layer-0-glyph`}
-                        >
-                            {`${$ls(`common.back`)}`}
-                        </p>
-                    </button>
-                </Fade>
-            {/if}
-            <button
-                class={`flex flex-row justify-center items-center`}
-                onclick={async () => {
-                    await handle_continue();
-                }}
-            >
-                <p class={`font-sans font-[600] text-lg text-layer-0-glyph-hl`}>
-                    {`${$ls(`common.details`)}`}
-                </p>
-                <Glyph
-                    basis={{
-                        classes: `text-layer-0-glyph-hl`,
-                        dim: `md`,
-                        key: `caret-right`,
+            {#if $casl_i === 0}
+                <button
+                    class={`flex flex-row justify-center items-center`}
+                    onclick={async () => {
+                        await handle_enter_location();
                     }}
-                />
-            </button>
+                >
+                    <p
+                        class={`font-sans font-[600] text-[18px] text-layer-0-glyph-hl`}
+                    >
+                        {`${$ls(`common.enter_location`)}`}
+                    </p>
+                    <Glyph
+                        basis={{
+                            classes: `text-layer-0-glyph-hl`,
+                            dim: `md`,
+                            key: `caret-right`,
+                        }}
+                    />
+                </button>
+            {/if}
         {/snippet}
     </PageToolbar>
     <Carousel>
@@ -191,6 +219,7 @@
         />
         <FarmsAddCasliDetail
             bind:val_farmname
+            bind:val_farmaddress
             bind:val_farmcontact
             bind:val_farmarea
             bind:val_farmarea_unit

@@ -23,31 +23,33 @@
 <div
     class={`flex flex-row min-h-nav_page_toolbar_${$app_lo} h-nav_page_toolbar_${$app_lo} w-full px-6 justify-between items-end`}
 >
-    <button
-        class={`flex flex-row gap-2 justify-start items-center`}
-        onclick={async () => {
-            if (basis?.callback) await basis.callback();
-            else await goto(`/`);
-        }}
-    >
-        <LogoCircleSm />
-        <LogoLetters />
-    </button>
-    <button
-        class={`flex flex-row justify-center items-center`}
-        onclick={async () => {
-            await goto(`/settings`);
-        }}
-    >
-        <Glyph
-            basis={{
-                classes: `text-layer-0-glyph`,
-                dim: `lg`,
-
-                key: `gear`,
+    <div class={`flex flex-row w-full justify-between items-center`}>
+        <button
+            class={`flex flex-row gap-2 justify-start items-center`}
+            onclick={async () => {
+                if (basis?.callback) await basis.callback();
+                else await goto(`/`);
             }}
-        />
-    </button>
+        >
+            <LogoCircleSm />
+            <LogoLetters />
+        </button>
+        <button
+            class={`flex flex-row justify-center items-center`}
+            onclick={async () => {
+                await goto(`/settings`);
+            }}
+        >
+            <Glyph
+                basis={{
+                    classes: `text-layer-0-glyph`,
+                    dim: `lg`,
+
+                    key: `gear`,
+                }}
+            />
+        </button>
+    </div>
 </div>
 {#if basis?.header}
     <PageHeader basis={basis.header}>

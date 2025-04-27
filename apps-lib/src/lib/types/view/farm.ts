@@ -30,9 +30,9 @@ export type IViewFarmsProductsAddSubmission = {
 
 export type IViewFarmsAddSubmission = {
     farm_name: string;
-    farm_area: number;
-    farm_area_unit: string;
-    farm_contact_name: string;
+    farm_area?: number;
+    farm_area_unit?: string;
+    farm_contact_name?: string;
     geolocation_point: GeolocationPoint;
     geolocation_address: GeolocationAddress;
 };

@@ -72,7 +72,7 @@
         class={`flex flex-row h-12 w-full justify-start items-center border-y-line border-layer-0-surface-edge`}
     >
         {#if basis.display_value}
-            <p class={`font-sans font-[400] text-layer-0-glyph text-form_base`}>
+            <p class={`font-sans font-[400] text-layer-1-glyph text-form_base`}>
                 {basis.display_value}
             </p>
         {:else if basis.input}
@@ -82,7 +82,7 @@
                     id: id ? fmt_id(id) : undefined,
                     layer: 0,
                     classes: `h-10 placeholder:text-[1.1rem]`,
-                    field: basis.input.field,
+                    field: basis.input.field || undefined,
                     placeholder: basis.input.placeholder || ``,
                     callback_keydown: basis.input.callback_keydown,
                 }}

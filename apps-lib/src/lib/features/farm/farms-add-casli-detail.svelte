@@ -8,6 +8,7 @@
 
     let {
         val_farmname = $bindable(``),
+        val_farmaddress = $bindable(``),
         val_farmarea = $bindable(``),
         val_farmarea_unit = $bindable(``),
         val_farmcontact = $bindable(``),
@@ -16,6 +17,7 @@
         ls,
     }: {
         val_farmname: string;
+        val_farmaddress: string;
         val_farmarea: string;
         val_farmarea_unit: string;
         val_farmcontact: string;
@@ -30,10 +32,30 @@
         class={`flex flex-col h-[100vh] w-full px-6 pt-2 gap-4 justify-start items-center`}
     >
         <FormLineLedger
+            bind:value={val_farmaddress}
             basis={{
                 id: `farm_location`,
                 label: `${$ls(`common.farm_location`)}`,
-                display_value: `${farm_geop_lat}, ${farm_geop_lng}`,
+                input: {
+                    placeholder: `${$ls(`icu.enter_*`, { value: `${$ls(`common.farm_location`)}`.toLowerCase() })}`,
+                },
+            }}
+        />
+
+        <FormLineLedger
+            basis={{
+                id: `farm_coordinates`,
+                label: `${$ls(`common.farm_coordinates`)}`,
+                display_value:
+                    farm_geop_lat && farm_geop_lng
+                        ? `${farm_geop_lat}, ${farm_geop_lng}`
+                        : undefined,
+                input:
+                    farm_geop_lat && farm_geop_lng
+                        ? undefined
+                        : {
+                              placeholder: `${$ls(`icu.enter_*`, { value: `${$ls(`common.farm_coordinates`)}`.toLowerCase() })}`,
+                          },
             }}
         />
         <FormLineLedger
@@ -53,14 +75,14 @@
                 id: `farm_size`,
                 label: `${$ls(`common.farm_size`)}`,
                 label_select: {
-                    label: `${$ls(`measurement.area.${val_farmarea_unit}_ab`)}`,
+                    label: `${$ls(`units.area.${val_farmarea_unit}_ab`)}`,
                     entries: area_units.map((i) => ({
                         value: i,
-                        label: `${$ls(`measurement.area.${i}`)}`,
+                        label: `${$ls(`units.area.${i}`)}`,
                     })),
                 },
                 input: {
-                    placeholder: `${`${$ls(`icu.enter_*`, { value: `${$ls(`common.farm_size`)}`.toLowerCase() })}`} ${`${$ls(`measurement.area.${val_farmarea_unit}_pl`)}`.toLowerCase()}`,
+                    placeholder: `${`${$ls(`icu.enter_*`, { value: `${$ls(`common.farm_size`)}`.toLowerCase() })}`} ${`${$ls(`units.area.${val_farmarea_unit}_pl`)}`.toLowerCase()}`,
                     field: form_fields.farm_size,
                 },
             }}

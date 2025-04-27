@@ -114,7 +114,7 @@
                         {
                             entries: mass_units.map((i) => ({
                                 value: i,
-                                label: `${$ls(`measurement.mass.unit.${i}_ab`)}`.toLowerCase(),
+                                label: `${$ls(`units.mass.unit.${i}_ab`)}`.toLowerCase(),
                             })),
                         },
                     ],

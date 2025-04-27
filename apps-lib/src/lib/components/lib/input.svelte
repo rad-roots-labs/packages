@@ -24,20 +24,14 @@
             : `bg-layer-${layer}-surface text-layer-${layer}-glyph_d placeholder:text-layer-${layer}-glyph_pl caret-layer-${layer}-glyph`,
     );
 
-    let value_local = $state(value);
-
     const sync_from_idb = async (): Promise<void> => {
         if (!browser || !idb || !id) return;
         try {
             const kv_val = await idb.get(id);
-            if (
-                kv_val !== null &&
-                kv_val !== undefined &&
-                kv_val !== value_local
-            ) {
-                value_local = kv_val;
+            if (kv_val !== null && kv_val !== undefined && kv_val !== value) {
+                value = kv_val;
             } else if (kv_val === null || kv_val === undefined) {
-                value_local = ``;
+                value = ``;
                 await idb.set(id, ``);
             }
         } catch (e) {
@@ -48,7 +42,7 @@
     const sync_to_idb = async (): Promise<void> => {
         if (!browser || !idb || !id) return;
         try {
-            await idb.set(id, value_local || ``);
+            await idb.set(id, value || ``);
         } catch (e) {
             handle_err(e, `input_idb_sync`);
         }
@@ -75,14 +69,14 @@
 
     const handle_on_input = async (): Promise<void> => {
         try {
-            let val_cur = value_local;
+            let val_cur = value;
             let pass = true;
             if (basis?.field) {
-                val_cur = value_constrain(basis.field.charset, val_cur);
-                if (val_cur !== value_local) {
-                    value_local = val_cur;
+                val_cur = value_constrain(basis.field?.charset, val_cur);
+                if (val_cur !== value) {
+                    value = val_cur;
                 }
-                pass = basis.field.validate.test(val_cur);
+                pass = basis.field?.validate.test(val_cur);
             }
             if (basis?.callback) {
                 await basis.callback({ value: val_cur, pass });
@@ -95,7 +89,7 @@
 
 <input
     bind:this={el}
-    bind:value={value_local}
+    bind:value
     disabled={!!basis.disabled}
     oninput={handle_on_input}
     onblur={async ({ currentTarget: el }) => {

@@ -44,7 +44,7 @@
 <LayoutTrellisLine
     basis={{
         label: {
-            value: `${$ls(`icu.*_price`, { value: `${$ls(`common.product`)}` })} (${val_sel_currency}/${`${$ls(`measurement.mass.unit.${val_sel_qty_unit}_ab`)}`})`,
+            value: `${$ls(`icu.*_price`, { value: `${$ls(`common.product`)}` })} (${val_sel_currency}/${`${$ls(`units.mass.unit.${val_sel_qty_unit}_ab`)}`})`,
         },
     }}
 >
@@ -109,7 +109,7 @@
                         {
                             entries: mass_units.map((i) => ({
                                 value: i,
-                                label: `${$ls(`measurement.mass.unit.${i}_ab`)}`.toLowerCase(),
+                                label: `${$ls(`units.mass.unit.${i}_ab`)}`.toLowerCase(),
                             })),
                         },
                     ],
