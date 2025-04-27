@@ -1,27 +1,27 @@
 <script lang="ts">
     import {
+        ButtonRoundNav,
+        FloatPage,
         Glyph,
         handle_err,
         idb_init_page,
+        ImageBlob,
         ImagePath,
         ImageUploadAddPhoto,
         NavigationTabs,
         SelectMenu,
-        ImageBlob,
-        FloatPage,
-        ButtonRoundNav,
         type IViewOnDestroy,
         type IViewProfileData,
-        type ViewProfileEditFieldKey,
         type LcPhotoAddCallback,
+        type ViewProfileEditFieldKey,
     } from "$root";
     import {
-        ascii,
+        symbols,
         type CallbackPromise,
         type CallbackPromiseFull,
         type CallbackPromiseGeneric,
-        type IViewBasis,
         type I18nTranslateFunction,
+        type IViewBasis,
     } from "@radroots/util";
     import { onDestroy, onMount } from "svelte";
 
@@ -209,7 +209,7 @@
                 <p
                     class={`font-sans font-[400] ${classes_photo_overlay_glyph}`}
                 >
-                    {ascii.bullet}
+                    {symbols.bullet}
                 </p>
                 <button
                     class={`flex flex-row justify-center items-center`}

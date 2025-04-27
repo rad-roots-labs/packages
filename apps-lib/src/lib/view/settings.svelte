@@ -11,7 +11,7 @@
         type ITrellisKind,
     } from "$root";
     import {
-        ascii,
+        symbols,
         type CallbackPromiseGeneric,
         type I18nTranslateFunction,
         type IViewBasis,
@@ -78,7 +78,7 @@
                                     {
                                         entries: [
                                             {
-                                                value: ascii.bullet,
+                                                value: symbols.bullet,
                                                 label: `${$ls(`icu.choose_*`, { value: `${$ls(`common.color_mode`)}`.toLowerCase() })}`,
                                                 disabled: true,
                                             },

@@ -7,7 +7,7 @@
         type IViewFarmsProductsAddSubmission,
     } from "$root";
     import {
-        ascii,
+        symbols,
         type I18nTranslateFunction,
         type I18nTranslateLocale,
     } from "@radroots/util";
@@ -90,7 +90,7 @@
                     <p
                         class={`font-sans font-[600] text-xl text-layer-1-glyph`}
                     >
-                        {ascii.bullet}
+                        {symbols.bullet}
                     </p>
                     <p
                         class={`font-sans font-[600] text-lg text-layer-1-glyph`}
@@ -114,7 +114,7 @@
                         {`${basis.data.geolocation_address.primary}, ${basis.data.geolocation_address.admin}`}
                     </p>
                     <p class={`font-sans font-[600] text-th-black`}>
-                        {ascii.bullet}
+                        {symbols.bullet}
                     </p>
                     <p class={`font-sans font-[600] text-th-black`}>
                         {`${basis.data.geolocation_address.country}`}

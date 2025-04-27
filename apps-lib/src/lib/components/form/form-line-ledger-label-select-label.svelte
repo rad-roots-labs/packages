@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { ascii } from "@radroots/util";
+    import { symbols } from "@radroots/util";
 
     let {
         basis,
@@ -22,12 +22,12 @@
         <p
             class={`absolute font-sansd text-trellis_ti text-layer-0-glyph-label uppercase scale-y-[70%] scale-x-[80%] -translate-y-[1px]`}
         >
-            {`${ascii.up}`}
+            {`${symbols.up}`}
         </p>
         <p
             class={`absolute font-sansd text-trellis_ti text-layer-0-glyph-label uppercase scale-y-[70%] scale-x-[80%] translate-y-[2px]`}
         >
-            {`${ascii.down}`}
+            {`${symbols.down}`}
         </p>
     </div>
     <p class={`font-sansd text-trellis_ti text-layer-0-glyph-label uppercase`}>
