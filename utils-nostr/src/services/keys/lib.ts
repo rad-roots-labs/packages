@@ -57,7 +57,6 @@ export class NostrKeyService implements INostrKeyService {
      */
     public npub_decode(npub: string): string {
         const decode = nip19.decode(npub);
-        console.log(`decode `, decode)
         if (decode && decode.type === `npub` && decode.data) return decode.data
         return ``;
     }
