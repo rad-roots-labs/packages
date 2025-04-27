@@ -118,4 +118,3 @@ export { default as Notifications } from "./view/notifications.svelte"
 export { default as ProfileEdit } from "./view/profile-edit.svelte"
 export { default as Profile } from "./view/profile.svelte"
 export { default as Settings } from "./view/settings.svelte"
-

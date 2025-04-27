@@ -38,3 +38,5 @@ export class NostrSyncService implements INostrSyncService {
         }
     }
 }
+
+export const nostr_sync = new NostrSyncService();
