@@ -52,6 +52,7 @@
         "@nostr-dev-kit/ndk-svelte": "^2.4.0",
         "@radroots/locales": "workspace:*",
         "@radroots/nostr-util": "workspace:*",
+        "@radroots/radroots-common-bindings": "workspace:*",
         "@radroots/theme": "workspace:*",
         "@radroots/util": "workspace:*",
         "luxon": "^3.5.0",
