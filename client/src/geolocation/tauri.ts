@@ -19,10 +19,6 @@ export class TauriClientGeolocation implements IClientGeolocation {
         return position;
     }
 
-    private async request_permissions(): Promise<PermissionStatus> {
-        return await requestPermissions(['location']);
-    }
-
     private async has_permissions(): Promise<boolean> {
         try {
             const permissions = await checkPermissions();
@@ -35,6 +31,10 @@ export class TauriClientGeolocation implements IClientGeolocation {
             console.log(`e has_permissions`, e);
             return false;
         }
+    }
+
+    public async request_permissions(): Promise<PermissionStatus> {
+        return await requestPermissions(['location']);
     }
 
     public async current(): Promise<IClientGeolocationPosition | ErrorMessage<IGeolocationErrorMessage>> {
