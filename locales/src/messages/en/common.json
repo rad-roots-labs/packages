@@ -1,4 +1,7 @@
 {
+    "nostr_key": "Nostr key",
+    "nip05_address": "NIP-05 address",
+    "create": "Create",
     "hide_alerts": "Hide alerts",
     "keep_previous": "Keep previous",
     "upload_photo": "Upload photo",
