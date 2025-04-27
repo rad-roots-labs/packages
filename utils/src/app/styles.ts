@@ -10,6 +10,7 @@ export type AppLayoutIOS<T extends string> = `${T}_${AppLayoutKeyIOS}`;
 export type AppLayoutWeb<T extends string> = `${T}_${AppLayoutKeyWeb}`;
 
 export type AppLayoutKeyHeight =
+    | `lo_view_main`
     | `lo_bottom_button`
     | `nav_tabs`
     | `nav_page_header`
