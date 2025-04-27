@@ -1,7 +1,6 @@
 import type { CallbackPromiseGeneric } from "@radroots/util";
 
-export type IHomeViewData = {};
-
+export type IViewHomeData = {};
 
 export type IViewOnMount<TypeCallbackParam> = {
     lc_on_mount: CallbackPromiseGeneric<TypeCallbackParam>;

@@ -7,7 +7,7 @@
         LayoutView,
         NavigationTabs,
         PageToolbar,
-        type IHomeViewData,
+        type IViewHomeData,
     } from "$root";
     import {
         type CallbackPromise,
@@ -21,7 +21,7 @@
         basis,
     }: {
         basis: IViewBasis<{
-            data: IHomeViewData;
+            data?: IViewHomeData;
             lc_handle_farms: CallbackPromise;
             lc_handle_products: CallbackPromise;
         }>;
@@ -37,23 +37,26 @@
     });
 </script>
 
-<LayoutView>
-    <PageToolbar
-        basis={{
-            header: {
-                label: `${$ls(`common.general`)}`,
-            },
-        }}
-    />
-    <LayoutPage>
-        <ButtonSimple
+{#if basis.data}
+    {@const { data: basis_data } = basis}
+    <LayoutView>
+        <PageToolbar
             basis={{
-                label: `${$ls(`common.farms`)}`,
-                callback: async () => {
-                    await basis.lc_handle_farms();
+                header: {
+                    label: `${$ls(`common.general`)}`,
                 },
             }}
         />
-    </LayoutPage>
-</LayoutView>
-<NavigationTabs />
+        <LayoutPage>
+            <ButtonSimple
+                basis={{
+                    label: `${$ls(`common.farms`)}`,
+                    callback: async () => {
+                        await basis.lc_handle_farms();
+                    },
+                }}
+            />
+        </LayoutPage>
+    </LayoutView>
+    <NavigationTabs />
+{/if}

@@ -1,4 +1,17 @@
-import type { GeolocationAddress, GeolocationPoint } from "@radroots/util";
+import type { GeolocationAddress, GeolocationPoint, GeometryPoint } from "@radroots/util";
+
+export type IViewFarmsDataListItem = {
+    id: string;
+    name: string;
+    geolocation?: {
+        point: GeometryPoint;
+        address: GeolocationAddress;
+    };
+};
+
+export type IViewFarmsData = {
+    list: IViewFarmsDataListItem[];
+}
 
 export type IViewFarmsProductsAddSubmission = {
     product: string;

@@ -1,6 +1,7 @@
 <script lang="ts">
     import {
         app_lo,
+        Glyph,
         toast_layout_map,
         toast_style_map,
         type IToast,
@@ -28,14 +29,13 @@
             <div
                 class={`absolute top-0 left-4 flex flex-row h-full items-center text-layer-${layer}-glyph`}
             >
-                <glyph
+                <Glyph
                     basis={{
                         key: `info`,
-                        weight: `regular`,
                         dim: `md`,
                         ...basis.glyph,
                     }}
-                ></glyph>
+                />
             </div>
             <div
                 class={`col-span-12 flex flex-row pl-1 ${fmt_cl(styles.map((style) => fmt_cl(toast_style_map.get(style)?.inner)).join(` `))}`}

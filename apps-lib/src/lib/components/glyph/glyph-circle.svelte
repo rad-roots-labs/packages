@@ -15,6 +15,6 @@
     <div
         class={`${fmt_cl(basis?.classes_wrap)} flex flex-col h-[${styles?.dim_1}px] w-[${styles?.dim_1}px] justify-center items-center rounded-full el-re`}
     >
-        <GlyphButton basis={basis?.glyph}></GlyphButton>
+        <GlyphButton basis={basis?.glyph} />
     </div>
 {/if}

@@ -25,8 +25,7 @@
 						<div
 							class={`flex flex-row justify-start items-center pr-2`}
 						>
-							<GlyphButton basis={{ ...title_l.glyph }}
-							></GlyphButton>
+							<GlyphButton basis={{ ...title_l.glyph }} />
 						</div>
 					{:else if `value` in title_l}
 						<p
@@ -48,7 +47,7 @@
 					class={`${fmt_cl(title_r.classes_wrap)} flex flex-row h-full gap-1 items-center ${title_r.hide_truncate ? `` : `truncate`}`}
 				>
 					{#if `glyph` in title_r}
-						<GlyphButton basis={{ ...title_r.glyph }}></GlyphButton>
+						<GlyphButton basis={{ ...title_r.glyph }} />
 					{:else if `value` in title_r}
 						<p
 							class={`${fmt_cl(title_r.classes)} font-sans text-line_d text-layer-${layer}-glyph_d ${title_r.hide_truncate ? `` : `truncate`} el-re`}

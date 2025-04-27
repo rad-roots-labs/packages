@@ -1,5 +1,10 @@
 <script lang="ts">
-    import { Map, MapMarkerArea, type LcGeocodeCallback } from "$root";
+    import {
+        Map,
+        MapMarkerArea,
+        type IViewFarmsDataListItem,
+        type LcGeocodeCallback,
+    } from "$root";
     import {
         fmt_geolocation_address,
         geol_lat_fmt,
@@ -7,9 +12,7 @@
         parse_geom_point_tup,
         parse_tup_geop_point,
         type CallbackPromiseGeneric,
-        type GeolocationAddress,
         type GeolocationPointTuple,
-        type GeometryPoint,
         type I18nTranslateFunction,
         type I18nTranslateLocale,
     } from "@radroots/util";
@@ -22,14 +25,7 @@
         ls,
         locale,
     }: {
-        basis: {
-            id: string;
-            name: string;
-            geolocation?: {
-                point: GeometryPoint;
-                address: GeolocationAddress;
-            };
-        };
+        basis: IViewFarmsDataListItem;
         lc_geocode: LcGeocodeCallback;
         lc_handle_farm_view: CallbackPromiseGeneric<string>;
         ls: I18nTranslateFunction;

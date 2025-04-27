@@ -66,7 +66,7 @@
                                 ...mod.glyph_circle?.glyph,
                             },
                         }}
-                    ></GlyphCircle>
+                    />
                 {/if}
             </button>
         </div>

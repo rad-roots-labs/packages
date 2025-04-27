@@ -27,7 +27,7 @@
         val_field = $bindable(``),
     }: {
         basis: IViewBasis<{
-            data: IViewProfileEditData;
+            data?: IViewProfileEditData;
             lc_handle_back: CallbackPromiseGeneric<{
                 field: ViewProfileEditFieldKey;
                 public_key: string;
@@ -63,40 +63,43 @@
     );
 </script>
 
-<LayoutView>
-    <LayoutPage>
-        <div class={`flex flex-row h-20 w-full justify-start items-center`}>
-            <Empty />
-        </div>
-        {#if basis.data.field}
-            <Input
-                bind:value={val_field}
-                basis={{
-                    id: fmt_id(`field`),
-                    sync: true,
-                    classes: `pl-6 h-entry_line text-layer-1-glyph bg-layer-1-surface rounded-2xl`,
-                    placeholder: input_placeholder,
-                    callback: basis.lc_handle_input,
-                }}
-            />
-        {/if}
-    </LayoutPage>
-</LayoutView>
-<FloatPage
-    basis={{
-        posx: `left`,
-    }}
->
-    <ButtonRoundNav
+{#if basis.data}
+    {@const { data: basis_data } = basis}
+    <LayoutView>
+        <LayoutPage>
+            <div class={`flex flex-row h-20 w-full justify-start items-center`}>
+                <Empty />
+            </div>
+            {#if basis.data.field}
+                <Input
+                    bind:value={val_field}
+                    basis={{
+                        id: fmt_id(`field`),
+                        sync: true,
+                        classes: `pl-6 h-entry_line text-layer-1-glyph bg-layer-1-surface rounded-2xl`,
+                        placeholder: input_placeholder,
+                        callback: basis.lc_handle_input,
+                    }}
+                />
+            {/if}
+        </LayoutPage>
+    </LayoutView>
+    <FloatPage
         basis={{
-            glyph: `arrow-left`,
-            callback: async () => {
-                await basis.lc_handle_back({
-                    field: basis.data.field,
-                    public_key: basis.data.public_key,
-                });
-            },
+            posx: `left`,
         }}
-    />
-</FloatPage>
-<NavigationTabs />
+    >
+        <ButtonRoundNav
+            basis={{
+                glyph: `arrow-left`,
+                callback: async () => {
+                    await basis.lc_handle_back({
+                        field: basis_data.field,
+                        public_key: basis_data.public_key,
+                    });
+                },
+            }}
+        />
+    </FloatPage>
+    <NavigationTabs />
+{/if}
