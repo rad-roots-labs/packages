@@ -1,4 +1,8 @@
 {
+    "farm_coordinates": "Farm coordinates",
+    "add_farm": "Add farm",
+    "enter_location": "Enter location",
+    "choose_location": "Choose location",
     "nostr_key": "Nostr key",
     "nip05_address": "NIP-05 address",
     "create": "Create",
