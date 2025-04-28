@@ -72,8 +72,8 @@
         {/snippet}
     </PageToolbar>
     <LayoutPage>
-        {#if basis.data?.list.length}
-            {#each basis.data?.list as li}
+        {#if basis.data}
+            {#each basis.data?.list || [] as li}
                 <FarmsDisplayLiEl
                     basis={li}
                     lc_geocode={basis.lc_geocode}
@@ -81,16 +81,16 @@
                     {ls}
                     {locale}
                 />
+            {:else}
+                <ButtonLabelDashed
+                    basis={{
+                        label: `Add farm`,
+                        callback: async () => {
+                            await basis.lc_handle_farm_add();
+                        },
+                    }}
+                />
             {/each}
-        {:else}
-            <ButtonLabelDashed
-                basis={{
-                    label: `Add farm`,
-                    callback: async () => {
-                        await basis.lc_handle_farm_add();
-                    },
-                }}
-            />
         {/if}
     </LayoutPage>
 </LayoutView>
