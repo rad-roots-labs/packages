@@ -1,6 +1,11 @@
 import { type GeolocationPointTuple, type GeometryPoint } from "$root";
 import { decodeBase32, encodeBase32 } from "geohashing";
 
+export type GeolocationBasis = {
+    point: GeolocationPoint;
+    address?: GeolocationAddress;
+}
+
 export type GeolocationAddress = {
     primary: string;
     admin: string;
@@ -232,4 +237,28 @@ export const geo_bounds_calc = (lat: number, lng: number, distance_km: number): 
         west: destination_point(lat, lng, 270, distance_km)
     };
 };
+
+export const location_gcs_to_geolocation_basis = ({
+    lat,
+    lng,
+    gc_name: primary,
+    gc_admin1_name: admin,
+    gc_country_id: country,
+}: {
+    lat: number;
+    lng: number;
+    gc_name?: string;
+    gc_admin1_name?: string;
+    gc_country_id?: string;
+}): GeolocationBasis => ({
+    point: {
+        lat,
+        lng,
+    },
+    address: primary && admin && country ? {
+        primary,
+        admin,
+        country,
+    } : undefined
+});
 
