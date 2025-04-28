@@ -108,17 +108,9 @@
         el_id(fmt_id(`farm_location`))?.focus();
     };
 
-    const handle_continue_0 = async (): Promise<void> => {
-        console.log(JSON.stringify(map_geop, null, 4), `map_geop`);
-        console.log(JSON.stringify(map_geoc, null, 4), `map_geoc`);
-        await casl_inc();
-    };
-
     const handle_continue_1 = async (): Promise<void> => {
-        if (!map_geop)
+        if (!map_geop || !map_geoc)
             return void basis.lc_gui_alert(`No farm location provided.`); //@todo
-        if (!farm_geolocation_address)
-            return void basis.lc_gui_alert(`No farm address provided.`); //@todo
         const farms_add_submission = schema_view_farms_add_submission.safeParse(
             {
                 farm_name: val_farmname,
@@ -131,7 +123,7 @@
                     ? val_farmcontact
                     : undefined,
                 geolocation_point: map_geop,
-                geolocation_address: farm_geolocation_address,
+                geocode_result: map_geoc,
             } satisfies IViewFarmsAddSubmission,
         );
 
@@ -147,10 +139,10 @@
 
     const handle_continue = async (): Promise<void> => {
         switch ($casl_i) {
-            case 0:
-                return await handle_continue_0();
             case 1:
                 return await handle_continue_1();
+            default:
+                await casl_inc();
         }
     };
 

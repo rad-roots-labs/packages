@@ -1,4 +1,4 @@
-import type { GeolocationAddress, GeolocationPoint, GeometryPoint } from "@radroots/util";
+import type { GeocoderReverseResult, GeolocationAddress, GeolocationPoint, GeometryPoint } from "@radroots/util";
 
 export type IViewFarmsDataListItem = {
     id: string;
@@ -34,6 +34,6 @@ export type IViewFarmsAddSubmission = {
     farm_area_unit?: string;
     farm_contact_name?: string;
     geolocation_point: GeolocationPoint;
-    geolocation_address: GeolocationAddress;
+    geocode_result: GeocoderReverseResult;
 };
 
