@@ -4,12 +4,13 @@
         "target": "es2021",
         "lib": [
             "es2021",
-            "DOM"
+            "dom"
         ],
         "module": "CommonJS",
         "outDir": "./dist",
         "rootDir": "./src",
-        "noEmit": true,
+        "declaration": true,
+        "emitDeclarationOnly": true,
         "esModuleInterop": true,
         "skipLibCheck": true
     },

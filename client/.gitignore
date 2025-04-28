@@ -28,8 +28,9 @@ yarn-error.log*
 .turbo
 
 .tmp*
-.dev*
 .vscode
 notes*.txt
+notes*.md
 justfile
+dist
 git-diff.txt
