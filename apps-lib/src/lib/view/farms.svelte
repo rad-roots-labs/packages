@@ -73,14 +73,16 @@
     </PageToolbar>
     <LayoutPage>
         {#if basis.data}
-            {#each basis.data?.list || [] as li}
-                <FarmsDisplayLiEl
-                    basis={li}
-                    lc_geocode={basis.lc_geocode}
-                    lc_handle_farm_view={basis.lc_handle_farm_view}
-                    {ls}
-                    {locale}
-                />
+            {#if basis.data?.list.length}
+                {#each basis.data?.list || [] as li}
+                    <FarmsDisplayLiEl
+                        basis={li}
+                        lc_geocode={basis.lc_geocode}
+                        lc_handle_farm_view={basis.lc_handle_farm_view}
+                        {ls}
+                        {locale}
+                    />
+                {/each}
             {:else}
                 <ButtonLabelDashed
                     basis={{
@@ -90,7 +92,7 @@
                         },
                     }}
                 />
-            {/each}
+            {/if}
         {/if}
     </LayoutPage>
 </LayoutView>

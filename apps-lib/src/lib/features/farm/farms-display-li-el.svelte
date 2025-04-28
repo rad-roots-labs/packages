@@ -1,10 +1,5 @@
 <script lang="ts">
-    import {
-        Map,
-        MapMarkerArea,
-        type IViewFarmsDataListItem,
-        type LcGeocodeCallback,
-    } from "$root";
+    import { Map, MapMarkerArea, type LcGeocodeCallback } from "$root";
     import {
         fmt_geolocation_address,
         geol_lat_fmt,
@@ -12,6 +7,7 @@
         parse_geol_point_tup,
         parse_tup_geop_point,
         type CallbackPromiseGeneric,
+        type FarmBasis,
         type GeolocationPointTuple,
         type I18nTranslateFunction,
         type I18nTranslateLocale,
@@ -25,7 +21,7 @@
         ls,
         locale,
     }: {
-        basis: IViewFarmsDataListItem;
+        basis: FarmBasis;
         lc_geocode: LcGeocodeCallback;
         lc_handle_farm_view: CallbackPromiseGeneric<string>;
         ls: I18nTranslateFunction;
@@ -36,31 +32,28 @@
     let map_center: GeolocationPointTuple = $state([0, 0]);
 
     onMount(async () => {
-        if (map && basis.geolocation?.point) {
-            map_center = parse_geol_point_tup(basis.geolocation.point);
-            map.setCenter(map_center);
-        } else {
-            //@todo
-        }
+        if (basis.location?.point)
+            map_center = parse_geol_point_tup(basis.location.point);
+        if (map) map.setCenter(map_center);
     });
 
     const map_geop = $derived(parse_tup_geop_point(map_center));
 
     const farm_addr_fmt = $derived(
-        basis.geolocation?.address
-            ? fmt_geolocation_address(basis.geolocation.address)
+        basis.location?.address
+            ? fmt_geolocation_address(basis.location.address)
             : ``,
     );
 
     const farm_geop_lat = $derived(
-        basis.geolocation?.point
-            ? geol_lat_fmt(basis.geolocation.point.lat, `dms`, $locale, 3)
+        basis.location?.point
+            ? geol_lat_fmt(basis.location.point.lat, `dms`, $locale, 3)
             : ``,
     );
 
     const farm_geop_lng = $derived(
-        basis.geolocation?.point
-            ? geol_lng_fmt(basis.geolocation.point.lng, `dms`, $locale, 3)
+        basis.location?.point
+            ? geol_lng_fmt(basis.location.point.lng, `dms`, $locale, 3)
             : ``,
     );
 </script>

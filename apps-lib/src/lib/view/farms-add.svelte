@@ -15,7 +15,6 @@
         focus_map_marker,
         geop_init,
         geop_is_valid,
-        Glyph,
         handle_err,
         LayoutView,
         PageToolbar,
@@ -169,13 +168,13 @@
     <PageToolbar
         basis={{
             header: {
-                label: `Farm / Add`,
+                label: `${$ls(`common.farms`)} / ${`${$ls(`common.add`)}`}`,
                 callback_route: basis.callback_route,
             },
         }}
     >
         {#snippet header_option()}
-            {#if $casl_i === 0}
+            <!--{#if $casl_i === 0}
                 <button
                     class={`flex flex-row justify-center items-center`}
                     onclick={async () => {
@@ -195,7 +194,7 @@
                         }}
                     />
                 </button>
-            {/if}
+            {/if}-->
         {/snippet}
     </PageToolbar>
     <Carousel>

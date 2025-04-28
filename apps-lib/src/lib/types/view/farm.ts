@@ -1,16 +1,10 @@
-import type { GeocoderReverseResult, GeolocationAddress, GeolocationBasis, GeolocationPoint } from "@radroots/util";
-
-export type IViewFarmsDataListItem = {
-    farm: {
-        id: string;
-        name: string;
-    };
-    geolocation?: GeolocationBasis;
-};
+import type { FarmBasis, GeocoderReverseResult, GeolocationAddress, GeolocationPoint } from "@radroots/util";
 
 export type IViewFarmsData = {
-    list: IViewFarmsDataListItem[];
-}
+    list: FarmBasis[];
+};
+
+export type IViewFarmsDetailsData = FarmBasis;
 
 export type IViewFarmsProductsAddSubmission = {
     product: string;
