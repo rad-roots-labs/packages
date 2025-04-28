@@ -9,7 +9,7 @@
         fmt_geolocation_address,
         geol_lat_fmt,
         geol_lng_fmt,
-        parse_geom_point_tup,
+        parse_geol_point_tup,
         parse_tup_geop_point,
         type CallbackPromiseGeneric,
         type GeolocationPointTuple,
@@ -37,7 +37,7 @@
 
     onMount(async () => {
         if (map && basis.geolocation?.point) {
-            map_center = parse_geom_point_tup(basis.geolocation.point);
+            map_center = parse_geol_point_tup(basis.geolocation.point);
             map.setCenter(map_center);
         } else {
             //@todo
@@ -53,24 +53,14 @@
     );
 
     const farm_geop_lat = $derived(
-        basis.geolocation?.point?.coordinates
-            ? geol_lat_fmt(
-                  basis.geolocation.point.coordinates[1],
-                  `dms`,
-                  $locale,
-                  3,
-              )
+        basis.geolocation?.point
+            ? geol_lat_fmt(basis.geolocation.point.lat, `dms`, $locale, 3)
             : ``,
     );
 
     const farm_geop_lng = $derived(
-        basis.geolocation?.point?.coordinates
-            ? geol_lng_fmt(
-                  basis.geolocation.point.coordinates[0],
-                  `dms`,
-                  $locale,
-                  3,
-              )
+        basis.geolocation?.point
+            ? geol_lng_fmt(basis.geolocation.point.lng, `dms`, $locale, 3)
             : ``,
     );
 </script>
@@ -78,13 +68,13 @@
 <button
     class={`z-10 relative flex flex-col w-full p-4 gap-3 justify-start items-center bg-layer-1-surface layer-1-active-raise-less layer-1-active-ring rounded-3xl el-re`}
     onclick={async () => {
-        if (basis.id) await lc_handle_farm_view(basis.id);
+        if (basis.farm.id) await lc_handle_farm_view(basis.farm.id);
     }}
 >
     <div class={`flex flex-col w-full gap-2 justify-center items-center`}>
         <div class={`flex flex-row w-full justify-between items-center`}>
             <p class={`font-sans font-[500] text-3xl text-layer-0-glyph`}>
-                {basis.name}
+                {basis.farm.name}
             </p>
 
             <div
