@@ -8,9 +8,8 @@
         app_lo,
         focus_map_marker,
         geop_is_valid,
+        get_context,
         handle_err,
-        type LcGeocodeCallback,
-        type LcGeocodeCurrentCallback,
     } from "$root";
     import {
         type GeocoderReverseResult,
@@ -18,17 +17,14 @@
     } from "@radroots/util";
     import { onMount } from "svelte";
 
+    const { lc_geop_current, lc_geocode } = get_context(`lib`);
+
     let {
-        basis,
         map_geoc = $bindable(undefined),
         map_geop = $bindable(undefined),
         farm_geop_lat,
         farm_geop_lng,
     }: {
-        basis: {
-            lc_geop_current: LcGeocodeCurrentCallback;
-            lc_geocode: LcGeocodeCallback;
-        };
         map_geoc: GeocoderReverseResult | undefined;
         map_geop: GeolocationPoint | undefined;
         farm_geop_lat: string;
@@ -41,10 +37,10 @@
 
     onMount(async () => {
         try {
-            const geop = await basis.lc_geop_current();
+            const geop = await lc_geop_current();
             if (!geop) return;
             map_geop = { ...geop };
-            const geoc = await basis.lc_geocode(geop);
+            const geoc = await lc_geocode(geop);
             if (!geoc) return;
             map_geoc = geoc;
             if (map) map.setCenter([map_geop.lng, map_geop.lat]);
@@ -66,7 +62,6 @@
                         bind:map_geop
                         bind:map_geoc
                         basis={{
-                            lc_geocode: basis.lc_geocode,
                             show_display: true,
                         }}
                     />

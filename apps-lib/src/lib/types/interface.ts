@@ -23,6 +23,12 @@ export type ICbG<T> = {
     callback: CallbackPromiseGeneric<T> | never;
 };
 
+export type ICbMouseEventOpt = ICbGOpt<
+    MouseEvent & {
+        currentTarget: EventTarget & HTMLImageElement;
+    }
+>;
+
 export type ICbGOpt<T> = Partial<ICbG<T>>;
 
 export type ICl = {
@@ -201,19 +207,22 @@ export type INavigationRoutePreventRoute = {
     prevent_route: CallbackPromise;
 };
 
-export type IImageBlob = IIdOpt & {
+export type IImage = IIdOpt & IClOpt & {
+    src?: string;
+    alt?: string;
+};
+
+export type IImageBlob = IIdOpt & IClOpt & {
     data: Uint8Array | undefined;
     alt?: string;
 };
 
-export type IImagePath = IClOpt &
-    ICbGOpt<
-        MouseEvent & {
-            currentTarget: EventTarget & HTMLImageElement;
-        }
-    > &
-    IIdOpt & {
-        path?: string;
-        alt?: string;
-    };
+export type IImageSource = IIdOpt & IClOpt & {
+    src?: string;
+    alt?: string;
+};
+
+export type IImagePath = Omit<IImage, 'src'> & {
+    path?: string;
+};
 

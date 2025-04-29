@@ -3,6 +3,7 @@
         ButtonLabelDashed,
         Fade,
         FarmsDisplayLiEl,
+        get_context,
         GlyphButtonSimple,
         handle_err,
         idb_init_page,
@@ -11,31 +12,25 @@
         PageToolbar,
         type CallbackRoute,
         type IViewFarmsData,
-        type LcGeocodeCallback,
     } from "$root";
     import {
         type CallbackPromise,
         type CallbackPromiseGeneric,
-        type I18nTranslateFunction,
-        type I18nTranslateLocale,
         type IViewBasis,
     } from "@radroots/util";
     import { onMount } from "svelte";
 
+    const { ls } = get_context(`lib`);
+
     let {
         basis,
-        ls,
-        locale,
     }: {
         basis: IViewBasis<{
             data?: IViewFarmsData;
             callback_route?: CallbackRoute<string>;
-            lc_geocode: LcGeocodeCallback;
-            lc_handle_farm_add: CallbackPromise;
-            lc_handle_farm_view: CallbackPromiseGeneric<string>;
+            on_handle_farm_add: CallbackPromise;
+            on_handle_farm_view: CallbackPromiseGeneric<string>;
         }>;
-        ls: I18nTranslateFunction;
-        locale: I18nTranslateLocale;
     } = $props();
 
     onMount(async () => {
@@ -63,7 +58,7 @@
                         basis={{
                             label: `${$ls(`icu.add_*`, { value: `${$ls(`common.farm`)}` })}`,
                             callback: async () => {
-                                await basis.lc_handle_farm_add();
+                                await basis.on_handle_farm_add();
                             },
                         }}
                     />
@@ -77,10 +72,7 @@
                 {#each basis.data?.list || [] as li}
                     <FarmsDisplayLiEl
                         basis={li}
-                        lc_geocode={basis.lc_geocode}
-                        lc_handle_farm_view={basis.lc_handle_farm_view}
-                        {ls}
-                        {locale}
+                        on_handle_farm_view={basis.on_handle_farm_view}
                     />
                 {/each}
             {:else}
@@ -88,7 +80,7 @@
                     basis={{
                         label: `Add farm`,
                         callback: async () => {
-                            await basis.lc_handle_farm_add();
+                            await basis.on_handle_farm_add();
                         },
                     }}
                 />

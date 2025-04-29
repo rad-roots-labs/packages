@@ -2,6 +2,7 @@
     import {
         EntryWrap,
         fmt_id,
+        get_context,
         Input,
         LayoutTrellisLine,
         Select,
@@ -11,12 +12,12 @@
         form_fields,
         mass_units,
         type ElementCallbackValue,
-        type I18nTranslateFunction,
     } from "@radroots/util";
+
+    const { ls } = get_context(`lib`);
 
     let {
         basis,
-        ls,
         val_input_quantity = $bindable(``),
         val_sel_quantity_unit = $bindable(``),
         val_sel_quantity_label = $bindable(``),
@@ -27,7 +28,6 @@
             input_placeholder?: string;
             callback_input?: ElementCallbackValue;
         };
-        ls: I18nTranslateFunction;
         val_input_quantity: string;
         val_sel_quantity_unit: string;
         val_sel_quantity_label: string;

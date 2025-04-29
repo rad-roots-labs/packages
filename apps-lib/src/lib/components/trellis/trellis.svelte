@@ -1,6 +1,7 @@
 <script lang="ts">
     import {
         app_lo,
+        get_context,
         TrellisDefaultLabel,
         TrellisInput,
         TrellisOffset,
@@ -9,25 +10,21 @@
         TrellisTouch,
         type ITrellis,
     } from "$root";
-    import {
-        fmt_cl,
-        parse_layer,
-        type I18nTranslateFunction,
-    } from "@radroots/util";
+    import { fmt_cl, parse_layer } from "@radroots/util";
     import type { Snippet } from "svelte";
+
+    const { ls } = get_context(`lib`);
 
     let {
         basis,
         el_default,
         el_offset,
         el_append,
-        ls,
     }: {
         basis: ITrellis;
         el_default?: Snippet;
         el_offset?: Snippet;
         el_append?: Snippet;
-        ls: I18nTranslateFunction;
     } = $props();
 
     const hide_border_t = $derived(

@@ -5,6 +5,7 @@
         Empty,
         type IClOpt,
         type IDisabledOpt,
+        type ILoadingOpt,
     } from "$root";
     import { fmt_cl, type CallbackPromise } from "@radroots/util";
 
@@ -12,10 +13,11 @@
         basis,
     }: {
         basis: IClOpt & {
-            continue: IDisabledOpt & {
-                label: string;
-                callback: CallbackPromise;
-            };
+            continue: IDisabledOpt &
+                ILoadingOpt & {
+                    label: string;
+                    callback: CallbackPromise;
+                };
             back?: IDisabledOpt & {
                 visible: boolean;
                 label?: string;

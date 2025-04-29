@@ -15,7 +15,7 @@
     }}
 >
     <p
-        class={`font-sans font-[700] text-xl text-layer-0-glyph capitalize tracking-wider opacity-active`}
+        class={`font-sans font-[600] text-xl text-layer-0-glyph capitalize tracking-wider opacity-active`}
     >
         {basis.label}
     </p>

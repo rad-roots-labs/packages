@@ -4,6 +4,7 @@
     import Empty from "$lib/components/lib/empty.svelte";
     import {
         fmt_id,
+        get_context,
         handle_err,
         idb_init_page,
         Input,
@@ -16,25 +17,24 @@
     import {
         type CallbackPromiseGeneric,
         type ElementCallbackValue,
-        type I18nTranslateFunction,
         type IViewBasis,
     } from "@radroots/util";
     import { onMount } from "svelte";
 
+    const { ls } = get_context(`lib`);
+
     let {
         basis,
-        ls,
         val_field = $bindable(``),
     }: {
         basis: IViewBasis<{
             data?: IViewProfileEditData;
-            lc_handle_back: CallbackPromiseGeneric<{
+            on_handle_back: CallbackPromiseGeneric<{
                 field: ViewProfileEditFieldKey;
                 public_key: string;
             }>;
-            lc_handle_input: ElementCallbackValue;
+            on_handle_input: ElementCallbackValue;
         }>;
-        ls: I18nTranslateFunction;
         val_field: string;
     } = $props();
 
@@ -78,7 +78,7 @@
                         sync: true,
                         classes: `pl-6 h-entry_line text-layer-1-glyph bg-layer-1-surface rounded-2xl`,
                         placeholder: input_placeholder,
-                        callback: basis.lc_handle_input,
+                        callback: basis.on_handle_input,
                     }}
                 />
             {/if}
@@ -93,7 +93,7 @@
             basis={{
                 glyph: `arrow-left`,
                 callback: async () => {
-                    await basis.lc_handle_back({
+                    await basis.on_handle_back({
                         field: basis_data.field,
                         public_key: basis_data.public_key,
                     });

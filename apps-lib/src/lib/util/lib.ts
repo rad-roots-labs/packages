@@ -3,7 +3,7 @@ import { goto } from "$app/navigation";
 import { page } from "$app/state";
 import { win_h, win_w, type CallbackRoute, type NavigationRouteParamKey } from "$root";
 import type { ColorMode, ThemeKey } from "@radroots/theme";
-import { encode_route, fmt_geometry_point_coords, fmt_price, parse_currency_marker, type GeolocationPoint, type GeometryPoint, type IErrorCatchCallback } from "@radroots/util";
+import { encode_route, fmt_geometry_point_coords, fmt_price, geo_point_to_geometry, parse_currency_marker, type GeolocationPoint, type GeometryPoint, type IErrorCatchCallback } from "@radroots/util";
 import { get } from "svelte/store";
 
 export const get_store = get;
@@ -72,6 +72,13 @@ export const lib_parse_currency_marker = (locale: string, currency: string): str
 export const lib_fmt_geometry_point_coords = (locale: string, point: GeometryPoint): string => {
     return fmt_geometry_point_coords(point, locale);
 };
+
+export const loc_fmt_geo_point_coords = (locale: string, geo_point: GeolocationPoint): string => {
+    const point = geo_point_to_geometry(geo_point);
+    if (!point) return ``; //@todo
+    return fmt_geometry_point_coords(point, locale);
+};
+
 
 export const view_effect = <T extends string>(view: T): void => {
     if (!browser) return;

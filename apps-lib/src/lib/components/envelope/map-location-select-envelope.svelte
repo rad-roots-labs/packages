@@ -1,10 +1,9 @@
 <script lang="ts">
     import {
-        ButtonSimple,
+        ButtonLayoutPair,
         EnvelopeLowerFull,
         Map,
         MapMarkerArea,
-        type LcGeocodeCallback,
     } from "$root";
     import {
         cfg_map,
@@ -13,6 +12,7 @@
         type GeocoderReverseResult,
         type GeolocationPoint,
     } from "@radroots/util";
+    import LayoutBottomButton from "../layout/layout-bottom-button.svelte";
 
     let {
         basis,
@@ -21,11 +21,13 @@
     }: {
         basis: {
             visible: boolean;
-            lc_geocode: LcGeocodeCallback;
-            lc_submit: CallbackPromiseGeneric<{
-                map_geop: GeolocationPoint | undefined;
-                map_geoc: GeocoderReverseResult | undefined;
-            }>;
+            on_submit: CallbackPromiseGeneric<
+                | {
+                      map_geop: GeolocationPoint | undefined;
+                      map_geoc: GeocoderReverseResult | undefined;
+                  }
+                | undefined
+            >;
         };
         map_geop?: GeolocationPoint;
         map_geoc?: GeocoderReverseResult;
@@ -66,23 +68,30 @@
                     bind:map_geoc
                     basis={{
                         show_display: !!map_geop,
-                        lc_geocode: basis.lc_geocode,
                     }}
                 />
             {/if}
         </Map>
-        <div
-            class={`absolute bottom-0 left-0 flex flex-row h-24 w-full px-4 justify-center items-start`}
-        >
-            <ButtonSimple
+        <LayoutBottomButton>
+            <ButtonLayoutPair
                 basis={{
-                    label: `Choose location`,
-                    callback: async () => {
-                        await basis.lc_submit({ map_geoc, map_geop });
-                        if (map) map.setCenter(cfg_map.coords.default);
+                    continue: {
+                        label: `Choose location`,
+                        disabled: false,
+                        callback: async () => {
+                            await basis.on_submit({ map_geoc, map_geop });
+                            if (map) map.setCenter(cfg_map.coords.default);
+                        },
+                    },
+                    back: {
+                        label: `Back`,
+                        visible: true,
+                        callback: async () => {
+                            await basis.on_submit(undefined);
+                        },
                     },
                 }}
             />
-        </div>
+        </LayoutBottomButton>
     </div>
 </EnvelopeLowerFull>

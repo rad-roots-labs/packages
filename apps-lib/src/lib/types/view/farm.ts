@@ -1,12 +1,14 @@
-import type { FarmBasis, GeocoderReverseResult, GeolocationAddress, GeolocationPoint } from "@radroots/util";
+import type { FarmExtended, GeocoderReverseResult, GeolocationPoint } from "@radroots/util";
 
 export type IViewFarmsData = {
-    list: FarmBasis[];
+    list: FarmExtended[];
 };
 
-export type IViewFarmsDetailsData = FarmBasis;
+export type IViewFarmsDetailsData = FarmExtended;
 
-export type IViewFarmsProductsAddSubmission = {
+export type IViewFarmsProductsAddData = FarmExtended;
+
+export type IViewFarmsProductsAddSubmitPayload = {
     product: string;
     process: string;
     description: string;
@@ -18,7 +20,7 @@ export type IViewFarmsProductsAddSubmission = {
     quantity_unit: string;
     quantity_label: string;
     geolocation_point: GeolocationPoint;
-    geolocation_address: GeolocationAddress;
+    geocode_result: GeocoderReverseResult;
 };
 
 export type IViewFarmsAddSubmission = {

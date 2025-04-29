@@ -3,6 +3,7 @@
         EntryLine,
         EntrySelect,
         fmt_id,
+        get_context,
         LayoutTrellisLine,
         type ISelectCallback,
         type ISelectOption,
@@ -10,12 +11,12 @@
     import {
         type CallbackPromiseGeneric,
         type FormField,
-        type I18nTranslateFunction,
     } from "@radroots/util";
+
+    const { ls } = get_context(`lib`);
 
     let {
         basis,
-        ls,
         val_sel = $bindable(``),
         val_sel_input = $bindable(``),
     }: {
@@ -29,7 +30,6 @@
             input_field?: FormField;
             entry_label?: string;
         };
-        ls: I18nTranslateFunction;
         val_sel: string;
         val_sel_input: string;
     } = $props();

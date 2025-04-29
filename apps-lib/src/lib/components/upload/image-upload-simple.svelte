@@ -1,40 +1,42 @@
 <script lang="ts">
     import {
+        get_context,
         Glyph,
         ImagePath,
         ImageUploadButtonsAspect,
-        type LcPhotoAddMultipleCallback,
     } from "$root";
     import { list_assign } from "@radroots/util";
 
+    const { ls, lc_photos_add } = get_context(`lib`);
+
     let {
-        basis,
         photo_paths = $bindable([]),
     }: {
-        basis: {
-            lc_handle_photo_add: LcPhotoAddMultipleCallback;
-        };
         photo_paths: string[];
     } = $props();
 
-    let img_data = $state(``);
+    let img_path = $state(``);
+
+    $effect(() => {
+        console.log(`img_path `, img_path);
+    });
 </script>
 
 <div class={`flex flex-col w-full gap-4 justify-center items-center`}>
-    {#if img_data}
+    {#if img_path}
         <div
             class={`flex flex-row h-[20rem] w-full gap-2 justify-center items-center rounded-3xl bg-layer-1-surface/60 overflow-hidden`}
         >
-            <ImagePath basis={{ path: img_data }} />
+            <ImagePath basis={{ path: img_path }} />
         </div>
     {:else}
         <button
             class={`flex flex-row w-full justify-center items-center`}
             onclick={async () => {
-                const photo_paths_add = await basis.lc_handle_photo_add();
+                const photo_paths_add = await lc_photos_add();
                 if (photo_paths_add) {
                     photo_paths = list_assign(photo_paths, photo_paths_add);
-                    img_data = photo_paths[0];
+                    img_path = photo_paths[0];
                 }
             }}
         >
@@ -52,7 +54,7 @@
                 <p
                     class={`font-sans font-[400] text-layer-0-glyph/80 capitalize`}
                 >
-                    {`Upload image`}
+                    {`${$ls(`icu.upload_*`, { value: `${$ls(`common.image`)}` })}`}
                 </p>
             </div>
         </button>
@@ -60,7 +62,7 @@
     <ImageUploadButtonsAspect
         basis={{
             callback: async (ratio) => {
-                console.log(`ratio `, ratio);
+                // @todo
             },
         }}
     />

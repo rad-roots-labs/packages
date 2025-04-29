@@ -1,38 +1,37 @@
 <script lang="ts">
     import {
         app_lo,
+        get_context,
         Glyph,
         ImagePath,
         lib_parse_currency_marker,
-        type IViewFarmsProductsAddSubmission,
+        type IViewFarmsProductsAddSubmitPayload,
     } from "$root";
-    import {
-        symbols,
-        type I18nTranslateFunction,
-        type I18nTranslateLocale,
-    } from "@radroots/util";
+    import { parse_geocode_address, symbols } from "@radroots/util";
+
+    const { ls, locale } = get_context(`lib`);
 
     let {
         basis,
-        ls,
-        locale,
     }: {
         basis: {
-            data: IViewFarmsProductsAddSubmission | undefined;
+            data: IViewFarmsProductsAddSubmitPayload | undefined;
         };
-        ls: I18nTranslateFunction;
-        locale: I18nTranslateLocale;
     } = $props();
 
     //@todo
 </script>
 
 <div
-    class={`flex flex-col h-[20rem] w-lo_${$app_lo} justify-start items-start rounded-touch bg-layer-1-surface overflow-hidden`}
+    class={`flex flex-col h-[20rem] w-lo_line_entry_${$app_lo} justify-start items-start rounded-touch bg-layer-1-surface overflow-hidden`}
 >
     <div class={`flex flex-row h-[10rem] w-full justify-center items-center`}>
         {#if basis.data?.photos.length}
-            <ImagePath basis={{ path: basis.data.photos[0] }} />
+            <ImagePath
+                basis={{
+                    path: basis.data.photos[0],
+                }}
+            />
         {:else}
             <div
                 class={`flex flex-row h-full w-full justify-center items-center bg-layer-2-surface`}
@@ -58,6 +57,9 @@
         class={`flex flex-col h-[10rem] w-full px-3 py-2 justify-start items-center`}
     >
         {#if basis.data}
+            {@const data_geoc_address = parse_geocode_address(
+                basis.data.geocode_result,
+            )}
             <div class={`flex flex-row w-full justify-between items-center`}>
                 <div class={`flex flex-row gap-1 justify-start items-center`}>
                     <p
@@ -106,21 +108,25 @@
                     {basis.data.description}
                 </p>
             </div>
-            <div
-                class={`flex flex-row w-full pt-2 justify-between items-center`}
-            >
-                <div class={`flex flex-row gap-1 justify-start items-center`}>
-                    <p class={`font-sans font-[600] text-th-black`}>
-                        {`${basis.data.geolocation_address.primary}, ${basis.data.geolocation_address.admin}`}
-                    </p>
-                    <p class={`font-sans font-[600] text-th-black`}>
-                        {symbols.bullet}
-                    </p>
-                    <p class={`font-sans font-[600] text-th-black`}>
-                        {`${basis.data.geolocation_address.country}`}
-                    </p>
+            {#if data_geoc_address}
+                <div
+                    class={`flex flex-row w-full pt-2 justify-between items-center`}
+                >
+                    <div
+                        class={`flex flex-row gap-1 justify-start items-center`}
+                    >
+                        <p class={`font-sans font-[600] text-th-black`}>
+                            {`${data_geoc_address.primary}, ${data_geoc_address.admin}`}
+                        </p>
+                        <p class={`font-sans font-[600] text-th-black`}>
+                            {symbols.bullet}
+                        </p>
+                        <p class={`font-sans font-[600] text-th-black`}>
+                            {`${data_geoc_address.country}`}
+                        </p>
+                    </div>
                 </div>
-            </div>
+            {/if}
         {/if}
     </div>
 </div>

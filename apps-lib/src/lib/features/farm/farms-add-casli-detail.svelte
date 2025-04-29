@@ -1,10 +1,8 @@
 <script lang="ts">
-    import { CarouselItem, FormLineLedger } from "$root";
-    import {
-        area_units,
-        form_fields,
-        type I18nTranslateFunction,
-    } from "@radroots/util";
+    import { CarouselItem, FormLineLedger, get_context } from "$root";
+    import { area_units, form_fields } from "@radroots/util";
+
+    const { ls } = get_context(`lib`);
 
     let {
         val_farmname = $bindable(``),
@@ -14,7 +12,6 @@
         val_farmcontact = $bindable(``),
         farm_geop_lat,
         farm_geop_lng,
-        ls,
     }: {
         val_farmname: string;
         val_farmaddress: string;
@@ -23,7 +20,6 @@
         val_farmcontact: string;
         farm_geop_lat: string;
         farm_geop_lng: string;
-        ls: I18nTranslateFunction;
     } = $props();
 </script>
 

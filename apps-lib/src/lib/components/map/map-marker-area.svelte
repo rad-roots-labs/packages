@@ -1,10 +1,16 @@
 <script lang="ts">
-    import { MapMarkerAreaDisplay, type IMapMarkerArea } from "$root";
+    import {
+        get_context,
+        MapMarkerAreaDisplay,
+        type IMapMarkerArea,
+    } from "$root";
     import {
         type GeocoderReverseResult,
         type GeolocationPoint,
     } from "@radroots/util";
     import { Marker, Popup } from "svelte-maplibre";
+
+    const { lc_geocode } = get_context(`lib`);
 
     let {
         basis,
@@ -23,7 +29,7 @@
     class={`flex flex-row h-[100px] w-[100px] bg-blue-400/20 border-[2px] border-white justify-center items-center rounded-full shadow-lg`}
     ondragend={async () => {
         if (!map_geop) return;
-        const geoc = await basis.lc_geocode(map_geop);
+        const geoc = await lc_geocode(map_geop);
         if (geoc) map_geoc = geoc;
     }}
 >

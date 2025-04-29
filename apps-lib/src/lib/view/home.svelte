@@ -1,6 +1,7 @@
 <script lang="ts">
     import {
         ButtonSimple,
+        get_context,
         handle_err,
         idb_init_page,
         LayoutPage,
@@ -9,23 +10,19 @@
         PageToolbar,
         type IViewHomeData,
     } from "$root";
-    import {
-        type CallbackPromise,
-        type I18nTranslateFunction,
-        type IViewBasis,
-    } from "@radroots/util";
+    import { type CallbackPromise, type IViewBasis } from "@radroots/util";
     import { onMount } from "svelte";
 
+    const { ls } = get_context(`lib`);
+
     let {
-        ls,
         basis,
     }: {
         basis: IViewBasis<{
             data?: IViewHomeData;
-            lc_handle_farms: CallbackPromise;
-            lc_handle_products: CallbackPromise;
+            on_handle_farms: CallbackPromise;
+            on_handle_products: CallbackPromise;
         }>;
-        ls: I18nTranslateFunction;
     } = $props();
 
     onMount(async () => {
@@ -52,7 +49,7 @@
                 basis={{
                     label: `${$ls(`common.farms`)}`,
                     callback: async () => {
-                        await basis.lc_handle_farms();
+                        await basis.on_handle_farms();
                     },
                 }}
             />

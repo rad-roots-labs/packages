@@ -2,50 +2,45 @@
     import {
         ButtonRoundNav,
         FloatPage,
+        get_context,
         Glyph,
         handle_err,
         idb_init_page,
-        ImageBlob,
         ImagePath,
         ImageUploadAddPhoto,
         NavigationTabs,
         SelectMenu,
         type IViewOnDestroy,
         type IViewProfileData,
-        type LcPhotoAddCallback,
         type ViewProfileEditFieldKey,
     } from "$root";
     import {
         symbols,
         type CallbackPromise,
-        type CallbackPromiseFull,
         type CallbackPromiseGeneric,
-        type I18nTranslateFunction,
         type IViewBasis,
     } from "@radroots/util";
     import { onDestroy, onMount } from "svelte";
 
+    const { ls } = get_context(`lib`);
+
     let {
         basis,
-        ls,
         photo_path = $bindable(``),
     }: {
         basis: IViewBasis<{
             data?: IViewProfileData;
             loading_photo_upload: boolean;
             loading_photo_upload_open: boolean;
-            lc_handle_back: CallbackPromiseGeneric<{
+            on_handle_back: CallbackPromiseGeneric<{
                 is_photo_existing: boolean;
             }>;
-            lc_handle_photo_add: LcPhotoAddCallback;
-            lc_handle_photo_options: CallbackPromise;
-            lc_fs_read_bin: CallbackPromiseFull<string, Uint8Array | undefined>;
-            lc_handle_edit_profile_field: CallbackPromiseGeneric<{
+            on_handle_photo_options: CallbackPromise;
+            on_handle_edit_profile_field: CallbackPromiseGeneric<{
                 field: ViewProfileEditFieldKey;
             }>;
         }> &
             IViewOnDestroy<{ public_key: string }>;
-        ls: I18nTranslateFunction;
         photo_path: string;
     } = $props();
 
@@ -64,8 +59,8 @@
 
     onDestroy(async () => {
         try {
-            if (basis.data)
-                await basis.lc_on_destroy({
+            if (basis.data?.public_key)
+                await basis.on_destroy({
                     public_key: basis.data.public_key,
                 });
         } catch (e) {
@@ -104,7 +99,7 @@
                     glyph: `arrow-left`,
                     loading: basis.loading_photo_upload,
                     callback: async () => {
-                        await basis.lc_handle_back({
+                        await basis.on_handle_back({
                             is_photo_existing: photo_overlay_visible,
                         });
                     },
@@ -135,30 +130,22 @@
                 <ButtonRoundNav
                     basis={{
                         glyph: `images-square`,
-                        callback: basis.lc_handle_photo_options,
+                        callback: basis.on_handle_photo_options,
                     }}
                 />
             </SelectMenu>
         </FloatPage>
         {#if basis.data.picture || photo_path}
             {@const img_path = photo_path || basis.data.picture || ``}
-            {#if img_path.startsWith(`file://`)}
-                {#await basis.lc_fs_read_bin(img_path) then data}
-                    <ImageBlob basis={{ data }} />
-                {/await}
-            {:else if img_path.startsWith(`http://`) || img_path.startsWith(`https://`)}
-                <ImagePath basis={{ path: img_path }} />
-            {/if}
+            <ImagePath basis={{ path: img_path }} />
         {:else}
             <div
                 class={`flex flex-row justify-start items-center -translate-y-8`}
             >
                 <ImageUploadAddPhoto
                     bind:photo_path
-                    {ls}
                     basis={{
                         loading: basis.loading_photo_upload_open,
-                        lc_handle_photo_add: basis.lc_handle_photo_add,
                     }}
                 />
             </div>
@@ -175,7 +162,7 @@
                     <button
                         class={`group flex flex-row justify-center items-center`}
                         onclick={async () => {
-                            await basis.lc_handle_edit_profile_field({
+                            await basis.on_handle_edit_profile_field({
                                 field: `display_name`,
                             });
                         }}
@@ -199,7 +186,7 @@
                     <button
                         class={`group flex flex-row justify-center items-center`}
                         onclick={async () => {
-                            await basis.lc_handle_edit_profile_field({
+                            await basis.on_handle_edit_profile_field({
                                 field: `name`,
                             });
                         }}
@@ -239,7 +226,7 @@
                     <button
                         class={`group flex flex-row justify-center items-center`}
                         onclick={async () => {
-                            await basis.lc_handle_edit_profile_field({
+                            await basis.on_handle_edit_profile_field({
                                 field: `about`,
                             });
                         }}

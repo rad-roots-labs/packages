@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Map, MapMarkerArea, type LcGeocodeCallback } from "$root";
+    import { get_context, Map, MapMarkerArea } from "$root";
     import {
         fmt_geolocation_address,
         geol_lat_fmt,
@@ -7,25 +7,19 @@
         parse_geol_point_tup,
         parse_tup_geop_point,
         type CallbackPromiseGeneric,
-        type FarmBasis,
+        type FarmExtended,
         type GeolocationPointTuple,
-        type I18nTranslateFunction,
-        type I18nTranslateLocale,
     } from "@radroots/util";
     import { onMount } from "svelte";
 
+    const { ls, locale } = get_context(`lib`);
+
     let {
         basis,
-        lc_geocode,
-        lc_handle_farm_view,
-        ls,
-        locale,
+        on_handle_farm_view,
     }: {
-        basis: FarmBasis;
-        lc_geocode: LcGeocodeCallback;
-        lc_handle_farm_view: CallbackPromiseGeneric<string>;
-        ls: I18nTranslateFunction;
-        locale: I18nTranslateLocale;
+        basis: FarmExtended;
+        on_handle_farm_view: CallbackPromiseGeneric<string>;
     } = $props();
 
     let map: maplibregl.Map | undefined = $state(undefined);
@@ -61,7 +55,7 @@
 <button
     class={`z-10 relative flex flex-col w-full p-4 gap-3 justify-start items-center bg-layer-1-surface layer-1-active-raise-less layer-1-active-ring rounded-3xl el-re`}
     onclick={async () => {
-        if (basis.farm.id) await lc_handle_farm_view(basis.farm.id);
+        if (basis.farm.id) await on_handle_farm_view(basis.farm.id);
     }}
 >
     <div class={`flex flex-col w-full gap-2 justify-center items-center`}>
@@ -106,7 +100,6 @@
                 {map_geop}
                 basis={{
                     no_drag: true,
-                    lc_geocode,
                 }}
             />
         </Map>

@@ -1,17 +1,15 @@
 <script lang="ts">
-    import { Glyph, LoadSymbol, type LcPhotoAddCallback } from "$root";
-    import { type I18nTranslateFunction } from "@radroots/util";
+    import { get_context, Glyph, LoadSymbol } from "$root";
+
+    const { ls, lc_photos_add } = get_context(`lib`);
 
     let {
         basis,
-        ls,
         photo_path = $bindable(``),
     }: {
         basis: {
             loading?: boolean;
-            lc_handle_photo_add: LcPhotoAddCallback;
         };
-        ls: I18nTranslateFunction;
         photo_path: string;
     } = $props();
 </script>
@@ -20,8 +18,8 @@
     <button
         class={`flex flex-row h-[5rem] w-[5rem] justify-center items-center bg-layer-1-surface/60 rounded-full`}
         onclick={async () => {
-            const photo_path_add = await basis.lc_handle_photo_add();
-            if (photo_path_add) photo_path = photo_path_add;
+            const photo_paths_add = await lc_photos_add();
+            if (photo_paths_add) photo_path = photo_paths_add[0];
         }}
     >
         {#if basis.loading}

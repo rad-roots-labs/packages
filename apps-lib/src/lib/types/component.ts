@@ -1,4 +1,4 @@
-import type { CallbackRoute, ICb, ICbG, ICbGOpt, ICbOpt, IClOpt, IDisabledOpt, IEntryWrap, IGl, IGlOpt, IGlyphKey, IIdGOpt, IIdOpt, ILabel, ILabelOpt, ILabelTup, ILoadingOpt, ILy, ILyOpt, INavigationRoutePreventRouteNav, LcGeocodeCallback, NavigationRouteParamKey } from "$root";
+import type { CallbackRoute, ICb, ICbG, ICbGOpt, ICbOpt, IClOpt, IDisabledOpt, IEntryWrap, IGl, IGlOpt, IGlyphKey, IIdGOpt, IIdOpt, ILabel, ILabelOpt, ILabelTup, ILoadingOpt, ILy, ILyOpt, INavigationRoutePreventRouteNav, NavigationRouteParamKey } from "$root";
 import type { CallbackPromise, CallbackPromiseGeneric, ElementCallbackMount, ElementCallbackValue, ElementCallbackValueBlur, ElementCallbackValueKeydown, FormField, GeometryGlyphDimension, GeometryScreenPosition, GeometryScreenPositionHorizontal, GlyphKey, GlyphWeight, NavigationParamTuple } from "@radroots/util";
 
 export type IButtonNavRound = ICb & IDisabledOpt & ILoadingOpt & IGlyphKey;
@@ -239,7 +239,6 @@ export type IButtonSimple = ILyOpt & {
 export type IMapMarkerArea = {
     show_display?: boolean;
     no_drag?: boolean;
-    lc_geocode: LcGeocodeCallback;
 }
 
 export type ILayoutTrellisLine = ILabelOpt &

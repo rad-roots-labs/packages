@@ -1,14 +1,12 @@
 <script lang="ts">
     import { browser } from "$app/environment";
-    import { handle_err, idb, type ITextArea } from "$root";
+    import { idb, type ITextArea } from "$root";
     import {
         fmt_cl,
         fmt_textarea_value,
         parse_layer,
-        sleep,
         value_constrain_textarea,
     } from "@radroots/util";
-    import { onMount } from "svelte";
 
     let {
         basis,
@@ -25,24 +23,8 @@
         typeof basis.layer === `boolean` ? 0 : parse_layer(basis.layer, 1),
     );
 
-    onMount(async () => {
-        try {
-            if (id && basis?.sync && browser) {
-                const sync_val = await idb.get(id);
-                await idb.set(id, sync_val || ``);
-            }
-        } catch (e) {
-            handle_err(e, `on_mount`);
-        }
-    });
-
     $effect(() => {
-        if (browser && id && basis?.sync && value) {
-            (async () => {
-                await sleep(100);
-                await idb.set(id, value);
-            })();
-        }
+        if (browser && id && basis?.sync && value) idb.set(id, value);
     });
 
     const handle_on_input = async (el: HTMLTextAreaElement): Promise<void> => {
@@ -60,7 +42,6 @@
                 }
                 pass = basis?.field.validate.test(val);
             }
-            if (id && basis?.sync && browser) await idb.set(id, val);
             if (basis?.callback) await basis?.callback({ value: val, pass });
         } catch (e) {
             console.log(`(error) handle_on_input `, e);
@@ -90,6 +71,6 @@
     }}
     {id}
     contenteditable="true"
-    class={`${fmt_cl(basis.classes)} el-textarea p-2 w-full bg-layer-${layer}-surface text-layer-${layer}-glyph_d placeholder:text-layer-${layer}-glyph_pl caret-layer-${layer}-glyph`}
+    class={`${fmt_cl(basis.classes)} el-textarea py-4 px-[18px] w-full bg-layer-${layer}-surface text-layer-${layer}-glyph_d placeholder:text-layer-${layer}-glyph_pl caret-layer-${layer}-glyph`}
     placeholder={basis.placeholder || ``}
 ></textarea>

@@ -2,6 +2,7 @@
     import {
         ButtonSimple,
         Empty,
+        get_context,
         Glyph,
         handle_err,
         LayoutPage,
@@ -11,7 +12,6 @@
         PageToolbar,
         type CallbackRoute,
         type IViewFarmsDetailsData,
-        type LcGeocodeCallback,
     } from "$root";
     import {
         fmt_geolocation_address,
@@ -21,27 +21,22 @@
         parse_tup_geop_point,
         type CallbackPromiseGeneric,
         type GeolocationPointTuple,
-        type I18nTranslateFunction,
-        type I18nTranslateLocale,
         type IViewBasis,
     } from "@radroots/util";
     import { onDestroy, onMount } from "svelte";
 
+    const { ls, locale } = get_context(`lib`);
+
     let {
         basis,
-        ls,
-        locale,
     }: {
         basis: IViewBasis<{
             data: IViewFarmsDetailsData;
             callback_route?: CallbackRoute<string>;
-            lc_geocode: LcGeocodeCallback;
-            lc_handle_farm_lot_add: CallbackPromiseGeneric<string>;
-            lc_handle_farm_products_view: CallbackPromiseGeneric<string>;
-            lc_handle_farm_orders_view: CallbackPromiseGeneric<string>;
+            on_handle_farm_lot_add: CallbackPromiseGeneric<string>;
+            on_handle_farm_products_view: CallbackPromiseGeneric<string>;
+            on_handle_farm_orders_view: CallbackPromiseGeneric<string>;
         }>;
-        ls: I18nTranslateFunction;
-        locale: I18nTranslateLocale;
     } = $props();
 
     let map: maplibregl.Map | undefined = $state(undefined);
@@ -49,7 +44,7 @@
 
     onMount(async () => {
         try {
-            if (basis.lc_on_mount) await basis.lc_on_mount();
+            if (basis.on_mount) await basis.on_mount();
             if (basis.data?.location)
                 map_center = parse_geol_point_tup(basis.data?.location.point);
             if (map) {
@@ -63,7 +58,7 @@
 
     onDestroy(async () => {
         try {
-            if (basis.lc_on_destroy) await basis.lc_on_destroy();
+            if (basis.on_destroy) await basis.on_destroy();
         } catch (e) {
             handle_err(e, `on_destroy`);
         }
@@ -229,7 +224,7 @@
                     label: `View Products`,
                     callback: async () => {
                         if (basis.data?.farm.id)
-                            await basis.lc_handle_farm_products_view(
+                            await basis.on_handle_farm_products_view(
                                 basis.data?.farm.id,
                             );
                     },
@@ -240,7 +235,7 @@
                     label: `View Orders`,
                     callback: async () => {
                         if (basis.data?.farm.id)
-                            await basis.lc_handle_farm_orders_view(
+                            await basis.on_handle_farm_orders_view(
                                 basis.data?.farm.id,
                             );
                     },
@@ -260,7 +255,6 @@
                     {map_geop}
                     basis={{
                         no_drag: true,
-                        lc_geocode: basis.lc_geocode,
                     }}
                 />
             </Map>

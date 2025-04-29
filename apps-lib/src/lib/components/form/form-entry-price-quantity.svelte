@@ -2,6 +2,7 @@
     import {
         EntryWrap,
         fmt_id,
+        get_context,
         Input,
         LayoutTrellisLine,
         lib_fmt_price,
@@ -14,14 +15,12 @@
         num_str,
         type ElementCallbackValue,
         type FormField,
-        type I18nTranslateFunction,
-        type I18nTranslateLocale,
     } from "@radroots/util";
+
+    const { ls, locale } = get_context(`lib`);
 
     let {
         basis,
-        ls,
-        locale,
         val_input_price = $bindable(``),
         val_sel_currency = $bindable(``),
         val_sel_qty_unit = $bindable(``),
@@ -31,8 +30,6 @@
             input_field?: FormField;
             callback_input: ElementCallbackValue;
         };
-        ls: I18nTranslateFunction;
-        locale: I18nTranslateLocale;
         val_input_price: string;
         val_sel_currency: string;
         val_sel_qty_unit: string;

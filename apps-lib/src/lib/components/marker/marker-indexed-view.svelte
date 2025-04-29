@@ -19,7 +19,7 @@
     >
         {#each Array(basis.index_max).fill(0) as _, index}
             <button
-                class={`flex flex-row flex-grow h-full justify-start items-center ${basis.index_curr >= index ? `bg-th-black` : `bg-layer-2-surface`} rounded-full el-re`}
+                class={`flex flex-row flex-grow h-full justify-start items-center ${basis.index_curr >= index ? `bg-layer-0-glyph` : `bg-layer-2-surface`} rounded-full el-re`}
                 onclick={async () => {
                     await basis.callback_index(index);
                 }}

@@ -42,7 +42,7 @@
                 classes: `h-full`,
             },
             el: {
-                classes: `h-full px-2 overflow-hidden`,
+                classes: `h-full overflow-hidden`,
                 id: id ? fmt_id(id) : undefined,
                 sync: true,
                 placeholder: basis.placeholder || ``,

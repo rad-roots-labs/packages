@@ -1,5 +1,5 @@
-import type { INavigationRoute } from "$root";
-import type { CallbackPromise, CallbackPromiseFull, CallbackPromiseResult, GeocoderReverseResult, GeolocationPoint, IClientGeolocationPosition, NavigationParamTuple } from "@radroots/util";
+import type { INavigationRoute, ISelectOption } from "$root";
+import type { CallbackPromise, CallbackPromiseFull, CallbackPromiseGeneric, CallbackPromiseResult, GeocoderReverseResult, GeolocationPoint, IClientGeolocationPosition, MediaImageUploadResult, NavigationParamTuple } from "@radroots/util";
 
 export type CallbackRoute<T extends string> = CallbackPromise | INavigationRoute<T>;
 
@@ -13,9 +13,12 @@ export type NavigationRouteParamKey = NavigationRouteParamId | NavigationRoutePa
 export type NavigationRouteParamTuple = NavigationParamTuple<NavigationRouteParamKey>;
 export type NavigationPreviousParam<T extends string> = { route: T, label?: string; params?: NavigationRouteParamTuple[] }
 
-export type LcGuiAlertCallback = CallbackPromiseFull<string, boolean>;
-export type LcGuiConfirmCallback = CallbackPromiseFull<string | { message: string; ok?: string; cancel?: string }, boolean>;
-export type LcGeocodeCurrentCallback = CallbackPromiseResult<IClientGeolocationPosition>;
-export type LcGeocodeCallback = CallbackPromiseFull<GeolocationPoint, GeocoderReverseResult | undefined>;
-export type LcPhotoAddCallback = CallbackPromiseResult<string>;
-export type LcPhotoAddMultipleCallback = CallbackPromiseResult<string[]>;
+export type LocalCallbackColorMode = CallbackPromiseGeneric<ISelectOption<string>>
+export type LocalCallbackGuiAlert = CallbackPromiseFull<string, boolean>;
+export type LocalCallbackGuiConfirm = CallbackPromiseFull<string | { message: string; ok?: string; cancel?: string }, boolean>;
+export type LocalCallbackGeocode = CallbackPromiseFull<GeolocationPoint, GeocoderReverseResult | undefined>;
+export type LocalCallbackGeocodeCurrent = CallbackPromiseResult<IClientGeolocationPosition>;
+export type LocalCallbackImgBin = CallbackPromiseFull<string, Uint8Array | undefined>;
+export type LocalCallbackPhotosAdd = CallbackPromiseResult<string>;
+export type LocalCallbackPhotosAddMultiple = CallbackPromiseResult<string[]>;
+export type LocalCallbackPhotosUpload = CallbackPromiseFull<{ url: string, path: string }, MediaImageUploadResult | undefined>;

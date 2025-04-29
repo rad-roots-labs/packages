@@ -43,8 +43,6 @@
         if (Math.max(el?.scrollTop || 0, 0) > 30) ph_blur.set(true);
         else ph_blur.set(false);
     };
-
-    //${$layout_view_cover ? `` : `pt-h_lo_view_${$app_lo}`}
 </script>
 
 <div

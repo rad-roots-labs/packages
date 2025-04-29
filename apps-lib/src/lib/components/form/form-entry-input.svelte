@@ -32,7 +32,7 @@
                 layer: 1,
             },
             el: {
-                // id: id ? fmt_id(id) : undefined,
+                id: id ? fmt_id(id) : undefined,
                 layer: 1,
                 classes: `fade-in`,
                 placeholder: basis.input_placeholder || ``,

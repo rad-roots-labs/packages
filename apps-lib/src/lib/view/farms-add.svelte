@@ -15,14 +15,12 @@
         focus_map_marker,
         geop_init,
         geop_is_valid,
+        get_context,
         handle_err,
         LayoutView,
         PageToolbar,
         type CallbackRoute,
         type IViewFarmsAddSubmission,
-        type LcGeocodeCallback,
-        type LcGeocodeCurrentCallback,
-        type LcGuiAlertCallback,
     } from "$root";
     import {
         el_id,
@@ -34,30 +32,22 @@
         type GeocoderReverseResult,
         type GeolocationAddress,
         type GeolocationPoint,
-        type I18nTranslateFunction,
-        type I18nTranslateLocale,
     } from "@radroots/util";
     import { onMount } from "svelte";
 
+    const { ls, locale, lc_gui_alert, lc_geop_current, lc_geocode } =
+        get_context(`lib`);
+
     let {
         basis,
-        ls,
-        locale,
     }: {
         basis: {
             callback_route?: CallbackRoute<string>;
-            lc_gui_alert: LcGuiAlertCallback;
-            lc_geop_current: LcGeocodeCurrentCallback;
-            lc_geocode: LcGeocodeCallback;
-            lc_submit: CallbackPromiseGeneric<{
-                data_s: IViewFarmsAddSubmission;
+            on_submit: CallbackPromiseGeneric<{
+                payload: IViewFarmsAddSubmission;
             }>;
         };
-        ls: I18nTranslateFunction;
-        locale: I18nTranslateLocale;
     } = $props();
-
-    let loading = $state(false);
 
     let map_geop: GeolocationPoint = $state(geop_init());
     let map_geoc: GeocoderReverseResult | undefined = $state(undefined);
@@ -109,7 +99,7 @@
 
     const handle_continue_1 = async (): Promise<void> => {
         if (!map_geop || !map_geoc)
-            return void basis.lc_gui_alert(`No farm location provided.`); //@todo
+            return void lc_gui_alert(`No farm location provided.`); //@todo
         const farms_add_submission = schema_view_farms_add_submission.safeParse(
             {
                 farm_name: val_farmname,
@@ -127,13 +117,11 @@
         );
 
         if (!farms_add_submission.success) {
-            return void basis.lc_gui_alert(
+            return void lc_gui_alert(
                 `Request invalid: ${farms_add_submission.error}`,
             ); //@todo
         }
-        loading = true;
-        await basis.lc_submit({ data_s: farms_add_submission.data });
-        loading = false;
+        await basis.on_submit({ payload: farms_add_submission.data });
     };
 
     const handle_continue = async (): Promise<void> => {
@@ -149,10 +137,10 @@
         switch ($casl_i) {
             case 1: {
                 if (!geop_is_valid(map_geop)) {
-                    const geop_cur = await basis.lc_geop_current();
+                    const geop_cur = await lc_geop_current();
                     if (geop_cur) {
                         map_geop = geop_cur;
-                        const geoc_cur = await basis.lc_geocode(geop_cur);
+                        const geoc_cur = await lc_geocode(geop_cur);
                         if (geoc_cur) map_geoc = geoc_cur;
                         focus_map_marker();
                     }
@@ -174,7 +162,7 @@
         }}
     >
         {#snippet header_option()}
-            <!--{#if $casl_i === 0}
+            <!-- @todo {#if $casl_i === 0}
                 <button
                     class={`flex flex-row justify-center items-center`}
                     onclick={async () => {
@@ -203,10 +191,6 @@
             bind:map_geoc
             {farm_geop_lat}
             {farm_geop_lng}
-            basis={{
-                lc_geocode: basis.lc_geocode,
-                lc_geop_current: basis.lc_geop_current,
-            }}
         />
         <FarmsAddCasliDetail
             bind:val_farmname
@@ -216,7 +200,6 @@
             bind:val_farmarea_unit
             {farm_geop_lat}
             {farm_geop_lng}
-            {ls}
         />
     </Carousel>
 </LayoutView>

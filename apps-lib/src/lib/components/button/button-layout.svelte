@@ -1,5 +1,12 @@
 <script lang="ts">
-    import { app_lo, type IClOpt, type IDisabledOpt, type ILyOpt } from "$root";
+    import {
+        app_lo,
+        LoadSymbol,
+        type IClOpt,
+        type IDisabledOpt,
+        type ILoadingOpt,
+        type ILyOpt,
+    } from "$root";
     import { fmt_cl, parse_layer, type CallbackPromise } from "@radroots/util";
 
     let {
@@ -7,7 +14,8 @@
     }: {
         basis: ILyOpt &
             IClOpt &
-            IDisabledOpt & {
+            IDisabledOpt &
+            ILoadingOpt & {
                 classes_inner?: string;
                 hide_active?: boolean;
                 label: string;
@@ -31,9 +39,13 @@
         if (!basis.disabled) await basis.callback();
     }}
 >
-    <p
-        class={`${fmt_cl(basis.classes_inner)} font-sans font-[600] tracking-wide text-layer-${layer}-glyph-shade ${basis.disabled ? `` : `group-active:text-layer-${layer}-glyph/40 `} el-re`}
-    >
-        {basis.label || ``}
-    </p>
+    {#if basis.loading}
+        <LoadSymbol basis={{ dim: `md` }} />
+    {:else}
+        <p
+            class={`${fmt_cl(basis.classes_inner)} font-sans font-[600] tracking-wide text-layer-${layer}-glyph-shade ${basis.disabled ? `` : `group-active:text-layer-${layer}-glyph/40 `} el-re`}
+        >
+            {basis.label || ``}
+        </p>
+    {/if}
 </button>

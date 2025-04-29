@@ -1,32 +1,26 @@
 <script lang="ts">
     import {
         app_thc,
+        get_context,
         handle_err,
         idb_init_page,
         LayoutTrellis,
         LayoutView,
         PageToolbar,
         Trellis,
-        type ISelectOption,
         type ITrellisKind,
     } from "$root";
-    import {
-        symbols,
-        type CallbackPromiseGeneric,
-        type I18nTranslateFunction,
-        type IViewBasis,
-    } from "@radroots/util";
+    import { symbols, type IViewBasis } from "@radroots/util";
     import { onMount } from "svelte";
+
+    const { ls, lc_color_mode } = get_context(`lib`);
 
     let {
         basis,
-        ls,
     }: {
         basis: IViewBasis<{
             trellis_2?: (ITrellisKind | undefined)[];
-            lc_color_mode: CallbackPromiseGeneric<ISelectOption<string>>;
         }>;
-        ls: I18nTranslateFunction;
     } = $props();
 
     onMount(async () => {
@@ -48,7 +42,6 @@
     />
     <LayoutTrellis>
         <Trellis
-            {ls}
             basis={{
                 layer: 1,
                 title: {
@@ -93,7 +86,7 @@
                                         ],
                                     },
                                 ],
-                                callback: basis.lc_color_mode,
+                                callback: lc_color_mode,
                             },
                             end: {
                                 glyph: {
@@ -106,7 +99,6 @@
             }}
         />
         <Trellis
-            {ls}
             basis={{
                 layer: 1,
                 list: basis.trellis_2,

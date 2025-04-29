@@ -1,5 +1,10 @@
 <script lang="ts">
-    import { Glyph, type IBasisOpt, type ILayoutTrellisLine } from "$root";
+    import {
+        app_lo,
+        Glyph,
+        type IBasisOpt,
+        type ILayoutTrellisLine,
+    } from "$root";
     import { fmt_cl } from "@radroots/util";
     import type { Snippet } from "svelte";
     import { fade } from "svelte/transition";
@@ -14,7 +19,7 @@
 </script>
 
 <div
-    class={`${fmt_cl(basis?.classes)} flex flex-col w-trellis_line gap-[6px] justify-start items-center`}
+    class={`${fmt_cl(basis?.classes)} flex flex-col w-lo_line_entry_${$app_lo} gap-[6px] justify-start items-center`}
 >
     {#if (basis?.label && `value` in basis?.label) || basis?.notify}
         <div

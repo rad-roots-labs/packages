@@ -1,33 +1,21 @@
 <script lang="ts">
-    import { type IImagePath } from "$root";
-    import { fmt_cl } from "@radroots/util";
-    import { onMount } from "svelte";
+    import { get_context, ImageBlob, type IImagePath } from "$root";
+    import ImageSrc from "./image-src.svelte";
 
+    const { lc_img_bin } = get_context(`lib`);
     let { basis }: { basis: IImagePath } = $props();
 
-    let img_src = $state(``);
-
-    onMount(async () => {
-        try {
-            if (basis.path) img_src = basis.path;
-        } catch (e) {
-        } finally {
-        }
-    });
+    const img_path = $derived(basis.path);
 </script>
 
-{#if img_src}
-    <!-- svelte-ignore a11y_click_events_have_key_events -->
-    <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
-    <img
-        id={basis?.id || null}
-        class={`${fmt_cl(basis?.classes)}`}
-        src={img_src}
-        alt={basis?.alt || null}
-        style={`height: 100%; width: 100%; object-fit: cover; display: block;`}
-        onclick={async (ev) => {
-            ev.stopPropagation();
-            if (basis?.callback) await basis.callback(ev);
-        }}
-    />
+{#if img_path}
+    {@const is_bin = img_path.startsWith(`file:`)}
+
+    {#if is_bin}
+        {#await lc_img_bin(img_path) then data}
+            <ImageBlob basis={{ data, ...basis }} />
+        {/await}
+    {:else}
+        <ImageSrc basis={{ src: img_path, ...basis }} />
+    {/if}
 {/if}
