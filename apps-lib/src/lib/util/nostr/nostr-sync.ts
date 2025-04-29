@@ -39,11 +39,11 @@ export const nostr_sync_handler = async (opts: {
         const $ls = get_store(ls);
         const $ndk_user = get_store(ndk_user);
         const public_key = $ndk_user.pubkey;
-        if (!public_key) return void await callback_alert(`${$ls(`error.client.nostr_sync_failure`)}`);
+        if (!public_key) return void await callback_alert(`${$ls(`error.client.nostr.missing_public_key`)}`);
 
         const $nostr_sync_prevent = get_store(nostr_sync_prevent);
         if ($nostr_sync_prevent) {
-            const confirm = await callback_confirm(`${$ls(`error.client.nostr_sync_disabled`)}`);
+            const confirm = await callback_confirm(`${$ls(`error.client.nostr.sync_disabled`)}`);
             if (confirm) nostr_sync_prevent.set(false);
             else return;
         }

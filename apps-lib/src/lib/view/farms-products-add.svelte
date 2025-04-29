@@ -294,7 +294,7 @@
             const geop = await lc_geop_current();
             if (!geop) {
                 return void (await lc_gui_alert(
-                    `${$ls(`icu.failure_*`, { value: `${$ls(`icu.reading_*`, { value: `${$ls(`common.location`)}`.toLowerCase() })}` })}`,
+                    `${$ls(`icu.failure_reading_*`, { value: `${$ls(`common.location`)}`.toLowerCase() })}`,
                 ));
             }
             const geoc = await lc_geocode(geop);

@@ -39,7 +39,7 @@ export const nostr_poll_relays_handler = async (opts: {
         const $ls = get_store(ls);
         const $ndk_user = get_store(ndk_user);
         const public_key = $ndk_user?.pubkey;
-        if (!public_key) return void await callback_alert(`${$ls(`error.client.nostr_poll_relays_failure`)}`);
+        if (!public_key) return void await callback_alert(`${$ls(`error.client.nostr.missing_public_key`)}`);
         const $nostr_relays_connected = get_store(nostr_relays_connected);
 
         const relay_urls = await callback_relay_urls(public_key);
