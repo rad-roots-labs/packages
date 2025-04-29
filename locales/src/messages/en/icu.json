@@ -1,17 +1,24 @@
 {
-    "not_a_valid_": "Not a valid {{value}}",
-    "choose_*": "Choose {{value}}",
+    "*_information": "{{value}} information",
+    "*_name": "{{value}} name",
+    "*_price": "{{value}} price",
     "add_*": "Add {{value}}",
     "add_existing_*": "Add existing {{value}}",
+    "choose_*": "Choose {{value}}",
     "configure_*": "Configure {{value}}",
     "create_new_*": "Create new {{value}}",
     "enter_*": "Enter {{value}}",
     "enter_a_*": "Enter a {{value}}",
     "enter_a_valid_*": "Enter a valid {{value}}",
+    "enter_the_*": "Enter the {{value}}",
+    "failure_reading_*": "Failure reading {{value}}",
     "failure_saving_*_to_the_database": "Failure saving {{value}} to the database",
-    "the_*_is_available": "The {{value}} is available",
-    "use_existing_*": "Use existing {{value}}",
     "keystore": {
         "init_existing": "This device has an existing configuration. There are {{value}} existing keys found."
-    }
+    },
+    "no_*": "No {{value}}",
+    "not_a_valid_*": "Not a valid {{value}}",
+    "the_*_is_available": "The {{value}} is available",
+    "upload_*": "Upload {{value}}",
+    "use_existing_*": "Use existing {{value}}"
 }

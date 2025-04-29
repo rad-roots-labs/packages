@@ -1,19 +1,32 @@
 {
     "client": {
-        "http": {
-            "request_failure": "There was a request failure"
-        },
         "geolocation": {
             "location_unavailable": "The device location is unavailable",
             "permission_denied": "The access device location was denied",
             "request_failure": "The request could not be completed",
             "timeout": "The request for your device location expired"
+        },
+        "http": {
+            "request_failure": "There was a request failure"
+        },
+        "nostr": {
+            "missing_public_key": "There is no public key available",
+            "sync_disabled": "The sync process is currently disabled"
         }
+    },
+    "default": {
+        "failure": "The request was not succesful"
     },
     "init": {
         "configuration_failure": "There was an error configuring the device",
         "device_configuration_nostr_profile": "There was an error while configuring your profile",
         "device_configuration_nostr_relay": "There was an error while adding the nostr relay configuration"
+    },
+    "model": {
+        "filter_map_bind_values_undefined": "",
+        "filter_map_options_list_invalid": "",
+        "filter_map_query_values_invalid_condition": "",
+        "filter_map_query_values_undefined": ""
     },
     "nostr": {
         "ndk_user_undefined": "There was an error configuring the nostr client",
@@ -21,12 +34,6 @@
     },
     "radroots": {
         "profile_registered": "This profile is already registered"
-    },
-    "model": {
-        "filter_map_options_list_invalid": "",
-        "filter_map_query_values_invalid_condition": "",
-        "filter_map_query_values_undefined": "",
-        "filter_map_bind_values_undefined": ""
     },
     "util": {
         "parse_file_path_undefined": "There was an error reading the file path"

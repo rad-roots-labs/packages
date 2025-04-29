@@ -11,8 +11,8 @@
         "on_first_load": "Notifications are enabled"
     },
     "profile": {
-        "update_name_confirmation": "Updating your username will result in public links on your profile being updated",
+        "handle_back_with_selected_photo": "Do you want to use this photo or keep your existing one?",
         "handle_back_with_selected_photo_no_existing": "Do you want to use this photo or leave the page?",
-        "handle_back_with_selected_photo": "Do you want to use this photo or keep your existing one?"
+        "update_name_confirmation": "Updating your username will result in public links on your profile being updated"
     }
 }
