@@ -480,7 +480,7 @@
                         },
                         ...trade_keys.map((i) => ({
                             value: i,
-                            label: `${$ls(`products.product.key.${i}.name`)}`,
+                            label: `${$ls(`products.key.${i}.name`)}`,
                         })),
                         {
                             value: `*other`,
@@ -513,7 +513,7 @@
                               },
                               ...product_process_list.map((i) => ({
                                   value: i,
-                                  label: `${$ls(`products.product.key.${tradepr_key_parsed}.process.${i}`)}`,
+                                  label: `${$ls(`products.key.${tradepr_key_parsed}.process.${i}`)}`,
                               })),
                               {
                                   value: `*other`,
@@ -540,7 +540,7 @@
                                             ...trade.default.process.map(
                                                 (i) => ({
                                                     value: i,
-                                                    label: `${$ls(`products.product.default.process.${i}`)}`,
+                                                    label: `${$ls(`products.default.process.${i}`)}`,
                                                 }),
                                             ),
                                             {
