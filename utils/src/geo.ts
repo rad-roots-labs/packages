@@ -1,10 +1,5 @@
-import { type GeolocationPointTuple, type GeometryPoint } from "$root";
+import { LocationBasis, type GeolocationPointTuple, type GeometryPoint } from "$root";
 import { decodeBase32, encodeBase32 } from "geohashing";
-
-export type GeolocationBasis = {
-    point: GeolocationPoint;
-    address?: GeolocationAddress;
-}
 
 export type GeolocationAddress = {
     primary: string;
@@ -95,6 +90,22 @@ export const parse_geolocation_point = (point?: GeometryPoint): GeolocationPoint
     return {
         lat: point.coordinates[1],
         lng: point.coordinates[0],
+    };
+};
+
+export const geo_point_to_geometry = (point?: GeolocationPoint): GeometryPoint | undefined => {
+    if (!point) return undefined;
+    return {
+        type: 'Point',
+        coordinates: [point.lng, point.lat]
+    };
+};
+
+export const location_basis_to_geo_point = (basis?: LocationBasis): GeolocationPoint | undefined => {
+    if (!basis) return undefined;
+    return {
+        lat: basis.point.lat,
+        lng: basis.point.lng
     };
 };
 
@@ -238,19 +249,22 @@ export const geo_bounds_calc = (lat: number, lng: number, distance_km: number): 
     };
 };
 
-export const location_gcs_to_geolocation_basis = ({
+export const location_gcs_to_location_basis = ({
+    id,
     lat,
     lng,
     gc_name: primary,
     gc_admin1_name: admin,
     gc_country_id: country,
 }: {
+    id: string;
     lat: number;
     lng: number;
     gc_name?: string;
     gc_admin1_name?: string;
     gc_country_id?: string;
-}): GeolocationBasis => ({
+}): LocationBasis => ({
+    id,
     point: {
         lat,
         lng,

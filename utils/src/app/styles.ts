@@ -18,6 +18,7 @@ export type AppLayoutKeyHeight =
 
 export type AppLayoutKeyWidth =
     | `lo`
+    | `lo_line_entry`
     | `lo_textdesc`;
 
 export type AppHeightsResponsiveIOS = AppLayoutIOS<AppLayoutKeyHeight>;

@@ -43,8 +43,11 @@ const trade_quantity_default: TradeQuantity[] = [
     },
 ];
 
+const TRADE_PROCESS_DEFAULT = `natural`;
+
+//@todo
 const trade_process_default: string[] = [
-    `natural`,
+    TRADE_PROCESS_DEFAULT,
     `dried`,
     `roasted`
 ];
@@ -60,6 +63,7 @@ export type TradeParam = {
         flavor: string[];
     }>;
 };
+
 export const trade: TradeParam = {
     default: {
         quantity: trade_quantity_default,
@@ -207,6 +211,11 @@ export function parse_trade_key(val?: string): TradeKey | undefined {
     };
 };
 
+export const trade_key_default_process = (val?: string): string => {
+    const key = parse_trade_key(val);
+    if (!key) return TRADE_PROCESS_DEFAULT;
+    return trade.key[key].process[0];
+};
 
 export function parse_trade_mass_tuple(val?: string): [number, MassUnit, string] | undefined {
     if (!val) return;

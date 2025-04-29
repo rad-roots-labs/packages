@@ -2,8 +2,8 @@ import type { CallbackPromise, CallbackPromiseGeneric } from "$root";
 
 export type IViewBasis<T extends object> = {
     kv_init_prevent?: boolean;
-    lc_on_mount?: CallbackPromise;
-    lc_on_destroy?: CallbackPromise;
+    on_mount?: CallbackPromise;
+    on_destroy?: CallbackPromise;
 } & T;
 
 
