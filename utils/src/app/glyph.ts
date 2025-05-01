@@ -1,6 +1,9 @@
 import type { GeometryCardinalDirection } from "$root";
 
 export type GlyphKey = |
+    `chat-text` |
+    `eye` |
+    `export` |
     `video-camera` |
     `device-mobile-camera` |
     `crop` |
