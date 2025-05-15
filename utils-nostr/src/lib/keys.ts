@@ -15,6 +15,18 @@ export const lib_nostr_key_generate = (): string => {
     return lib_nostr_get_key_hex(bytes);
 };
 
+export const lib_nostr_npub_encode = (public_key_hex?: string): string | undefined => {
+    if (!public_key_hex) return undefined;
+    const npub = nip19.npubEncode(public_key_hex)
+    return npub;
+};
+
+export const lib_nostr_npub_decode = (npub?: string): string | undefined => {
+    if (!npub) return undefined;
+    const { type, data } = nip19.decode(npub)
+    if (type === `npub` && data) return data
+};
+
 export const lib_nostr_nsec_encode = (secret_key_hex?: string): string | undefined => {
     if (!secret_key_hex) return undefined;
     const bytes = lib_nostr_get_key_bytes(secret_key_hex);
@@ -28,6 +40,17 @@ export const lib_nostr_nsec_decode = (nsec?: string): string | undefined => {
     return undefined;
 };
 
+export const lib_nostr_nprofile_encode = (public_key_hex: string, relays: string[]): string | undefined => {
+    if (!public_key_hex || !relays.length) return undefined;
+    const nprofile = nip19.nprofileEncode({ pubkey: public_key_hex,relays })
+    return nprofile;
+};
+
+export const lib_nostr_nprofile_decode = (nprofile?: string): nip19.ProfilePointer | undefined => {
+    if (!nprofile) return undefined;
+    const { type, data } = nip19.decode(nprofile)
+    if (type === `nprofile` && data) return data
+};
 
 export const lib_nostr_public_key = (secret_key_hex: string): string => {
     const bytes = lib_nostr_get_key_bytes(secret_key_hex);

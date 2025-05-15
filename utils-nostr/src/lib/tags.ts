@@ -1,5 +1,5 @@
-import { INostrClassified, INostrJobRequest, NostrEventTagClient, NostrEventTagLocation, NostrEventTagMediaUpload, NostrEventTagPrice, NostrEventTagPriceDiscount, NostrEventTagQuantity, type INostrFollow, type NostrEventTag, type NostrEventTags } from "$root";
-import { ngeotags, type InputData as NostrGeotagsInputData } from "nostr-geotags";
+import { INostrClassified, INostrJobRequest, INostrReaction, NostrEventTagClient, NostrEventTagLocation, NostrEventTagMediaUpload, NostrEventTagPrice, NostrEventTagPriceDiscount, NostrEventTagQuantity, type INostrFollow, type NostrEventTag, type NostrEventTags } from "$root";
+import ngeotags, { type InputData as NostrGeotagsInputData } from "nostr-geotags";
 
 export const tag_client = (opts: NostrEventTagClient, d_tag?: string): NostrEventTag => {
     const tag = [`client`, opts.name];
@@ -44,17 +44,20 @@ export const tag_classified_image = (opts: NostrEventTagMediaUpload): NostrEvent
 };
 
 export const tag_classified_location = (opts: NostrEventTagLocation): NostrEventTag => {
-    const tag = [`location`];
+    if (!opts.primary) return [];
+    const tag = [`location`, opts.primary];
     if (opts.city) tag.push(opts.city);
-    if (opts.region_code && !isNaN(parseInt(opts.region_code))) tag.push(opts.region_code);
-    else if (opts.region) tag.push(opts.region); //@todo 
-    if (opts.country_code) tag.push(opts.country_code);
+    if (opts.region) tag.push(opts.region);
+    if (opts.country) tag.push(opts.country);
     return tag;
 };
 
 export const tags_classified_location_geotags = (opts: NostrEventTagLocation): NostrEventTags => {
-    const { lat, lng: lon, city, region: regionName, country: countryName, country_code: countryCode } = opts;
-    return ngeotags({ lat, lon, city, regionName, countryName, countryCode } satisfies NostrGeotagsInputData, { geohash: true, gps: true, city: true, iso31662: true });
+    const { lat, lng: lon, city, region: regionName, country } = opts;
+    const country_raw = country || ``;
+    const countryCode = country_raw && country_raw?.length <= 3 ? country_raw : undefined;
+    const countryName = country_raw && country_raw?.length > 3 ? country_raw : undefined;
+    return ngeotags({ lat, lon, city, regionName, countryCode, countryName } satisfies NostrGeotagsInputData, { geohash: true, gps: true, city: true, iso31662: true });
 };
 
 export const tags_classified = (opts: INostrClassified): NostrEventTags => {
@@ -73,7 +76,7 @@ export const tags_classified = (opts: INostrClassified): NostrEventTags => {
     }
     if (opts.location) {
         tags.push(tag_classified_location(opts.location));
-        //tags.push(...tags_classified_location_geotags(opts.location));
+        tags.push(...tags_classified_location_geotags(opts.location));
     }
     if (opts.images) for (const image_tags of opts.images) tags.push(tag_classified_image(image_tags));
     return tags;
@@ -95,5 +98,18 @@ export const tags_job_request = (opts: INostrJobRequest): NostrEventTags => {
 
     const tags: NostrEventTags = [tag_i];
     tags.push(...(opts.tags || []))
+    return tags;
+};
+
+export const tags_reaction = (opts: INostrReaction): NostrEventTags => {
+    const { ref_event } = opts;
+    const ref_kind = ref_event.kind.toString();
+    const ref_author = ref_event.author;
+    const tags: NostrEventTags = [
+        [`e`, ref_event.id, ...ref_event.relays || ``],
+        [`p`, ref_author],
+        [`k`, ref_kind],
+    ];
+    if (ref_event.d_tag) tags.push([`a`, `${ref_kind}:${ref_author}:${ref_event.d_tag}`, ...ref_event.relays || ``])
     return tags;
 };

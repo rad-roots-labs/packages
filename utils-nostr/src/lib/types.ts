@@ -117,14 +117,12 @@ export type NostrEventTagListing = {
 };
 
 export type NostrEventTagLocation = {
+    primary: string;
     city?: string;
     region?: string;
-    region_code?: string;
     country?: string;
-    country_code?: string;
     lat?: number;
     lng?: number;
-    geohash: string;
 };
 
 export type NostrEventTagMediaUpload = {
@@ -139,4 +137,15 @@ export type NostrEventTagClient = {
     name: string;
     pubkey: string;
     relay: string;
+};
+
+export type INostrReaction = {
+    ref_event: {
+        id: string;
+        kind: number;
+        author: string;
+        relays?: string[];
+        d_tag?: string;
+    },
+    content: string;
 };
