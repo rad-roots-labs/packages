@@ -23,12 +23,12 @@ export class NostrSyncService implements INostrSyncService {
 
     public metadata = async (opts: INostrSyncServiceMetadata): Promise<NDKEvent | ErrorMessage<string>> => {
         try {
-            const { $ndk, $ndk_user } = this.config();
-            const { metadata } = opts;
+            const { $ndk: ndk, $ndk_user: ndk_user } = this.config();
+            const { metadata: data } = opts;
             const ev = await ndk_event_metadata({
-                $ndk,
-                $ndk_user,
-                metadata,
+                ndk,
+                ndk_user,
+                data,
             });
             if (ev) return ev;
             return err_msg(`error.nostr.sync.metadata.missing_event`);
