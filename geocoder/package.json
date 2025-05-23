@@ -27,7 +27,7 @@
         "access": "public"
     },
     "dependencies": {
-        "@radroots/util": "workspace:*",
+        "@radroots/util": "*",
         "sql.js": "1.12.0"
     }
 }
