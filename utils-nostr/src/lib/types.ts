@@ -1,3 +1,4 @@
+import { NostrEventReferenced } from "$root";
 import { ListingOrder } from "@radroots/radroots-common-bindings";
 import { type EventTemplate as NostrToolsEventTemplate } from "nostr-tools";
 
@@ -14,10 +15,14 @@ export type INostrMetadata = {
     bot?: boolean;
 };
 
-export type INostrFollow = {
+export type INostrFollowList = {
     public_key: string;
     relay_url?: string;
     contact_name?: string;
+};
+
+export type INostrFollow = {
+    list: INostrFollowList[]
 };
 
 export type NostrEventTagQuantity = {
@@ -140,12 +145,12 @@ export type NostrEventTagClient = {
 };
 
 export type INostrReaction = {
-    ref_event: {
-        id: string;
-        kind: number;
-        author: string;
-        relays?: string[];
-        d_tag?: string;
-    },
+    ref_event: NostrEventReferenced;
+    content: string;
+};
+
+export type INostrComment = {
+    root_event: NostrEventReferenced;
+    ref_event?: NostrEventReferenced;
     content: string;
 };

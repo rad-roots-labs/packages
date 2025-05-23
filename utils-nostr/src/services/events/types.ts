@@ -19,6 +19,6 @@ export type INostrEventService = {
     nostr_event_verify: (event: NostrToolsEvent) => boolean;
     nevent_encode: (opts: INostrEventServiceNeventEncode) => string;
     metadata: (ndk: NDK, opts: INostrMetadata) => Promise<INostrEventServiceEventResolve>;
-    follows: (ndk: NDK, opts: INostrFollow[]) => Promise<INostrEventServiceEventResolve>;
+    follows: (ndk: NDK, opts: INostrFollow) => Promise<INostrEventServiceEventResolve>;
     classified: (ndk: NDK, opts: INostrClassified) => Promise<INostrEventServiceEventResolve>;
 };

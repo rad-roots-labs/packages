@@ -40,12 +40,12 @@ export class NostrEventService implements INostrEventService {
         return lib_nostr_nevent_encode(opts);
     };
 
-    public metadata = async ($ndk: NDK, opts: INostrMetadata): Promise<INostrEventServiceEventResolve> => {
-        const $ndk_user = await this.resolve_ndk_user($ndk);
-        if (`err` in $ndk_user) return $ndk_user;
+    public metadata = async (ndk: NDK, opts: INostrMetadata): Promise<INostrEventServiceEventResolve> => {
+        const ndk_user = await this.resolve_ndk_user(ndk);
+        if (`err` in ndk_user) return ndk_user;
         const ev = await ndk_event({
-            $ndk,
-            $ndk_user,
+            ndk,
+            ndk_user,
             basis: {
                 kind: NDKKind.Metadata,
                 content: JSON.stringify(opts),
@@ -54,24 +54,24 @@ export class NostrEventService implements INostrEventService {
         return this.resolve_ndk_event(ev);
     }
 
-    public follows = async ($ndk: NDK, list: INostrFollow[]): Promise<INostrEventServiceEventResolve> => {
-        const $ndk_user = await this.resolve_ndk_user($ndk);
-        if (`err` in $ndk_user) return $ndk_user;
+    public follows = async (ndk: NDK, data: INostrFollow): Promise<INostrEventServiceEventResolve> => {
+        const ndk_user = await this.resolve_ndk_user(ndk);
+        if (`err` in ndk_user) return ndk_user;
         const ev = await ndk_event_follows({
-            $ndk,
-            $ndk_user,
-            list
+            ndk,
+            ndk_user,
+            data
         });
         return this.resolve_ndk_event(ev);
     }
 
-    public classified = async ($ndk: NDK, classified: INostrClassified): Promise<INostrEventServiceEventResolve> => {
-        const $ndk_user = await this.resolve_ndk_user($ndk);
-        if (`err` in $ndk_user) return $ndk_user;
+    public classified = async (ndk: NDK, data: INostrClassified): Promise<INostrEventServiceEventResolve> => {
+        const ndk_user = await this.resolve_ndk_user(ndk);
+        if (`err` in ndk_user) return ndk_user;
         const ev = await ndk_event_classified({
-            $ndk,
-            $ndk_user,
-            classified
+            ndk,
+            ndk_user,
+            data
         });
         return this.resolve_ndk_event(ev);
     }

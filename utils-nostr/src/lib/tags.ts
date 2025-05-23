@@ -1,4 +1,4 @@
-import { INostrClassified, INostrJobRequest, INostrReaction, NostrEventTagClient, NostrEventTagLocation, NostrEventTagMediaUpload, NostrEventTagPrice, NostrEventTagPriceDiscount, NostrEventTagQuantity, type INostrFollow, type NostrEventTag, type NostrEventTags } from "$root";
+import { INostrClassified, INostrComment, INostrFollowList, INostrJobRequest, INostrReaction, NostrEventTagClient, NostrEventTagLocation, NostrEventTagMediaUpload, NostrEventTagPrice, NostrEventTagPriceDiscount, NostrEventTagQuantity, type NostrEventTag, type NostrEventTags } from "$root";
 import ngeotags, { type InputData as NostrGeotagsInputData } from "nostr-geotags";
 
 export const tag_client = (opts: NostrEventTagClient, d_tag?: string): NostrEventTag => {
@@ -8,7 +8,7 @@ export const tag_client = (opts: NostrEventTagClient, d_tag?: string): NostrEven
     return tag;
 };
 
-export const tags_follow_list = (list: INostrFollow[]): NostrEventTags => {
+export const tags_follow_list = (list: INostrFollowList[]): NostrEventTags => {
     return list.map(({ public_key, relay_url, contact_name }) => {
         const entry = [`p`, public_key];
         if (relay_url) entry.push(relay_url);
@@ -111,5 +111,40 @@ export const tags_reaction = (opts: INostrReaction): NostrEventTags => {
         [`k`, ref_kind],
     ];
     if (ref_event.d_tag) tags.push([`a`, `${ref_kind}:${ref_author}:${ref_event.d_tag}`, ...ref_event.relays || ``])
+    return tags;
+};
+
+export const tags_comment = (opts: INostrComment): NostrEventTags => {
+    const { root_event, ref_event } = opts;
+
+    const root = {
+        kind: root_event.kind.toString(),
+        author: root_event.author,
+        id: root_event.id,
+        d_tag: root_event.d_tag,
+        relays: root_event.relays || [],
+    };
+
+    const parent = (ref_event && ref_event.id)
+        ? {
+            kind: ref_event.kind.toString(),
+            author: ref_event.author,
+            id: ref_event.id,
+            d_tag: ref_event.d_tag,
+            relays: ref_event.relays || [],
+        }
+        : root;
+
+    const tags: NostrEventTags = [
+        ["E", root.id, ...root.relays],
+        ["P", root.author],
+        ["K", root.kind],
+        ...(root.d_tag ? [["A", `${root.kind}:${root.author}:${root.d_tag}`, ...root.relays]] : []),
+        ["e", parent.id, ...parent.relays],
+        ["p", parent.author],
+        ["k", parent.kind],
+        ...(parent.d_tag ? [["a", `${parent.kind}:${parent.author}:${parent.d_tag}`, ...parent.relays]] : []),
+    ];
+
     return tags;
 };
