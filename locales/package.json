@@ -1,29 +1,33 @@
 {
-  "name": "@radroots/locales",
-  "version": "0.0.0",
-  "private": true,
-  "license": "GPLv3",
-  "type": "module",
-  "main": "dist/index.js",
-  "module": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "exports": {
-    ".": {
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
+    "name": "@radroots/locales",
+    "version": "0.0.1",
+    "private": true,
+    "license": "GPLv3",
+    "type": "module",
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "files": [
+        "dist"
+    ],
+    "exports": {
+        ".": {
+            "import": "./dist/index.js",
+            "types": "./dist/index.d.ts"
+        }
+    },
+    "scripts": {
+        "prebuild": "npm run clean",
+        "build": "tsc",
+        "clean": "rimraf dist && rimraf tsconfig.tsbuildinfo",
+        "lint": "eslint 'src/**/*.{ts,tsx}'",
+        "format": "prettier --write \"src/**/*.{ts,tsx}\"",
+        "test": "jest"
+    },
+    "devDependencies": {
+        "@types/node": "^22.15.3",
+        "typescript": "5.8.2"
+    },
+    "publishConfig": {
+        "access": "public"
     }
-  },
-  "scripts": {
-    "build": "tsup",
-    "dev": "tsup --watch",
-    "watch": "tsc -w"
-  },
-  "devDependencies": {
-    "@types/node": "^22.13.1",
-    "tsup": "^6.2.3",
-    "typescript": "^5.3.3"
-  },
-  "publishConfig": {
-    "access": "public"
-  }
 }

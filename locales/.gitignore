@@ -45,3 +45,4 @@ notes*.txt
 notes*.md
 git-diff.txt
 justfile
+*.tsbuildinfo*

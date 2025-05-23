@@ -1,4 +1,5 @@
 {
+    "by_*": "By {{value}}",
     "*_information": "{{value}} information",
     "*_name": "{{value}} name",
     "*_price": "{{value}} price",
