@@ -1,6 +1,7 @@
 import type { GeometryCardinalDirection } from "$root";
 
 export type GlyphKey = |
+    string |
     `chat-text` |
     `eye` |
     `export` |
@@ -127,4 +128,4 @@ export type GlyphKey = |
     `caret-up-down`;
 
 export type GlyphKeyCurrency = `dollar` | `eur`;
-export type GlyphWeight = `bold` | `fill`
+export type GlyphWeight = `bold` | `fill` | `light`;
