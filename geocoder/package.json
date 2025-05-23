@@ -21,7 +21,7 @@
     "devDependencies": {
         "@types/sql.js": "^1.4.9",
         "tsup": "^6.2.3",
-        "typescript": "^5.3.3"
+        "typescript": "5.8.3"
     },
     "publishConfig": {
         "access": "public"
