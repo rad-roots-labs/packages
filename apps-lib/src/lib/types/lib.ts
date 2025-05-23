@@ -22,3 +22,5 @@ export type LocalCallbackImgBin = CallbackPromiseFull<string, Uint8Array | undef
 export type LocalCallbackPhotosAdd = CallbackPromiseResult<string>;
 export type LocalCallbackPhotosAddMultiple = CallbackPromiseResult<string[]>;
 export type LocalCallbackPhotosUpload = CallbackPromiseFull<{ url: string, path: string }, MediaImageUploadResult | undefined>;
+
+export type MaplibreMap = maplibregl.Map;
