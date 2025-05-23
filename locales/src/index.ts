@@ -3,13 +3,14 @@ import iso639_1 from "./data/iso639_1.json" assert { type: "json" };
 import locales from "./data/locales.json" assert { type: "json" };
 export { iso3166_2, iso639_1, locales };
 
-export const locales_default = [`en`] as const;
+export const locales_default = [`en`, `es`] as const;
 export type Locales = typeof locales_default[number];
 export const locales_set = new Set<string>(locales_default);
 
 export const get_locales_undef = (val?: string): Locales | undefined => {
     switch (val) {
         case `en`:
+        case `es`:
             return val;
         default:
             return undefined;
