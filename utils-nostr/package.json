@@ -1,5 +1,5 @@
 {
-    "name": "@radroots/nostr-util",
+    "name": "@radroots/utils-nostr",
     "version": "0.0.0",
     "private": true,
     "type": "module",
@@ -30,7 +30,6 @@
         "@noble/hashes": "^1.4.0",
         "@nostr-dev-kit/ndk": "^2.11.0",
         "@radroots/radroots-common-bindings": "*",
-        "@radroots/util": "*",
         "nostr-geotags": "*",
         "nostr-tools": "^2.10.4",
         "uuid": "^10.0.0"
