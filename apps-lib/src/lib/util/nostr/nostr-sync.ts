@@ -1,6 +1,6 @@
 import { get_store, handle_err, ndk_user, nostr_sync, nostr_sync_attempts, nostr_sync_attempts_max, nostr_sync_prevent, nostr_sync_stop } from "$root";
-import type { INostrMetadata } from "@radroots/nostr-util";
 import { throw_err, type CallbackPromiseFull, type CallbackPromiseGeneric, type I18nTranslateFunction } from "@radroots/util";
+import type { INostrMetadata } from "@radroots/utils-nostr";
 
 export const nostr_sync_retry_handler = async (callback: () => Promise<any>) => {
     let current_count = 0;

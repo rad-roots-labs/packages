@@ -1,8 +1,8 @@
 import { get_store, handle_err, ndk, ndk_user } from "$root";
 import type { NDKEvent, NDKUser } from "@nostr-dev-kit/ndk";
 import type NDKSvelte from "@nostr-dev-kit/ndk-svelte";
-import { ndk_event_metadata, type INostrMetadata } from "@radroots/nostr-util";
 import { err_msg, type ErrorMessage } from "@radroots/util";
+import { ndk_event_metadata, type INostrMetadata } from "@radroots/utils-nostr";
 
 export type INostrSyncServiceMetadata = {
     metadata: INostrMetadata;

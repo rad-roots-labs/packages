@@ -1,6 +1,6 @@
 import { get_store, handle_err, ndk_user, nostr_poll_relays_attempts, nostr_poll_relays_attempts_max, nostr_poll_relays_stop, nostr_relays_connected } from "$root";
-import { lib_nostr_relay_build_information_document, type NostrRelayInformationDocumentFields } from "@radroots/nostr-util";
 import { type CallbackPromiseFull, type CallbackPromiseGeneric, type ErrorMessage, type I18nTranslateFunction, type IHttpResponse } from "@radroots/util";
+import { lib_nostr_relay_build_information_document, type NostrRelayInformationDocumentFields } from "@radroots/utils-nostr";
 
 export const nostr_poll_relays_retry_handler = async (callback: () => Promise<any>) => {
     let current_count = 0;
