@@ -1,1 +1,0 @@
-export const list_defined = (i: any): boolean => typeof i !== `undefined`;

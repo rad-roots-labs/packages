@@ -1,12 +1,4 @@
-export type IErrorCatchCallback = {
-    name: string;
-    message: string;
-    stack: string;
-    url: string;
-    func: string;
-};
-
-export type ErrorMessage<T extends string> = { err: T };
+import { ErrorMessage } from "../types/lib.js";
 
 export const err_msg = <T extends string>(err: T): ErrorMessage<T> => {
     return { err };
