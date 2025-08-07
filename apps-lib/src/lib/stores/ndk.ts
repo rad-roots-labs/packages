@@ -9,13 +9,18 @@ if (!NDK_CACHE_NAME) throw new Error('Error: VITE_PUBLIC_NDK_CACHE_NAME is requi
 const NDK_CLIENT_NAME = import.meta.env.VITE_PUBLIC_NDK_CLIENT_NAME;
 if (!NDK_CLIENT_NAME) throw new Error('Error: VITE_PUBLIC_NDK_CLIENT_NAME is required');
 
-let cacheAdapter: NDKCacheAdapter | undefined;
-if (typeof window !== `undefined`) cacheAdapter = new NDKCacheAdapterDexie({ dbName: NDK_CACHE_NAME });
+const RADROOTS_MARKET_RELAY_URL = import.meta.env.VITE_PUBLIC_RADROOTS_MARKET_RELAY_URL
+if (!RADROOTS_MARKET_RELAY_URL) throw new Error('Error: VITE_PUBLIC_RADROOTS_MARKET_RELAY_URL is required');
 
-const ndk_svelte = new NDKSvelte({
-  cacheAdapter,
-  clientName: NDK_CLIENT_NAME,
-});
+let cache_adapter: NDKCacheAdapter | undefined;
+if (typeof window !== `undefined`) cache_adapter = new NDKCacheAdapterDexie({ dbName: NDK_CACHE_NAME });
 
-export const ndk = writable<NDKSvelte>(ndk_svelte);
+let cache_adapter_global: NDKCacheAdapter | undefined;
+if (typeof window !== `undefined`) cache_adapter_global = new NDKCacheAdapterDexie({ dbName: `${NDK_CACHE_NAME}-global` });
+
+const _ndk = new NDKSvelte({ cacheAdapter: cache_adapter, clientName: NDK_CLIENT_NAME, explicitRelayUrls: [RADROOTS_MARKET_RELAY_URL], autoConnectUserRelays: true, autoFetchUserMutelist: true });
+export const ndk = writable<NDKSvelte>(_ndk);
 export const ndk_user = writable<NDKUser>();
+
+const _ndk_global = new NDKSvelte({ cacheAdapter: cache_adapter_global, clientName: NDK_CLIENT_NAME, autoConnectUserRelays: true, autoFetchUserMutelist: true });
+export const ndk_global = writable<NDKSvelte>(_ndk_global);
