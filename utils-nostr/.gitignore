@@ -43,5 +43,8 @@ vite.config.ts.timestamp-*
 .vscode
 notes*.txt
 notes*.md
-git-diff.txt
+notes*.json
+git-diff*.txt
+prompt*.txt
+tree*.txt
 justfile
