@@ -2,6 +2,7 @@
     "name": "@radroots/utils",
     "version": "0.0.1",
     "private": true,
+    "license": "GPLv3",
     "type": "module",
     "main": "./dist/cjs/index.cjs",
     "module": "./dist/esm/index.js",
@@ -18,7 +19,7 @@
         "build:cjs": "tsc -p tsconfig.cjs.json",
         "build": "npm run clean && npm run build:esm && npm run build:cjs",
         "prebuild": "npm run clean",
-        "clean": "rimraf dist && rimraf tsconfig.tsbuildinfo",
+        "clean": "rimraf dist",
         "dev": "npm run watch",
         "watch": "tsc -w"
     },
