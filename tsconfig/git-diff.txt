@@ -1,0 +1,183 @@
+Listing changes in the repository:
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	deleted:    base.json
+	deleted:    node.json
+	modified:   package.json
+	deleted:    tauri-plugin.json
+	new file:   tsconfig.cjs.json
+	new file:   tsconfig.esm.json
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	git-diff.txt
+
+
+Detailed differences (unstaged changes):
+
+Staged changes (ready to be committed):
+diff --git a/base.json b/base.json
+deleted file mode 100644
+index ad0240f..0000000
+--- a/base.json
++++ /dev/null
+@@ -1,25 +0,0 @@
+-{
+-    "$schema": "https://json.schemastore.org/tsconfig",
+-    "display": "Default",
+-    "compilerOptions": {
+-      "composite": false,
+-      "declaration": true,
+-      "declarationMap": true,
+-      "esModuleInterop": true,
+-      "forceConsistentCasingInFileNames": true,
+-      "allowImportingTsExtensions": true,
+-      "inlineSources": false,
+-      "isolatedModules": true,
+-      "module": "ESNext",
+-      "moduleResolution": "Bundler",
+-      "noUnusedLocals": false,
+-      "noUnusedParameters": false,
+-      "preserveWatchOutput": true,
+-      "skipLibCheck": true,
+-      "strict": true,
+-      "noEmit": true,
+-      "strictNullChecks": true
+-    },
+-    "exclude": ["node_modules"]
+-  }
+-  
+\ No newline at end of file
+diff --git a/node.json b/node.json
+deleted file mode 100644
+index 1ba26f1..0000000
+--- a/node.json
++++ /dev/null
+@@ -1,24 +0,0 @@
+-{
+-    "$schema": "https://json.schemastore.org/tsconfig",
+-    "display": "Default",
+-    "compilerOptions": {
+-        "target": "ESNext",
+-        "module": "ESNext",
+-        "composite": false,
+-        "declaration": true,
+-        "declarationMap": true,
+-        "esModuleInterop": true,
+-        "forceConsistentCasingInFileNames": true,
+-        "inlineSources": false,
+-        "isolatedModules": true,
+-        "moduleResolution": "node",
+-        "noUnusedLocals": false,
+-        "noUnusedParameters": false,
+-        "preserveWatchOutput": true,
+-        "skipLibCheck": true,
+-        "strict": true
+-    },
+-    "exclude": [
+-        "node_modules"
+-    ]
+-}
+\ No newline at end of file
+diff --git a/package.json b/package.json
+index 6f2c3ab..9cf6e74 100644
+--- a/package.json
++++ b/package.json
+@@ -3,9 +3,6 @@
+     "version": "0.0.0",
+     "private": true,
+     "license": "GPLv3",
+-    "files": [
+-        "base.json"
+-    ],
+     "publishConfig": {
+         "access": "public"
+     }
+diff --git a/tauri-plugin.json b/tauri-plugin.json
+deleted file mode 100644
+index e39492d..0000000
+--- a/tauri-plugin.json
++++ /dev/null
+@@ -1,27 +0,0 @@
+-{
+-    "compilerOptions": {
+-        "pretty": true,
+-        "module": "commonjs",
+-        "target": "ES2022",
+-        "resolveJsonModule": true,
+-        "types": [],
+-        "incremental": true,
+-        "inlineSourceMap": true,
+-        "inlineSources": true,
+-        "allowSyntheticDefaultImports": true,
+-        "strict": true,
+-        "noUncheckedIndexedAccess": true,
+-        "noFallthroughCasesInSwitch": true,
+-        "noUnusedLocals": true,
+-        "noUnusedParameters": true,
+-        "noImplicitReturns": true,
+-        "esModuleInterop": true,
+-        "plugins": [
+-            {
+-                "transform": "typia/lib/transform"
+-            }
+-        ],
+-        "strictNullChecks": true,
+-        "skipLibCheck": true
+-    }
+-}
+\ No newline at end of file
+diff --git a/tsconfig.cjs.json b/tsconfig.cjs.json
+new file mode 100644
+index 0000000..487a477
+--- /dev/null
++++ b/tsconfig.cjs.json
+@@ -0,0 +1,6 @@
++{
++  "extends": "./tsconfig.esm.json",
++  "compilerOptions": {
++    "module": "CommonJS"
++  }
++}
+diff --git a/tsconfig.esm.json b/tsconfig.esm.json
+new file mode 100644
+index 0000000..c80cd72
+--- /dev/null
++++ b/tsconfig.esm.json
+@@ -0,0 +1,33 @@
++{
++  "compilerOptions": {
++    "target": "ES2022",
++    "module": "ESNext",
++    "lib": ["ES2022"],
++    "moduleResolution": "node",
++    "moduleDetection": "force",
++    "declaration": true,
++    "declarationMap": true,
++    "esModuleInterop": true,
++    "resolveJsonModule": true,
++    "strict": true,
++    "sourceMap": true,
++    "skipLibCheck": true,
++    "experimentalDecorators": true,
++    "emitDecoratorMetadata": false,
++    "allowSyntheticDefaultImports": true,
++    "useDefineForClassFields": true,
++    "noImplicitAny": true,
++    "noImplicitThis": true,
++    "strictNullChecks": true,
++    "strictFunctionTypes": true,
++    "strictBindCallApply": true,
++    "strictPropertyInitialization": true,
++    "strictBuiltinIteratorReturn": true,
++    "alwaysStrict": true,
++    "useUnknownInCatchVariables": true,
++    "incremental": false,
++    "composite": false
++  },
++  "include": ["src"],
++  "exclude": ["node_modules", "dist", "**/dist"]
++}
