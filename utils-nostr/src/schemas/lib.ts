@@ -109,3 +109,17 @@ export const nostr_event_listing_schema = z.object({
     images: z.array(nostr_tag_image_schema).optional(),
     client: nostr_tag_client_schema.optional()
 });
+
+export const nostr_event_referenced_schema = z.object({
+    id: z.string().regex(/^[0-9a-f]{64}$/i, "expected 64-char hex id"),
+    kind: z.number().int().nonnegative(),
+    author: z.string().regex(/^[0-9a-f]{64}$/i, "expected 64-char hex pubkey"),
+    relays: z.array(z.url()).nonempty().optional(),
+    d_tag: z.string().min(1).optional(),
+});
+
+export const nostr_event_comment_schema = z.object({
+    root_event: nostr_event_referenced_schema,
+    ref_event: nostr_event_referenced_schema.optional(),
+    content: z.string().min(1),
+});

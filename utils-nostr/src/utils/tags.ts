@@ -1,5 +1,5 @@
 import ngeotags, { type InputData as NostrGeotagsInputData } from "nostr-geotags";
-import { NostrEventListing, NostrEventTag, NostrEventTagClient, NostrEventTagImage, NostrEventTagLocation, NostrEventTagPrice, NostrEventTagPriceDiscount, NostrEventTagQuantity, NostrEventTags } from "../types/lib.js";
+import { NostrEventComment, NostrEventListing, NostrEventTag, NostrEventTagClient, NostrEventTagImage, NostrEventTagLocation, NostrEventTagPrice, NostrEventTagPriceDiscount, NostrEventTagQuantity, NostrEventTags } from "../types/lib.js";
 
 export const tag_client = (opts: NostrEventTagClient, d_tag?: string): NostrEventTag => {
     const tag = [`client`, opts.name];
@@ -71,5 +71,40 @@ export const tags_classified = (opts: NostrEventListing): NostrEventTags => {
         tags.push(...tags_classified_location_geotags(opts.location));
     }
     if (opts.images) for (const image_tags of opts.images) tags.push(tag_classified_image(image_tags));
+    return tags;
+};
+
+export const tags_comment = (opts: NostrEventComment): NostrEventTags => {
+    const { root_event, ref_event } = opts;
+
+    const root = {
+        kind: root_event.kind.toString(),
+        author: root_event.author,
+        id: root_event.id,
+        d_tag: root_event.d_tag,
+        relays: root_event.relays || [],
+    };
+
+    const parent = (ref_event && ref_event.id)
+        ? {
+            kind: ref_event.kind.toString(),
+            author: ref_event.author,
+            id: ref_event.id,
+            d_tag: ref_event.d_tag,
+            relays: ref_event.relays || [],
+        }
+        : root;
+
+    const tags: NostrEventTags = [
+        ["E", root.id, ...root.relays],
+        ["P", root.author],
+        ["K", root.kind],
+        ...(root.d_tag ? [["A", `${root.kind}:${root.author}:${root.d_tag}`, ...root.relays]] : []),
+        ["e", parent.id, ...parent.relays],
+        ["p", parent.author],
+        ["k", parent.kind],
+        ...(parent.d_tag ? [["a", `${parent.kind}:${parent.author}:${parent.d_tag}`, ...parent.relays]] : []),
+    ];
+
     return tags;
 };
