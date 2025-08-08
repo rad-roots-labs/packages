@@ -1,5 +1,5 @@
 {
-  "extends": "@radroots/internal-tsconfig/tsconfig.cjs.json",
+  "extends": "@radroots/tsconfig/tsconfig.cjs.json",
   "compilerOptions": {
     "rootDir": "./src",
     "outDir": "dist/cjs"

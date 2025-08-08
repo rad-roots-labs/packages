@@ -1,5 +1,5 @@
 {
-  "extends": "@radroots/internal-tsconfig/tsconfig.esm.json",
+  "extends": "@radroots/tsconfig/tsconfig.esm.json",
   "compilerOptions": {
     "rootDir": "./src",
     "outDir": "dist/esm"
