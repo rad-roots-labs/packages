@@ -1,6 +1,7 @@
 import { NDKEvent } from "@nostr-dev-kit/ndk";
 import { NostrEventListing, type NostrEventMetadata } from "../types/lib.js";
-import { parse_nostr_listing_event, parse_nostr_metadata_event } from "./parse.js";
+import { parse_nostr_listing_event } from "./listing/parse.js";
+import { parse_nostr_metadata_event } from "./metadata/parse.js";
 
 export type NdkEventPayload =
     | { kind: 0; metadata: NostrEventMetadata; }

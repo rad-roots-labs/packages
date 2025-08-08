@@ -1,19 +1,7 @@
 import { NDKEvent } from "@nostr-dev-kit/ndk";
-import { nostr_event_listing_schema, nostr_event_metadata_schema, nostr_tag_listing_schema, nostr_tag_location_schema, nostr_tag_price_schema, nostr_tag_quantity_schema } from "../schemas/lib.js";
-import { NostrEventListing, type NostrEventMetadata } from "../types/lib.js";
-import { get_event_tag, get_event_tags } from "./lib.js";
-
-export const parse_nostr_metadata_event = (event: NDKEvent): NostrEventMetadata | undefined => {
-    if (!event || typeof event.content !== 'string' || event.kind !== 0) return undefined;
-
-    try {
-        const parsed = JSON.parse(event.content);
-        const result = nostr_event_metadata_schema.parse(parsed);
-        return result;
-    } catch {
-        return undefined;
-    }
-};
+import { nostr_event_listing_schema, nostr_tag_listing_schema, nostr_tag_location_schema, nostr_tag_price_schema, nostr_tag_quantity_schema } from "../../schemas/lib.js";
+import { NostrEventListing } from "../../types/lib.js";
+import { get_event_tag, get_event_tags } from "../lib.js";
 
 export const parse_nostr_listing_event = (event: NDKEvent): NostrEventListing | undefined => {
     if (!event || event.kind !== 30402 || !Array.isArray(event.tags)) return;
