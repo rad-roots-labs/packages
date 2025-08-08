@@ -15,7 +15,7 @@
         }
     },
     "scripts": {
-        "build:esm": "tsc -p tsconfig.esm.json",
+        "build:esm": "tsc -p tsconfig.json",
         "build:cjs": "tsc -p tsconfig.cjs.json",
         "build": "npm run clean && npm run build:esm && npm run build:cjs",
         "prebuild": "npm run clean",
@@ -24,6 +24,7 @@
         "watch": "tsc -w"
     },
     "devDependencies": {
+        "@radroots/tsconfig": "*",
         "@types/node": "^22.15.3",
         "typescript": "5.8.3"
     },
