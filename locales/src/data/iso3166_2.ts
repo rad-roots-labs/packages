@@ -1,4 +1,4 @@
-{
+export const iso3166_2 = {
     "AD": "Andorra",
     "AE": "United Arab Emirates",
     "AF": "Afghanistan",
@@ -248,4 +248,4 @@
     "ZA": "South Africa",
     "ZM": "Zambia",
     "ZW": "Zimbabwe"
-}
+} as const;

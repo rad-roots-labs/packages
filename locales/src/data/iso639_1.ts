@@ -1,4 +1,4 @@
-{
+export const iso639_1 = {
     "aa": "Afar",
     "ab": "Abkhaz",
     "ae": "Avestan",
@@ -180,4 +180,4 @@
     "za": "Zhuang",
     "zu": "isiZulu",
     "zz": "Zazaki"
-}
+} as const;

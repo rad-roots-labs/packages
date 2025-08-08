@@ -4,24 +4,24 @@
     "private": true,
     "license": "GPLv3",
     "type": "module",
-    "main": "./dist/index.js",
-    "types": "./dist/index.d.ts",
-    "files": [
-        "dist"
-    ],
+    "main": "./dist/cjs/index.cjs",
+    "module": "./dist/esm/index.js",
+    "types": "./dist/types/index.d.ts",
     "exports": {
         ".": {
-            "import": "./dist/index.js",
-            "types": "./dist/index.d.ts"
+            "types": "./dist/types/index.d.ts",
+            "import": "./dist/esm/index.js",
+            "require": "./dist/cjs/index.js"
         }
     },
     "scripts": {
+        "build:esm": "tsc -p tsconfig.esm.json",
+        "build:cjs": "tsc -p tsconfig.cjs.json",
+        "build": "npm run clean && npm run build:esm && npm run build:cjs",
         "prebuild": "npm run clean",
-        "build": "tsc",
-        "clean": "rimraf dist && rimraf tsconfig.tsbuildinfo",
-        "lint": "eslint 'src/**/*.{ts,tsx}'",
-        "format": "prettier --write \"src/**/*.{ts,tsx}\"",
-        "test": "jest"
+        "clean": "rimraf dist",
+        "dev": "npm run watch",
+        "watch": "tsc -w"
     },
     "devDependencies": {
         "@types/node": "^22.15.3",
