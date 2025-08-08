@@ -1,5 +1,5 @@
 import ngeotags, { type InputData as NostrGeotagsInputData } from "nostr-geotags";
-import { NostrEventComment, NostrEventListing, NostrEventTag, NostrEventTagClient, NostrEventTagImage, NostrEventTagLocation, NostrEventTagPrice, NostrEventTagPriceDiscount, NostrEventTagQuantity, NostrEventTags } from "../types/lib.js";
+import { NostrEventComment, NostrEventListing, NostrEventReaction, NostrEventTag, NostrEventTagClient, NostrEventTagImage, NostrEventTagLocation, NostrEventTagPrice, NostrEventTagPriceDiscount, NostrEventTagQuantity, NostrEventTags } from "../types/lib.js";
 
 export const tag_client = (opts: NostrEventTagClient, d_tag?: string): NostrEventTag => {
     const tag = [`client`, opts.name];
@@ -106,5 +106,18 @@ export const tags_comment = (opts: NostrEventComment): NostrEventTags => {
         ...(parent.d_tag ? [["a", `${parent.kind}:${parent.author}:${parent.d_tag}`, ...parent.relays]] : []),
     ];
 
+    return tags;
+};
+
+export const tags_reaction = (opts: NostrEventReaction): NostrEventTags => {
+    const { ref_event } = opts;
+    const ref_kind = ref_event.kind.toString();
+    const ref_author = ref_event.author;
+    const tags: NostrEventTags = [
+        [`e`, ref_event.id, ...ref_event.relays || ``],
+        [`p`, ref_author],
+        [`k`, ref_kind],
+    ];
+    if (ref_event.d_tag) tags.push([`a`, `${ref_kind}:${ref_author}:${ref_event.d_tag}`, ...ref_event.relays || ``])
     return tags;
 };

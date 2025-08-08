@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { nostr_event_comment_schema, nostr_event_listing_schema, nostr_event_metadata_schema, nostr_event_referenced_schema, nostr_tag_client_schema, nostr_tag_discount_schema, nostr_tag_image_schema, nostr_tag_listing_schema, nostr_tag_location_schema, nostr_tag_price_schema, nostr_tag_quantity_schema } from "../schemas/lib.js";
+import { nostr_event_comment_schema, nostr_event_listing_schema, nostr_event_metadata_schema, nostr_event_reaction_schema, nostr_event_referenced_schema, nostr_tag_client_schema, nostr_tag_discount_schema, nostr_tag_image_schema, nostr_tag_listing_schema, nostr_tag_location_schema, nostr_tag_price_schema, nostr_tag_quantity_schema } from "../schemas/lib.js";
 
 export type NostrEventMetadata = z.infer<typeof nostr_event_metadata_schema>;
 export type NostrEventListing = z.infer<typeof nostr_event_listing_schema>
@@ -12,6 +12,7 @@ export type NostrTagQuantity = z.infer<typeof nostr_tag_quantity_schema>
 export type NostrTagListing = z.infer<typeof nostr_tag_listing_schema>
 export type NostrEventComment = z.infer<typeof nostr_event_comment_schema>
 export type NostrEventReferenced = z.infer<typeof nostr_event_referenced_schema>
+export type NostrEventReaction = z.infer<typeof nostr_event_reaction_schema>
 
 export type NostrEventTag = string[];
 export type NostrEventTags = NostrEventTag[];

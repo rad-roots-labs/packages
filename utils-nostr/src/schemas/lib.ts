@@ -123,3 +123,8 @@ export const nostr_event_comment_schema = z.object({
     ref_event: nostr_event_referenced_schema.optional(),
     content: z.string().min(1),
 });
+
+export const nostr_event_reaction_schema = z.object({
+    ref_event: nostr_event_referenced_schema,
+    content: z.string().min(1),
+});
