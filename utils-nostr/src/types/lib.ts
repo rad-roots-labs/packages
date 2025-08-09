@@ -1,3 +1,4 @@
+import { type EventTemplate as NostrToolsEventTemplate } from "nostr-tools";
 import { z } from 'zod';
 import { nostr_event_comment_schema, nostr_event_follow_schema, nostr_event_listing_schema, nostr_event_metadata_schema, nostr_event_reaction_schema, nostr_event_referenced_schema, nostr_follow_list_schema, nostr_tag_client_schema, nostr_tag_discount_schema, nostr_tag_image_schema, nostr_tag_listing_schema, nostr_tag_location_schema, nostr_tag_price_schema, nostr_tag_quantity_schema } from "../schemas/lib.js";
 
@@ -89,4 +90,31 @@ export type NostrEventTagImage = {
         w: number;
         h: number;
     };
+};
+
+export type NostrRelayInformationDocument = {
+    id?: string;
+    name?: string;
+    description?: string;
+    pubkey?: string;
+    contact?: string;
+    supported_nips?: number[];
+    software?: string;
+    version?: string;
+    limitation_payment_required?: string;
+    limitation_restricted_writes?: boolean;
+}
+
+export type NostrRelayInformationDocumentFields = { [K in keyof NostrRelayInformationDocument]: string; };
+
+export type ILibNostrNeventEncode = {
+    id: string;
+    relays: string[];
+    author: string;
+    kind: number;
+};
+
+export type ILibNostrEventSign = {
+    secret_key: string;
+    event: NostrToolsEventTemplate;
 };
