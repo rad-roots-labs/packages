@@ -1,6 +1,6 @@
 import { NDKEvent, NDKKind } from "@nostr-dev-kit/ndk";
 import { NostrEventListing } from "../../types/lib.js";
-import { NDKEventFigure } from "../../types/ndk";
+import { NDKEventFigure } from "../../types/ndk.js";
 import { tags_classified } from "../../utils/tags.js";
 import { ndk_event } from "../lib.js";
 

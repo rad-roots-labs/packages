@@ -1,5 +1,5 @@
 import ngeotags, { type InputData as NostrGeotagsInputData } from "nostr-geotags";
-import { NostrEventComment, NostrEventListing, NostrEventReaction, NostrEventTag, NostrEventTagClient, NostrEventTagImage, NostrEventTagLocation, NostrEventTagPrice, NostrEventTagPriceDiscount, NostrEventTagQuantity, NostrEventTags } from "../types/lib.js";
+import { NostrEventComment, NostrEventListing, NostrEventReaction, NostrEventTag, NostrEventTagClient, NostrEventTagImage, NostrEventTagLocation, NostrEventTagPrice, NostrEventTagPriceDiscount, NostrEventTagQuantity, NostrEventTags, NostrFollowList } from "../types/lib.js";
 
 export const tag_client = (opts: NostrEventTagClient, d_tag?: string): NostrEventTag => {
     const tag = [`client`, opts.name];
@@ -120,4 +120,13 @@ export const tags_reaction = (opts: NostrEventReaction): NostrEventTags => {
     ];
     if (ref_event.d_tag) tags.push([`a`, `${ref_kind}:${ref_author}:${ref_event.d_tag}`, ...ref_event.relays || ``])
     return tags;
+};
+
+export const tags_follow_list = (list: NostrFollowList[]): NostrEventTags => {
+    return list.map(({ public_key, relay_url, contact_name }) => {
+        const entry = [`p`, public_key];
+        if (relay_url) entry.push(relay_url);
+        if (contact_name) entry.push(contact_name);
+        return entry;
+    });
 };

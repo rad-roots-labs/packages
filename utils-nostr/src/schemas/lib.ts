@@ -128,3 +128,13 @@ export const nostr_event_reaction_schema = z.object({
     ref_event: nostr_event_referenced_schema,
     content: z.string().min(1),
 });
+
+export const nostr_follow_list_schema = z.object({
+    public_key: z.string(),
+    relay_url: z.url().optional(),
+    contact_name: z.string().optional()
+});
+
+export const nostr_event_follow_schema = z.object({
+    list: z.array(nostr_follow_list_schema)
+});
