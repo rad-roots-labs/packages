@@ -1,6 +1,14 @@
 {
   "extends": "./tsconfig.esm.json",
   "compilerOptions": {
-    "module": "CommonJS"
-  }
+    "module": "CommonJS",
+    "moduleResolution": "nodenext",
+    "rootDir": "./src",
+    "outDir": "dist/cjs",
+    "declaration": false,
+    "declarationMap": false,
+    "emitDeclarationOnly": false,
+    "tsBuildInfoFile": "node_modules/.cache/tsc.cjs.tsbuildinfo"
+  },
+  "exclude": ["node_modules", "dist", "**/dist"]
 }
