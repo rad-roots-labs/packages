@@ -1,10 +1,13 @@
 import { NDKEvent } from "@nostr-dev-kit/ndk";
-import { NostrEventFollow } from "../../types/lib.js";
+import { type RadrootsFollow } from "@radroots/radroots-common-bindings";
 import { NDKEventFigure } from "../../types/ndk.js";
 import { tags_follow_list } from "../../utils/tags.js";
 import { ndk_event } from "../lib.js";
 
-export const ndk_event_follows = async (opts: NDKEventFigure<{ data: NostrEventFollow; }>): Promise<NDKEvent | undefined> => {
+export const KIND_RADROOTS_FOLLOW = 3;
+export type KindRadrootsFollow = typeof KIND_RADROOTS_FOLLOW;
+
+export const ndk_event_follows = async (opts: NDKEventFigure<{ data: RadrootsFollow; }>): Promise<NDKEvent | undefined> => {
     const { ndk, ndk_user, data } = opts;
     return await ndk_event({
         ndk,

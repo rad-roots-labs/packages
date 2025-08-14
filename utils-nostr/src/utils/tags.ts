@@ -1,5 +1,6 @@
+import { RadrootsComment, RadrootsFollowProfile, RadrootsListing, RadrootsReaction, } from "@radroots/radroots-common-bindings";
 import ngeotags, { type InputData as NostrGeotagsInputData } from "nostr-geotags";
-import { NostrEventComment, NostrEventListing, NostrEventReaction, NostrEventTag, NostrEventTagClient, NostrEventTagImage, NostrEventTagLocation, NostrEventTagPrice, NostrEventTagPriceDiscount, NostrEventTagQuantity, NostrEventTags, NostrFollowList } from "../types/lib.js";
+import { NostrEventTag, NostrEventTagClient, NostrEventTagImage, NostrEventTagLocation, NostrEventTagPrice, NostrEventTagPriceDiscount, NostrEventTagQuantity, NostrEventTags } from "../types/lib.js";
 
 export const tag_client = (opts: NostrEventTagClient, d_tag?: string): NostrEventTag => {
     const tag = [`client`, opts.name];
@@ -52,11 +53,10 @@ export const tag_classified_image = (opts: NostrEventTagImage): NostrEventTag =>
     return tag;
 };
 
-export const tags_classified = (opts: NostrEventListing): NostrEventTags => {
-    const { d_tag, listing, quantities, prices } = opts;
+export const tags_classified = (opts: RadrootsListing): NostrEventTags => {
+    const { d_tag, product, quantities, prices } = opts;
     const tags: NostrEventTags = [[`d`, d_tag]];
-    if (opts.client) tags.push(tag_client(opts.client, opts.d_tag));
-    for (const [k, v] of Object.entries(listing)) if (v) tags.push([k, v]);
+    for (const [k, v] of Object.entries(product)) if (v) tags.push([k, v]);
     for (const quantity of quantities) {
         tags.push(tag_classified_quantity(quantity));
     }
@@ -74,8 +74,8 @@ export const tags_classified = (opts: NostrEventListing): NostrEventTags => {
     return tags;
 };
 
-export const tags_comment = (opts: NostrEventComment): NostrEventTags => {
-    const { root_event, ref_event } = opts;
+export const tags_comment = (opts: RadrootsComment): NostrEventTags => {
+    const { root: root_event, parent: parent_event } = opts;
 
     const root = {
         kind: root_event.kind.toString(),
@@ -85,13 +85,13 @@ export const tags_comment = (opts: NostrEventComment): NostrEventTags => {
         relays: root_event.relays || [],
     };
 
-    const parent = (ref_event && ref_event.id)
+    const parent = (parent_event && parent_event.id)
         ? {
-            kind: ref_event.kind.toString(),
-            author: ref_event.author,
-            id: ref_event.id,
-            d_tag: ref_event.d_tag,
-            relays: ref_event.relays || [],
+            kind: parent_event.kind.toString(),
+            author: parent_event.author,
+            id: parent_event.id,
+            d_tag: parent_event.d_tag,
+            relays: parent_event.relays || [],
         }
         : root;
 
@@ -109,20 +109,20 @@ export const tags_comment = (opts: NostrEventComment): NostrEventTags => {
     return tags;
 };
 
-export const tags_reaction = (opts: NostrEventReaction): NostrEventTags => {
-    const { ref_event } = opts;
-    const ref_kind = ref_event.kind.toString();
-    const ref_author = ref_event.author;
+export const tags_reaction = (opts: RadrootsReaction): NostrEventTags => {
+    const { root } = opts;
+    const ref_kind = root.kind.toString();
+    const ref_author = root.author;
     const tags: NostrEventTags = [
-        [`e`, ref_event.id, ...ref_event.relays || ``],
+        [`e`, root.id, ...root.relays || ``],
         [`p`, ref_author],
         [`k`, ref_kind],
     ];
-    if (ref_event.d_tag) tags.push([`a`, `${ref_kind}:${ref_author}:${ref_event.d_tag}`, ...ref_event.relays || ``])
+    if (root.d_tag) tags.push([`a`, `${ref_kind}:${ref_author}:${root.d_tag}`, ...root.relays || ``])
     return tags;
 };
 
-export const tags_follow_list = (list: NostrFollowList[]): NostrEventTags => {
+export const tags_follow_list = (list: RadrootsFollowProfile[]): NostrEventTags => {
     return list.map(({ public_key, relay_url, contact_name }) => {
         const entry = [`p`, public_key];
         if (relay_url) entry.push(relay_url);

@@ -1,13 +1,20 @@
 import { schnorr } from "@noble/curves/secp256k1";
 import { hexToBytes } from "@noble/hashes/utils";
 import { NDKEvent, NDKTag } from "@nostr-dev-kit/ndk";
-import { time_now_ms, uuidv4 } from "@radroots/utils";
+import { time_now_ms, time_now_s, uuidv4 } from "@radroots/utils";
 import { finalizeEvent, getEventHash, nip19, type NostrEvent as NostrToolsEvent } from "nostr-tools";
 import { ILibNostrEventSign, ILibNostrNeventEncode, NostrEventTags } from "../types/lib.js";
 import { NDKEventFigure } from "../types/ndk.js";
+import { tag_client } from "../utils/tags.js";
+import { NdkEventBasis } from "./subscription.js";
 
 export const get_event_tag = (tags: NDKTag[], key: string): string => tags.find(t => t[0] === key)?.[1] ?? '';
 export const get_event_tags = (tags: NDKTag[], key: string): NDKTag[] => tags.filter(t => t[0] === key);
+
+export const parse_nostr_event_basis = <T extends number>(event: NDKEvent, kind: T): NdkEventBasis<T> | undefined => {
+    if (!event || typeof event.created_at !== 'number' || event.kind !== kind) return undefined;
+    return { id: event.id, published_at: event.created_at, author: event.pubkey, kind: event.kind as T };
+};
 
 export const lib_nostr_event_verify = (event: NostrToolsEvent): boolean => {
     const hash = getEventHash(event);
@@ -25,7 +32,7 @@ export const lib_nostr_event_sign_attest = (secret_key: string): NostrToolsEvent
         secret_key,
         event: {
             kind: 1,
-            created_at: Math.floor(Date.now() / 1000),
+            created_at: time_now_s(),
             tags: [],
             content: uuidv4(),
         },
@@ -66,6 +73,7 @@ export const ndk_event = async (opts: NDKEventFigure<{
             ['published_at', published_at],
         ];
         if (basis.tags?.length) tags.push(...basis.tags);
+        if (opts.client) tags.push(tag_client(opts.client, tags.find(i => i[0] === `d_tag`)?.[1] || undefined));
         const ev = new NDKEvent(ndk, {
             kind: basis.kind,
             pubkey: ndk_user.pubkey,

@@ -1,9 +1,12 @@
 import { NDKEvent } from "@nostr-dev-kit/ndk";
-import { NostrEventMetadata } from "../../types/lib.js";
+import { RadrootsProfile } from "@radroots/radroots-common-bindings";
 import { NDKEventFigure } from "../../types/ndk.js";
 import { ndk_event } from "../lib.js";
 
-export const ndk_event_metadata = async (opts: NDKEventFigure<{ data: NostrEventMetadata }>): Promise<NDKEvent | undefined> => {
+export const KIND_RADROOTS_PROFILE = 0;
+export type KindRadrootsProfile = typeof KIND_RADROOTS_PROFILE;
+
+export const ndk_event_profile = async (opts: NDKEventFigure<{ data: RadrootsProfile }>): Promise<NDKEvent | undefined> => {
     const { ndk, ndk_user, data } = opts;
     return await ndk_event({
         ndk,
