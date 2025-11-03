@@ -48,7 +48,7 @@ export const tag_listing_image = (opts: NostrEventTagImage): NostrEventTag => {
 export const tags_listing = (opts: RadrootsListing): NostrEventTags => {
     const { d_tag, product, quantities, prices } = opts;
     const tags: NostrEventTags = [[`d`, d_tag]];
-    for (const [k, v] of Object.entries(product)) if (v) tags.push([k, v]);
+    for (const [k, v] of Object.entries(product)) if (v) tags.push([k, String(v)]);
     for (const quantity of quantities) {
         tags.push(tag_listing_quantity(quantity));
     }

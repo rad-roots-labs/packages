@@ -32,6 +32,8 @@
         "typescript": "5.8.3"
     },
     "dependencies": {
+        "@radroots/events-bindings": "*",
+        "@radroots/trade-bindings": "*",
         "@radroots/utils": "*",
         "@noble/curves": "^1.6.0",
         "@noble/hashes": "^1.4.0",
