@@ -37,7 +37,6 @@
     "dependencies": {
         "@noble/curves": "^1.6.0",
         "@noble/hashes": "^1.4.0",
-        "@radroots/radroots-common-bindings": "*",
         "convert": "^5.5.1",
         "geohashing": "^2.0.1",
         "uuid": "^11.1.0",
