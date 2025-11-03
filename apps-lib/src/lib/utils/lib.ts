@@ -4,6 +4,8 @@ import { get } from "svelte/store";
 
 export const get_store = get;
 
+export const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
 export const trim_slashes = (path: string): string =>
     path.replace(/^\/+|\/+$/g, '');
 
@@ -39,3 +41,4 @@ export const get_system_theme = (): ThemeMode => {
 export const theme_set = (theme_key: string, color_mode: ThemeMode): void => {
     document.documentElement.setAttribute("data-theme", `${theme_key}_${color_mode}`);
 };
+export const fmt_cl = (classes?: string): string => `${classes || ``}`;

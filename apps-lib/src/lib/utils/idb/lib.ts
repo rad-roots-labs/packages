@@ -1,9 +1,8 @@
 import { browser } from '$app/environment';
-import { fmt_id } from '../lib';
+import { fmt_id } from '$lib';
 
 const IDB_NAME = import.meta.env.VITE_PUBLIC_IDB_NAME;
 if (!IDB_NAME) throw new Error('VITE_PUBLIC_IDB_NAME is required');
-
 
 let _kv: Keyva | null = null;
 export function get_idb(): Keyva {

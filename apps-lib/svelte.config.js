@@ -6,9 +6,6 @@ const config = {
 	preprocess: vitePreprocess(),
 	kit: {
 		adapter: adapter(),
-		alias: {
-			$root: './src/lib/index.js',
-		}
 	},
 };
 
