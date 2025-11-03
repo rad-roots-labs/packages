@@ -1,5 +1,5 @@
 import { NDKEvent } from "@nostr-dev-kit/ndk";
-import { type RadrootsProfile, radroots_profile_schema } from "@radroots/radroots-common-bindings";
+import { type RadrootsProfile, radroots_profile_schema } from "@radroots/events-bindings";
 import { parse_nostr_event_basis } from "../lib.js";
 import { NdkEventBasis } from "../subscription.js";
 import { KIND_RADROOTS_PROFILE, type KindRadrootsProfile } from "./lib.js";

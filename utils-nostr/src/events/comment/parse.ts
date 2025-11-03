@@ -1,5 +1,5 @@
 import { NDKEvent } from "@nostr-dev-kit/ndk";
-import { type RadrootsComment, radroots_comment_schema } from "@radroots/radroots-common-bindings";
+import { radroots_comment_schema, RadrootsComment } from "@radroots/events-bindings";
 import { parse_nostr_event_basis } from "../lib.js";
 import { NdkEventBasis } from "../subscription.js";
 import { KIND_RADROOTS_COMMENT, type KindRadrootsComment } from "./lib.js";

@@ -1,8 +1,8 @@
 import { NDKEvent } from "@nostr-dev-kit/ndk";
-import { type RadrootsFollow } from "@radroots/radroots-common-bindings";
+import { RadrootsFollow } from "@radroots/events-bindings";
 import { NDKEventFigure } from "../../types/ndk.js";
-import { tags_follow_list } from "../../utils/tags.js";
 import { ndk_event } from "../lib.js";
+import { tags_follow_list } from "./tags.js";
 
 export const KIND_RADROOTS_FOLLOW = 3;
 export type KindRadrootsFollow = typeof KIND_RADROOTS_FOLLOW;

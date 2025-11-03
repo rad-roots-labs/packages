@@ -12,20 +12,7 @@ export type NostrEventTagClient = {
     relay: string;
 };
 
-export type NostrEventTagQuantity = {
-    amt: string;
-    unit: string;
-    label?: string;
-};
-
-export type NostrEventTagPrice = {
-    amt: string;
-    currency: string;
-    qty_amt: string;
-    qty_unit: string;
-    qty_key: string;
-};
-
+/*
 export type NostrEventTagPriceDiscount = (
     {
         quantity: {
@@ -60,6 +47,7 @@ export type NostrEventTagPriceDiscount = (
         }
     }
 );
+*/
 
 export type NostrEventTagLocation = {
     primary: string;

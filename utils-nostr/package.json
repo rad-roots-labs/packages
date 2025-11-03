@@ -36,7 +36,6 @@
         "@noble/curves": "^1.6.0",
         "@noble/hashes": "^1.4.0",
         "@nostr-dev-kit/ndk": "2.14.33",
-        "@radroots/radroots-common-bindings": "*",
         "nostr-geotags": "*",
         "nostr-tools": "^2.10.4"
     }

@@ -1,5 +1,5 @@
 import { NDKEvent } from "@nostr-dev-kit/ndk";
-import { type RadrootsListing, radroots_listing_location_schema, radroots_listing_price_schema, radroots_listing_product_schema, radroots_listing_quantity_schema, radroots_listing_schema } from "@radroots/radroots-common-bindings";
+import { type RadrootsListing, radroots_listing_location_schema, radroots_listing_price_schema, radroots_listing_product_schema, radroots_listing_quantity_schema, radroots_listing_schema } from "@radroots/events-bindings";
 import { get_event_tag, get_event_tags, parse_nostr_event_basis } from "../lib.js";
 import { NdkEventBasis } from "../subscription.js";
 import { KIND_RADROOTS_LISTING, type KindRadrootsListing } from "./lib.js";

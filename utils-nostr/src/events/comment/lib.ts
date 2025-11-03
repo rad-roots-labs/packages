@@ -1,8 +1,8 @@
 import { NDKEvent, NDKKind } from "@nostr-dev-kit/ndk";
-import { type RadrootsComment, } from "@radroots/radroots-common-bindings";
+import { RadrootsComment } from "@radroots/events-bindings";
 import { NDKEventFigure } from "../../types/ndk.js";
-import { tags_comment } from "../../utils/tags.js";
 import { ndk_event } from "../lib.js";
+import { tags_comment } from "./tags.js";
 
 export const KIND_RADROOTS_COMMENT = 1111;
 export type KindRadrootsComment = typeof KIND_RADROOTS_COMMENT;
