@@ -1,20 +1,20 @@
 <script lang="ts">
-    import type { IGlyphI } from "$lib/types/components";
+    import { glyph_style_map } from "$lib/styles/glyphs";
+    import type { IGlyph } from "$lib/types/components";
     import { fmt_cl } from "$lib/utils/lib";
 
-    const styles = {
-        xs: `text-[16px]`,
-        sm: `text-[20px]`,
-        md: `text-[26px]`,
-        lg: `text-[32px]`,
-        xl: `text-[48px]`,
-        "2xl": "text-[64px]",
-    };
+    let { basis }: { basis: IGlyph } = $props();
 
-    let { basis }: { basis: IGlyphI } = $props();
+    const styles = $derived(
+        basis?.dim ? glyph_style_map.get(basis.dim) : glyph_style_map.get(`sm`),
+    );
+
+    const weight = $derived(basis.weight ? `-${basis.weight}` : `-bold`);
 </script>
 
-<i
-    class={`ph${!basis?.weight || basis?.weight === `regular` ? `` : `-${basis?.weight}`} ph-${basis.key} ${fmt_cl(basis.classes)} ${basis.size ? styles[basis.size] : ""}`}
+<div
+    id={basis.id || null}
+    class={`${fmt_cl(basis.classes)} flex flex-row text-[${styles?.gl_1}px] justify-center items-center`}
 >
-</i>
+    <i class={`ph${weight} ph-${basis.key}`}></i>
+</div>

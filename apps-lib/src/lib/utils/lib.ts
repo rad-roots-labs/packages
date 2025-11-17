@@ -1,8 +1,27 @@
 import { browser } from '$app/environment';
-import type { ThemeMode } from '$lib/types/lib';
+import { goto } from '$app/navigation';
+import { win_h, win_w } from '$lib/stores/app';
+import type { CallbackRoute, NavigationParamTuple, NavigationRouteParamKey, NavigationRouteParamTuple, } from '$lib/types/lib';
+import type { ThemeLayer, ThemeMode } from '@radroots/themes';
+import type { FilePath } from '@radroots/utils';
+import { getContext, setContext } from "svelte";
 import { get } from "svelte/store";
 
+export const symbols = {
+    bullet: '•',
+    dash: `—`,
+    up: `↑`,
+    down: `↓`,
+    percent: `%`
+};
+
 export const get_store = get;
+
+export const get_context = <M extends Record<string, any>, K extends keyof M>(key: K): M[K] =>
+    getContext(key as string) as M[K];
+
+export const set_context = <M extends Record<string, any>, K extends keyof M>(key: K, value: M[K]): void =>
+    setContext(key as string, value);
 
 export const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
@@ -27,6 +46,19 @@ export const fmt_id = (raw_id?: string): string => {
     return `*${prefix}${suffix}`;
 };
 
+export const view_effect = <T extends string>(view: T): void => {
+    if (!browser) return;
+    for (const el of document.querySelectorAll(`[data-view]`)) {
+        if (el.getAttribute(`data-view`) !== view) el.classList.add(`hidden`)
+        else el.classList.remove(`hidden`)
+    }
+};
+
+export const el_id = (id: string): HTMLElement | undefined => {
+    const el = document.getElementById(id);
+    return el ? el : undefined;
+};
+
 export const build_storage_key = (
     raw_id: string,
     base_prefix: string
@@ -42,3 +74,117 @@ export const theme_set = (theme_key: string, color_mode: ThemeMode): void => {
     document.documentElement.setAttribute("data-theme", `${theme_key}_${color_mode}`);
 };
 export const fmt_cl = (classes?: string): string => `${classes || ``}`;
+
+export const handle_err = async (e: unknown, fcall: string): Promise<void> => {
+    try {
+        console.log(`[handle_err] `, e, fcall)
+        /*return void await catch_err(e, fcall, async (opts) => {
+            console.log(`handle_err e `, e)
+            console.log(JSON.stringify(opts, null, 4), `handle_err opts`)
+        });*/
+    } catch (e) {
+        console.log(`(handle_err) `, e)
+    }
+};
+
+export const window_set = (): void => {
+    if (!browser) return;
+    win_h.set(window.innerHeight);
+    win_w.set(window.innerWidth);
+};
+
+export const parse_layer = (layer?: number, layer_default?: ThemeLayer): ThemeLayer => {
+    switch (layer) {
+        case 0:
+        case 1:
+        case 2:
+            return layer;
+        default:
+            return layer_default ? layer_default : 0;
+    };
+};
+
+export const value_constrain = (regex_charset: RegExp, value: string): string => {
+    return value
+        .split(``)
+        .filter((char) => regex_charset.test(char))
+        .join(``);
+};
+
+
+export const encode_query_params = <T extends string>(params_list: NavigationParamTuple<T>[] = []): string => {
+    let query = "";
+    for (const [k, v] of params_list) {
+        if (k && v) {
+            if (query) query += `&`;
+            query += `${k.trim()}=${encodeURIComponent(v.trim())}`;
+        }
+    }
+    return query ? `?${query}` : ``;
+};
+
+export const encode_route = <TRoute extends string, TParam extends string>(route: TRoute, params_list?: NavigationParamTuple<TParam>[]): string => {
+    const query = encode_query_params(params_list);
+    if (!query) return route;
+    return `${route === `/` ? `/` : route.replace(/\/+$/, ``)}${query}`;
+};
+
+export const debounce = <T extends (...args: any[]) => void>(
+    fn: T,
+    delay: number
+): T => {
+    let timeout: ReturnType<typeof setTimeout>;
+    return ((...args: any[]) => {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => fn(...args), delay);
+    }) as T;
+};
+
+export const create_router = <T extends string>() => {
+    const router = async (nav_route: T, params: NavigationRouteParamTuple[] = []): Promise<void> => {
+        try {
+            if (params.length) await goto(encode_route<T, NavigationRouteParamKey>(nav_route, params));
+            else await goto(nav_route);
+        } catch (e) {
+            handle_err(e, `route`);
+        };
+    };
+    return router;
+};
+
+export const get_locale = (locales: string[]): string => {
+    const { language: navigator_locale } = navigator;
+    let locale = `en`;
+    if (locales.some(i => i === navigator_locale.toLowerCase())) locale = navigator.language;
+    else if (locales.some(i => i === navigator_locale.slice(0, 2).toLowerCase())) locale = navigator_locale.slice(0, 2);
+    return locale.toLowerCase();
+};
+
+export const callback_route = async <T extends string>(callback_route: CallbackRoute<T>): Promise<void> => {
+    if (`route` in callback_route) {
+        if (typeof callback_route.route === `string`) return void await goto(callback_route.route);
+        else return void await goto(
+            encode_route<string, NavigationRouteParamKey>(
+                callback_route.route[0],
+                callback_route.route[1],
+            ),
+        );
+    }
+    return void await callback_route();
+};
+
+export const to_arr_buf = (u8: Uint8Array): ArrayBuffer => {
+    return u8.slice().buffer;
+};
+
+export const parse_file_path = (file_path: string): FilePath | undefined => {
+    const file_path_spl = file_path.split(`/`);
+    const file_path_file = file_path_spl[file_path_spl.length - 1] || ``;
+    const [file_name, mime_type] = file_path_file.split(`.`);
+    if (!file_name || !mime_type) return undefined;
+    return {
+        file_path,
+        file_name,
+        mime_type
+    };
+};
