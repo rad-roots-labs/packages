@@ -1,13 +1,14 @@
 {
-    "name": "@radroots/apps-lib-native",
+    "name": "@radroots/apps-lib-pwa",
     "version": "0.0.0",
     "private": true,
     "license": "GPLv3",
     "scripts": {
         "dev": "svelte-package -w",
-        "prebuild": "npm run check",
+        "prebuild": "npm run clean && npm run check",
         "build": "svelte-package",
         "preview": "vite preview",
+        "clean": "rimraf dist",
         "prepare": "svelte-kit sync || echo ''",
         "prepack": "svelte-kit sync && svelte-package && publint",
         "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
@@ -46,5 +47,24 @@
         "typescript": "5.8.3",
         "vite": "7.0.6"
     },
-    "dependencies": {}
+    "dependencies": {
+        "@radroots/locales": "*",
+        "@radroots/apps-lib": "*",
+        "@radroots/events-bindings": "*",
+        "@radroots/client": "*",
+        "@radroots/tangle-schema-bindings": "*",
+        "@radroots/themes": "*",
+        "@radroots/utils": "*",
+        "@radroots/utils-nostr": "*",
+        "@nostr-dev-kit/ndk": "2.14.33",
+        "@nostr-dev-kit/ndk-cache-dexie": "2.6.34",
+        "@nostr-dev-kit/ndk-svelte": "2.4.38",
+        "@sveltekit-i18n/base": "^1.3.7",
+        "@sveltekit-i18n/parser-icu": "^1.0.8",
+        "luxon": "^3.5.0",
+        "sveltekit-i18n": "^2.4.2",
+        "svelte-maplibre": "1.2.0",
+        "sveltekit-search-params": "^3.0.0",
+        "zod": "^4.0.5"
+    }
 }
