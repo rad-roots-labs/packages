@@ -1,41 +1,3 @@
-@theme {
-    --color-ly0: hsl(var(--ly0) / <alpha-value>);
-    --color-ly0-w: hsl(var(--ly0-w) / <alpha-value>);
-    --color-ly0-a: hsl(var(--ly0-a) / <alpha-value>);
-    --color-ly0-edge: hsl(var(--ly0-edge) / <alpha-value>);
-    --color-ly0-blur: hsl(var(--ly0-blur) / <alpha-value>);
-    --color-ly0-gl: hsl(var(--ly0-gl) / <alpha-value>);
-    --color-ly0-gl-a: hsl(var(--ly0-gl-a) / <alpha-value>);
-    --color-ly0-gl-pl: hsl(var(--ly0-gl-pl) / <alpha-value>);
-    --color-ly0-gl-hl: hsl(var(--ly0-gl-hl) / <alpha-value>);
-    --color-ly0-gl-hl-a: hsl(var(--ly0-gl-hl-a) / <alpha-value>);
-    --color-ly0-gl-shade: hsl(var(--ly0-gl-shade) / <alpha-value>);
-    --color-ly0-gl-label: hsl(var(--ly0-gl-label) / <alpha-value>);
-    --color-ly1: hsl(var(--ly1) / <alpha-value>);
-    --color-ly1-a: hsl(var(--ly1-a) / <alpha-value>);
-    --color-ly1-edge: hsl(var(--ly1-edge) / <alpha-value>);
-    --color-ly1-err: hsl(var(--ly1-err) / <alpha-value>);
-    --color-ly1-focus: hsl(var(--ly1-focus) / <alpha-value>);
-    --color-ly1-gl: hsl(var(--ly1-gl) / <alpha-value>);
-    --color-ly1-gl-a: hsl(var(--ly1-gl-a) / <alpha-value>);
-    --color-ly1-gl-d: hsl(var(--ly1-gl-d) / <alpha-value>);
-    --color-ly1-gl-pl: hsl(var(--ly1-gl-pl) / <alpha-value>);
-    --color-ly1-gl-hl: hsl(var(--ly1-gl-hl) / <alpha-value>);
-    --color-ly1-gl-hl-a: hsl(var(--ly1-gl-hl-a) / <alpha-value>);
-    --color-ly1-gl-shade: hsl(var(--ly1-gl-shade) / <alpha-value>);
-    --color-ly1-gl-label: hsl(var(--ly1-gl-label) / <alpha-value>);
-    --color-ly2: hsl(var(--ly2) / <alpha-value>);
-    --color-ly2-a: hsl(var(--ly2-a) / <alpha-value>);
-    --color-ly2-edge: hsl(var(--ly2-edge) / <alpha-value>);
-    --color-ly2-gl: hsl(var(--ly2-gl) / <alpha-value>);
-    --color-ly2-gl-a: hsl(var(--ly2-gl-a) / <alpha-value>);
-    --color-ly2-gl-d: hsl(var(--ly2-gl-d) / <alpha-value>);
-    --color-ly2-gl-pl: hsl(var(--ly2-gl-pl) / <alpha-value>);
-    --color-ly2-gl-hl: hsl(var(--ly2-gl-hl) / <alpha-value>);
-    --color-ly2-gl-hl-a: hsl(var(--ly2-gl-hl-a) / <alpha-value>);
-    --color-ly2-gl-shade: hsl(var(--ly2-gl-shade) / <alpha-value>);
-}
-
 @plugin "daisyui/theme" {
     name: "os_dark";
     default: false;
@@ -84,7 +46,7 @@
     prefersdark: false;
     color-scheme: light;
     --color-ly0: hsl(240, 24%, 96%);
-    --color-ly0-w: hsl(248, 248%, 250%);
+    --color-ly0-w: hsl(248, 17%, 98%);
     --color-ly0-a: hsl(240, 6%, 83%);
     --color-ly0-edge: hsl(0, 0%, 87%);
     --color-ly0-blur: hsl(179, 7%, 96%);
