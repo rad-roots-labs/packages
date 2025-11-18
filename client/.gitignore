@@ -1,36 +1,42 @@
-# dependencies
 node_modules
-.pnp
-.pnp.js
-
-# testing
-coverage
-
-# svelte
-.svelte-kit
-
-# misc
-.DS_Store
-*.pem
-
-# debug
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# local env files
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-
-# turbo
+dist
 .turbo
 
-.tmp*
-.vscode
+# Logs
+logs/
+*.log
+
+# Env
+.env
+.env.*
+!.env.example
+!.env.test
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Secrets
+*.pem
+*.crt
+*.key
+
+# Testing
+test*.json
+
+# Editors
+.vscode/
+.idea/
+*.iml
+
+# Notes
 notes*.txt
 notes*.md
+notes*.json
+tree*.txt
+diff*.txt
+prompt*.txt
+
+# Dev
+.local*
 justfile
-dist
-git-diff.txt

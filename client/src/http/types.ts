@@ -1,6 +1,6 @@
-import type { ErrorMessage, IHttpImageResponse, IHttpOpts, IHttpResponse } from "@radroots/util";
+import type { IHttpImageResponse, IHttpOpts, IHttpResponse, ResolveError } from "@radroots/utils";
 
 export type IClientHttp = {
-    fetch(opts: IHttpOpts): Promise<IHttpResponse | ErrorMessage<string>>;
-    fetch_image(url: string): Promise<IHttpImageResponse | ErrorMessage<string>>;
+    fetch(opts: IHttpOpts): Promise<ResolveError<IHttpResponse>>;
+    fetch_image(url: string): Promise<ResolveError<IHttpImageResponse>>;
 };

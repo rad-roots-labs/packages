@@ -1,28 +1,35 @@
 {
     "name": "@radroots/client",
-    "version": "0.0.0",
+    "version": "0.0.1",
     "private": true,
     "license": "GPLv3",
     "type": "module",
-    "module": "index.ts",
+    "main": "./dist/cjs/index.js",
+    "module": "./dist/esm/index.js",
+    "types": "./dist/types/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/types/index.d.ts",
+            "import": "./dist/esm/index.js",
+            "require": "./dist/cjs/index.js"
+        }
+    },
     "scripts": {
-        "build": "tsc",
-        "dev": "tsc -w"
+        "build:esm": "tsc -p tsconfig.esm.json",
+        "build:cjs": "tsc -p tsconfig.cjs.json",
+        "build": "npm run clean && npm run build:esm && npm run build:cjs",
+        "prebuild": "npm run clean",
+        "clean": "rimraf dist",
+        "dev": "npm run watch",
+        "watch": "tsc -w"
     },
     "dependencies": {
-        "@radroots/models": "workspace:*",
-        "@radroots/nostr-util": "workspace:*",
-        "@radroots/util": "workspace:*",
-        "@tauri-apps/api": "^2.5.0",
-        "@tauri-apps/plugin-dialog": "workspace:*",
-        "@tauri-apps/plugin-fs": "workspace:*",
-        "@tauri-apps/plugin-geolocation": "workspace:*",
-        "@tauri-apps/plugin-haptics": "workspace:*",
-        "@tauri-apps/plugin-http": "workspace:*",
-        "@tauri-apps/plugin-log": "workspace:*",
-        "@tauri-apps/plugin-notification": "workspace:*",
-        "@tauri-apps/plugin-os": "workspace:*",
-        "@tauri-apps/plugin-store": "workspace:*"
+        "@radroots/models": "*",
+        "@radroots/utils": "*",
+        "@radroots/utils-nostr": "*",
+        "idb": "^8.0.3",
+        "idb-keyval": "^6.2.1",
+        "sql.js": "^1.13.0"
     },
     "devDependencies": {
         "@types/debug": "^4.1.12",

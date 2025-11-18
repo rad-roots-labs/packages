@@ -1,17 +1,19 @@
-import type { FileHandle, FileInfo } from "@tauri-apps/plugin-fs";
+import { type ResolveError } from "@radroots/utils";
 
-export type IClientFsOpenResult = FileHandle;
+export type IClientFsOpenResult = { path: string }
 
-export type IClientFsFileInfo = FileInfo;
-
-export type IClientFsExistsResolve = boolean;
-export type IClientFsOpenResolve = IClientFsOpenResult;
-export type IClientFsReadBinResolve = Uint8Array;
-export type IClientFsInfoResolve = IClientFsFileInfo;
+export type IClientFsFileInfo = {
+    size: number
+    isFile: boolean
+    isDirectory: boolean
+    accessedAt?: number
+    modifiedAt?: number
+    createdAt?: number
+};
 
 export type IClientFs = {
-    exists(path: string): Promise<IClientFsExistsResolve>;
-    open(path: string): Promise<IClientFsOpenResolve>;
-    read_bin(path: string): Promise<IClientFsReadBinResolve>;
-    info(path: string): Promise<IClientFsInfoResolve>;
+    exists(path: string): Promise<ResolveError<boolean>>;
+    open(path: string): Promise<ResolveError<IClientFsOpenResult>>;
+    info(path: string): Promise<ResolveError<IClientFsFileInfo>>;
+    read_bin(path: string): Promise<ResolveError<Uint8Array>>;
 };

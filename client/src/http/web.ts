@@ -1,8 +1,7 @@
-import { err_msg, http_fetch_opts, lib_http_parse_headers, lib_http_parse_response, type ErrorMessage, type FieldRecord, type IHttpImageResponse, type IHttpOpts, type IHttpResponse } from '@radroots/util';
-import { fetch, type ClientOptions } from '@tauri-apps/plugin-http';
-import type { IClientHttp } from './types';
+import { handle_err, http_fetch_opts, lib_http_parse_headers, lib_http_parse_response, type FieldRecord, type IHttpOpts } from '@radroots/utils';
+import type { IClientHttp } from "./types.js";
 
-export class TauriClientHttp implements IClientHttp {
+export class WebHttp implements IClientHttp {
     private _headers: FieldRecord;
 
     constructor() {
@@ -16,28 +15,27 @@ export class TauriClientHttp implements IClientHttp {
     public async init(opts?: {
         app_version?: string;
         app_hash?: string;
-    }): Promise<void> {
+    }) {
         if (opts?.app_version) this._headers["User-Agent"] = `radroots/${opts.app_version}`;
         if (opts?.app_hash) this._headers["X-Radroots-Version"] = `radroots/${opts.app_hash}`;
     }
 
-    public async fetch(opts: IHttpOpts): Promise<IHttpResponse | ErrorMessage<string>> {
+    public async fetch(opts: IHttpOpts) {
         try {
             const { url, options } = http_fetch_opts(opts);
             const response = await fetch(url, options);
             return lib_http_parse_response(response);
         } catch (e) {
-            console.log(`e fetch`, e)
-            return err_msg(String(e));
+            return handle_err(e);
         };
     }
 
-    public async fetch_image(url: string): Promise<IHttpImageResponse | ErrorMessage<string>> {
+    public async fetch_image(url: string) {
         try {
             const headers: FieldRecord = {
                 ...this._headers,
             };
-            const options: RequestInit & ClientOptions = {
+            const options: RequestInit = {
                 method: `GET`,
                 headers,
             }
@@ -61,8 +59,7 @@ export class TauriClientHttp implements IClientHttp {
                 }
             }
         } catch (e) {
-            console.log(`e fetch_image`, e)
-            return err_msg(String(e));
+            return handle_err(e);
         };
     }
 }
