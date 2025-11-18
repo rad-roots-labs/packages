@@ -1,6 +1,7 @@
-import type { ErrorMessage, GeolocationCoordinatesPoint, ResultObj, ResultsList } from "@radroots/util";
+import { IError } from "@radroots/types-bindings";
+import type { GeolocationCoordinatesPoint, ResultObj, ResultsList } from "@radroots/utils";
 
-export type GeocoderErrorMessage =
+export type GeocoderIError =
     | `*-result`
     | `*-statement`
     | `*-db`
@@ -30,11 +31,11 @@ export type IGeocoderCountryCenter = {
 
 export type IGeocoderCountryListResult = GeolocationCoordinatesPoint & { country_id: string; country: string };
 
-export type IGeocoderConnectResolve = true | ErrorMessage<GeocoderErrorMessage>;
-export type IGeocoderReverseResolve = ResultsList<GeocoderReverseResult> | ErrorMessage<GeocoderErrorMessage>;
-export type IGeocoderCountryResolve = ResultsList<GeocoderReverseResult> | ErrorMessage<GeocoderErrorMessage>;
-export type IGeocoderCountryListResolve = ResultsList<IGeocoderCountryListResult> | ErrorMessage<GeocoderErrorMessage>;
-export type IGeocoderCountryCenterResolve = ResultObj<GeolocationCoordinatesPoint> | ErrorMessage<GeocoderErrorMessage>;
+export type IGeocoderConnectResolve = true | IError<GeocoderIError>;
+export type IGeocoderReverseResolve = ResultsList<GeocoderReverseResult> | IError<GeocoderIError>;
+export type IGeocoderCountryResolve = ResultsList<GeocoderReverseResult> | IError<GeocoderIError>;
+export type IGeocoderCountryListResolve = ResultsList<IGeocoderCountryListResult> | IError<GeocoderIError>;
+export type IGeocoderCountryCenterResolve = ResultObj<GeolocationCoordinatesPoint> | IError<GeocoderIError>;
 
 export type IGeocoder = {
     connect(wasm_path: string): Promise<IGeocoderConnectResolve>;

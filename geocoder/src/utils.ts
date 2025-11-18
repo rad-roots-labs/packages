@@ -1,5 +1,5 @@
-import type { GeolocationCoordinatesPoint } from "@radroots/util";
-import type { GeocoderReverseResult, IGeocoderCountryListResult } from "./types";
+import type { GeolocationCoordinatesPoint } from "@radroots/utils";
+import type { GeocoderReverseResult, IGeocoderCountryListResult } from "./types.js";
 
 export const parse_geocode_reverse_result = (obj: any): GeocoderReverseResult | undefined => {
     if (typeof obj !== `object` || !obj) return undefined;

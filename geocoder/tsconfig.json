@@ -1,26 +1,3 @@
 {
-    "compilerOptions": {
-        "strict": true,
-        "target": "es2021",
-        "lib": [
-            "es2021",
-            "WebWorker"
-        ],
-        "module": "ESNext",
-        "moduleResolution": "node",
-        "declaration": true,
-        "declarationMap": true,
-        "outDir": "./dist",
-        "esModuleInterop": true,
-        "skipLibCheck": true,
-        "baseUrl": ".",
-        "rootDir": "./src",
-    },
-    "include": [
-        "src"
-    ],
-    "exclude": [
-        "node_modules",
-        "dist"
-    ],
+  "extends": "./tsconfig.esm.json"
 }
