@@ -1,5 +1,5 @@
 import { RadrootsListingDiscount, RadrootsListingPrice, RadrootsListingQuantity, type RadrootsListing } from "@radroots/events-bindings";
-import ngeotags, { type InputData as NostrGeotagsInputData } from "nostr-geotags";
+import { ngeotags, type InputData as NostrGeotagsInputData } from "nostr-geotags";
 import { NostrEventTag, NostrEventTagImage, NostrEventTagLocation, NostrEventTags } from "../../types/lib.js";
 
 const tags_map = (tag: any[]) => tag.map(i => String(i).toLowerCase());
