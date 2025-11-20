@@ -4,14 +4,51 @@
     "private": true,
     "license": "GPLv3",
     "type": "module",
-    "main": "./dist/cjs/index.js",
-    "module": "./dist/esm/index.js",
-    "types": "./dist/types/index.d.ts",
     "exports": {
-        ".": {
-            "types": "./dist/types/index.d.ts",
-            "import": "./dist/esm/index.js",
-            "require": "./dist/cjs/index.js"
+        "./cipher": {
+            "types": "./dist/types/cipher/index.d.ts",
+            "import": "./dist/esm/cipher/index.js",
+            "require": "./dist/cjs/cipher/index.js"
+        },
+        "./datastore": {
+            "types": "./dist/types/datastore/index.d.ts",
+            "import": "./dist/esm/datastore/index.js",
+            "require": "./dist/cjs/datastore/index.js"
+        },
+        "./fs": {
+            "types": "./dist/types/fs/index.d.ts",
+            "import": "./dist/esm/fs/index.js",
+            "require": "./dist/cjs/fs/index.js"
+        },
+        "./geolocation": {
+            "types": "./dist/types/geolocation/index.d.ts",
+            "import": "./dist/esm/geolocation/index.js",
+            "require": "./dist/cjs/geolocation/index.js"
+        },
+        "./http": {
+            "types": "./dist/types/http/index.d.ts",
+            "import": "./dist/esm/http/index.js",
+            "require": "./dist/cjs/http/index.js"
+        },
+        "./keystore": {
+            "types": "./dist/types/keystore/index.d.ts",
+            "import": "./dist/esm/keystore/index.js",
+            "require": "./dist/cjs/keystore/index.js"
+        },
+        "./notifications": {
+            "types": "./dist/types/notifications/index.d.ts",
+            "import": "./dist/esm/notifications/index.js",
+            "require": "./dist/cjs/notifications/index.js"
+        },
+        "./radroots": {
+            "types": "./dist/types/radroots/index.d.ts",
+            "import": "./dist/esm/radroots/index.js",
+            "require": "./dist/cjs/radroots/index.js"
+        },
+        "./sql": {
+            "types": "./dist/types/sql/index.d.ts",
+            "import": "./dist/esm/sql/index.js",
+            "require": "./dist/cjs/sql/index.js"
         }
     },
     "scripts": {
@@ -24,7 +61,6 @@
         "watch": "tsc -w"
     },
     "dependencies": {
-        "@radroots/models": "*",
         "@radroots/utils": "*",
         "@radroots/utils-nostr": "*",
         "idb": "^8.0.3",

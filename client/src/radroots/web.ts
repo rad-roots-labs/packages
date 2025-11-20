@@ -1,7 +1,7 @@
 import { err_msg, type IHttpResponse, is_err_response, is_error_response } from '@radroots/utils';
 import { lib_nostr_event_sign_attest } from '@radroots/utils-nostr';
 import { WebHttp } from '../http/web.js';
-import type { IClientRadroots, IClientRadrootsFetchMediaImageUpload, IClientRadrootsFetchMediaImageUploadResolve, IClientRadrootsFetchProfileActivate, IClientRadrootsFetchProfileActivateResolve, IClientRadrootsFetchProfileCreate, IClientRadrootsFetchProfileCreateResolve, IClientRadrootsFetchProfileRequest, IClientRadrootsFetchProfileRequestResolve } from "./types.js";
+import type { IClientRadroots, IClientRadrootsMediaImageUpload, IClientRadrootsMediaImageUploadResolve, IClientRadrootsProfileActivate, IClientRadrootsProfileActivateResolve, IClientRadrootsProfileCreate, IClientRadrootsProfileCreateResolve, IClientRadrootsProfileRequest, IClientRadrootsProfileRequestResolve } from "./types.js";
 
 export class WebClientRadroots implements IClientRadroots {
     private _base_url: string
@@ -20,7 +20,7 @@ export class WebClientRadroots implements IClientRadroots {
         if (typeof field === `string` && field) return field
     }
 
-    public fetch_profile_request = async (opts: IClientRadrootsFetchProfileRequest): Promise<IClientRadrootsFetchProfileRequestResolve> => {
+    public profile_request = async (opts: IClientRadrootsProfileRequest): Promise<IClientRadrootsProfileRequestResolve> => {
         const { profile_name, secret_key } = opts
         const res = await this._http_client.fetch({
             url: `${this._base_url}/public/profile/request`,
@@ -39,7 +39,7 @@ export class WebClientRadroots implements IClientRadroots {
         return err_msg(`error.radroots.profile_registered`)
     }
 
-    public fetch_profile_create = async (opts: IClientRadrootsFetchProfileCreate): Promise<IClientRadrootsFetchProfileCreateResolve> => {
+    public profile_create = async (opts: IClientRadrootsProfileCreate): Promise<IClientRadrootsProfileCreateResolve> => {
         const { tok, secret_key } = opts
         const res = await this._http_client.fetch({
             url: `${this._base_url}/public/profile/create`,
@@ -58,7 +58,7 @@ export class WebClientRadroots implements IClientRadroots {
         return err_msg(`error.client.request_failure`)
     }
 
-    public fetch_profile_activate = async (opts: IClientRadrootsFetchProfileActivate): Promise<IClientRadrootsFetchProfileActivateResolve> => {
+    public profile_activate = async (opts: IClientRadrootsProfileActivate): Promise<IClientRadrootsProfileActivateResolve> => {
         const { id, secret_key } = opts
         const res = await this._http_client.fetch({
             url: `${this._base_url}/public/profile/activate`,
@@ -74,7 +74,7 @@ export class WebClientRadroots implements IClientRadroots {
         return err_msg(`error.client.request_failure`)
     }
 
-    public fetch_media_image_upload = async (opts: IClientRadrootsFetchMediaImageUpload): Promise<IClientRadrootsFetchMediaImageUploadResolve> => {
+    public media_image_upload = async (opts: IClientRadrootsMediaImageUpload): Promise<IClientRadrootsMediaImageUploadResolve> => {
         const { file_path, file_data, secret_key } = opts
         const res = await this._http_client.fetch({
             url: `${this._base_url}/public/media/image/upload`,

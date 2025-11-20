@@ -1,4 +1,4 @@
-import type { ResolveError, ResultObj, ResultPass, ResultsList } from "@radroots/utils";
+import type { IdbClientConfig, ResolveError, ResultObj, ResultPass, ResultsList } from "@radroots/utils";
 
 export type IClientDatastoreValue = string | null;
 
@@ -20,6 +20,7 @@ export type IClientDatastore<
     TKeyObjMap extends IClientDatastoreKeyMap,
 > = {
     init(): Promise<ResolveError<void>>;
+    get_config(): IdbClientConfig
     set(key: keyof TKeyMap, value: string): Promise<ResolveError<ResultPass>>;
     get(key: keyof TKeyMap): Promise<ResolveError<ResultObj<string>>>;
     set_obj(key: keyof TKeyObjMap, value: TKeyObjMap): Promise<ResolveError<ResultPass>>;

@@ -1,4 +1,4 @@
-import { err_msg, handle_err, ResolveError, ResultObj } from "@radroots/utils";
+import { err_msg, handle_err, IdbClientConfig, ResolveError, ResultObj } from "@radroots/utils";
 import {
     createStore,
     clear as idb_clear,
@@ -8,7 +8,6 @@ import {
     set as idb_set,
     type UseStore
 } from "idb-keyval";
-import { type IClientIdbConfig } from "../utils/idb.js";
 import type {
     IClientDatastore,
     IClientDatastoreDelPrefResolve,
@@ -34,7 +33,7 @@ export class WebDatastore<
     private _key_param_map: Tp;
     private _key_obj_map: TkO;
 
-    constructor(key_map: Tk, key_param_map: Tp, key_obj_map: TkO, config?: IClientIdbConfig) {
+    constructor(key_map: Tk, key_param_map: Tp, key_obj_map: TkO, config?: Partial<IdbClientConfig>) {
         this.db_name = config?.database || "radroots-web-datastore";
         this.store_name = config?.store || "default";
         this.store = null;
@@ -49,6 +48,13 @@ export class WebDatastore<
             this.store = createStore(this.db_name, this.store_name);
         }
         return this.store;
+    }
+
+    public get_config(): IdbClientConfig {
+        return {
+            database: this.db_name,
+            store: this.store_name,
+        };
     }
 
     public async init() {
@@ -80,7 +86,7 @@ export class WebDatastore<
 
     public async del(key: keyof Tk): Promise<IClientDatastoreDelResolve> {
         try {
-            await idb_del(this._key_map[key]);
+            await idb_del(this._key_map[key], this.get_store());
             return { result: key.toString() };
         } catch (e) {
             return handle_err(e);
@@ -124,7 +130,7 @@ export class WebDatastore<
 
     public async del_obj(key: keyof TkO): Promise<IClientDatastoreDelResolve> {
         try {
-            await idb_del(this._key_obj_map[key]);
+            await idb_del(this._key_obj_map[key], this.get_store());
             return { result: key.toString() };
         } catch (e) {
             return handle_err(e);
@@ -149,7 +155,7 @@ export class WebDatastore<
         key_param: Parameters<Tp[K]>[0]
     ): Promise<IClientDatastoreGetPResolve> {
         try {
-            const value = await idb_get(this._key_param_map[key](key_param));
+            const value = await idb_get(this._key_param_map[key](key_param), this.get_store());
             if (!value) return err_msg("error.client.datastore.no_result")
             return { result: value };
         } catch (e) {
@@ -164,7 +170,7 @@ export class WebDatastore<
             const filtered_keys = all_keys.filter((k): k is string => (typeof k === "string" && k.startsWith(key_prefix)));
             console.log(JSON.stringify(filtered_keys, null, 4), `filtered_keys`)
             for (const key of filtered_keys) {
-                await idb_del(key);
+                await idb_del(key, this.get_store());
             }
             return { results: filtered_keys };
         } catch (e) {
