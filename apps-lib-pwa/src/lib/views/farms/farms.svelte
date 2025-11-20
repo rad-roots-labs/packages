@@ -1,7 +1,7 @@
 <script lang="ts">
     import ButtonGlyphSimple from "$lib/components/button/button-glyph-simple.svelte";
     import ButtonLabelDashed from "$lib/components/button/button-label-dashed.svelte";
-    import FarmsDisplayLiEl from "$lib/components/farm/farms-display-li-el.svelte";
+    import FarmsPreviewCard from "$lib/components/farm/farms-preview-card.svelte";
     import LayoutPage from "$lib/components/layout/layout-page.svelte";
     import LayoutView from "$lib/components/layout/layout-view.svelte";
     import PageToolbar from "$lib/components/navigation/page-toolbar.svelte";
@@ -72,7 +72,7 @@
         {#if basis.data}
             {#if basis.data?.list.length}
                 {#each basis.data?.list || [] as li}
-                    <FarmsDisplayLiEl
+                    <FarmsPreviewCard
                         basis={li}
                         on_handle_farm_view={basis.on_handle_farm_view}
                     />
