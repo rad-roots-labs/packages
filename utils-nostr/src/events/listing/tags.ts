@@ -1,29 +1,80 @@
-import { RadrootsListingDiscount, RadrootsListingPrice, RadrootsListingQuantity, type RadrootsListing } from "@radroots/events-bindings";
-import { ngeotags, type InputData as NostrGeotagsInputData } from "nostr-geotags";
-import { NostrEventTag, NostrEventTagImage, NostrEventTagLocation, NostrEventTags } from "../../types/lib.js";
+import type { RadrootsCoreQuantityPrice } from "@radroots/core-bindings";
+import type { RadrootsListing, RadrootsListingDiscount, RadrootsListingImage, RadrootsListingLocation, RadrootsListingQuantity } from "@radroots/events-bindings";
+import ngeotags, { type InputData as NostrGeotagsInputData } from "nostr-geotags";
+import { NostrEventTag, NostrEventTagLocation, NostrEventTags } from "../../types/lib.js";
 
-const tags_map = (tag: any[]) => tag.map(i => String(i).toLowerCase());
+type CoreUnit = RadrootsListingQuantity["value"]["unit"];
+type CoreCurrency = RadrootsCoreQuantityPrice["amount"]["currency"];
 
-export const tag_listing_quantity = (opts: RadrootsListingQuantity): NostrEventTag => {
-    const tag = [`quantity`, opts.value.amount, opts.value.unit];
-    if (opts.label) tag.push(opts.label);
-    return tags_map(tag);
+const currency_to_code = (currency: CoreCurrency): string => {
+    if (Array.isArray(currency) && currency.length >= 3) {
+        const [a, b, c] = currency;
+        return String.fromCharCode(Number(a), Number(b), Number(c));
+    }
+    return String(currency);
 };
 
-export const tag_listing_price = (price: RadrootsListingPrice): NostrEventTag => {
-    const tag = [`price`, price.amount, price.amount.amount, price.quantity.amount, price.quantity.unit, price.quantity.label || ``];
-    return tags_map(tag);
+const unit_to_code = (unit: CoreUnit): string => {
+    switch (unit) {
+        case "Each": return "each";
+        case "MassKg": return "kg";
+        case "MassG": return "g";
+        case "MassOz": return "oz";
+        case "MassLb": return "lb";
+        case "VolumeL": return "l";
+        case "VolumeMl": return "ml";
+        default: return String(unit).toLowerCase();
+    }
+};
+
+const clean_label = (value?: string | null) => value?.trim() || undefined;
+
+const normalize_listing_location = (location?: RadrootsListingLocation | null): NostrEventTagLocation | undefined => {
+    if (!location?.primary) return undefined;
+    const { primary, city, region, country, lat, lng } = location;
+    return {
+        primary,
+        city: city ?? undefined,
+        region: region ?? undefined,
+        country: country ?? undefined,
+        lat: typeof lat === "number" ? lat : undefined,
+        lng: typeof lng === "number" ? lng : undefined,
+    };
+};
+
+const normalize_image_size = (size: RadrootsListingImage["size"]) =>
+    size && typeof size?.w === "number" && typeof size?.h === "number" ? size : undefined;
+
+export const tag_listing_quantity = (opts: RadrootsListingQuantity): NostrEventTag => {
+    const tag: NostrEventTag = ["quantity", String(opts.value.amount), unit_to_code(opts.value.unit)];
+    const label = clean_label(opts.label ?? opts.value.label);
+    if (label) tag.push(label);
+    if (opts.count !== undefined && opts.count !== null) tag.push(String(opts.count));
+    return tag;
+};
+
+export const tag_listing_price = (price: RadrootsCoreQuantityPrice): NostrEventTag => {
+    const tag: NostrEventTag = [
+        "price",
+        String(price.amount.amount),
+        currency_to_code(price.amount.currency).toLowerCase(),
+        String(price.quantity.amount),
+        unit_to_code(price.quantity.unit),
+    ];
+    const label = clean_label(price.quantity.label);
+    if (label) tag.push(label);
+    return tag;
 };
 
 export const tag_listing_price_discount = (discount: RadrootsListingDiscount): NostrEventTag => {
-    const tag = [`price-discount-${Object.keys(discount)[0]}`];
-    for (const [key, value] of Object.entries(discount.amount)) tag.push(`${key}:${value}`);
-    return tags_map(tag);
+    const tag: NostrEventTag = [`price-discount-${discount.kind}`];
+    tag.push(JSON.stringify(discount.amount));
+    return tag;
 };
 
 export const tag_listing_location = (opts: NostrEventTagLocation): NostrEventTag => {
     if (!opts.primary) return [];
-    const tag = [`location`, opts.primary];
+    const tag: NostrEventTag = ["location", opts.primary];
     if (opts.city) tag.push(opts.city);
     if (opts.region) tag.push(opts.region);
     if (opts.country) tag.push(opts.country);
@@ -38,16 +89,16 @@ export const tags_listing_location_geotags = (opts: NostrEventTagLocation): Nost
     return ngeotags({ lat, lon, city, regionName, countryCode, countryName } satisfies NostrGeotagsInputData, { geohash: true, gps: true, city: true, iso31662: true });
 };
 
-
-export const tag_listing_image = (opts: NostrEventTagImage): NostrEventTag => {
-    const tag = [`image`, opts.url];
-    if (opts.size) tag.push(`${opts.size.w}x${opts.size.h}`)
+export const tag_listing_image = (opts: RadrootsListingImage): NostrEventTag => {
+    const tag: NostrEventTag = ["image", opts.url];
+    const size = normalize_image_size(opts.size);
+    if (size) tag.push(`${size.w}x${size.h}`);
     return tag;
 };
 
 export const tags_listing = (opts: RadrootsListing): NostrEventTags => {
     const { d_tag, product, quantities, prices } = opts;
-    const tags: NostrEventTags = [[`d`, d_tag]];
+    const tags: NostrEventTags = [["d", d_tag]];
     for (const [k, v] of Object.entries(product)) if (v) tags.push([k, String(v)]);
     for (const quantity of quantities) {
         tags.push(tag_listing_quantity(quantity));
@@ -55,13 +106,12 @@ export const tags_listing = (opts: RadrootsListing): NostrEventTags => {
     for (const price of prices) {
         tags.push(tag_listing_price(price));
     }
-    for (const discount of opts.discounts || []) {
-        tags.push(tag_listing_price_discount(discount));
+    if (opts.discounts?.length) for (const discount of opts.discounts) if (discount) tags.push(tag_listing_price_discount(discount));
+    const location = normalize_listing_location(opts.location);
+    if (location) {
+        tags.push(tag_listing_location(location));
+        tags.push(...tags_listing_location_geotags(location));
     }
-    if (opts.location) {
-        tags.push(tag_listing_location(opts.location));
-        tags.push(...tags_listing_location_geotags(opts.location));
-    }
-    if (opts.images) for (const image_tags of opts.images) tags.push(tag_listing_image(image_tags));
+    if (opts.images) for (const image_tags of opts.images) if (image_tags) tags.push(tag_listing_image(image_tags));
     return tags;
 };

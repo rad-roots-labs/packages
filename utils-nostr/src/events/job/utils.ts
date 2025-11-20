@@ -9,7 +9,7 @@ import type { NostrEventTags } from "../../types/lib.js";
 export function get_job_input_data_for_marker(
     tags: NostrEventTags,
     marker: string,
-    input_type: JobInputType = JobInputType.Event
+    input_type: JobInputType = "event"
 ): string | undefined {
     for (const t of tags) {
         if (t[0] !== "i") continue;

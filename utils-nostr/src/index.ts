@@ -33,4 +33,6 @@ export * from "./schemas/lib.js"
 export * from "./types/lib.js"
 export * from "./types/ndk.js"
 export * from "./utils/ndk.js"
+export * from "./utils/relays.js"
 export * from "./utils/tags.js"
+

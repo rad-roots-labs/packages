@@ -1,4 +1,4 @@
-import { JobInputType, RadrootsJobInput } from "@radroots/events-bindings";
+import { RadrootsJobInput } from "@radroots/events-bindings";
 import { tags_job_request, tags_job_result } from "../../events/job/tags.js";
 
 export type CommonRequestOpts = {
@@ -28,7 +28,7 @@ export const make_event_input = (
     relay?: string
 ): RadrootsJobInput => ({
     data: id,
-    input_type: JobInputType.Event,
+    input_type: "event",
     ...(relay ? { relay } : {}),
     marker,
 });
@@ -38,7 +38,7 @@ export const make_text_input = (
     marker: string
 ): RadrootsJobInput => ({
     data: typeof payload === "string" ? payload : JSON.stringify(payload),
-    input_type: JobInputType.Text,
+    input_type: "text",
     marker,
 });
 

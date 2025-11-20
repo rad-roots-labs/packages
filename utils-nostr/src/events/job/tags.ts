@@ -23,7 +23,7 @@ export const tags_job_providers = (pubkeys: string[]): NostrEventTags =>
 export const tags_job_topics = (topics: string[]): NostrEventTags =>
     topics.map(t => ["t", t]);
 
-export const tag_job_amount = (msat: number, bolt11?: string): NostrEventTag =>
+export const tag_job_amount = (msat: number, bolt11?: string | null): NostrEventTag =>
     bolt11 ? ["amount", String(msat), bolt11] : ["amount", String(msat)];
 
 export const tag_job_encrypted = (): NostrEventTag => ["encrypted"];
@@ -55,7 +55,7 @@ export const tags_job_result = (opts: RadrootsJobResult): NostrEventTags => {
     }
     if (opts.encrypted) tags.push(tag_job_encrypted());
     return tags;
-}
+};
 
 export const tags_job_feedback = (opts: RadrootsJobFeedback): NostrEventTags => {
     const tags: NostrEventTags = [];
@@ -72,4 +72,4 @@ export const tags_job_feedback = (opts: RadrootsJobFeedback): NostrEventTags => 
     if (opts.customer_pubkey) tags.push(["p", opts.customer_pubkey]);
     if (opts.encrypted) tags.push(tag_job_encrypted());
     return tags;
-}
+};
