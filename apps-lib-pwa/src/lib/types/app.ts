@@ -1,3 +1,6 @@
+import type { TangleDatabaseBackup } from "@radroots/tangle-client";
+import type { IdbClientConfig } from "@radroots/utils";
+
 export type AppConfigRole = `farmer` | `personal`
 
 export type AppLayoutKeyIOS = `ios0` | `ios1`;
@@ -26,3 +29,32 @@ export type AppWidthsResponsiveIOS = AppLayoutIOS<AppLayoutKeyWidth>;
 export type AppWidthsResponsiveWeb = AppLayoutWeb<AppLayoutKeyWidth>;
 
 export type LabelFieldKind = `link` | `on` | `shade`;
+
+export type BackupVersions = {
+    app: string;
+    tangle_sql: string;
+    backup_format: string;
+};
+
+export type ExportedAppState = {
+    backup_version: string;
+    exported_at: string;
+    versions: BackupVersions;
+    datastore: {
+        config: IdbClientConfig;
+        entries: Record<string, unknown>;
+    };
+    nostr_keystore: {
+        config: IdbClientConfig;
+        keys: {
+            public_key: string;
+            secret_key: string;
+        }[];
+    };
+    database: {
+        store_key: string;
+        backup: TangleDatabaseBackup;
+    };
+};
+
+export type ImportableAppState = ExportedAppState;

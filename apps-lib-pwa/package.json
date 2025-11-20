@@ -1,6 +1,6 @@
 {
     "name": "@radroots/apps-lib-pwa",
-    "version": "0.0.0",
+    "version": "0.0.1",
     "private": true,
     "license": "GPLv3",
     "scripts": {
@@ -29,6 +29,34 @@
         ".": {
             "types": "./dist/index.d.ts",
             "svelte": "./dist/index.js"
+        },
+        "./stores/*": {
+            "types": "./dist/stores/*.d.ts",
+            "import": "./dist/stores/*.js",
+            "default": "./dist/stores/*.js"
+        },
+        "./types/*": {
+            "types": "./dist/types/*.d.ts",
+            "import": "./dist/types/*.js",
+            "default": "./dist/types/*.js"
+        },
+        "./utils/*": {
+            "types": "./dist/utils/*.d.ts",
+            "import": "./dist/utils/*.js",
+            "default": "./dist/utils/*.js"
+        }
+    },
+    "typesVersions": {
+        "*": {
+            "stores/*": [
+                "dist/stores/*"
+            ],
+            "types/*": [
+                "dist/types/*"
+            ],
+            "utils/*": [
+                "dist/utils/*"
+            ]
         }
     },
     "peerDependencies": {

@@ -10,7 +10,7 @@
         children,
     }: {
         basis: ISelect;
-        value: string;
+        value?: string;
         el_wrap?: HTMLDivElement | null;
         el_select?: HTMLSelectElement | null;
         children?: Snippet;
@@ -30,7 +30,9 @@
     bind:this={el_wrap}
 >
     <div
-        class={`${fmt_cl(basis.classes)} z-20 absolute top-0 left-0 flex flex-row h-full w-full justify-end items-center ${classes_layer}`}
+        class={`${fmt_cl(
+            basis.classes,
+        )} z-20 absolute top-0 left-0 flex flex-row h-full w-full justify-end items-center ${classes_layer}`}
     >
         <select
             class={`select select-ghost h-full w-full bg-transparent focus:border-0 focus:outline-0 text-transparent focus:text-transparent`}
