@@ -65,7 +65,7 @@ export type IHttpOpts = {
     connect_timeout?: number;
 };
 
-export const lib_http_to_bodyinit = (data: any): any => { // @todo BodyInit
+export const lib_http_to_bodyinit = (data: any): RequestInit["body"] => {
     if (typeof data === 'string') return data;
     else if (data instanceof FormData) return data;
     else if (data instanceof Blob) return data;
@@ -138,4 +138,3 @@ export const http_fetch = async (opts: IHttpOpts): Promise<IHttpResponse> => {
         headers: lib_http_parse_headers(response.headers)
     };
 };
-
