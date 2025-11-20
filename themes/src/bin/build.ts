@@ -2,7 +2,6 @@
 
 import fs from "node:fs";
 import path from "node:path";
-import { fileURLToPath } from "node:url";
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
 import { z } from "zod";
@@ -18,8 +17,17 @@ const args_schema = z.object({
 type BuildArgs = z.infer<typeof args_schema>;
 
 
-const script_dir = path.dirname(fileURLToPath(import.meta.url));
-const package_root = path.resolve(script_dir, "..", "..");
+const resolve_script_dir = (): string => {
+    const script_path = process.argv[1];
+
+    if (script_path === undefined) {
+        throw new Error("script path unavailable");
+    }
+
+    return path.dirname(path.resolve(script_path));
+};
+
+const package_root = path.resolve(resolve_script_dir(), "..", "..");
 const css_output_dir = path.resolve(package_root, "css");
 const styles_output_path = path.resolve(css_output_dir, "styles.css");
 const layout_output_path = path.resolve(css_output_dir, "layout.css");
