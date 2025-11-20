@@ -1,3 +1,5 @@
+import { ValidationRegex } from "./types.js";
+
 export type IModelsQueryValue = string | number | boolean | null;
 export type IModelsQueryBindValue = string | number | boolean | null;;
 export type IModelsQueryBindValueTuple = [string, IModelsQueryValue];
@@ -16,11 +18,10 @@ export type IModelsForm = {
     placeholder?: string;
     validateKeypress?: boolean;
     preventFocusRest?: boolean;
-    validation: RegExp;
-    charset: RegExp;
     hidden?: boolean;
     optional?: boolean;
     default?: string | number;
+    rxpv: ValidationRegex;
 };
 
 export type IModelQueryFilterMapValuesTuplesOption = [IModelsQueryValue, IModelsQueryFilterOption];

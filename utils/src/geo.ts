@@ -23,8 +23,8 @@ export type GeolocationPoint = {
     lng: number;
 };
 
-export type LocationPoint = GeolocationCoordinatesPoint & {
-    error: GeolocationCoordinatesPoint;
+export type LocationPoint = GeolocationPoint & {
+    error: GeolocationPoint;
 }
 
 export type GeocoderReverseResult = {
@@ -38,18 +38,11 @@ export type GeocoderReverseResult = {
     longitude: number;
 };
 
-export type IClientGeolocationPosition = {
-    lat: number;
-    lng: number;
+export type IClientGeolocationPosition = GeolocationPoint & {
     accuracy?: number;
     altitude?: number;
     altitude_accuracy?: number;
 };
-
-export type GeolocationCoordinatesPoint = {
-    lat: number;
-    lng: number;
-}
 
 export type GeolocationLatitudeFmtOption = 'dms' | 'd' | 'dm';
 
@@ -81,13 +74,13 @@ export const geohash_decode = (geohash: string): LocationPoint => {
     };
 };
 
-export const location_geohash = (point: GeolocationCoordinatesPoint): string => {
+export const location_geohash = (point: GeolocationPoint): string => {
     const { lat, lng } = point;
     const res = geohash_encode({ lat, lng });
     return res;
 };
 
-export const parse_geop_point = (point: GeolocationCoordinatesPoint): GeolocationPoint => {
+export const parse_geop_point = (point: GeolocationPoint): GeolocationPoint => {
     const { lat, lng } = point;
     return { lat, lng };
 };

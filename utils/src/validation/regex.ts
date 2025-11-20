@@ -1,4 +1,6 @@
 export const util_rxp = {
+    email: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+    email_ch: /^[a-zA-Z0-9._%+-@-]*$/,
     product_key: /^[A-Za-z_]+$/,
     product_key_ch: /^[A-Za-z_]$/,
     product_title: /[A-Za-z0-9 ]+$/,

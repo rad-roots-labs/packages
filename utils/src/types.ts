@@ -18,3 +18,8 @@ export type IdbClientConfig = {
     database: string;
     store: string;
 };
+
+export type ValidationRegex = {
+    value: RegExp;
+    charset: RegExp;
+}
