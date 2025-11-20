@@ -49,6 +49,11 @@
             "types": "./dist/types/sql/index.d.ts",
             "import": "./dist/esm/sql/index.js",
             "require": "./dist/cjs/sql/index.js"
+        },
+        "./tangle": {
+            "types": "./dist/types/tangle/index.d.ts",
+            "import": "./dist/esm/tangle/index.js",
+            "require": "./dist/cjs/tangle/index.js"
         }
     },
     "scripts": {
@@ -63,6 +68,7 @@
     "dependencies": {
         "@radroots/utils": "*",
         "@radroots/utils-nostr": "*",
+        "@radroots/tangle-sql-wasm": "*",
         "idb": "^8.0.3",
         "idb-keyval": "^6.2.1",
         "sql.js": "^1.13.0"
