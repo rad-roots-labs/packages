@@ -1,50 +1,42 @@
-# dependencies
 node_modules
-.pnp
-.pnp.js
-
-# testing
-coverage
-
-# svelte
-.svelte-kit
-
-# misc
-.DS_Store
-*.pem
-
-# debug
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# turbo
+dist
 .turbo
 
+# Logs
+logs/
+*.log
 
-# Output
-.output
-/build
-dist
-
-# local env files
-.env*
+# Env
+.env
+.env.*
 !.env.example
+!.env.test
 
+# OS
+.DS_Store
+Thumbs.db
 
-# Vite
-vite.config.js.timestamp-*
-vite.config.ts.timestamp-*
+# Secrets
+*.pem
+*.crt
+*.key
 
-# local
-.tmp*
-.backup*
-.dev*
-.vscode
+# Testing
+test*.json
+
+# Editors
+.vscode/
+.idea/
+*.iml
+
+# Notes
 notes*.txt
 notes*.md
 notes*.json
-git-diff*.txt
-prompt*.txt
 tree*.txt
+diff*.txt
+prompt*.txt
+
+# Dev
+.local*
 justfile
