@@ -71,7 +71,7 @@
         "@radroots/tangle-sql-wasm": "*",
         "idb": "^8.0.3",
         "idb-keyval": "^6.2.1",
-        "sql.js": "^1.13.0"
+        "sql.js": "1.13.0"
     },
     "devDependencies": {
         "@types/debug": "^4.1.12",

@@ -7,8 +7,6 @@ import type {
     IFarmFindManyResolve,
     IFarmFindOne,
     IFarmFindOneResolve,
-    IFarmLocationRelation,
-    IFarmLocationResolve,
     IFarmUpdate,
     IFarmUpdateResolve,
     ILocationGcsCreate,
@@ -49,8 +47,6 @@ import type {
     INostrProfileFindManyResolve,
     INostrProfileFindOne,
     INostrProfileFindOneResolve,
-    INostrProfileRelayRelation,
-    INostrProfileRelayResolve,
     INostrProfileUpdate,
     INostrProfileUpdateResolve,
     INostrRelayCreate,
@@ -71,24 +67,24 @@ import type {
     ITradeProductFindManyResolve,
     ITradeProductFindOne,
     ITradeProductFindOneResolve,
+    ITradeProductUpdate,
+    ITradeProductUpdateResolve,
+    IFarmLocationRelation,
+    IFarmLocationResolve,
+    INostrProfileRelayRelation,
+    INostrProfileRelayResolve,
     ITradeProductLocationRelation,
     ITradeProductLocationResolve,
     ITradeProductMediaRelation,
-    ITradeProductMediaResolve,
-    ITradeProductUpdate,
-    ITradeProductUpdateResolve
+    ITradeProductMediaResolve
 } from "@radroots/tangle-schema-bindings";
 import init_wasm, {
     query_sql,
-    tangle_db_export_backup,
     tangle_db_farm_create,
     tangle_db_farm_delete,
     tangle_db_farm_find_many,
     tangle_db_farm_find_one,
-    tangle_db_farm_location_set,
-    tangle_db_farm_location_unset,
     tangle_db_farm_update,
-    tangle_db_import_backup,
     tangle_db_location_gcs_create,
     tangle_db_location_gcs_delete,
     tangle_db_location_gcs_find_many,
@@ -108,30 +104,34 @@ import init_wasm, {
     tangle_db_nostr_profile_delete,
     tangle_db_nostr_profile_find_many,
     tangle_db_nostr_profile_find_one,
-    tangle_db_nostr_profile_relay_set,
-    tangle_db_nostr_profile_relay_unset,
     tangle_db_nostr_profile_update,
     tangle_db_nostr_relay_create,
     tangle_db_nostr_relay_delete,
     tangle_db_nostr_relay_find_many,
     tangle_db_nostr_relay_find_one,
     tangle_db_nostr_relay_update,
-    tangle_db_reset_database,
-    tangle_db_run_migrations,
     tangle_db_trade_product_create,
     tangle_db_trade_product_delete,
     tangle_db_trade_product_find_many,
     tangle_db_trade_product_find_one,
+    tangle_db_trade_product_update,
+    tangle_db_farm_location_set,
+    tangle_db_farm_location_unset,
+    tangle_db_nostr_profile_relay_set,
+    tangle_db_nostr_profile_relay_unset,
     tangle_db_trade_product_location_set,
     tangle_db_trade_product_location_unset,
     tangle_db_trade_product_media_set,
     tangle_db_trade_product_media_unset,
-    tangle_db_trade_product_update
+    tangle_db_reset_database,
+    tangle_db_run_migrations,
+    tangle_db_export_backup,
+    tangle_db_import_backup
 } from "@radroots/tangle-sql-wasm";
 import type { IError } from "@radroots/types-bindings";
 import { type IdbClientConfig } from "@radroots/utils";
 import type { SqlJsMigrationRow, SqlJsMigrationState } from "../sql/types.js";
-import { WebSqlEngine, } from "../sql/web.js";
+import { WebSqlEngine } from "../sql/web.js";
 import { radroots_sql_install_bridges } from "./bridge.js";
 import type { IClientTangleDatabase } from "./types.js";
 
@@ -157,7 +157,7 @@ export type TangleDatabaseBackup = {
 
 export class WebTangleDatabase implements IClientTangleDatabase {
     private engine: WebSqlEngine | null = null;
-    private readonly store_key: string = "radroots.tangle-db-v1.key";;
+    private readonly store_key: string = "radroots.tangle-db-v1.key";
     private cipher_config: IdbClientConfig | null = null;
 
     constructor(config?: {

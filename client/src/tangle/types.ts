@@ -7,8 +7,6 @@ import type {
     IFarmFindManyResolve,
     IFarmFindOne,
     IFarmFindOneResolve,
-    IFarmLocationRelation,
-    IFarmLocationResolve,
     IFarmUpdate,
     IFarmUpdateResolve,
     ILocationGcsCreate,
@@ -49,8 +47,6 @@ import type {
     INostrProfileFindManyResolve,
     INostrProfileFindOne,
     INostrProfileFindOneResolve,
-    INostrProfileRelayRelation,
-    INostrProfileRelayResolve,
     INostrProfileUpdate,
     INostrProfileUpdateResolve,
     INostrRelayCreate,
@@ -71,15 +67,19 @@ import type {
     ITradeProductFindManyResolve,
     ITradeProductFindOne,
     ITradeProductFindOneResolve,
+    ITradeProductUpdate,
+    ITradeProductUpdateResolve,
+    IFarmLocationRelation,
+    IFarmLocationResolve,
+    INostrProfileRelayRelation,
+    INostrProfileRelayResolve,
     ITradeProductLocationRelation,
     ITradeProductLocationResolve,
     ITradeProductMediaRelation,
-    ITradeProductMediaResolve,
-    ITradeProductUpdate,
-    ITradeProductUpdateResolve
+    ITradeProductMediaResolve
 } from "@radroots/tangle-schema-bindings";
-import type { IError } from "@radroots/types-bindings";
 import { type SqlJsMigrationState } from "../sql/types.js";
+import type { IError } from "@radroots/types-bindings";
 import type { TangleDatabaseBackup } from "./web.js";
 
 export interface IClientTangleDatabase {

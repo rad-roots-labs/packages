@@ -1,7 +1,7 @@
 import { err_msg, type IHttpResponse, is_err_response, is_error_response } from '@radroots/utils';
 import { lib_nostr_event_sign_attest } from '@radroots/utils-nostr';
 import { WebHttp } from '../http/web.js';
-import type { IClientRadroots, IClientRadrootsMediaImageUpload, IClientRadrootsMediaImageUploadResolve, IClientRadrootsProfileActivate, IClientRadrootsProfileActivateResolve, IClientRadrootsProfileCreate, IClientRadrootsProfileCreateResolve, IClientRadrootsProfileRequest, IClientRadrootsProfileRequestResolve } from "./types.js";
+import type { IClientRadroots, IClientRadrootsAccountsActivate, IClientRadrootsAccountsActivateResolve, IClientRadrootsAccountsCreate, IClientRadrootsAccountsCreateResolve, IClientRadrootsAccountsRequest, IClientRadrootsAccountsRequestResolve, IClientRadrootsMediaImageUpload, IClientRadrootsMediaImageUploadResolve } from "./types.js";
 
 export class WebClientRadroots implements IClientRadroots {
     private _base_url: string
@@ -20,13 +20,17 @@ export class WebClientRadroots implements IClientRadroots {
         if (typeof field === `string` && field) return field
     }
 
-    public profile_request = async (opts: IClientRadrootsProfileRequest): Promise<IClientRadrootsProfileRequestResolve> => {
+    private create_x_nostr_event(secret_key: string): string {
+        return JSON.stringify(lib_nostr_event_sign_attest(secret_key))
+    }
+
+    public accounts_request = async (opts: IClientRadrootsAccountsRequest): Promise<IClientRadrootsAccountsRequestResolve> => {
         const { profile_name, secret_key } = opts
         const res = await this._http_client.fetch({
-            url: `${this._base_url}/public/profile/request`,
+            url: `${this._base_url}/v1/accounts/request`,
             method: `post`,
             headers: {
-                "X-Nostr-Event": JSON.stringify(lib_nostr_event_sign_attest(secret_key))
+                "X-Nostr-Event": this.create_x_nostr_event(secret_key),
             },
             data: { profile_name }
         })
@@ -36,16 +40,16 @@ export class WebClientRadroots implements IClientRadroots {
             const tok = this.parse_res_field(res.data.tok)
             if (tok) return { result: tok }
         }
-        return err_msg(`error.radroots.profile_registered`)
+        return err_msg(`error.radroots.account_registered`)
     }
 
-    public profile_create = async (opts: IClientRadrootsProfileCreate): Promise<IClientRadrootsProfileCreateResolve> => {
+    public accounts_create = async (opts: IClientRadrootsAccountsCreate): Promise<IClientRadrootsAccountsCreateResolve> => {
         const { tok, secret_key } = opts
         const res = await this._http_client.fetch({
-            url: `${this._base_url}/public/profile/create`,
+            url: `${this._base_url}/v1/accounts/create`,
             method: `post`,
             headers: {
-                "X-Nostr-Event": JSON.stringify(lib_nostr_event_sign_attest(secret_key))
+                "X-Nostr-Event": this.create_x_nostr_event(secret_key),
             },
             authorization: tok
         })
@@ -58,13 +62,13 @@ export class WebClientRadroots implements IClientRadroots {
         return err_msg(`error.client.request_failure`)
     }
 
-    public profile_activate = async (opts: IClientRadrootsProfileActivate): Promise<IClientRadrootsProfileActivateResolve> => {
+    public accounts_activate = async (opts: IClientRadrootsAccountsActivate): Promise<IClientRadrootsAccountsActivateResolve> => {
         const { id, secret_key } = opts
         const res = await this._http_client.fetch({
-            url: `${this._base_url}/public/profile/activate`,
+            url: `${this._base_url}/v1/accounts/activate`,
             method: `post`,
             headers: {
-                "X-Nostr-Event": JSON.stringify(lib_nostr_event_sign_attest(secret_key))
+                "X-Nostr-Event": this.create_x_nostr_event(secret_key),
             },
             data: { id }
         })
@@ -77,11 +81,11 @@ export class WebClientRadroots implements IClientRadroots {
     public media_image_upload = async (opts: IClientRadrootsMediaImageUpload): Promise<IClientRadrootsMediaImageUploadResolve> => {
         const { file_path, file_data, secret_key } = opts
         const res = await this._http_client.fetch({
-            url: `${this._base_url}/public/media/image/upload`,
+            url: `${this._base_url}/v1/media/image/upload`,
             method: `put`,
             headers: {
                 "Content-Type": file_path.mime_type,
-                "X-Nostr-Event": JSON.stringify(lib_nostr_event_sign_attest(secret_key))
+                "X-Nostr-Event": this.create_x_nostr_event(secret_key),
             },
             data_bin: file_data
         })
