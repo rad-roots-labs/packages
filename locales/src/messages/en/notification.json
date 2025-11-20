@@ -1,4 +1,14 @@
 {
+    "backup": {
+        "import_success": "The application backup has been successfully imported."
+    },
+    "configuration": {
+        "backup_file_invalid": "Not a valid backup file.",
+        "backup_file_valid": "The backup file is valid (version: {{backup_version}}).",
+        "clear_prior_session": "Clear the prior session?",
+        "import_description": "Choose a JSON export created by this app to restore configuration, nostr keys, and database information.",
+        "prior_session_pending": "Restoring a prior session is not available yet."
+    },
     "device": {
         "reset": "You are about to reset this device, which will erase all data including keys, profiles, and personal files",
         "reset_complete": "The device has been reset"
