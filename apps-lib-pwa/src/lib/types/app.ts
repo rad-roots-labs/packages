@@ -1,4 +1,4 @@
-import type { TangleDatabaseBackup } from "@radroots/tangle-client";
+import type { TangleDatabaseBackup } from "@radroots/client/tangle";
 import type { IdbClientConfig } from "@radroots/utils";
 
 export type AppConfigRole = `farmer` | `personal`

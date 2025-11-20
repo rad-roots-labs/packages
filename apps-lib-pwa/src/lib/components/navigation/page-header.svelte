@@ -1,6 +1,6 @@
 <script lang="ts">
     import { app_lo, ph_blur } from "$lib/stores/app";
-    import type { IPageHeader } from "$lib/types/components";
+    import type { IPageHeader } from "$lib/types/components/lib";
     import { callback_route, Flex } from "@radroots/apps-lib";
     import type { Snippet } from "svelte";
     import { fade } from "svelte/transition";

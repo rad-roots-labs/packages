@@ -1,7 +1,7 @@
 <script lang="ts">
     import { goto } from "$app/navigation";
     import { app_lo } from "$lib/stores/app";
-    import type { IPageToolbar } from "$lib/types/components";
+    import type { IPageToolbar } from "$lib/types/components/lib";
     import { type IBasisOpt, Glyph } from "@radroots/apps-lib";
     import type { Snippet } from "svelte";
     import LogoCircleSm from "../lib/logo-circle-sm.svelte";
