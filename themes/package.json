@@ -1,6 +1,6 @@
 {
     "name": "@radroots/themes",
-    "version": "0.0.0",
+    "version": "0.0.1",
     "private": false,
     "license": "GPL-3.0-or-later",
     "type": "module",
@@ -28,12 +28,11 @@
         "build:cjs": "tsc -p tsconfig.cjs.json",
         "build": "npm run build:esm && npm run build:cjs",
         "prebuild": "npm run clean && npx tsx src/bin/build.ts",
-        "clean": "rimraf dist css",
+        "clean": "rimraf dist",
         "dev": "npm run watch",
         "watch": "tsc -w"
     },
     "devDependencies": {
-        "@radroots/dev": "*",
         "@radroots/tsconfig": "*",
         "tsx": "^4.20.6",
         "typescript": "5.8.3"

@@ -2,6 +2,7 @@
 
 import fs from "node:fs";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
 import { z } from "zod";
@@ -16,12 +17,20 @@ const args_schema = z.object({
 
 type BuildArgs = z.infer<typeof args_schema>;
 
-const styles_output_path = path.resolve(process.cwd(), "css/styles.css");
-const layout_output_path = path.resolve(process.cwd(), "css/layout.css");
+
+const script_dir = path.dirname(fileURLToPath(import.meta.url));
+const package_root = path.resolve(script_dir, "..", "..");
+const css_output_dir = path.resolve(package_root, "css");
+const styles_output_path = path.resolve(css_output_dir, "styles.css");
+const layout_output_path = path.resolve(css_output_dir, "layout.css");
 
 const write_css = (file_path: string, css: string): void => {
-    const dir = path.dirname(file_path);
-    fs.mkdirSync(dir, { recursive: true });
+    const directory = path.dirname(file_path);
+
+    if (!fs.existsSync(directory)) {
+        fs.mkdirSync(directory, { recursive: true })
+    }
+
     fs.writeFileSync(file_path, css, { encoding: "utf8" });
 };
 
@@ -56,8 +65,8 @@ const main = (): void => {
         for (const theme_key of theme_keys) {
             const css = themes_css_by_preset[theme_key];
             const theme_output_path = path.resolve(
-                process.cwd(),
-                `css/theme_${theme_key}.css`
+                css_output_dir,
+                `theme_${theme_key}.css`
             );
             write_css(theme_output_path, css);
         }
