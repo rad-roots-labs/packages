@@ -3,7 +3,7 @@ import type { ThemeKey, ThemeMode } from "@radroots/themes";
 import { type CallbackPromiseGeneric } from "@radroots/utils";
 import { writable } from "svelte/store";
 
-export const theme_mode = writable<ThemeMode>();
+export const theme_mode = writable<ThemeMode>("light");
 export const theme_key = writable<ThemeKey>();
 export const theme_reset = writable<boolean>(false);
 

@@ -25,7 +25,7 @@ export const i18n_conf = <T extends string>(opts: {
     loaders: Loader.LoaderModule[]
 }) => {
     const { default_locale: initLocale, translations, loaders } = opts;
-    const config: Config<LanguageConfig> = {
+    const config: Config<any> = {
         initLocale,
         fallbackLocale: initLocale,
         translations,
