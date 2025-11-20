@@ -1,4 +1,4 @@
-import { err_msg, type GeolocationCoordinatesPoint } from "@radroots/utils";
+import { err_msg, type GeolocationPoint } from "@radroots/utils";
 import type { Database } from "sql.js";
 import type { GeocoderReverseResult, IGeocoder, IGeocoderConnectResolve, IGeocoderCountryCenter, IGeocoderCountryCenterResolve, IGeocoderCountryListResolve, IGeocoderCountryListResult, IGeocoderCountryResolve, IGeocoderReverseOpts, IGeocoderReverseResolve } from "./types.js";
 import { parse_geocode_country_center_result, parse_geocode_country_list_result, parse_geocode_reverse_result } from "./utils.js";
@@ -30,7 +30,7 @@ export class Geocoder implements IGeocoder {
         };
     }
 
-    public async reverse(point: GeolocationCoordinatesPoint, opts?: IGeocoderReverseOpts): Promise<IGeocoderReverseResolve> {
+    public async reverse(point: GeolocationPoint, opts?: IGeocoderReverseOpts): Promise<IGeocoderReverseResolve> {
         try {
             if (!this._db) return err_msg(`*-db`);
             const limit = typeof opts?.limit === `boolean` ? `` : opts?.limit ? Math.round(opts.limit) : `1`;

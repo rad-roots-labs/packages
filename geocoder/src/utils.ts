@@ -1,4 +1,4 @@
-import type { GeolocationCoordinatesPoint } from "@radroots/utils";
+import type { GeolocationPoint } from "@radroots/utils";
 import type { GeocoderReverseResult, IGeocoderCountryListResult } from "./types.js";
 
 export const parse_geocode_reverse_result = (obj: any): GeocoderReverseResult | undefined => {
@@ -47,7 +47,7 @@ export const parse_geocode_country_list_result = (obj: any): IGeocoderCountryLis
     return undefined;
 };
 
-export const parse_geocode_country_center_result = (obj: any): GeolocationCoordinatesPoint | undefined => {
+export const parse_geocode_country_center_result = (obj: any): GeolocationPoint | undefined => {
     if (typeof obj !== `object` || !obj) return undefined;
     const { latitude_c: lat, longitude_c: lng } = obj;
     if (
