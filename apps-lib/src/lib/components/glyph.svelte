@@ -1,7 +1,7 @@
 <script lang="ts">
     import { glyph_style_map } from "$lib/styles/glyphs";
     import type { IGlyph } from "$lib/types/components";
-    import { fmt_cl } from "$lib/utils/lib";
+    import { fmt_cl } from "$lib/utils/app/lib";
 
     let { basis }: { basis: IGlyph } = $props();
 

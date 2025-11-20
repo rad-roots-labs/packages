@@ -1,7 +1,7 @@
 <script lang="ts">
     import { casl_i } from "$lib/stores/carousel";
     import type { IBasisOpt, IClOpt } from "$lib/types/ui";
-    import { fmt_cl } from "$lib/utils/lib";
+    import { fmt_cl } from "$lib/utils/app/lib";
     import type { Snippet } from "svelte";
 
     let {

@@ -1,11 +1,11 @@
-import { get_store } from "$lib/utils/lib";
+import { get_store } from "$lib/utils/app/lib";
 import { writable } from "svelte/store";
 
-export const carousel_active = writable<boolean>(false);
+export const casl_active = writable<boolean>(false);
 export const casl_i = writable<number>(0);
 export const casl_imax = writable<number>(0);
 
-const fn_carousel_num = (num_i: number, num_min: number) => {
+const create_carousel_num = (num_i: number, num_min: number) => {
     const store = writable<number>(num_i);
     return {
         subscribe: store.subscribe,
@@ -17,7 +17,7 @@ const fn_carousel_num = (num_i: number, num_min: number) => {
         }
     };
 }
-export const carousel_num = fn_carousel_num(1, 1);
+export const casl_num = create_carousel_num(1, 1);
 
 export const casl_inc = async (opts?: 'noflow'): Promise<void> => {
     const $casl_i = get_store(casl_i);

@@ -188,3 +188,46 @@ export const parse_file_path = (file_path: string): FilePath | undefined => {
         mime_type
     };
 };
+
+export const download_json = (data: any, filename: string): void => {
+    const json = JSON.stringify(data, null, 2);
+    const blob = new Blob([json], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const anchor = document.createElement("a");
+    anchor.href = url;
+    anchor.download = filename;
+    anchor.click();
+    URL.revokeObjectURL(url);
+};
+
+export const select_file = async (): Promise<File | undefined> => {
+    return new Promise((resolve) => {
+        const input = document.createElement("input");
+        input.type = "file";
+        input.accept = "*/*";
+        input.style.display = "none";
+        const cleanup = () => {
+            input.remove();
+        };
+        input.addEventListener("change", async () => {
+            const file = input.files?.[0];
+            cleanup();
+            resolve(file ?? undefined);
+        });
+        document.body.appendChild(input);
+        input.click();
+    });
+};
+
+export const get_file_text = async (file: File | null): Promise<string | undefined> => {
+    if (!file) return undefined;
+    const text = await file.text();
+    return text;
+};
+
+export const parse_file_json = async (file: File | null): Promise<unknown | undefined> => {
+    const contents = await get_file_text(file);
+    if (!contents) return undefined;
+    const parsed: unknown = JSON.parse(contents);
+    return parsed;
+};

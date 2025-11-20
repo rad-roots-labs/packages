@@ -1,6 +1,6 @@
 <script lang="ts">
     import type { IImagePath } from "$lib/types/ui";
-    import { get_context } from "$lib/utils/lib";
+    import { get_context } from "$lib/utils/app/lib";
     import ImageBlob from "./image-blob.svelte";
     import ImageSrc from "./image-src.svelte";
 

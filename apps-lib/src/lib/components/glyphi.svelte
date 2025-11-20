@@ -1,6 +1,6 @@
 <script lang="ts">
     import type { IGlyphI } from "$lib/types/components";
-    import { fmt_cl } from "$lib/utils/lib";
+    import { fmt_cl } from "$lib/utils/app/lib";
 
     const styles = {
         xs: `text-[16px]`,

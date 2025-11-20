@@ -1,6 +1,6 @@
 <script lang="ts">
     import type { IImageBlob } from "$lib/types/ui";
-    import { fmt_cl, to_arr_buf } from "$lib/utils/lib";
+    import { fmt_cl, to_arr_buf } from "$lib/utils/app/lib";
 
     let { basis }: { basis: IImageBlob } = $props();
 

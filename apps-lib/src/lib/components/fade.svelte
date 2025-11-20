@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { fmt_cl } from "$lib/utils/lib";
+    import { fmt_cl } from "$lib/utils/app/lib";
     import type { Snippet } from "svelte";
     import { cubicIn, cubicOut } from "svelte/easing";
     import { fade, type FadeParams } from "svelte/transition";
@@ -28,7 +28,7 @@
         easing: cubicOut,
         ...basis?.out,
     }}
-    class={`flex w-full overflow-hidden ${fmt_cl(basis?.classes)}`}
+    class={`flex ${fmt_cl(basis?.classes)}`}
 >
     {@render children()}
 </div>
