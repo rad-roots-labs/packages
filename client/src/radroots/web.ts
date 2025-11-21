@@ -1,6 +1,5 @@
 import { err_msg, type IHttpResponse, is_err_response, is_error_response } from '@radroots/utils';
 import { lib_nostr_event_sign_attest } from '@radroots/utils-nostr';
-import { _envLib } from '../_env.js';
 import { WebHttp } from '../http/web.js';
 import type { IClientRadroots, IClientRadrootsAccountsActivate, IClientRadrootsAccountsActivateResolve, IClientRadrootsAccountsCreate, IClientRadrootsAccountsCreateResolve, IClientRadrootsAccountsRequest, IClientRadrootsAccountsRequestResolve, IClientRadrootsMediaImageUpload, IClientRadrootsMediaImageUploadResolve } from "./types.js";
 
@@ -8,9 +7,11 @@ export class WebClientRadroots implements IClientRadroots {
     private _base_url: string
     private _http_client: WebHttp
 
-    constructor(base_url?: string) {
-        const url = base_url || _envLib.RADROOTS_API;
-        this._base_url = url.replaceAll(`/`, ``);
+    constructor(base_url: string) {
+        if (!base_url) throw new Error(`Missing base_url`);
+        const parsed_url = new URL(base_url);
+        const sanitized_base_url = `${parsed_url.origin}${parsed_url.pathname}`.replace(/\/+$/, ``);
+        this._base_url = sanitized_base_url;
         this._http_client = new WebHttp();
     }
 
