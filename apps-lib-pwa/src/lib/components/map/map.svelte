@@ -33,9 +33,9 @@
     bind:map
     class="{fmt_cl(basis?.classes)} relative h-full w-full"
     zoom={10}
-    style={cfg_map.styles.base[$theme_mode || "light"]}
+    style={cfg_map.styles.base[$theme_mode ?? "light"]}
     attributionControl={false}
-    {interactive}
+    interactive={!!interactive}
     {zoomOnDoubleClick}
 >
     {@render children()}

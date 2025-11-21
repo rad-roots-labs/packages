@@ -20,6 +20,7 @@ export { default as CarouselItem } from "./components/lib/carousel-item.svelte";
 export { default as Css } from "./components/lib/css.svelte";
 export { default as InputPwa } from "./components/lib/input-pwa.svelte";
 export { default as InputValue } from "./components/lib/input-value.svelte";
+export { default as LoadCircle } from "./components/lib/load-circle.svelte";
 export { default as LoadSymbol } from "./components/lib/load-symbol.svelte";
 export { default as LogoCircleSm } from "./components/lib/logo-circle-sm.svelte";
 export { default as LogoCircle } from "./components/lib/logo-circle.svelte";

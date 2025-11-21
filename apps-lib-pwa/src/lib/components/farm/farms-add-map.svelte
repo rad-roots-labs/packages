@@ -39,6 +39,7 @@
             if (!geoc) return;
             map_geoc = geoc;
             if (map && map_geop) map.setCenter([map_geop.lng, map_geop.lat]);
+            map?.setZoom(13);
             focus_map_marker();
         } catch (e) {
             handle_err(e, `on_mount`);

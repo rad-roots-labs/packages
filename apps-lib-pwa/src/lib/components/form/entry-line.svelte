@@ -6,7 +6,7 @@
         type LoadingDimension,
     } from "@radroots/apps-lib";
     import InputValue from "../lib/input-value.svelte";
-    import LoadSymbol from "../lib/load-symbol.svelte";
+    import LoadCircle from "../lib/load-circle.svelte";
     import EntryWrap from "./entry-wrap.svelte";
 
     let {
@@ -44,7 +44,7 @@
         <div
             class={`z-5 absolute right-0 top-0 flex flex-row h-full pr-4 justify-end items-center fade-in el-re`}
         >
-            <LoadSymbol
+            <LoadCircle
                 basis={{
                     dim: loading_dim,
                 }}

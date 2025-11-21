@@ -88,20 +88,10 @@
             input: {
                 placeholder: `${`${$ls(`icu.enter_*`, {
                     value: `${$ls(`common.farm_size`)}`.toLowerCase(),
-                })}`} ${`${$ls(`units.area.${val_farmarea_unit}_pl`)}`.toLowerCase()}`,
+                })}`} ${`${$ls(
+                    `units.area.${val_farmarea_unit}_pl`,
+                )}`.toLowerCase()}`,
                 field: form_fields.farm_size,
-            },
-        }}
-    />
-    <FormLineLedger
-        bind:value={val_farmcontact}
-        basis={{
-            id: `farm_contact`,
-            label: `${$ls(`common.farm_contact`)}`,
-            input: {
-                placeholder: `${$ls(`icu.enter_*`, {
-                    value: `${$ls(`common.contact_name`)}`.toLowerCase(),
-                })}`,
             },
         }}
     />
