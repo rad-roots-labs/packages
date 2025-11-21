@@ -18,6 +18,7 @@ export * from "./utils/i18n.js";
 export * from "./utils/keyval/idb.js";
 export * from "./utils/keyval/lib.js";
 export * from "./utils/nostr/lib.js";
+export * from "./utils/nostr/ndk.js";
 export { default as Fade } from "./components/fade.svelte";
 export { default as Flex } from "./components/flex.svelte";
 export { default as Glyph } from "./components/glyph.svelte";
