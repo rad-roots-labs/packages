@@ -21,7 +21,7 @@ export type IMapMarkerArea = {
     no_drag?: boolean;
 }
 
-export type IGlyphCircle = {
+export type IButtonGlyphCircle = {
     classes_wrap: string;
     glyph: IGlyph
 };
