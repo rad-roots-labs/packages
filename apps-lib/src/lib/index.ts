@@ -26,4 +26,5 @@ export { default as Glyphi } from "./components/glyphi.svelte";
 export { default as ImageBlob } from "./components/image-blob.svelte";
 export { default as ImagePath } from "./components/image-path.svelte";
 export { default as ImageSrc } from "./components/image-src.svelte";
+export { default as InputExt } from "./components/input-ext.svelte";
 export { default as Input } from "./components/input.svelte";
