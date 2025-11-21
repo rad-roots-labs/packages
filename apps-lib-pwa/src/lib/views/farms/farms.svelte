@@ -6,7 +6,7 @@
     import LayoutView from "$lib/components/layout/layout-view.svelte";
     import PageToolbar from "$lib/components/navigation/page-toolbar.svelte";
     import type { IViewBasis } from "$lib/types/views";
-    import type { IViewFarmsData } from "$lib/types/views/farm";
+    import type { IViewFarmsData } from "$lib/types/views/farms";
     import {
         Fade,
         get_context,

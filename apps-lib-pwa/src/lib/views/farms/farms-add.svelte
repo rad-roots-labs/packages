@@ -8,7 +8,7 @@
     import CarouselItem from "$lib/components/lib/carousel-item.svelte";
     import PageToolbar from "$lib/components/navigation/page-toolbar.svelte";
     import { app_platform } from "$lib/stores/app";
-    import type { IViewFarmsAddSubmission } from "$lib/types/views/farm";
+    import type { IViewFarmsAddSubmission } from "$lib/types/views/farms";
     import { schema_view_farms_add_submission } from "$lib/utils/farm/schema";
     import { focus_map_marker } from "$lib/utils/map";
     import {

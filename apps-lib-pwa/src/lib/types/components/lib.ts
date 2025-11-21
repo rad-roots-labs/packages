@@ -26,10 +26,6 @@ export type IGlyphCircle = {
     glyph: IGlyph
 };
 
-export type IFloatPage = {
-    posx: Omit<GeometryScreenPositionHorizontal, "center">;
-};
-
 export type IButtonNavRound = ICb & IDisabledOpt & ILoadingOpt & IGlyphKey;
 
 export type CarouselMouseEvent = MouseEvent & {
@@ -54,4 +50,8 @@ export type ICarouselItem<T extends string> = IClOpt & {
 
 export type ILoadCircle = IClOpt & {
     dim?: LoadingDimension;
+};
+
+export type IFloatPage = {
+    posx: Omit<GeometryScreenPositionHorizontal, "center">;
 };

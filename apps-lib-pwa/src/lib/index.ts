@@ -3,6 +3,7 @@ export { default as ButtonLabelDashed } from "./components/button/button-label-d
 export { default as ButtonLayoutBottom } from "./components/button/button-layout-bottom.svelte";
 export { default as ButtonLayoutPair } from "./components/button/button-layout-pair.svelte";
 export { default as ButtonLayout } from "./components/button/button-layout.svelte";
+export { default as ButtonRoundNav } from "./components/button/button-round-nav.svelte";
 export { default as ButtonSimple } from "./components/button/button-simple.svelte";
 export { default as FarmsAddDetail } from "./components/farm/farms-add-detail.svelte";
 export { default as FarmsAddMap } from "./components/farm/farms-add-map.svelte";
@@ -18,6 +19,7 @@ export { default as LayoutWindow } from "./components/layout/layout-window.svelt
 export { default as CarouselContainer } from "./components/lib/carousel-container.svelte";
 export { default as CarouselItem } from "./components/lib/carousel-item.svelte";
 export { default as Css } from "./components/lib/css.svelte";
+export { default as FloatPage } from "./components/lib/float-page.svelte";
 export { default as InputPwa } from "./components/lib/input-pwa.svelte";
 export { default as InputValue } from "./components/lib/input-value.svelte";
 export { default as LoadCircle } from "./components/lib/load-circle.svelte";
@@ -31,9 +33,11 @@ export { default as WrapBorder } from "./components/lib/wrap-border.svelte";
 export { default as MapMarkerAreaDisplay } from "./components/map/map-marker-area-display.svelte";
 export { default as MapMarkerArea } from "./components/map/map-marker-area.svelte";
 export { default as Map } from "./components/map/map.svelte";
+export { default as ImageUploadPhotoAdd } from "./components/media/image-upload-photo-add.svelte";
 export { default as NavigationTabs } from "./components/navigation/navigation-tabs.svelte";
 export { default as PageHeader } from "./components/navigation/page-header.svelte";
 export { default as PageToolbar } from "./components/navigation/page-toolbar.svelte";
 export { default as FarmsAdd } from "./views/farms/farms-add.svelte";
 export { default as Farms } from "./views/farms/farms.svelte";
+export { default as Profile } from "./views/profile/profile.svelte";
 export { default as Home } from "./views/root/home.svelte";

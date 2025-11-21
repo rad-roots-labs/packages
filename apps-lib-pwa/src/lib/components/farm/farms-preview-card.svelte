@@ -1,7 +1,7 @@
 <script lang="ts">
     import MapMarkerArea from "$lib/components/map/map-marker-area.svelte";
     import Map from "$lib/components/map/map.svelte";
-    import type { FarmExtended } from "$lib/types/views/farm";
+    import type { FarmExtended } from "$lib/types/views/farms";
     import { get_context } from "@radroots/apps-lib";
     import {
         fmt_geolocation_address,
