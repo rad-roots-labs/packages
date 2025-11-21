@@ -99,14 +99,17 @@ export const http_fetch_opts = (opts: IHttpOpts): { url: string; options: Reques
     }
 };
 
-export const lib_http_parse_response = async (res: Response): Promise<Promise<IHttpResponse>> => {
-    let data: any = null;
+export const lib_http_parse_response = async (res: Response): Promise<IHttpResponse> => {
+    let data: unknown = null;
     try {
-        const res_json = await res.json();
-        if (typeof res_json === `string`) data = JSON.parse(res_json);
-        else data = res_json;
+        const res_json = await res.clone().json();
+        data = typeof res_json === `string` ? JSON.parse(res_json) : res_json;
     } catch { }
-    if (!data) data = await res.text();
+    if (!data) {
+        try {
+            data = await res.text();
+        } catch { }
+    }
     return {
         status: res.status,
         url: res.url,
