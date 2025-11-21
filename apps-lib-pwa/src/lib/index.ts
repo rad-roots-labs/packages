@@ -39,5 +39,6 @@ export { default as PageHeader } from "./components/navigation/page-header.svelt
 export { default as PageToolbar } from "./components/navigation/page-toolbar.svelte";
 export { default as FarmsAdd } from "./views/farms/farms-add.svelte";
 export { default as Farms } from "./views/farms/farms.svelte";
+export { default as ProfileEdit } from "./views/profile/profile-edit.svelte";
 export { default as Profile } from "./views/profile/profile.svelte";
 export { default as Home } from "./views/root/home.svelte";
