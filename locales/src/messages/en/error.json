@@ -61,7 +61,7 @@
         "no_relays": "There are no relays connected"
     },
     "radroots": {
-        "profile_registered": "This profile is already registered"
+        "account_registered": "This profile is already registered"
     },
     "util": {
         "parse_file_path_undefined": "There was an error reading the file path"
