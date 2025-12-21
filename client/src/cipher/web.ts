@@ -1,30 +1,26 @@
-import { IdbClientConfig } from "@radroots/utils";
+import { as_array_buffer, type IdbClientConfig } from "@radroots/utils";
 import { createStore, del as idb_del, get as idb_get, set as idb_set, type UseStore } from "idb-keyval";
+import { type WebAesGcmCipherConfig } from "../keystore/web.js";
+import { cl_cipher_error } from "./error.js";
+import type { IClientCipher } from "./types.js";
 
-function as_array_buffer(u8: Uint8Array): ArrayBuffer {
-    if (u8.byteOffset === 0 && u8.buffer instanceof ArrayBuffer && u8.byteLength === u8.buffer.byteLength) {
-        return u8.buffer;
-    }
-    return u8.slice().buffer;
-}
-
-const DEFAULT_DB_NAME = "radroots-aes-gcm-keystore";
-const DEFAULT_STORE_NAME = "default";
-const DEFAULT_KEY_NAME = "radroots.aes-gcm.key";
-const DEFAULT_ALGORITHM_NAME = "AES-GCM";
-const DEFAULT_KEY_LENGTH = 256;
-const DEFAULT_IV_LENGTH = 12;
-const DEFAULT_KEY_USAGES: KeyUsage[] = ["encrypt", "decrypt"];
-
-export type WebAesGcmCipherConfig = {
-    idb_config?: Partial<IdbClientConfig>;
-    key_name?: string;
-    key_length?: number;
-    iv_length?: number;
-    algorithm?: string;
+const DEFAULT_IDB_CONFIG: IdbClientConfig = {
+    database: "radroots-aes-gcm-keystore",
+    store: "default"
 };
 
-export class WebAesGcmCipher {
+const DEFAULT_WEB_AES_GCM_CONFIG = {
+    key_name: "radroots.aes-gcm.key",
+    algorithm: "AES-GCM",
+    key_length: 256,
+    iv_length: 12
+} as const;
+
+const DEFAULT_KEY_USAGES: KeyUsage[] = ["encrypt", "decrypt"];
+
+export interface IWebAesGcmCipher extends IClientCipher { }
+
+export class WebAesGcmCipher implements IWebAesGcmCipher {
     private readonly db_name: string;
     private readonly store_name: string;
     private readonly key_name: string;
@@ -38,20 +34,20 @@ export class WebAesGcmCipher {
 
     constructor(config?: WebAesGcmCipherConfig) {
         const idb_config = config?.idb_config ?? {};
-        this.db_name = idb_config.database ?? DEFAULT_DB_NAME;
-        this.store_name = idb_config.store ?? DEFAULT_STORE_NAME;
-        this.key_name = config?.key_name ?? DEFAULT_KEY_NAME;
-        this.algorithm_name = config?.algorithm ?? DEFAULT_ALGORITHM_NAME;
+        this.db_name = idb_config.database ?? DEFAULT_IDB_CONFIG.database;
+        this.store_name = idb_config.store ?? DEFAULT_IDB_CONFIG.store;
+        this.key_name = config?.key_name ?? DEFAULT_WEB_AES_GCM_CONFIG.key_name;
+        this.algorithm_name = config?.algorithm ?? DEFAULT_WEB_AES_GCM_CONFIG.algorithm;
         this.key_usages = DEFAULT_KEY_USAGES;
-        this.iv_length = config?.iv_length ?? DEFAULT_IV_LENGTH;
-        this.key_length = config?.key_length ?? DEFAULT_KEY_LENGTH;
+        this.iv_length = Number.isInteger(config?.iv_length) && (config?.iv_length ?? 0) > 0
+            ? config?.iv_length ?? DEFAULT_WEB_AES_GCM_CONFIG.iv_length
+            : DEFAULT_WEB_AES_GCM_CONFIG.iv_length;
+        this.key_length = Number.isInteger(config?.key_length) && (config?.key_length ?? 0) > 0
+            ? config?.key_length ?? DEFAULT_WEB_AES_GCM_CONFIG.key_length
+            : DEFAULT_WEB_AES_GCM_CONFIG.key_length;
 
-        if (typeof indexedDB === "undefined") {
-            throw new Error("error.client.keystore.idb_undefined");
-        }
-        if (!globalThis.crypto || !globalThis.crypto.subtle) {
-            throw new Error("error.client.keystore.crypto_undefined");
-        }
+        if (typeof indexedDB === "undefined") throw new Error(cl_cipher_error.idb_undefined);
+        if (!globalThis.crypto || !globalThis.crypto.subtle) throw new Error(cl_cipher_error.crypto_undefined);
 
         this.store = createStore(this.db_name, this.store_name);
         this.cached_key = null;
@@ -102,29 +98,20 @@ export class WebAesGcmCipher {
 
     private async resolve_persisted_key(): Promise<CryptoKey | null> {
         const stored = await idb_get(this.key_name, this.store);
-        if (!stored) {
-            return null;
-        }
-        if (stored instanceof CryptoKey) {
-            return stored;
-        }
-        if (stored instanceof Uint8Array) {
-            return this.import_key(stored);
-        }
+        if (!stored) return null;
+        if (stored instanceof CryptoKey) return stored;
+        if (stored instanceof Uint8Array) return this.import_key(stored);
         if (ArrayBuffer.isView(stored) && stored.buffer instanceof ArrayBuffer) {
-            const view = new Uint8Array(stored.buffer);
-            return this.import_key(view);
+            const slice = new Uint8Array(stored.buffer, stored.byteOffset, stored.byteLength);
+            const bytes = new Uint8Array(slice);
+            return this.import_key(bytes);
         }
         return null;
     }
 
     private async load_key(): Promise<CryptoKey> {
-        if (this.cached_key) {
-            return this.cached_key;
-        }
-        if (this.key_promise) {
-            return this.key_promise;
-        }
+        if (this.cached_key) return this.cached_key;
+        if (this.key_promise) return this.key_promise;
         this.key_promise = this.inner_load_key();
         const key = await this.key_promise;
         this.cached_key = key;
@@ -134,9 +121,7 @@ export class WebAesGcmCipher {
 
     private async inner_load_key(): Promise<CryptoKey> {
         const existing = await this.resolve_persisted_key();
-        if (existing) {
-            return existing;
-        }
+        if (existing) return existing;
         return this.generate_and_persist_key();
     }
 
@@ -147,9 +132,7 @@ export class WebAesGcmCipher {
     }
 
     public async encrypt(data: Uint8Array): Promise<Uint8Array> {
-        if (data.byteLength === 0) {
-            return data;
-        }
+        if (data.byteLength === 0) return data;
         const key = await this.load_key();
         const iv = crypto.getRandomValues(new Uint8Array(this.iv_length));
         const ciphertext_buffer = await crypto.subtle.encrypt(
@@ -165,9 +148,7 @@ export class WebAesGcmCipher {
     }
 
     public async decrypt(blob: Uint8Array): Promise<Uint8Array> {
-        if (blob.byteLength <= this.iv_length) {
-            throw new Error("error.client.keystore.invalid_ciphertext");
-        }
+        if (blob.byteLength <= this.iv_length) throw new Error(cl_cipher_error.invalid_ciphertext);
         const key = await this.load_key();
         const iv = blob.slice(0, this.iv_length);
         const ciphertext = blob.slice(this.iv_length);
@@ -179,7 +160,7 @@ export class WebAesGcmCipher {
             );
             return new Uint8Array(plaintext);
         } catch {
-            throw new Error("error.client.keystore.decrypt_failure");
+            throw new Error(cl_cipher_error.decrypt_failure);
         }
     }
 }

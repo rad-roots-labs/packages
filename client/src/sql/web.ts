@@ -1,5 +1,5 @@
 import { IdbClientConfig } from "@radroots/utils";
-import { del as idb_del } from "idb-keyval";
+import { del as idb_del, get as idb_get, set as idb_set } from "idb-keyval";
 import type { BindParams, Database, SqlJsStatic, SqlValue, Statement } from "sql.js";
 import init_sql_js from "sql.js/dist/sql-wasm.js";
 import { WebAesGcmCipher } from "../cipher/web.js";
@@ -20,33 +20,33 @@ class WebSqlEngineEncryptedStore implements IClientSqlEncryptedStore {
         });
     }
 
-    async load() {
-        if (typeof indexedDB === "undefined") {
-            return null;
-        }
-        const { get } = await import("idb-keyval");
-        const data = await get(this.db_key);
-        if (data instanceof Uint8Array) {
-            return this.cipher.decrypt(data);
-        }
+    async load(): Promise<Uint8Array | null> {
+        if (typeof indexedDB === "undefined") return null;
+        const data = await idb_get(this.db_key);
+        if (data instanceof Uint8Array) return this.cipher.decrypt(data);
         return null;
     }
 
-    async save(bytes: Uint8Array) {
-        if (typeof indexedDB === "undefined") {
-            return;
-        }
-        const { set } = await import("idb-keyval");
+    async save(bytes: Uint8Array): Promise<void> {
+        if (typeof indexedDB === "undefined") return;
         const enc = await this.cipher.encrypt(bytes);
-        await set(this.db_key, enc);
+        await idb_set(this.db_key, enc);
     }
 
-    async remove() {
+    async remove(): Promise<void> {
         await idb_del(this.db_key);
     }
 }
 
-export class WebSqlEngine {
+export interface IWebSqlEngine {
+    close(): Promise<void>;
+    purge_storage(): Promise<void>;
+    exec(sql: string, params: SqlJsParams): SqlJsExecOutcome;
+    query(sql: string, params: SqlJsParams): SqlJsResultRow[];
+    export_bytes(): Uint8Array;
+}
+
+export class WebSqlEngine implements IWebSqlEngine {
     private save_timer: number | undefined;
 
     private constructor(
@@ -83,9 +83,7 @@ export class WebSqlEngine {
     }
 
     private schedule_persist(): void {
-        if (this.save_timer) {
-            return;
-        }
+        if (this.save_timer) return;
         this.save_timer = self.setTimeout(async () => {
             const bytes = this.db.export();
             await this.store.save(bytes);
@@ -120,11 +118,8 @@ export class WebSqlEngine {
 
     private bind(st: Statement, params: SqlJsParams): void {
         let bind_params: BindParams;
-        if (Array.isArray(params)) {
-            bind_params = [...params];
-        } else {
-            bind_params = { ...(params as Readonly<Record<string, SqlValue>>) };
-        }
+        if (Array.isArray(params)) bind_params = [...params];
+        else bind_params = { ...(params as Readonly<Record<string, SqlValue>>) };
         st.bind(bind_params);
     }
 
@@ -137,9 +132,7 @@ export class WebSqlEngine {
             const idx = col_names.indexOf("last_insert_rowid()");
             if (idx >= 0) {
                 const v = st.get()[idx];
-                if (typeof v === "number") {
-                    last_id = v;
-                }
+                if (typeof v === "number") last_id = v;
             }
         }
 
@@ -165,9 +158,7 @@ export class WebSqlEngine {
         while (st.step()) {
             const row = st.get();
             const obj: SqlJsResultRow = {};
-            for (let i = 0; i < names.length; i++) {
-                obj[names[i]] = row[i];
-            }
+            for (let i = 0; i < names.length; i++) obj[names[i]] = row[i];
             out.push(obj);
         }
 

@@ -1,4 +1,5 @@
-import { err_msg } from "@radroots/utils";
+import { err_msg, type IClientGeolocationPosition, type ResolveErrorMsg } from "@radroots/utils";
+import { cl_geolocation_error, type ClientGeolocationErrorMessage } from "./error.js";
 import type { IClientGeolocation } from "./types.js";
 
 type GeoPolicyAllows = boolean | "unknown";
@@ -85,27 +86,27 @@ function map_error_key(
 ) {
     if (error.code === 1) {
         if (debug.policy_allows === false) {
-            return "error.client.geolocation.blocked_by_permissions_policy";
+            return cl_geolocation_error.blocked_by_permissions_policy;
         }
-        return "error.client.geolocation.permission_denied";
+        return cl_geolocation_error.permission_denied;
     }
 
     if (error.code === 2) {
-        return "error.client.geolocation.position_unavailable";
+        return cl_geolocation_error.position_unavailable;
     }
 
     if (error.code === 3) {
-        return "error.client.geolocation.timeout";
+        return cl_geolocation_error.timeout;
     }
 
-    return "error.client.geolocation.unknown_error";
+    return cl_geolocation_error.unknown_error;
 }
 
-export class WebGeolocation implements IClientGeolocation {
-    public async current() {
-        if (!navigator.geolocation) {
-            return err_msg("error.client.geolocation.location_unavailable");
-        }
+export interface IWebGeolocation extends IClientGeolocation {}
+
+export class WebGeolocation implements IWebGeolocation {
+    public async current(): Promise<ResolveErrorMsg<IClientGeolocationPosition, ClientGeolocationErrorMessage>> {
+        if (!navigator.geolocation) return err_msg(cl_geolocation_error.location_unavailable);
 
         const policy_allows = read_policy_allows_geolocation(document);
         const permission_state = await read_permission_state_geolocation(navigator);
@@ -114,7 +115,7 @@ export class WebGeolocation implements IClientGeolocation {
 
         if (policy_allows === false) {
             log_geo_debug("[geolocation] blocked_by_policy", base_debug);
-            return err_msg("error.client.geolocation.blocked_by_permissions_policy");
+            return err_msg(cl_geolocation_error.blocked_by_permissions_policy);
         }
 
         try {
@@ -140,7 +141,7 @@ export class WebGeolocation implements IClientGeolocation {
             }
 
             log_geo_debug("[geolocation] unknown_exception", base_debug);
-            return err_msg("error.client.geolocation.unknown_error");
+            return err_msg(cl_geolocation_error.unknown_error);
         }
     }
 }

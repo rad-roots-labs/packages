@@ -5,6 +5,11 @@
     "license": "GPLv3",
     "type": "module",
     "exports": {
+        ".": {
+            "types": "./dist/types/index.d.ts",
+            "import": "./dist/esm/index.js",
+            "require": "./dist/cjs/index.js"
+        },
         "./cipher": {
             "types": "./dist/types/cipher/index.d.ts",
             "import": "./dist/esm/cipher/index.js",
@@ -66,9 +71,10 @@
         "watch": "tsc -w"
     },
     "dependencies": {
+        "@radroots/tangle-schema-bindings": "*",
+        "@radroots/tangle-sql-wasm": "*",
         "@radroots/utils": "*",
         "@radroots/utils-nostr": "*",
-        "@radroots/tangle-sql-wasm": "*",
         "idb": "^8.0.3",
         "idb-keyval": "^6.2.1",
         "sql.js": "1.13.0"

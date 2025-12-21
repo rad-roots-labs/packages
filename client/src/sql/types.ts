@@ -23,7 +23,7 @@ export type SqlJsValue = SqlValue;
 export type SqlJsParams = Readonly<Record<string, SqlJsValue>> | ReadonlyArray<SqlJsValue>;
 
 
-export type IClientSqlEncryptedStore = {
+export interface IClientSqlEncryptedStore {
     load(): Promise<Uint8Array | null>;
     save(bytes: Uint8Array): Promise<void>;
     remove(): Promise<void>;

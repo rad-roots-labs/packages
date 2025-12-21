@@ -14,23 +14,23 @@ export type IClientDatastoreEntriesResolve = ResolveError<ResultsList<[string, I
 export type IClientDatastoreKeyMap = Record<string, string>;
 export type IClientDatastoreKeyParamMap = Record<string, (...args: string[]) => string>;
 
-export type IClientDatastore<
+export interface IClientDatastore<
     TKeyMap extends IClientDatastoreKeyMap,
     TKeyParamMap extends IClientDatastoreKeyParamMap,
     TKeyObjMap extends IClientDatastoreKeyMap,
-> = {
+> {
     init(): Promise<ResolveError<void>>;
-    get_config(): IdbClientConfig
-    set(key: keyof TKeyMap, value: string): Promise<ResolveError<ResultPass>>;
+    get_config(): IdbClientConfig;
+    set(key: keyof TKeyMap, value: string): Promise<ResolveError<ResultObj<string>>>;
     get(key: keyof TKeyMap): Promise<ResolveError<ResultObj<string>>>;
-    set_obj(key: keyof TKeyObjMap, value: TKeyObjMap): Promise<ResolveError<ResultPass>>;
-    update_obj(key: keyof TKeyObjMap, value: Partial<TKeyObjMap>): Promise<ResolveError<ResultPass>>;
+    set_obj(key: keyof TKeyObjMap, value: TKeyObjMap): Promise<ResolveError<ResultObj<TKeyObjMap>>>;
+    update_obj(key: keyof TKeyObjMap, value: Partial<TKeyObjMap>): Promise<ResolveError<ResultObj<TKeyObjMap>>>;
     get_obj<T>(key: keyof TKeyObjMap): Promise<ResolveError<ResultObj<T>>>;
     del_obj(key: keyof TKeyObjMap): Promise<ResolveError<ResultObj<string>>>;
     del(key: keyof TKeyMap): Promise<IClientDatastoreDelResolve>;
     del_pref(key_prefix: string): Promise<IClientDatastoreDelPrefResolve>;
-    setp<K extends keyof TKeyParamMap>(key: K, key_param: Parameters<TKeyParamMap[K]>[0], value: string): Promise<ResolveError<ResultPass>>;
+    setp<K extends keyof TKeyParamMap>(key: K, key_param: Parameters<TKeyParamMap[K]>[0], value: string): Promise<ResolveError<ResultObj<string>>>;
     getp<K extends keyof TKeyParamMap>(key: K, key_param: Parameters<TKeyParamMap[K]>[0]): Promise<ResolveError<ResultObj<string>>>;
     keys(): Promise<ResolveError<ResultsList<string>>>;
     reset(): Promise<ResolveError<ResultPass>>;
-};
+}

@@ -1,8 +1,10 @@
-import { handle_err } from "@radroots/utils";
-import type { IClientFs } from "./types.js";
+import { handle_err, type ResolveError } from "@radroots/utils";
+import type { IClientFs, IClientFsFileInfo, IClientFsOpenResult, IClientFsReadBinResolve } from "./types.js";
 
-export class WebFs implements IClientFs {
-    public async exists(path: string) {
+export interface IWebFs extends IClientFs {}
+
+export class WebFs implements IWebFs {
+    public async exists(path: string): Promise<ResolveError<boolean>> {
         try {
             const res = await fetch(path, { method: 'HEAD' });
             return res.ok;
@@ -11,11 +13,11 @@ export class WebFs implements IClientFs {
         }
     }
 
-    public async open(path: string) {
+    public async open(path: string): Promise<ResolveError<IClientFsOpenResult>> {
         return { path };
     }
 
-    public async info(path: string) {
+    public async info(path: string): Promise<ResolveError<IClientFsFileInfo>> {
         try {
             const res = await fetch(path, { method: 'HEAD' });
             const size_header = res.headers.get('Content-Length');
@@ -26,7 +28,7 @@ export class WebFs implements IClientFs {
         }
     }
 
-    public async read_bin(path: string) {
+    public async read_bin(path: string): Promise<IClientFsReadBinResolve> {
         try {
             const res = await fetch(path);
             const buf = await res.arrayBuffer();

@@ -2,19 +2,19 @@ import type { ResolveError, ResultObj, ResultPass, ResultPublicKey, ResultSecret
 
 export type IClientKeystoreValue = string | null;
 
-export type IClientKeystore = {
+export interface IClientKeystore {
     add(key: string, value: string): Promise<ResolveError<ResultObj<string>>>;
     remove(key: string): Promise<ResolveError<ResultObj<string>>>;
-    read(key?: string | null): Promise<ResolveError<ResultObj<IClientKeystoreValue>>>;
-    keys(key: string): Promise<ResolveError<ResultsList<string>>>;
+    read(key?: string | null): Promise<ResolveError<ResultObj<string>>>;
+    keys(): Promise<ResolveError<ResultsList<string>>>;
     reset(): Promise<ResolveError<ResultPass>>;
-};
+}
 
-export type IClientKeystoreNostr = {
+export interface IClientKeystoreNostr {
     generate(): Promise<ResolveError<ResultPublicKey>>;
     add(secret_key: string): Promise<ResolveError<ResultPublicKey>>;
     read(public_key: string): Promise<ResolveError<ResultSecretKey>>;
     keys(): Promise<ResolveError<ResultsList<string>>>;
     remove(public_key: string): Promise<ResolveError<ResultObj<string>>>;
     reset(): Promise<ResolveError<ResultPass>>;
-};
+}

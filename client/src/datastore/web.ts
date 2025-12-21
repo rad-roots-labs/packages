@@ -1,31 +1,33 @@
-import { err_msg, handle_err, IdbClientConfig, ResolveError, ResultObj } from "@radroots/utils";
-import {
-    createStore,
-    clear as idb_clear,
-    del as idb_del,
-    get as idb_get,
-    keys as idb_keys,
-    set as idb_set,
-    type UseStore
-} from "idb-keyval";
+import { err_msg, handle_err, type IdbClientConfig, type ResolveError, type ResultObj, type ResultPass, type ResultsList } from "@radroots/utils";
+import { createStore, clear as idb_clear, del as idb_del, get as idb_get, keys as idb_keys, set as idb_set, type UseStore } from "idb-keyval";
+import { cl_datastore_error } from "./error.js";
 import type {
     IClientDatastore,
     IClientDatastoreDelPrefResolve,
     IClientDatastoreDelResolve,
-    IClientDatastoreGetPResolve,
-    IClientDatastoreGetResolve,
     IClientDatastoreKeyMap,
-    IClientDatastoreKeyParamMap,
-    IClientDatastoreKeysResolve,
-    IClientDatastoreSetPResolve,
-    IClientDatastoreSetResolve
+    IClientDatastoreKeyParamMap
 } from "./types.js";
+
+const DEFAULT_IDB_CONFIG: IdbClientConfig = {
+    database: "radroots-web-datastore",
+    store: "default",
+};
+
+const is_record = (value: unknown): value is Record<string, unknown> =>
+    typeof value === "object" && value !== null && !Array.isArray(value);
+
+export interface IWebDatastore<
+    Tk extends IClientDatastoreKeyMap,
+    Tp extends IClientDatastoreKeyParamMap,
+    TkO extends IClientDatastoreKeyMap,
+> extends IClientDatastore<Tk, Tp, TkO> { }
 
 export class WebDatastore<
     Tk extends IClientDatastoreKeyMap,
     Tp extends IClientDatastoreKeyParamMap,
     TkO extends IClientDatastoreKeyMap,
-> implements IClientDatastore<Tk, Tp, TkO> {
+> implements IWebDatastore<Tk, Tp, TkO> {
     private db_name: string;
     private store_name: string;
     private store: UseStore | null = null;
@@ -34,8 +36,8 @@ export class WebDatastore<
     private _key_obj_map: TkO;
 
     constructor(key_map: Tk, key_param_map: Tp, key_obj_map: TkO, config?: Partial<IdbClientConfig>) {
-        this.db_name = config?.database || "radroots-web-datastore";
-        this.store_name = config?.store || "default";
+        this.db_name = config?.database ?? DEFAULT_IDB_CONFIG.database;
+        this.store_name = config?.store ?? DEFAULT_IDB_CONFIG.store;
         this.store = null;
         this._key_map = key_map;
         this._key_param_map = key_param_map;
@@ -44,7 +46,7 @@ export class WebDatastore<
 
     private get_store(): UseStore {
         if (!this.store) {
-            if (typeof indexedDB === "undefined") throw new Error("error.client.keystore.idb_undefined");
+            if (typeof indexedDB === "undefined") throw new Error(cl_datastore_error.idb_undefined);
             this.store = createStore(this.db_name, this.store_name);
         }
         return this.store;
@@ -57,7 +59,7 @@ export class WebDatastore<
         };
     }
 
-    public async init() {
+    public async init(): Promise<ResolveError<void>> {
         try {
             this.get_store();
         } catch (e) {
@@ -65,19 +67,19 @@ export class WebDatastore<
         }
     }
 
-    public async set(key: keyof Tk, value: string): Promise<IClientDatastoreSetResolve> {
+    public async set(key: keyof Tk, value: string): Promise<ResolveError<ResultObj<string>>> {
         try {
             await idb_set(this._key_map[key], value, this.get_store());
-            return { pass: true };
+            return { result: value };
         } catch (e) {
             return handle_err(e);
         }
     }
 
-    public async get(key: keyof Tk): Promise<IClientDatastoreGetResolve> {
+    public async get(key: keyof Tk): Promise<ResolveError<ResultObj<string>>> {
         try {
             const value = await idb_get(this._key_map[key], this.get_store());
-            if (!value) return err_msg("error.client.datastore.no_result")
+            if (!value) return err_msg(cl_datastore_error.no_result);
             return { result: value };
         } catch (e) {
             return handle_err(e);
@@ -93,26 +95,27 @@ export class WebDatastore<
         }
     }
 
-    public async set_obj<T>(key: keyof TkO, value: T): Promise<IClientDatastoreSetResolve> {
+    public async set_obj<T extends TkO>(key: keyof TkO, value: T): Promise<ResolveError<ResultObj<TkO>>> {
         try {
             await idb_set(this._key_obj_map[key], JSON.stringify(value), this.get_store());
-            return { pass: true };
+            return { result: value };
         } catch (e) {
             return handle_err(e);
         }
     }
 
-    public async update_obj<T>(key: keyof TkO, value: Partial<T>): Promise<IClientDatastoreSetResolve> {
+    public async update_obj<T extends TkO>(key: keyof TkO, value: Partial<T>): Promise<ResolveError<ResultObj<TkO>>> {
         try {
             const k = this._key_obj_map[key];
+            const obj_curr: Record<string, unknown> = {};
             const curr = await idb_get(k, this.get_store());
-            const obj_u: any = {}
-            if (curr) for (const [curr_key, curr_val] of Object.entries(JSON.parse(curr))) if (curr_val) obj_u[curr_key] = curr_val;
-            await idb_set(k, JSON.stringify({
-                ...obj_u,
-                ...value
-            }), this.get_store());
-            return { pass: true };
+            if (curr) {
+                const parsed: unknown = JSON.parse(curr);
+                if (is_record(parsed)) for (const [curr_key, curr_val] of Object.entries(parsed)) if (curr_val) obj_curr[curr_key] = curr_val;
+            }
+            const obj: T = { ...obj_curr, ...value } as any;
+            await idb_set(k, JSON.stringify(obj), this.get_store());
+            return { result: obj };
         } catch (e) {
             return handle_err(e);
         }
@@ -121,14 +124,14 @@ export class WebDatastore<
     public async get_obj<T>(key: keyof TkO): Promise<ResolveError<ResultObj<T>>> {
         try {
             const value = await idb_get(this._key_obj_map[key], this.get_store());
-            if (!value) return err_msg("error.client.datastore.no_result")
+            if (!value) return err_msg(cl_datastore_error.no_result);
             return { result: JSON.parse(value) };
         } catch (e) {
             return handle_err(e);
         }
     }
 
-    public async del_obj(key: keyof TkO): Promise<IClientDatastoreDelResolve> {
+    public async del_obj(key: keyof TkO): Promise<ResolveError<ResultObj<string>>> {
         try {
             await idb_del(this._key_obj_map[key], this.get_store());
             return { result: key.toString() };
@@ -141,10 +144,10 @@ export class WebDatastore<
         key: K,
         key_param: Parameters<Tp[K]>[0],
         value: string
-    ): Promise<IClientDatastoreSetPResolve> {
+    ): Promise<ResolveError<ResultObj<string>>> {
         try {
             await idb_set(this._key_param_map[key](key_param), value, this.get_store());
-            return { pass: true };
+            return { result: value };
         } catch (e) {
             return handle_err(e);
         }
@@ -153,10 +156,10 @@ export class WebDatastore<
     public async getp<K extends keyof Tp>(
         key: K,
         key_param: Parameters<Tp[K]>[0]
-    ): Promise<IClientDatastoreGetPResolve> {
+    ): Promise<ResolveError<ResultObj<string>>> {
         try {
             const value = await idb_get(this._key_param_map[key](key_param), this.get_store());
-            if (!value) return err_msg("error.client.datastore.no_result")
+            if (!value) return err_msg(cl_datastore_error.no_result);
             return { result: value };
         } catch (e) {
             return handle_err(e);
@@ -166,9 +169,7 @@ export class WebDatastore<
     public async del_pref(key_prefix: string): Promise<IClientDatastoreDelPrefResolve> {
         try {
             const all_keys = await idb_keys(this.get_store());
-            console.log(JSON.stringify(all_keys, null, 4), `all_keys`)
             const filtered_keys = all_keys.filter((k): k is string => (typeof k === "string" && k.startsWith(key_prefix)));
-            console.log(JSON.stringify(filtered_keys, null, 4), `filtered_keys`)
             for (const key of filtered_keys) {
                 await idb_del(key, this.get_store());
             }
@@ -178,7 +179,7 @@ export class WebDatastore<
         }
     }
 
-    public async keys(): Promise<IClientDatastoreKeysResolve> {
+    public async keys(): Promise<ResolveError<ResultsList<string>>> {
         try {
             const all_keys = await idb_keys(this.get_store());
             return { results: all_keys.filter((k): k is string => typeof k === "string") };
@@ -187,7 +188,7 @@ export class WebDatastore<
         }
     }
 
-    public async reset() {
+    public async reset(): Promise<ResolveError<ResultPass>> {
         try {
             await idb_clear(this.get_store());
             return { pass: true } as const;

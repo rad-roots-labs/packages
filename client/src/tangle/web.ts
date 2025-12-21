@@ -220,7 +220,7 @@ export class WebTangleDatabase implements IClientTangleDatabase {
 
     async import_backup(backup: TangleDatabaseBackup): Promise<void> {
         await this.init();
-        await tangle_db_import_backup(this.serialize(backup));
+        tangle_db_import_backup(this.serialize(backup));
     }
 
     async farm_create(opts: IFarmCreate): Promise<IFarmCreateResolve | IError<string>> {
