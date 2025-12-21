@@ -28,9 +28,11 @@
     let map_center: GeolocationPointTuple = $state([0, 0]);
 
     onMount(async () => {
-        if (basis.location?.point)
+        map?.setZoom(13);
+        if (basis.location?.point) {
             map_center = parse_geol_point_tup(basis.location.point);
-        if (map) map.setCenter(map_center);
+            if (map_center && map) map.setCenter(map_center);
+        }
     });
 
     const map_geop = $derived(parse_tup_geop_point(map_center));
