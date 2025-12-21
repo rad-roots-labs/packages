@@ -1,4 +1,4 @@
-import { ValidationRegex } from "./types.js";
+import { ValidationRegex } from "../types/index.js";
 
 export type IModelsQueryValue = string | number | boolean | null;
 export type IModelsQueryBindValue = string | number | boolean | null;;

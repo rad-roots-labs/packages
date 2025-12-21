@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { zf_area_unit, zf_mass_unit } from "./validation/schemas.js";
+import { zf_area_unit, zf_mass_unit } from "../validation/schema.js";
 
 export type AreaUnit = z.infer<typeof zf_area_unit>;
 export const area_units: AreaUnit[] = [`ac`, `ha`, `ft2`, `m2`] as const;

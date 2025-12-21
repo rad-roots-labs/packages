@@ -1,4 +1,4 @@
-import { util_rxp } from "./validation/regex.js";
+import { util_rxp } from "../validation/regex.js";
 
 export type FiatCurrency = `usd` | `eur`;
 export const fiat_currencies: FiatCurrency[] = [`usd`, `eur`] as const;

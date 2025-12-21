@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { GeocoderReverseResult, GeolocationAddress, GeolocationPoint } from "../geo.js";
-import { parse_int } from "../numbers/lib.js";
+import { GeocoderReverseResult, GeolocationAddress, GeolocationPoint } from "../geo/index.js";
+import { parse_int } from "../numbers/index.js";
 import { util_rxp } from "./regex.js";
 
 export const zf_area_unit = z.union([

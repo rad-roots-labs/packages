@@ -1,5 +1,5 @@
 import type { IError } from "@radroots/types-bindings";
-import { FieldRecord, NotifyMessage } from "./types.js";
+import { FieldRecord, NotifyMessage } from "../types/index.js";
 
 export const is_err_response = (response: any): response is { err: string } => {
     return "err" in response && typeof response.err === "string";
