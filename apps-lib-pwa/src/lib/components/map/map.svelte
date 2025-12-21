@@ -22,7 +22,7 @@
         typeof basis?.interactive === `boolean` ? basis?.interactive : true,
     );
 
-    const zoomOnDoubleClick = $derived(
+    const double_click_zoom = $derived(
         typeof basis?.zoom_click_off === `boolean`
             ? basis?.zoom_click_off
             : true,
@@ -36,7 +36,7 @@
     style={cfg_map.styles.base[$theme_mode ?? "light"]}
     attributionControl={false}
     interactive={!!interactive}
-    {zoomOnDoubleClick}
+    zoomOnDoubleClick={double_click_zoom}
 >
     {@render children()}
 </MapLibre>

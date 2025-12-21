@@ -102,7 +102,7 @@
 
     const handle_continue_1 = async (): Promise<void> => {
         if (!map_geop || !map_geoc)
-            return void lc_gui_alert(`No farm location provided.`); //@todo
+            return void lc_gui_alert(`No farm location provided.`); // @todo
         const farms_add_submission = schema_view_farms_add_submission.safeParse(
             {
                 farm_name: val_farmname,
@@ -122,7 +122,7 @@
         if (!farms_add_submission.success) {
             return void lc_gui_alert(
                 `Request invalid: ${farms_add_submission.error}`,
-            ); //@todo
+            ); // @todo
         }
         await basis.on_submit({ payload: farms_add_submission.data });
     };
@@ -165,7 +165,7 @@
         }}
     >
         {#snippet header_option()}
-            <!-- @todo {#if $casl_i === 0}
+            <!-- {#if $casl_i === 0}
                 <button
                     class={`flex flex-row justify-center items-center`}
                     onclick={async () => {

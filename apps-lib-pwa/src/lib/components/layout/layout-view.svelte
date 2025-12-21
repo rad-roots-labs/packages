@@ -15,7 +15,7 @@
 
     onMount(async () => {
         try {
-            el?.addEventListener("scroll", scrollChange);
+            el?.addEventListener("scroll", on_scroll_change);
         } catch (e) {
         } finally {
         }
@@ -23,13 +23,13 @@
 
     onDestroy(async () => {
         try {
-            el?.removeEventListener("scroll", scrollChange);
+            el?.removeEventListener("scroll", on_scroll_change);
         } catch (e) {
         } finally {
         }
     });
 
-    const scrollChange = (): void => {
+    const on_scroll_change = (): void => {
         if (Math.max(el?.scrollTop || 0, 0) > 10) nav_blur.set(true);
         else nav_blur.set(false);
         if (Math.max(el?.scrollTop || 0, 0) > 10) tabs_blur.set(true);
@@ -41,7 +41,9 @@
 
 <div
     bind:this={el}
-    class={`${fmt_cl(basis?.classes)} absolute top-0 left-0 flex flex-col h-[100vh] w-full justify-start items-center scroll-hide overflow-auto`}
+    class={`${fmt_cl(
+        basis?.classes,
+    )} absolute top-0 left-0 flex flex-col h-[100vh] w-full justify-start items-center scroll-hide overflow-auto`}
     class:fade-in={basis?.fade}
 >
     {@render children()}

@@ -50,6 +50,10 @@
 
     let val_sel_options_button = $state(``);
 
+    $effect(() => {
+        console.log(JSON.stringify(basis.data, null, 4), `data`);
+    });
+
     onMount(async () => {
         try {
             if (!basis.kv_init_prevent) await idb_kv_init_page();
@@ -107,6 +111,16 @@
                 }}
             />
         </FloatPage>
+        {#if photo_path}
+            <button
+                class={`absolute top-12 flex flex-row h-7 px-6 justify-center items-center bg-ly1 active:bg-ly1-a rounded-full`}
+                onclick={async () => {}}
+            >
+                <p class={`font-sans font-[400] text-sm text-ly0-gl`}>
+                    {`Post Photo`}
+                </p>
+            </button>
+        {/if}
         <FloatPage
             basis={{
                 posx: `right`,

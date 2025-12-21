@@ -36,15 +36,15 @@
 
     const param: Record<ViewProfileEditFieldKey, { placeholder: string }> = {
         name: {
-            placeholder: `${$ls(`icu.enter_*`, { value: `profile username` })}`, //@todo
+            placeholder: `${$ls(`icu.enter_*`, { value: `profile username` })}`, // @todo
         },
         display_name: {
             placeholder: `${$ls(`icu.enter_*`, {
                 value: `profile display name`,
-            })}`, //@todo
+            })}`, // @todo
         },
         about: {
-            placeholder: `${$ls(`icu.enter_*`, { value: `profile bio` })}`, //@todo
+            placeholder: `${$ls(`icu.enter_*`, { value: `profile bio` })}`, // @todo
         },
     };
 

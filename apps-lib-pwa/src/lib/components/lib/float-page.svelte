@@ -9,4 +9,3 @@
 <div class={`absolute top-10 ${basis.posx}-6 flex flex-row`}>
     {@render children()}
 </div>
-<div class="hidden left-6 right-6"></div>

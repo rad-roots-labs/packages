@@ -1,7 +1,7 @@
 <script lang="ts">
-    import { LoadSymbol } from "$lib";
     import type { IButtonNavRound } from "$lib/types/components/lib";
     import { Glyph } from "@radroots/apps-lib";
+    import LoadCircle from "../lib/load-circle.svelte";
 
     let { basis }: { basis: IButtonNavRound } = $props();
 </script>
@@ -12,7 +12,7 @@
     onclick={basis.callback}
 >
     {#if basis.loading}
-        <LoadSymbol />
+        <LoadCircle />
     {:else}
         <Glyph
             basis={{
