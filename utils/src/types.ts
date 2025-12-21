@@ -11,6 +11,9 @@ export type NotifyMessage = {
 export type FileBytesFormat = `kb` | `mb` | `gb`;
 export type FileMimeType = string;
 export type FilePath = { file_path: string; file_name: string; mime_type: FileMimeType; }
+export type FilePathBlob = { blob_path: string; blob_name: string; mime_type?: FileMimeType; }
+
+export type WebFilePath = FilePath | FilePathBlob;
 
 export type ValStr = string | undefined | null;
 
@@ -23,3 +26,4 @@ export type ValidationRegex = {
     value: RegExp;
     charset: RegExp;
 }
+

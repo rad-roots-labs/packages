@@ -43,3 +43,13 @@ export const obj_results_str = (obj: any): string[] | undefined => {
     if (Array.isArray(obj.results)) return obj.results.map(String);
     return undefined;
 };
+
+export const str_cap = (val?: string): string => {
+    if (!val) return ``;
+    return `${val[0].toUpperCase()}${val.slice(1)}`;
+};
+
+export const str_cap_words = (val?: string): string => {
+    if (!val) return ``;
+    return val.split(` `).map(i => i ? str_cap(i) : ``).filter(i => !!i).join(` `);
+};

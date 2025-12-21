@@ -1,5 +1,7 @@
 import { decodeBase32, encodeBase32 } from "geohashing";
 
+const EARTH_RADIUS = 6371;
+
 export type GeometryPoint = {
     type: string;
     coordinates: number[];
@@ -209,12 +211,10 @@ export const compute_bounding_box = (lat: number, lng: number, distance_km: numb
     const deg_to_rad = (deg: number) => deg * (Math.PI / 180);
     const rad_to_deg = (rad: number) => rad * (180 / Math.PI);
 
-    const R = 6371;
-
     function destination_point(lat: number, lng: number, bearing: number, distance_km: number): GeolocationPoint {
         const lat1 = deg_to_rad(lat);
         const lon1 = deg_to_rad(lng);
-        const angular_distance = distance_km / R;
+        const angular_distance = distance_km / EARTH_RADIUS;
 
         const lat2 = Math.asin(Math.sin(lat1) * Math.cos(angular_distance) + Math.cos(lat1) * Math.sin(angular_distance) * Math.cos(deg_to_rad(bearing)));
         const lon2 = lon1 + Math.atan2(Math.sin(deg_to_rad(bearing)) * Math.sin(angular_distance) * Math.cos(lat1), Math.cos(angular_distance) - Math.sin(lat1) * Math.sin(lat2));
@@ -238,12 +238,10 @@ export const geo_bounds_calc = (lat: number, lng: number, distance_km: number): 
     const deg_to_rad = (deg: number) => deg * (Math.PI / 180);
     const rad_to_deg = (rad: number) => rad * (180 / Math.PI);
 
-    const R = 6371;
-
     function destination_point(lat: number, lng: number, bearing: number, distance_km: number): GeolocationPoint {
         const lat1 = deg_to_rad(lat);
         const lon1 = deg_to_rad(lng);
-        const angular_distance = distance_km / R;
+        const angular_distance = distance_km / EARTH_RADIUS;
 
         const lat2 = Math.asin(Math.sin(lat1) * Math.cos(angular_distance) + Math.cos(lat1) * Math.sin(angular_distance) * Math.cos(deg_to_rad(bearing)));
         const lon2 = lon1 + Math.atan2(Math.sin(deg_to_rad(bearing)) * Math.sin(angular_distance) * Math.cos(lat1), Math.cos(angular_distance) - Math.sin(lat1) * Math.sin(lat2));
