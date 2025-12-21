@@ -3,7 +3,7 @@ import { goto } from '$app/navigation';
 import { win_h, win_w } from '$lib/stores/app';
 import type { CallbackRoute, NavigationParamTuple, NavigationRouteParamKey, NavigationRouteParamTuple, } from '$lib/types/lib';
 import type { ThemeLayer, ThemeMode } from '@radroots/themes';
-import type { FilePath } from '@radroots/utils';
+import type { WebFilePath } from '@radroots/utils';
 import { getContext, setContext } from "svelte";
 import { get } from "svelte/store";
 
@@ -177,7 +177,8 @@ export const to_arr_buf = (u8: Uint8Array): ArrayBuffer => {
     return u8.slice().buffer;
 };
 
-export const parse_file_path = (file_path: string): FilePath | undefined => {
+export const parse_file_path = (file_path: string): WebFilePath | undefined => {
+    if (file_path.startsWith("blob:")) return { blob_path: file_path, blob_name: file_path.replaceAll("blob:", "").replaceAll("http://", "") };
     const file_path_spl = file_path.split(`/`);
     const file_path_file = file_path_spl[file_path_spl.length - 1] || ``;
     const [file_name, mime_type] = file_path_file.split(`.`);

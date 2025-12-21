@@ -24,10 +24,10 @@ export const i18n_conf = <T extends string>(opts: {
     translations: Record<T, any>;
     loaders: Loader.LoaderModule[]
 }) => {
-    const { default_locale: initLocale, translations, loaders } = opts;
+    const { default_locale, translations, loaders } = opts;
     const config: Config<any> = {
-        initLocale,
-        fallbackLocale: initLocale,
+        initLocale: default_locale,
+        fallbackLocale: default_locale,
         translations,
         loaders,
     };
@@ -39,10 +39,10 @@ export const i18n_conf_icu = <T extends string>(opts: {
     translations: Record<T, any>;
     loaders: Loader.LoaderModule[]
 }): i18n<ParserIcu.Params<LanguageConfig>> => {
-    const { default_locale: initLocale, translations, loaders } = opts;
+    const { default_locale, translations, loaders } = opts;
     const config: ConfigIcu<LanguageConfig> = {
-        initLocale,
-        fallbackLocale: initLocale,
+        initLocale: default_locale,
+        fallbackLocale: default_locale,
         translations,
         parser: parser_icu(),
         loaders,

@@ -166,7 +166,7 @@ export type GeometryGlyphDimension =
 export type LayerGlyphBasisKind = `_a` | `_d` | `_pl`;
 
 export type LoadingBlades = 8 | 12;
-export type LoadingDimension = GeometryDimension | `glyph-send-button`; //@todo remove
+export type LoadingDimension = GeometryDimension | `glyph-send-button`; // @todo remove
 
 export type ElementCallbackValue = CallbackPromiseGeneric<{ value: string; pass: boolean; }>;
 export type ElementCallbackValueKeydown<T extends HTMLElement> = CallbackPromiseGeneric<{ key: string; key_s: boolean; el: T }>;

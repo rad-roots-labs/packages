@@ -1,10 +1,10 @@
 import { browser } from "$app/environment";
-import { _envLib } from "../_env";
+import { _env_lib } from "../_env";
 import { fmt_id } from "../app/lib";
 import { IdbKeyval } from "./idb";
 
 export let idb_kv: IdbKeyval;
-if (browser) idb_kv = new IdbKeyval({ name: _envLib.KEYVAL_NAME });
+if (browser) idb_kv = new IdbKeyval({ name: _env_lib.KEYVAL_NAME });
 
 export const idb_kv_init = async (): Promise<void> => {
     if (!browser) return;

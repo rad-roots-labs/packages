@@ -20,17 +20,17 @@ const create_carousel_num = (num_i: number, num_min: number) => {
 export const casl_num = create_carousel_num(1, 1);
 
 export const casl_inc = async (opts?: 'noflow'): Promise<void> => {
-    const $casl_i = get_store(casl_i);
-    const $casl_imax = get_store(casl_imax);
-    if (opts === 'noflow' && $casl_i < $casl_imax) casl_i.set($casl_i + 1);
-    else casl_i.set(($casl_i + 1) % ($casl_imax + 1));
+    const casl_i_val = get_store(casl_i);
+    const casl_imax_val = get_store(casl_imax);
+    if (opts === 'noflow' && casl_i_val < casl_imax_val) casl_i.set(casl_i_val + 1);
+    else casl_i.set((casl_i_val + 1) % (casl_imax_val + 1));
 };
 
 export const casl_dec = async (opts?: 'noflow'): Promise<void> => {
-    const $casl_i = get_store(casl_i);
-    const $casl_imax = get_store(casl_imax);
-    if (opts === 'noflow' && $casl_i > 0) casl_i.set($casl_i - 1);
-    else casl_i.set(($casl_i - 1 + ($casl_imax + 1)) % ($casl_imax + 1));
+    const casl_i_val = get_store(casl_i);
+    const casl_imax_val = get_store(casl_imax);
+    if (opts === 'noflow' && casl_i_val > 0) casl_i.set(casl_i_val - 1);
+    else casl_i.set((casl_i_val - 1 + (casl_imax_val + 1)) % (casl_imax_val + 1));
 };
 
 export const casl_init = (index_curr: number, index_max: number): void => {

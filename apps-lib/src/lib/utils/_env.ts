@@ -12,7 +12,7 @@ if (!RADROOTS_RELAY || typeof RADROOTS_RELAY !== 'string') throw new Error('Miss
 
 const PROD = import.meta.env.MODE === 'production';
 
-export const _envLib = {
+export const _env_lib = {
   PROD,
   KEYVAL_NAME,
   NDK_CACHE,
