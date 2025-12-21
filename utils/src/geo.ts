@@ -1,3 +1,4 @@
+import { LocationGcs } from "@radroots/tangle-schema-bindings";
 import { decodeBase32, encodeBase32 } from "geohashing";
 
 const EARTH_RADIUS = 6371;
@@ -256,3 +257,24 @@ export const geo_bounds_calc = (lat: number, lng: number, distance_km: number): 
         west: destination_point(lat, lng, 270, distance_km)
     };
 };
+
+
+export const gcs_to_location_basis = ({
+    id,
+    lat,
+    lng,
+    gc_name: primary,
+    gc_admin1_name: admin,
+    gc_country_id: country,
+}: LocationGcs): LocationBasis => ({
+    id,
+    point: {
+        lat,
+        lng,
+    },
+    address: primary && admin && country ? {
+        primary,
+        admin,
+        country,
+    } : undefined
+});
