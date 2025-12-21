@@ -161,12 +161,12 @@ export const parse_nostr_listing_event = (event: NDKEvent): RadrootsListingNostr
             const geohash = get_event_tags(tags, "g")[0]?.[1];
             if (geohash) location_raw.geohash = geohash;
 
-            for (const locTag of get_event_tags(tags, "l")) {
-                if (locTag.length < 3) continue;
-                const coord = Number(locTag[1]);
+            for (const loc_tag of get_event_tags(tags, "l")) {
+                if (loc_tag.length < 3) continue;
+                const coord = Number(loc_tag[1]);
                 if (!Number.isFinite(coord)) continue;
-                if (locTag[2] === "dd.lat") location_raw.lat = coord;
-                if (locTag[2] === "dd.lon") location_raw.lng = coord;
+                if (loc_tag[2] === "dd.lat") location_raw.lat = coord;
+                if (loc_tag[2] === "dd.lon") location_raw.lng = coord;
             }
         }
 

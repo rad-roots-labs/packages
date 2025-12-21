@@ -82,11 +82,12 @@ export const tag_listing_location = (opts: NostrEventTagLocation): NostrEventTag
 };
 
 export const tags_listing_location_geotags = (opts: NostrEventTagLocation): NostrEventTags => {
-    const { lat, lng: lon, city, region: regionName, country } = opts;
+    const { lat, lng: lon, city, region, country } = opts;
     const country_raw = country || ``;
-    const countryCode = country_raw && country_raw?.length <= 3 ? country_raw : undefined;
-    const countryName = country_raw && country_raw?.length > 3 ? country_raw : undefined;
-    return ngeotags({ lat, lon, city, regionName, countryCode, countryName } satisfies NostrGeotagsInputData, { geohash: true, gps: true, city: true, iso31662: true });
+    const country_code = country_raw && country_raw?.length <= 3 ? country_raw : undefined;
+    const country_name = country_raw && country_raw?.length > 3 ? country_raw : undefined;
+    const input: NostrGeotagsInputData = { lat, lon, city, regionName: region, countryCode: country_code, countryName: country_name };
+    return ngeotags(input, { geohash: true, gps: true, city: true, iso31662: true });
 };
 
 export const tag_listing_image = (opts: RadrootsListingImage): NostrEventTag => {
