@@ -1,5 +1,4 @@
-import type { IError } from "@radroots/types-bindings";
-import { type FilePath, type ResultObj, type ResultPass } from '@radroots/utils';
+import { MediaResource, ResolveErrorMsg, type ResultObj, type ResultPass } from '@radroots/utils';
 
 export type IClientRadrootsAccountsRequestMessage =
     | string
@@ -7,13 +6,13 @@ export type IClientRadrootsAccountsRequestMessage =
     | `*-registered`;
 
 export type IClientRadrootsAccountsRequest = { profile_name: string; secret_key: string; };
-export type IClientRadrootsAccountsRequestResolve = ResultObj<string> | IError<IClientRadrootsAccountsRequestMessage>;
+export type IClientRadrootsAccountsRequestResolve = ResolveErrorMsg<ResultObj<string>, IClientRadrootsAccountsRequestMessage>;
 export type IClientRadrootsAccountsCreate = { tok: string; secret_key: string; };
-export type IClientRadrootsAccountsCreateResolve = ResultObj<string> | IError<IClientRadrootsAccountsRequestMessage>;
+export type IClientRadrootsAccountsCreateResolve = ResolveErrorMsg<ResultObj<string>, IClientRadrootsAccountsRequestMessage>;
 export type IClientRadrootsAccountsActivate = { id: string; secret_key: string; };
-export type IClientRadrootsAccountsActivateResolve = ResultPass | IError<IClientRadrootsAccountsRequestMessage>;
-export type IClientRadrootsMediaImageUpload = { file_path: FilePath; file_data: Uint8Array; secret_key: string; };
-export type IClientRadrootsMediaImageUploadResolve = any;
+export type IClientRadrootsAccountsActivateResolve = ResolveErrorMsg<ResultPass, IClientRadrootsAccountsRequestMessage>;
+export type IClientRadrootsMediaImageUpload = { mime_type?: string; file_data: Uint8Array; secret_key: string; };
+export type IClientRadrootsMediaImageUploadResolve = ResolveErrorMsg<MediaResource, IClientRadrootsAccountsRequestMessage>;
 
 export type IClientRadroots = {
     accounts_request: (opts: IClientRadrootsAccountsRequest) => Promise<IClientRadrootsAccountsRequestResolve>;

@@ -58,7 +58,7 @@ export class WebNotifications implements IClientNotifications {
             const input = document.createElement('input');
             input.type = 'file';
             input.multiple = true;
-            input.accept = 'image/png';
+            input.accept = 'image/png,image/jpg';
             input.onchange = () => {
                 const files = input.files;
                 if (!files) return resolve(undefined);

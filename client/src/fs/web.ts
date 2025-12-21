@@ -18,8 +18,8 @@ export class WebFs implements IClientFs {
     public async info(path: string) {
         try {
             const res = await fetch(path, { method: 'HEAD' });
-            const sizeHeader = res.headers.get('Content-Length');
-            const size = sizeHeader ? Number(sizeHeader) : 0;
+            const size_header = res.headers.get('Content-Length');
+            const size = size_header ? Number(size_header) : 0;
             return { size, isFile: true, isDirectory: false };
         } catch (e) {
             return handle_err(e);
