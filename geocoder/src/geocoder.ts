@@ -38,11 +38,11 @@ export class Geocoder implements IGeocoder {
             const query = `SELECT * FROM geonames WHERE id IN (SELECT feature_id FROM coordinates WHERE latitude BETWEEN $lat - ${deg_offset} AND $lat + ${deg_offset} AND longitude BETWEEN $lng - ${deg_offset} AND $lng + ${deg_offset} ORDER BY (($lat - latitude) * ($lat - latitude) + ($lng - longitude) * ($lng - longitude) * $scale) ASC${limit ? ` LIMIT ${limit}` : ``});`
             const stmt = this._db.prepare(query);
             if (!stmt) return err_msg(`*-statement`);
-            const { lat: $lat, lng: $lng } = point;
-            const latScale = KM_PER_DEGREE_LATITUDE;
-            const lngScale = KM_PER_DEGREE_LATITUDE * Math.cos($lat * (Math.PI / 180));
-            const $scale = (latScale + lngScale) / 2;
-            stmt.bind({ $lat, $lng, $scale });
+            const { lat: pt_lat, lng: pt_lng } = point;
+            const lat_scale = KM_PER_DEGREE_LATITUDE;
+            const lng_scale = KM_PER_DEGREE_LATITUDE * Math.cos(pt_lat * (Math.PI / 180));
+            const scale = (lat_scale + lng_scale) / 2;
+            stmt.bind({ $lat: pt_lat, $lng: pt_lng, $scale: scale });
             const results: GeocoderReverseResult[] = [];
             while (stmt.step()) {
                 const result = parse_geocode_reverse_result(stmt.getAsObject());
@@ -61,8 +61,8 @@ export class Geocoder implements IGeocoder {
             const query = `SELECT * FROM geonames WHERE country_id = $id;`
             const stmt = this._db.prepare(query);
             if (!stmt) return err_msg(`*-statement`);
-            const $id = opts.country_id
-            stmt.bind({ $id });
+            const { country_id } = opts;
+            stmt.bind({ $id: country_id });
             const results: GeocoderReverseResult[] = [];
             while (stmt.step()) {
                 const result = parse_geocode_reverse_result(stmt.getAsObject());
@@ -100,8 +100,8 @@ export class Geocoder implements IGeocoder {
             const query = `SELECT AVG(latitude) AS latitude_c, AVG(longitude) AS longitude_c FROM geonames WHERE country_id = $id;`;
             const stmt = this._db.prepare(query);
             if (!stmt) return err_msg(`*-statement`);
-            const $id = opts.country_id
-            stmt.bind({ $id });
+            const { country_id } = opts;
+            stmt.bind({ $id: country_id });
             while (stmt.step()) {
                 const result = parse_geocode_country_center_result(stmt.getAsObject());
                 if (result) return { result };
