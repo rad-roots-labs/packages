@@ -8,7 +8,6 @@ export * from "./types/components.js";
 export * from "./types/lib.js";
 export * from "./types/ndk.js";
 export * from "./types/ui.js";
-export * from "./utils/_env.js";
 export * from "./utils/app/carousel.js";
 export * from "./utils/app/lib.js";
 export * from "./utils/browser.js";
