@@ -81,7 +81,6 @@ export class WebAesGcmCipher implements IWebAesGcmCipher {
     }
 
     public async encrypt(data: Uint8Array): Promise<Uint8Array> {
-        if (data.byteLength === 0) return data;
         return await this.crypto.encrypt(this.store_id, data);
     }
 

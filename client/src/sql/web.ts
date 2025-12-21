@@ -1,12 +1,12 @@
 import { handle_err, type IdbClientConfig, type ResolveError } from "@radroots/utils";
-import { del as idb_del, get as idb_get, set as idb_set } from "idb-keyval";
+import { createStore, del as idb_del, get as idb_get, set as idb_set, type UseStore } from "idb-keyval";
 import type { BindParams, Database, SqlJsStatic, SqlValue, Statement } from "sql.js";
 import init_sql_js from "sql.js/dist/sql-wasm.js";
 import { backup_b64_to_bytes, backup_bytes_to_b64 } from "../backup/codec.js";
 import type { BackupSqlPayload } from "../backup/types.js";
 import { WebCryptoService } from "../crypto/service.js";
 import type { LegacyKeyConfig } from "../crypto/types.js";
-import type { IClientSqlEncryptedStore, IWebSqlEngine, SqlJsExecOutcome, SqlJsParams, SqlJsResultRow } from "./types.js";
+import type { IClientSqlEncryptedStore, IWebSqlEngine, SqlJsExecOutcome, SqlJsParams, SqlJsResultRow, WebSqlEngineConfig } from "./types.js";
 
 const DEFAULT_SQL_CIPHER_CONFIG: IdbClientConfig = {
     database: "radroots-web-sql-cipher",
@@ -18,17 +18,23 @@ interface IWebSqlEngineEncryptedStore extends IClientSqlEncryptedStore {
 }
 
 class WebSqlEngineEncryptedStore implements IWebSqlEngineEncryptedStore {
-    private readonly db_key: string;
+    private readonly store_key: string;
     private readonly store_id: string;
     private readonly crypto: WebCryptoService;
+    private readonly db_name: string;
+    private readonly store_name: string;
+    private store: UseStore | null;
 
-    constructor(key: string, cipher_config: IdbClientConfig | null) {
-        this.db_key = key;
-        this.store_id = `sql:${key}`;
+    constructor(config: WebSqlEngineConfig) {
+        this.store_key = config.store_key;
+        this.db_name = config.idb_config.database;
+        this.store_name = config.idb_config.store;
+        this.store = null;
+        this.store_id = `sql:${this.store_key}`;
         this.crypto = new WebCryptoService();
         const legacy_config: LegacyKeyConfig = {
-            idb_config: cipher_config ?? DEFAULT_SQL_CIPHER_CONFIG,
-            key_name: `radroots.sql.${key}.aes-gcm.key`,
+            idb_config: config.cipher_config ?? DEFAULT_SQL_CIPHER_CONFIG,
+            key_name: `radroots.sql.${this.store_key}.aes-gcm.key`,
             iv_length: 12,
             algorithm: "AES-GCM"
         };
@@ -50,24 +56,30 @@ class WebSqlEngineEncryptedStore implements IWebSqlEngineEncryptedStore {
         return null;
     }
 
+    private get_store(): UseStore {
+        if (!this.store) this.store = createStore(this.db_name, this.store_name);
+        return this.store;
+    }
+
     async load(): Promise<Uint8Array | null> {
         if (typeof indexedDB === "undefined") return null;
-        const data = await idb_get(this.db_key);
+        const data = await idb_get(this.store_key, this.get_store());
         const bytes = this.as_bytes(data);
         if (!bytes) return null;
         const outcome = await this.crypto.decrypt_record(this.store_id, bytes);
-        if (outcome.reencrypted) await idb_set(this.db_key, outcome.reencrypted);
+        if (outcome.reencrypted) await idb_set(this.store_key, outcome.reencrypted, this.get_store());
         return outcome.plaintext;
     }
 
     async save(bytes: Uint8Array): Promise<void> {
         if (typeof indexedDB === "undefined") return;
         const enc = await this.crypto.encrypt(this.store_id, bytes);
-        await idb_set(this.db_key, enc);
+        await idb_set(this.store_key, enc, this.get_store());
     }
 
     async remove(): Promise<void> {
-        await idb_del(this.db_key);
+        if (typeof indexedDB === "undefined") return;
+        await idb_del(this.store_key, this.get_store());
     }
 }
 
@@ -85,15 +97,21 @@ export class WebSqlEngine implements IWebSqlEngine {
         this.store_id = store.get_store_id();
     }
 
-    static async create(store_key: string, cipher_config: IdbClientConfig | null): Promise<WebSqlEngine> {
+    static async create(config: WebSqlEngineConfig): Promise<WebSqlEngine> {
         const sql = await init_sql_js({ locateFile: f => `/assets/${f}` });
-        const kv = new WebSqlEngineEncryptedStore(store_key, cipher_config);
-        const existing = await kv.load();
+        const store = new WebSqlEngineEncryptedStore(config);
+        const existing = await store.load();
         const db = existing ? new sql.Database(existing) : new sql.Database();
-        return new WebSqlEngine(sql, db, kv);
+        return new WebSqlEngine(sql, db, store);
     }
 
     async close(): Promise<void> {
+        if (this.save_timer) {
+            self.clearTimeout(this.save_timer);
+            this.save_timer = undefined;
+            const bytes = this.db.export();
+            await this.store.save(bytes);
+        }
         this.db.close();
     }
 

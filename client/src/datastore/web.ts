@@ -152,7 +152,7 @@ export class WebDatastore<
                 const decrypted = await this.decrypt_value(k, curr);
                 if ("err" in decrypted) return decrypted;
                 const parsed: unknown = JSON.parse(decrypted.result);
-                if (is_record(parsed)) for (const [curr_key, curr_val] of Object.entries(parsed)) if (curr_val) obj_curr[curr_key] = curr_val;
+                if (is_record(parsed)) for (const [curr_key, curr_val] of Object.entries(parsed)) obj_curr[curr_key] = curr_val;
             }
             const obj: T = { ...obj_curr, ...value } as T;
             const serialized = JSON.stringify(obj);

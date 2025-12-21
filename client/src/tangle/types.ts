@@ -84,12 +84,12 @@ import type { TangleDatabaseBackup } from "./web.js";
 
 export interface IClientTangleDatabase {
     init(): Promise<void>;
-    migration_state(): Promise<SqlJsMigrationState>;
-    reset(): Promise<SqlJsMigrationState>;
-    reinit(): Promise<SqlJsMigrationState>;
+    migration_state(): Promise<SqlJsMigrationState | IError<string>>;
+    reset(): Promise<SqlJsMigrationState | IError<string>>;
+    reinit(): Promise<SqlJsMigrationState | IError<string>>;
     get_store_key(): string;
-    export_backup(): Promise<TangleDatabaseBackup>;
-    import_backup(backup: TangleDatabaseBackup): Promise<void>;
+    export_backup(): Promise<TangleDatabaseBackup | IError<string>>;
+    import_backup(backup: TangleDatabaseBackup): Promise<void | IError<string>>;
     farm_create(opts: IFarmCreate): Promise<IFarmCreateResolve | IError<string>>;
     farm_find_one(opts: IFarmFindOne): Promise<IFarmFindOneResolve | IError<string>>;
     farm_find_many(opts?: IFarmFindMany): Promise<IFarmFindManyResolve | IError<string>>;
@@ -133,4 +133,7 @@ export interface IClientTangleDatabase {
     trade_product_location_unset(opts: ITradeProductLocationRelation): Promise<ITradeProductLocationResolve | IError<string>>;
     trade_product_media_set(opts: ITradeProductMediaRelation): Promise<ITradeProductMediaResolve | IError<string>>;
     trade_product_media_unset(opts: ITradeProductMediaRelation): Promise<ITradeProductMediaResolve | IError<string>>;
+}
+
+export interface IWebTangleDatabase extends IClientTangleDatabase {
 }

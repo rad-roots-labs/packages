@@ -1,4 +1,4 @@
-import type { ResolveError } from "@radroots/utils";
+import type { IdbClientConfig, ResolveError } from "@radroots/utils";
 import type { SqlValue } from "sql.js";
 import type { BackupSqlPayload } from "../backup/types.js";
 
@@ -24,6 +24,11 @@ export type SqlJsValue = SqlValue;
 
 export type SqlJsParams = Readonly<Record<string, SqlJsValue>> | ReadonlyArray<SqlJsValue>;
 
+export type WebSqlEngineConfig = {
+    store_key: string;
+    idb_config: IdbClientConfig;
+    cipher_config?: IdbClientConfig | null;
+};
 
 export interface IClientSqlEncryptedStore {
     load(): Promise<Uint8Array | null>;

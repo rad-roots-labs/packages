@@ -10,9 +10,9 @@ const ensure_crypto = (): void => {
 
 export const backup_bytes_to_b64 = (bytes: Uint8Array): string => {
     if (typeof btoa === "undefined") throw new Error(cl_backup_error.encode_failure);
-    let binary = "";
-    for (let i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
-    return btoa(binary);
+    const chars: string[] = new Array(bytes.length);
+    for (let i = 0; i < bytes.length; i++) chars[i] = String.fromCharCode(bytes[i]);
+    return btoa(chars.join(""));
 };
 
 export const backup_b64_to_bytes = (value: string): Uint8Array => {

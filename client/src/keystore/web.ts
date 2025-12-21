@@ -143,7 +143,7 @@ export class WebKeystore implements IWebKeystore {
                 if (typeof key !== "string") continue;
                 const value = await this.read(key);
                 if ("err" in value) return value;
-                if (!value.result) return err_msg(cl_keystore_error.corrupt_data);
+                if (typeof value.result !== "string") return err_msg(cl_keystore_error.corrupt_data);
                 entries.push({ key, value: value.result });
             }
             return { entries };

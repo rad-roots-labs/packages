@@ -65,23 +65,42 @@ export class WebNotifications implements IWebNotifications {
         }
     }
 
+    private async read_photo_data(file: File): Promise<string> {
+        return await new Promise<string>((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => {
+                if (typeof reader.result === "string") return resolve(reader.result);
+                return reject(new Error(cl_notifications_error.read_failure));
+            };
+            reader.onerror = () => {
+                if (reader.error) return reject(reader.error);
+                return reject(new Error(cl_notifications_error.read_failure));
+            };
+            reader.readAsDataURL(file);
+        });
+    }
+
     public async open_photos(): Promise<ResolveError<IResultList<string> | undefined>> {
-        return await new Promise<IResultList<string> | undefined>((resolve) => {
-            const input = document.createElement('input');
-            input.type = 'file';
-            input.multiple = true;
-            input.accept = 'image/png,image/jpg';
-            input.onchange = () => {
-                const files = input.files;
-                if (!files) return resolve(undefined);
-                const results: string[] = [];
-                for (let i = 0; i < files.length; i++) {
-                    const url = URL.createObjectURL(files[i]!);
-                    results.push(url);
-                }
-                resolve({ results });
+        try {
+            const files = await new Promise<FileList | null>((resolve) => {
+                const input = document.createElement('input');
+                input.type = 'file';
+                input.multiple = true;
+                input.accept = 'image/png,image/jpg';
+                input.onchange = () => resolve(input.files);
+                input.click();
+            });
+            if (!files) return;
+            const results: string[] = [];
+            for (let i = 0; i < files.length; i++) {
+                const file = files.item(i);
+                if (!file) continue;
+                const data_url = await this.read_photo_data(file);
+                results.push(data_url);
             }
-            input.click();
-        })
+            return { results };
+        } catch (e) {
+            return handle_err(e);
+        }
     }
 }

@@ -106,12 +106,14 @@ export interface IWebGeolocation extends IClientGeolocation {}
 
 export class WebGeolocation implements IWebGeolocation {
     public async current(): Promise<ResolveErrorMsg<IClientGeolocationPosition, ClientGeolocationErrorMessage>> {
+        if (typeof navigator === "undefined" || typeof document === "undefined") return err_msg(cl_geolocation_error.location_unavailable);
         if (!navigator.geolocation) return err_msg(cl_geolocation_error.location_unavailable);
 
         const policy_allows = read_policy_allows_geolocation(document);
         const permission_state = await read_permission_state_geolocation(navigator);
 
         const base_debug = create_debug(policy_allows, permission_state);
+        const has_geo_error = typeof GeolocationPositionError !== "undefined";
 
         if (policy_allows === false) {
             log_geo_debug("[geolocation] blocked_by_policy", base_debug);
@@ -127,7 +129,7 @@ export class WebGeolocation implements IWebGeolocation {
                 accuracy: position.coords.accuracy
             };
         } catch (e) {
-            if (e instanceof GeolocationPositionError) {
+            if (has_geo_error && e instanceof GeolocationPositionError) {
                 const debug: GeoDebug = {
                     ...base_debug,
                     error_code: e.code,
