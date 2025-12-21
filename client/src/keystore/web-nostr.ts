@@ -63,6 +63,7 @@ export class WebKeystoreNostr implements IWebKeystoreNostr {
         try {
             const resolve = await this._keystore.read(public_key);
             if ("err" in resolve) return resolve;
+            if (!resolve.result) return err_msg(cl_keystore_error.missing_key);
             return { secret_key: resolve.result };
         } catch (e) {
             return handle_err(e);

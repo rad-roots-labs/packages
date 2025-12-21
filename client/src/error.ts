@@ -1,4 +1,6 @@
 export * from "./cipher/error.js";
+export * from "./crypto/error.js";
+export * from "./backup/error.js";
 export * from "./datastore/error.js";
 export * from "./fs/error.js";
 export * from "./geolocation/error.js";

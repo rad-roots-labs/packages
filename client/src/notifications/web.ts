@@ -12,7 +12,7 @@ import type {
     IClientNotificationsNotifySendResolve
 } from "./types.js";
 
-export interface IWebNotifications extends IClientNotifications {}
+export interface IWebNotifications extends IClientNotifications { }
 
 export class WebNotifications implements IWebNotifications {
     private _config: IClientNotificationsConfig;

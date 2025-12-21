@@ -15,6 +15,16 @@
             "import": "./dist/esm/cipher/index.js",
             "require": "./dist/cjs/cipher/index.js"
         },
+        "./crypto": {
+            "types": "./dist/types/crypto/index.d.ts",
+            "import": "./dist/esm/crypto/index.js",
+            "require": "./dist/cjs/crypto/index.js"
+        },
+        "./backup": {
+            "types": "./dist/types/backup/index.d.ts",
+            "import": "./dist/esm/backup/index.js",
+            "require": "./dist/cjs/backup/index.js"
+        },
         "./datastore": {
             "types": "./dist/types/datastore/index.d.ts",
             "import": "./dist/esm/datastore/index.js",
