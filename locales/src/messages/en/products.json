@@ -1,0 +1,106 @@
+{
+    "default": {
+        "process": {
+            "dried": "Dried",
+            "natural": "Natural",
+            "roasted": "Roasted"
+        }
+    },
+    "key": {
+        "cacao": {
+            "name": "Cacao",
+            "process": {
+                "chocolate": "Chocolate",
+                "cocoa_butter": "Cocoa Butter",
+                "cocoa_powder": "Cocoa Powder",
+                "dried": "Dried",
+                "fermented": "Fermented",
+                "raw": "Raw",
+                "roasted": "Roasted"
+            }
+        },
+        "coffee": {
+            "name": "Coffee",
+            "process": {
+                "carbonic_maceration": "Carbonic Maceration",
+                "dry": "Dry",
+                "honey": "Honey",
+                "natural": "Natural",
+                "pulped_natural": "Pulped Natural",
+                "semi_washed": "Semi-Washed",
+                "washed": "Washed",
+                "wet_hulled": "Wet-Hulled"
+            },
+            "profile": {
+                "apricot": "Apricot",
+                "banana": "Banana",
+                "bergamot": "Bergamot",
+                "berry": "Berry",
+                "black cherry": "Black Cherry",
+                "black currant": "Black Currant",
+                "black tea": "Black Tea",
+                "blueberry": "Blueberry",
+                "brown sugar": "Brown Sugar",
+                "caramel": "Caramel",
+                "cherry": "Cherry",
+                "chocolate": "Chocolate",
+                "cola": "Cola",
+                "cranberry": "Cranberry",
+                "ctrius": "Ctrius",
+                "dark chocolate": "Dark Chocolate",
+                "dried dates": "Dried Dates",
+                "dried fig": "Dried Fig",
+                "golden raisin": "Golden Raisin",
+                "grape": "Grape",
+                "grapefruit": "Grapefruit",
+                "green apple": "Green Apple",
+                "green grape": "Green Grape",
+                "green tea": "Green Tea",
+                "jasmine honeysuckle": "Jasmine Honeysuckle",
+                "lemon": "Lemon",
+                "licorice/anise": "Licorice/Anise",
+                "lychee": "Lychee",
+                "magnolia": "Magnolia",
+                "mandarin": "Mandarin",
+                "mango": "Mango",
+                "maple syrup": "Maple Syrup",
+                "marshmallow": "Marshmallow",
+                "milk chocolate": "Milk Chocolate",
+                "natural": "Natural",
+                "nectarine": "Nectarine",
+                "nougat": "Nougat",
+                "nut": "Nut",
+                "orange": "Orange",
+                "orange blossom": "Orange Blossom",
+                "peach": "Peach",
+                "pineapple": "Pineapple",
+                "plum": "Plum",
+                "prune": "Prune",
+                "raisin": "Raisin",
+                "raspberry": "Raspberry",
+                "red apple": "Red Apple",
+                "red currant": "Red Currant",
+                "red grape": "Red Grape",
+                "roses": "Roses",
+                "star fruit": "Star Fruit",
+                "stronefruit": "Stronefruit",
+                "sugar cane": "Sugar Cane",
+                "sweet bread pastry": "Sweet Bread Pastry",
+                "tamarind": "Tamarind",
+                "tropical fruit": "Tropical Fruit",
+                "vanilla": "Vanilla",
+                "white grape": "White Grape"
+            }
+        },
+        "maca": {
+            "name": "Maca",
+            "process": {
+                "capsules": "Capsules",
+                "gelatinized": "Gelatinized",
+                "powdered": "Powdered",
+                "raw": "Raw",
+                "roasted": "Roasted"
+            }
+        }
+    }
+}

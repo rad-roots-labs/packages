@@ -1,0 +1,69 @@
+{
+    "backup": {
+        "export_failure": "Unable to export app state. Please try again."
+    },
+    "app": {
+        "export": {
+            "missing_datastore_config": "Missing datastore configuration for export.",
+            "missing_nostr_keystore_config": "Missing nostr keystore configuration for export."
+        }
+    },
+    "client": {
+        "geolocation": {
+            "location_unavailable": "The device location is unavailable",
+            "permission_denied": "The access device location was denied",
+            "request_failure": "The request could not be completed",
+            "timeout": "The request for your device location expired"
+        },
+        "http": {
+            "request_failure": "There was a request failure"
+        },
+        "undefined_window": "The window context is unavailable",
+        "nostr": {
+            "missing_public_key": "There is no public key available",
+            "sync_disabled": "The sync process is currently disabled"
+        }
+    },
+    "default": {
+        "failure": "The request was not succesful"
+    },
+    "configuration": {
+        "import": {
+            "database_format_mismatch": "Import file database backup format does not match metadata.",
+            "empty_file": "Import file is empty.",
+            "failure": "Unable to import app state. Please verify the file and try again.",
+            "invalid_file_contents": "Import file contents are invalid.",
+            "missing_required_sections": "Import file is missing required sections.",
+            "missing_version_metadata": "Import file is missing version metadata.",
+            "no_file_chosen": "Choose a backup file before continuing.",
+            "storage_mismatch": "Import failed: {{label}} storage mismatch (app={{app_database}}/{{app_store}}, backup={{backup_database}}/{{backup_store}}).",
+            "tangle_sql_version_mismatch": "Import file tangle-sql version does not match metadata.",
+            "tangle_store_key_mismatch": "Import failed: tangle DB store key mismatch (app={{app_store_key}}, backup={{backup_store_key}}).",
+            "unsupported_backup_version": "Unsupported backup version ({{backup_version}}); expected {{expected_version}}."
+        },
+        "profile": {
+            "name_min_length": "Profile name must be at least 3 characters."
+        }
+    },
+    "init": {
+        "configuration_failure": "There was an error configuring the device",
+        "device_configuration_nostr_profile": "There was an error while configuring your profile",
+        "device_configuration_nostr_relay": "There was an error while adding the nostr relay configuration"
+    },
+    "model": {
+        "filter_map_bind_values_undefined": "",
+        "filter_map_options_list_invalid": "",
+        "filter_map_query_values_invalid_condition": "",
+        "filter_map_query_values_undefined": ""
+    },
+    "nostr": {
+        "ndk_user_undefined": "There was an error configuring the nostr client",
+        "no_relays": "There are no relays connected"
+    },
+    "radroots": {
+        "account_registered": "This profile is already registered"
+    },
+    "util": {
+        "parse_file_path_undefined": "There was an error reading the file path"
+    }
+}
