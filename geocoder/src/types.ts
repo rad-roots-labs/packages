@@ -1,5 +1,6 @@
 import { IError } from "@radroots/types-bindings";
-import type { GeolocationPoint, ResultObj, ResultsList } from "@radroots/utils";
+import type { GeolocationPoint } from "@radroots/geo";
+import type { ResultObj, ResultsList } from "@radroots/utils";
 
 export type GeocoderIError =
     | `*-result`

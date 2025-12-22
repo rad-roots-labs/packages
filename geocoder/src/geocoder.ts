@@ -1,4 +1,5 @@
-import { err_msg, type GeolocationPoint } from "@radroots/utils";
+import type { GeolocationPoint } from "@radroots/geo";
+import { err_msg } from "@radroots/utils";
 import type { Database } from "sql.js";
 import type { GeocoderReverseResult, IGeocoder, IGeocoderConnectResolve, IGeocoderCountryCenter, IGeocoderCountryCenterResolve, IGeocoderCountryListResolve, IGeocoderCountryListResult, IGeocoderCountryResolve, IGeocoderReverseOpts, IGeocoderReverseResolve } from "./types.js";
 import { parse_geocode_country_center_result, parse_geocode_country_list_result, parse_geocode_reverse_result } from "./utils.js";
@@ -113,4 +114,3 @@ export class Geocoder implements IGeocoder {
         };
     }
 }
-
