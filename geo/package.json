@@ -24,7 +24,7 @@
         "watch": "tsc -w"
     },
     "devDependencies": {
-        "@radroots/tsconfig": "*",
+        "@radroots/tsconfig": "workspace:*",
         "@types/ngeohash": "0.6.8",
         "@types/node": "^22.13.1",
         "rimraf": "^6.0.1",
@@ -34,8 +34,8 @@
         "access": "public"
     },
     "dependencies": {
-        "@radroots/utils": "*",
-        "@radroots/tangle-schema-bindings": "*",
+        "@radroots/utils": "workspace:*",
+        "@radroots/tangle-schema-bindings": "workspace:*",
         "geohashing": "^2.0.1",
         "zod": "^4.0.5"
     }
