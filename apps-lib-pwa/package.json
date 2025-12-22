@@ -47,7 +47,7 @@
         }
     },
     "typesVersions": {
-        "*": {
+        "workspace:*": {
             "stores/*": [
                 "dist/stores/*"
             ],
@@ -76,15 +76,15 @@
         "vite": "7.0.6"
     },
     "dependencies": {
-        "@radroots/locales": "*",
-        "@radroots/apps-lib": "*",
-        "@radroots/events-bindings": "*",
-        "@radroots/client": "*",
-        "@radroots/geo": "*",
-        "@radroots/tangle-schema-bindings": "*",
-        "@radroots/themes": "*",
-        "@radroots/utils": "*",
-        "@radroots/utils-nostr": "*",
+        "@radroots/locales": "workspace:*",
+        "@radroots/apps-lib": "workspace:*",
+        "@radroots/events-bindings": "workspace:*",
+        "@radroots/client": "workspace:*",
+        "@radroots/geo": "workspace:*",
+        "@radroots/tangle-schema-bindings": "workspace:*",
+        "@radroots/themes": "workspace:*",
+        "@radroots/utils": "workspace:*",
+        "@radroots/utils-nostr": "workspace:*",
         "@nostr-dev-kit/ndk": "2.14.33",
         "@nostr-dev-kit/ndk-cache-dexie": "2.6.34",
         "@nostr-dev-kit/ndk-svelte": "2.4.38",
