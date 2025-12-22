@@ -1,0 +1,86 @@
+<script lang="ts">
+    import {
+        type ElementCallbackValueKeydown,
+        type IIdOpt,
+        type ISelectCallback,
+        type ISelectOption,
+        fmt_id,
+    } from "@radroots/apps-lib";
+    import InputPwa from "../lib/input-pwa.svelte";
+    import SelectPwa from "../lib/select-pwa.svelte";
+
+    let {
+        basis,
+        value_input = $bindable(``),
+        value_sel = $bindable(``),
+    }: {
+        basis: IIdOpt & {
+            display_value?: string;
+            label?: string;
+            input: {
+                placeholder?: string;
+                callback_keydown?:
+                    | ElementCallbackValueKeydown<HTMLInputElement>
+                    | undefined;
+            };
+            select: {
+                entries: ISelectOption<string>[];
+                callback?: ISelectCallback;
+            };
+        };
+        value_input?: string;
+        value_sel?: string;
+    } = $props();
+
+    const id = $derived(basis.id || ``);
+</script>
+
+<div class={`flex flex-col w-full gap-2 justify-start items-start`}>
+    {#if basis.label}
+        <div class={`flex flex-row w-full justify-start items-center`}>
+            <p class={`font-sansd text-trellis_ti text-ly0-gl-label uppercase`}>
+                {basis.label}
+            </p>
+        </div>
+    {/if}
+    <div
+        class={`relative flex flex-row h-12 w-full justify-start items-center border-y-line border-ly0-edge`}
+    >
+        {#if basis.display_value}
+            <p class={`font-sans font-[400] text-ly0-gl text-form_base`}>
+                {basis.display_value}
+            </p>
+        {:else}
+            <InputPwa
+                bind:value={value_input}
+                basis={{
+                    id: id ? fmt_id(`${id}_input`) : undefined,
+                    layer: 0,
+                    classes: `h-10 placeholder:text-[1.1rem]`,
+                    placeholder: basis.input.placeholder || ``,
+                    callback_keydown: basis.input.callback_keydown,
+                }}
+            />
+            <div
+                class={`absolute right-0 flex flex-row justify-center items-center`}
+            >
+                <SelectPwa
+                    bind:value={value_sel}
+                    basis={{
+                        classes: `w-fit text-ly1-gl`,
+                        id: id ? fmt_id(`${id}_sel`) : undefined,
+                        sync: true,
+                        layer: 1,
+                        show_arrows: `r`,
+                        options: [
+                            {
+                                entries: basis.select.entries,
+                            },
+                        ],
+                        callback: basis.select.callback,
+                    }}
+                />
+            </div>
+        {/if}
+    </div>
+</div>
