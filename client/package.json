@@ -1,0 +1,96 @@
+{
+    "name": "@radroots/client",
+    "version": "0.0.1",
+    "private": true,
+    "license": "GPLv3",
+    "type": "module",
+    "exports": {
+        ".": {
+            "types": "./dist/types/index.d.ts",
+            "import": "./dist/esm/index.js",
+            "require": "./dist/cjs/index.js"
+        },
+        "./cipher": {
+            "types": "./dist/types/cipher/index.d.ts",
+            "import": "./dist/esm/cipher/index.js",
+            "require": "./dist/cjs/cipher/index.js"
+        },
+        "./crypto": {
+            "types": "./dist/types/crypto/index.d.ts",
+            "import": "./dist/esm/crypto/index.js",
+            "require": "./dist/cjs/crypto/index.js"
+        },
+        "./backup": {
+            "types": "./dist/types/backup/index.d.ts",
+            "import": "./dist/esm/backup/index.js",
+            "require": "./dist/cjs/backup/index.js"
+        },
+        "./datastore": {
+            "types": "./dist/types/datastore/index.d.ts",
+            "import": "./dist/esm/datastore/index.js",
+            "require": "./dist/cjs/datastore/index.js"
+        },
+        "./fs": {
+            "types": "./dist/types/fs/index.d.ts",
+            "import": "./dist/esm/fs/index.js",
+            "require": "./dist/cjs/fs/index.js"
+        },
+        "./geolocation": {
+            "types": "./dist/types/geolocation/index.d.ts",
+            "import": "./dist/esm/geolocation/index.js",
+            "require": "./dist/cjs/geolocation/index.js"
+        },
+        "./keystore": {
+            "types": "./dist/types/keystore/index.d.ts",
+            "import": "./dist/esm/keystore/index.js",
+            "require": "./dist/cjs/keystore/index.js"
+        },
+        "./notifications": {
+            "types": "./dist/types/notifications/index.d.ts",
+            "import": "./dist/esm/notifications/index.js",
+            "require": "./dist/cjs/notifications/index.js"
+        },
+        "./radroots": {
+            "types": "./dist/types/radroots/index.d.ts",
+            "import": "./dist/esm/radroots/index.js",
+            "require": "./dist/cjs/radroots/index.js"
+        },
+        "./sql": {
+            "types": "./dist/types/sql/index.d.ts",
+            "import": "./dist/esm/sql/index.js",
+            "require": "./dist/cjs/sql/index.js"
+        },
+        "./tangle": {
+            "types": "./dist/types/tangle/index.d.ts",
+            "import": "./dist/esm/tangle/index.js",
+            "require": "./dist/cjs/tangle/index.js"
+        }
+    },
+    "scripts": {
+        "build:esm": "tsc -p tsconfig.esm.json",
+        "build:cjs": "tsc -p tsconfig.cjs.json",
+        "build": "npm run clean && npm run build:esm && npm run build:cjs",
+        "prebuild": "npm run clean",
+        "clean": "rimraf dist",
+        "dev": "npm run watch",
+        "watch": "tsc -w"
+    },
+    "dependencies": {
+        "@radroots/geo": "*",
+        "@radroots/http": "*",
+        "@radroots/tangle-schema-bindings": "*",
+        "@radroots/tangle-sql-wasm": "*",
+        "@radroots/utils": "*",
+        "@radroots/utils-nostr": "*",
+        "idb": "^8.0.3",
+        "idb-keyval": "^6.2.1",
+        "sql.js": "1.13.0"
+    },
+    "devDependencies": {
+        "@types/debug": "^4.1.12",
+        "typescript": "^5.3.3"
+    },
+    "publishConfig": {
+        "access": "public"
+    }
+}
