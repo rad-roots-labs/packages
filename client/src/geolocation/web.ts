@@ -1,4 +1,5 @@
-import { err_msg, type IClientGeolocationPosition, type ResolveErrorMsg } from "@radroots/utils";
+import type { IClientGeolocationPosition } from "@radroots/geo";
+import { err_msg, type ResolveErrorMsg } from "@radroots/utils";
 import { cl_geolocation_error, type ClientGeolocationErrorMessage } from "./error.js";
 import type { IClientGeolocation } from "./types.js";
 

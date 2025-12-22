@@ -3,6 +3,7 @@ import { createStore, clear as idb_clear, del as idb_del, get as idb_get, keys a
 import type { BackupDatastorePayload } from "../backup/types.js";
 import { WebCryptoService } from "../crypto/service.js";
 import { crypto_registry_clear_key_entry, crypto_registry_clear_store_index, crypto_registry_get_store_index } from "../crypto/registry.js";
+import { IDB_CONFIG_DATASTORE } from "../idb/config.js";
 import { cl_datastore_error } from "./error.js";
 import type {
     IClientDatastore,
@@ -12,10 +13,7 @@ import type {
     IClientDatastoreKeyParamMap
 } from "./types.js";
 
-const DEFAULT_IDB_CONFIG: IdbClientConfig = {
-    database: "radroots-web-datastore",
-    store: "default",
-};
+const DEFAULT_IDB_CONFIG: IdbClientConfig = IDB_CONFIG_DATASTORE;
 
 const is_record = (value: unknown): value is Record<string, unknown> =>
     typeof value === "object" && value !== null && !Array.isArray(value);

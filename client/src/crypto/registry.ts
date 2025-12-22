@@ -1,12 +1,10 @@
 import { createStore, del as idb_del, get as idb_get, keys as idb_keys, set as idb_set } from "idb-keyval";
 import type { IdbClientConfig } from "@radroots/utils";
+import { IDB_CONFIG_CRYPTO_REGISTRY } from "../idb/config.js";
 import { cl_crypto_error } from "./error.js";
 import type { CryptoKeyEntry, CryptoRegistryExport, CryptoStoreIndex } from "./types.js";
 
-const CRYPTO_IDB_CONFIG: IdbClientConfig = {
-    database: "radroots-client-crypto",
-    store: "default"
-};
+const CRYPTO_IDB_CONFIG: IdbClientConfig = IDB_CONFIG_CRYPTO_REGISTRY;
 
 const CRYPTO_STORE = createStore(CRYPTO_IDB_CONFIG.database, CRYPTO_IDB_CONFIG.store);
 const STORE_INDEX_PREFIX = "store:";

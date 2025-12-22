@@ -14,6 +14,7 @@ import type { BackupKeystorePayload } from "../backup/types.js";
 import { WebCryptoService } from "../crypto/service.js";
 import type { LegacyKeyConfig } from "../crypto/types.js";
 import { crypto_registry_clear_key_entry, crypto_registry_clear_store_index, crypto_registry_get_store_index } from "../crypto/registry.js";
+import { IDB_CONFIG_KEYSTORE, IDB_STORE_CIPHER_SUFFIX } from "../idb/config.js";
 import { cl_keystore_error } from "./error.js";
 import type { IClientKeystore, IClientKeystoreValue } from "./types.js";
 
@@ -40,18 +41,20 @@ export class WebKeystore implements IWebKeystore {
     private legacy_key_config: LegacyKeyConfig;
 
     constructor(config?: IdbClientConfig) {
+        const config_base = config ?? {};
         this.config = {
-            database: config?.database || "radroots-web-keystore",
-            store: config?.store || "default"
+            database: config_base.database ?? IDB_CONFIG_KEYSTORE.database,
+            store: config_base.store ?? IDB_CONFIG_KEYSTORE.store
         };
         this.store = null;
         this.store_id = `keystore:${this.config.database}:${this.config.store}`;
         this.crypto = new WebCryptoService();
+        const legacy_store = `${this.config.store}${IDB_STORE_CIPHER_SUFFIX}`;
 
         this.legacy_key_config = {
             idb_config: {
-                database: `${this.config.database}-cipher`,
-                store: this.config.store
+                database: this.config.database,
+                store: legacy_store
             },
             key_name: `radroots.keystore.${this.config.store}.aes-gcm.key`,
             iv_length: 12,

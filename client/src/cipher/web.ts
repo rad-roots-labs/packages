@@ -4,13 +4,11 @@ import type { WebAesGcmCipherConfig } from "../keystore/web.js";
 import { crypto_registry_clear_key_entry, crypto_registry_clear_store_index, crypto_registry_get_store_index } from "../crypto/registry.js";
 import { WebCryptoService } from "../crypto/service.js";
 import type { LegacyKeyConfig } from "../crypto/types.js";
+import { IDB_CONFIG_CIPHER_AES_GCM } from "../idb/config.js";
 import { cl_cipher_error } from "./error.js";
 import type { IClientCipher } from "./types.js";
 
-const DEFAULT_IDB_CONFIG: IdbClientConfig = {
-    database: "radroots-aes-gcm-keystore",
-    store: "default"
-};
+const DEFAULT_IDB_CONFIG: IdbClientConfig = IDB_CONFIG_CIPHER_AES_GCM;
 
 const DEFAULT_WEB_AES_GCM_CONFIG = {
     key_name: "radroots.aes-gcm.key",

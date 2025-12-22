@@ -130,6 +130,7 @@ import init_wasm, {
 } from "@radroots/tangle-sql-wasm";
 import type { IError } from "@radroots/types-bindings";
 import { err_msg, handle_err, type IdbClientConfig } from "@radroots/utils";
+import { IDB_CONFIG_TANGLE } from "../idb/config.js";
 import type { SqlJsMigrationRow, SqlJsMigrationState, WebSqlEngineConfig } from "../sql/types.js";
 import { WebSqlEngine } from "../sql/web.js";
 import { radroots_sql_install_bridges } from "./bridge.js";
@@ -211,10 +212,7 @@ const is_tangle_database_backup = (value: unknown): value is TangleDatabaseBacku
 };
 
 const DEFAULT_TANGLE_STORE_KEY = "radroots-pwa-v1-tangle-db";
-const DEFAULT_TANGLE_IDB_CONFIG: IdbClientConfig = {
-    database: "radroots-pwa-v1-tangle",
-    store: "default"
-};
+const DEFAULT_TANGLE_IDB_CONFIG: IdbClientConfig = IDB_CONFIG_TANGLE;
 
 export class WebTangleDatabase implements IWebTangleDatabase {
     private engine: WebSqlEngine | null = null;

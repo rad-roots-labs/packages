@@ -40,11 +40,6 @@
             "import": "./dist/esm/geolocation/index.js",
             "require": "./dist/cjs/geolocation/index.js"
         },
-        "./http": {
-            "types": "./dist/types/http/index.d.ts",
-            "import": "./dist/esm/http/index.js",
-            "require": "./dist/cjs/http/index.js"
-        },
         "./keystore": {
             "types": "./dist/types/keystore/index.d.ts",
             "import": "./dist/esm/keystore/index.js",
@@ -81,6 +76,8 @@
         "watch": "tsc -w"
     },
     "dependencies": {
+        "@radroots/geo": "*",
+        "@radroots/http": "*",
         "@radroots/tangle-schema-bindings": "*",
         "@radroots/tangle-sql-wasm": "*",
         "@radroots/utils": "*",

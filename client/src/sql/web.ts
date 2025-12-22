@@ -6,12 +6,10 @@ import { backup_b64_to_bytes, backup_bytes_to_b64 } from "../backup/codec.js";
 import type { BackupSqlPayload } from "../backup/types.js";
 import { WebCryptoService } from "../crypto/service.js";
 import type { LegacyKeyConfig } from "../crypto/types.js";
+import { IDB_CONFIG_CIPHER_SQL } from "../idb/config.js";
 import type { IClientSqlEncryptedStore, IWebSqlEngine, SqlJsExecOutcome, SqlJsParams, SqlJsResultRow, WebSqlEngineConfig } from "./types.js";
 
-const DEFAULT_SQL_CIPHER_CONFIG: IdbClientConfig = {
-    database: "radroots-web-sql-cipher",
-    store: "default"
-};
+const DEFAULT_SQL_CIPHER_CONFIG: IdbClientConfig = IDB_CONFIG_CIPHER_SQL;
 
 interface IWebSqlEngineEncryptedStore extends IClientSqlEncryptedStore {
     get_store_id(): string;

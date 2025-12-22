@@ -12,6 +12,7 @@ import {
 import { lib_nostr_key_generate, lib_nostr_public_key, lib_nostr_secret_key_validate } from '@radroots/utils-nostr';
 import { cl_keystore_error } from "./error.js";
 import type { IClientKeystoreNostr } from './types.js';
+import { IDB_CONFIG_KEYSTORE_NOSTR } from "../idb/config.js";
 import { WebKeystore } from './web.js';
 
 export interface IWebKeystoreNostr extends IClientKeystoreNostr {
@@ -23,7 +24,11 @@ export class WebKeystoreNostr implements IWebKeystoreNostr {
     private _keystore: WebKeystore;
 
     constructor(config?: Partial<IdbClientConfig>) {
-        this.keystore_config = { database: config?.database || "radroots-web-keystore-nostr", store: config?.store || "default" };
+        const config_base = config ?? {};
+        this.keystore_config = {
+            database: config_base.database ?? IDB_CONFIG_KEYSTORE_NOSTR.database,
+            store: config_base.store ?? IDB_CONFIG_KEYSTORE_NOSTR.store
+        };
         this._keystore = new WebKeystore(this.keystore_config);
     }
 
