@@ -1,0 +1,40 @@
+{
+    "name": "@radroots/geocoder",
+    "version": "0.0.1",
+    "private": true,
+    "license": "GPLv3",
+    "type": "module",
+    "main": "./dist/cjs/index.js",
+    "module": "./dist/esm/index.js",
+    "types": "./dist/types/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/types/index.d.ts",
+            "import": "./dist/esm/index.js",
+            "require": "./dist/cjs/index.js"
+        }
+    },
+    "scripts": {
+        "build:esm": "tsc -p tsconfig.esm.json",
+        "build:cjs": "tsc -p tsconfig.cjs.json",
+        "build": "npm run clean && npm run build:esm && npm run build:cjs",
+        "prebuild": "npm run clean",
+        "clean": "rimraf dist",
+        "dev": "npm run watch",
+        "watch": "tsc -w"
+    },
+    "devDependencies": {
+        "@types/sql.js": "^1.4.9",
+        "tsup": "^6.2.3",
+        "typescript": "5.8.3"
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "dependencies": {
+        "@radroots/geo": "*",
+        "@radroots/utils": "*",
+        "@radroots/types-bindings": "*",
+        "sql.js": "1.13.0"
+    }
+}
