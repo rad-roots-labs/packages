@@ -1,14 +1,6 @@
 import type { IError } from "@radroots/types-bindings";
 
-export type FieldRecord = Record<string, string>;
-
 export type ResolveStatus = "info" | "warning" | "error" | "success";
-
-export type NotifyMessage = {
-    message: string;
-    ok?: string;
-    cancel?: string;
-};
 
 export type FileBytesFormat = `kb` | `mb` | `gb`;
 export type FileMimeType = string;

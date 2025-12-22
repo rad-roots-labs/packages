@@ -2,8 +2,6 @@ export * from "./async/index.js";
 export * from "./binary/index.js";
 export * from "./currency/index.js";
 export * from "./errors/index.js";
-export * from "./geo/index.js";
-export * from "./http/index.js";
 export * from "./id/index.js";
 export * from "./index.js";
 export * from "./media/index.js";
