@@ -4,7 +4,6 @@ export * from "./backup/error.js";
 export * from "./datastore/error.js";
 export * from "./fs/error.js";
 export * from "./geolocation/error.js";
-export * from "./http/error.js";
 export * from "./keystore/error.js";
 export * from "./notifications/error.js";
 export * from "./radroots/error.js";

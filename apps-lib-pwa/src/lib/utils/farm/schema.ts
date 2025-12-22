@@ -1,6 +1,8 @@
 import { dev } from "$app/environment";
 import type { IViewFarmsAddSubmission, IViewFarmsProductsAddSubmitPayload } from "$lib/types/views/farms";
-import { form_fields, schema_geocode_result, schema_geolocation_point, util_rxp, zf_numf_pos, zf_numi_pos, zf_price } from "@radroots/utils";
+import { schema_geocode_result, schema_geolocation_point } from "@radroots/geo";
+import { form_fields, util_rxp, zf_numf_pos, zf_numi_pos, zf_price } from "@radroots/utils";
+
 import { z } from "zod";
 
 export const schema_view_farms_add_submission: z.ZodSchema<IViewFarmsAddSubmission> = z.object({

@@ -40,11 +40,10 @@ export class WebKeystore implements IWebKeystore {
     private store_id: string;
     private legacy_key_config: LegacyKeyConfig;
 
-    constructor(config?: IdbClientConfig) {
-        const config_base = config ?? {};
+    constructor(config?: Partial<IdbClientConfig>) {
         this.config = {
-            database: config_base.database ?? IDB_CONFIG_KEYSTORE.database,
-            store: config_base.store ?? IDB_CONFIG_KEYSTORE.store
+            database: config?.database ?? IDB_CONFIG_KEYSTORE.database,
+            store: config?.store ?? IDB_CONFIG_KEYSTORE.store
         };
         this.store = null;
         this.store_id = `keystore:${this.config.database}:${this.config.store}`;
