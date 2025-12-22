@@ -33,7 +33,7 @@
         "watch": "tsc -w"
     },
     "devDependencies": {
-        "@radroots/tsconfig": "*",
+        "@radroots/tsconfig": "workspace:*",
         "tsx": "^4.20.6",
         "typescript": "5.8.3"
     },
