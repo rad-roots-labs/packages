@@ -53,7 +53,7 @@ export const ndk_event_trade_listing_invoice_result = async (
         parsed
             ? {
                 payment_sat: parsed.total_sat,
-                payment_bolt11: parsed.bolt11,
+                payment_bolt11: parsed.bolt11 ?? undefined,
             }
             : undefined
     );

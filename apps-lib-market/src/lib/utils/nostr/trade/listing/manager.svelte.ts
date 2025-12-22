@@ -1,12 +1,13 @@
 import NDK, { NDKEvent, NDKSubscription, NDKUser } from "@nostr-dev-kit/ndk";
 import { KIND_JOB_FEEDBACK } from "@radroots/events-bindings";
-import { MARKER_LISTING, TradeListingStage, type TradeListingAcceptRequest, type TradeListingConveyanceRequest, type TradeListingFulfillmentRequest, type TradeListingInvoiceRequest, type TradeListingOrderRequestPayload, type TradeListingPaymentProofRequest, type TradeListingReceiptRequest } from "@radroots/trade-bindings";
+import { MARKER_LISTING, type TradeListingAcceptRequest, type TradeListingConveyanceRequest, type TradeListingFulfillmentRequest, type TradeListingInvoiceRequest, type TradeListingOrderRequestPayload, type TradeListingPaymentProofRequest, type TradeListingReceiptRequest } from "@radroots/trade-bindings";
 import { time_now_ms } from "@radroots/utils";
 import {
     KIND_RADROOTS_LISTING,
     REQUEST_KINDS,
     RESULT_KINDS,
     TAG_E,
+    TRADE_LISTING_STAGE,
     get_event_tag,
     get_job_input_data_for_marker,
     get_trade_listing_stage_from_event_kind,
@@ -18,6 +19,7 @@ import {
     ndk_event_trade_listing_payment_request,
     ndk_event_trade_listing_receipt_request,
 } from "@radroots/utils-nostr";
+import type { TradeListingStageKind } from "@radroots/utils-nostr";
 import { SvelteMap, SvelteSet } from "svelte/reactivity";
 import type {
     AcceptOptions,
@@ -166,13 +168,13 @@ export class TradeFlowServiceImpl implements TradeFlowService {
         }
     }
 
-    async accept_request(opts: AcceptOptions): Promise<StageActionResult<TradeListingStage.Accept>> {
+    async accept_request(opts: AcceptOptions): Promise<StageActionResult<typeof TRADE_LISTING_STAGE.Accept>> {
         const { listing_id, order_id, timeout_ms } = opts;
-        const prereq_id = this.resolve_input_event_id(TradeListingStage.Accept, listing_id, order_id);
+        const prereq_id = this.resolve_input_event_id(TRADE_LISTING_STAGE.Accept, listing_id, order_id);
         if (!prereq_id) {
-            const err: StageActionErr<TradeListingStage.Accept> = {
+            const err: StageActionErr<typeof TRADE_LISTING_STAGE.Accept> = {
                 ok: false,
-                stage: TradeListingStage.Accept,
+                stage: TRADE_LISTING_STAGE.Accept,
                 error: "error.missing_prerequisite",
             };
             return err;
@@ -189,16 +191,16 @@ export class TradeFlowServiceImpl implements TradeFlowService {
                     data,
                 })
             );
-            return this.await_stage_result(TradeListingStage.Accept, {
+            return this.await_stage_result(TRADE_LISTING_STAGE.Accept, {
                 listing_id,
                 order_id,
                 request,
                 timeout_ms,
             });
         } catch {
-            const err: StageActionErr<TradeListingStage.Accept> = {
+            const err: StageActionErr<typeof TRADE_LISTING_STAGE.Accept> = {
                 ok: false,
-                stage: TradeListingStage.Accept,
+                stage: TRADE_LISTING_STAGE.Accept,
                 error: "error.failed_to_publish",
             };
             return err;
@@ -207,17 +209,17 @@ export class TradeFlowServiceImpl implements TradeFlowService {
 
     async conveyance_request(
         opts: ConveyanceOptions
-    ): Promise<StageActionResult<TradeListingStage.Conveyance>> {
+    ): Promise<StageActionResult<typeof TRADE_LISTING_STAGE.Conveyance>> {
         const { listing_id, order_id, method, timeout_ms } = opts;
         const prereq_id = this.resolve_input_event_id(
-            TradeListingStage.Conveyance,
+            TRADE_LISTING_STAGE.Conveyance,
             listing_id,
             order_id
         );
         if (!prereq_id) {
-            const err: StageActionErr<TradeListingStage.Conveyance> = {
+            const err: StageActionErr<typeof TRADE_LISTING_STAGE.Conveyance> = {
                 ok: false,
-                stage: TradeListingStage.Conveyance,
+                stage: TRADE_LISTING_STAGE.Conveyance,
                 error: "error.missing_prerequisite",
             };
             return err;
@@ -234,16 +236,16 @@ export class TradeFlowServiceImpl implements TradeFlowService {
                     data,
                 })
             );
-            return this.await_stage_result(TradeListingStage.Conveyance, {
+            return this.await_stage_result(TRADE_LISTING_STAGE.Conveyance, {
                 listing_id,
                 order_id,
                 request,
                 timeout_ms,
             });
         } catch {
-            const err: StageActionErr<TradeListingStage.Conveyance> = {
+            const err: StageActionErr<typeof TRADE_LISTING_STAGE.Conveyance> = {
                 ok: false,
-                stage: TradeListingStage.Conveyance,
+                stage: TRADE_LISTING_STAGE.Conveyance,
                 error: "error.failed_to_publish",
             };
             return err;
@@ -252,13 +254,13 @@ export class TradeFlowServiceImpl implements TradeFlowService {
 
     async invoice_request(
         opts: InvoiceOptions
-    ): Promise<StageActionResult<TradeListingStage.Invoice>> {
+    ): Promise<StageActionResult<typeof TRADE_LISTING_STAGE.Invoice>> {
         const { listing_id, order_id, timeout_ms } = opts;
-        const prereq_id = this.resolve_input_event_id(TradeListingStage.Invoice, listing_id, order_id);
+        const prereq_id = this.resolve_input_event_id(TRADE_LISTING_STAGE.Invoice, listing_id, order_id);
         if (!prereq_id) {
-            const err: StageActionErr<TradeListingStage.Invoice> = {
+            const err: StageActionErr<typeof TRADE_LISTING_STAGE.Invoice> = {
                 ok: false,
-                stage: TradeListingStage.Invoice,
+                stage: TRADE_LISTING_STAGE.Invoice,
                 error: "error.missing_prerequisite",
             };
             return err;
@@ -272,16 +274,16 @@ export class TradeFlowServiceImpl implements TradeFlowService {
                     data,
                 })
             );
-            return this.await_stage_result(TradeListingStage.Invoice, {
+            return this.await_stage_result(TRADE_LISTING_STAGE.Invoice, {
                 listing_id,
                 order_id,
                 request,
                 timeout_ms,
             });
         } catch {
-            const err: StageActionErr<TradeListingStage.Invoice> = {
+            const err: StageActionErr<typeof TRADE_LISTING_STAGE.Invoice> = {
                 ok: false,
-                stage: TradeListingStage.Invoice,
+                stage: TRADE_LISTING_STAGE.Invoice,
                 error: "error.failed_to_publish",
             };
             return err;
@@ -290,13 +292,13 @@ export class TradeFlowServiceImpl implements TradeFlowService {
 
     async payment_request(
         opts: PaymentOptions
-    ): Promise<StageActionResult<TradeListingStage.Payment>> {
+    ): Promise<StageActionResult<typeof TRADE_LISTING_STAGE.Payment>> {
         const { listing_id, order_id, proof, timeout_ms } = opts;
-        const prereq_id = this.resolve_input_event_id(TradeListingStage.Payment, listing_id, order_id);
+        const prereq_id = this.resolve_input_event_id(TRADE_LISTING_STAGE.Payment, listing_id, order_id);
         if (!prereq_id) {
-            const err: StageActionErr<TradeListingStage.Payment> = {
+            const err: StageActionErr<typeof TRADE_LISTING_STAGE.Payment> = {
                 ok: false,
-                stage: TradeListingStage.Payment,
+                stage: TRADE_LISTING_STAGE.Payment,
                 error: "error.missing_prerequisite",
             };
             return err;
@@ -313,16 +315,16 @@ export class TradeFlowServiceImpl implements TradeFlowService {
                     data,
                 })
             );
-            return this.await_stage_result(TradeListingStage.Payment, {
+            return this.await_stage_result(TRADE_LISTING_STAGE.Payment, {
                 listing_id,
                 order_id,
                 request,
                 timeout_ms,
             });
         } catch {
-            const err: StageActionErr<TradeListingStage.Payment> = {
+            const err: StageActionErr<typeof TRADE_LISTING_STAGE.Payment> = {
                 ok: false,
-                stage: TradeListingStage.Payment,
+                stage: TRADE_LISTING_STAGE.Payment,
                 error: "error.failed_to_publish",
             };
             return err;
@@ -331,17 +333,17 @@ export class TradeFlowServiceImpl implements TradeFlowService {
 
     async fulfillment_request(
         opts: FulfillmentOptions
-    ): Promise<StageActionResult<TradeListingStage.Fulfillment>> {
+    ): Promise<StageActionResult<typeof TRADE_LISTING_STAGE.Fulfillment>> {
         const { listing_id, order_id, timeout_ms } = opts;
         const prereq_id = this.resolve_input_event_id(
-            TradeListingStage.Fulfillment,
+            TRADE_LISTING_STAGE.Fulfillment,
             listing_id,
             order_id
         );
         if (!prereq_id) {
-            const err: StageActionErr<TradeListingStage.Fulfillment> = {
+            const err: StageActionErr<typeof TRADE_LISTING_STAGE.Fulfillment> = {
                 ok: false,
-                stage: TradeListingStage.Fulfillment,
+                stage: TRADE_LISTING_STAGE.Fulfillment,
                 error: "error.missing_prerequisite",
             };
             return err;
@@ -355,16 +357,16 @@ export class TradeFlowServiceImpl implements TradeFlowService {
                     data,
                 })
             );
-            return this.await_stage_result(TradeListingStage.Fulfillment, {
+            return this.await_stage_result(TRADE_LISTING_STAGE.Fulfillment, {
                 listing_id,
                 order_id,
                 request,
                 timeout_ms,
             });
         } catch {
-            const err: StageActionErr<TradeListingStage.Fulfillment> = {
+            const err: StageActionErr<typeof TRADE_LISTING_STAGE.Fulfillment> = {
                 ok: false,
-                stage: TradeListingStage.Fulfillment,
+                stage: TRADE_LISTING_STAGE.Fulfillment,
                 error: "error.failed_to_publish",
             };
             return err;
@@ -373,13 +375,13 @@ export class TradeFlowServiceImpl implements TradeFlowService {
 
     async receipt_request(
         opts: ReceiptOptions
-    ): Promise<StageActionResult<TradeListingStage.Receipt>> {
+    ): Promise<StageActionResult<typeof TRADE_LISTING_STAGE.Receipt>> {
         const { listing_id, order_id, note, timeout_ms } = opts;
-        const prereq_id = this.resolve_input_event_id(TradeListingStage.Receipt, listing_id, order_id);
+        const prereq_id = this.resolve_input_event_id(TRADE_LISTING_STAGE.Receipt, listing_id, order_id);
         if (!prereq_id) {
-            const err: StageActionErr<TradeListingStage.Receipt> = {
+            const err: StageActionErr<typeof TRADE_LISTING_STAGE.Receipt> = {
                 ok: false,
-                stage: TradeListingStage.Receipt,
+                stage: TRADE_LISTING_STAGE.Receipt,
                 error: "error.missing_prerequisite",
             };
             return err;
@@ -395,16 +397,16 @@ export class TradeFlowServiceImpl implements TradeFlowService {
                     data,
                 })
             );
-            return this.await_stage_result(TradeListingStage.Receipt, {
+            return this.await_stage_result(TRADE_LISTING_STAGE.Receipt, {
                 listing_id,
                 order_id,
                 request,
                 timeout_ms,
             });
         } catch {
-            const err: StageActionErr<TradeListingStage.Receipt> = {
+            const err: StageActionErr<typeof TRADE_LISTING_STAGE.Receipt> = {
                 ok: false,
-                stage: TradeListingStage.Receipt,
+                stage: TRADE_LISTING_STAGE.Receipt,
                 error: "error.failed_to_publish",
             };
             return err;
@@ -413,20 +415,20 @@ export class TradeFlowServiceImpl implements TradeFlowService {
 
     post(input: StagePostInput): Promise<StagePostOutput> {
         switch (input.stage) {
-            case TradeListingStage.Accept:
+            case TRADE_LISTING_STAGE.Accept:
                 return this.accept_request(input.opts);
-            case TradeListingStage.Conveyance:
+            case TRADE_LISTING_STAGE.Conveyance:
                 return this.conveyance_request(input.opts);
-            case TradeListingStage.Invoice:
+            case TRADE_LISTING_STAGE.Invoice:
                 return this.invoice_request(input.opts);
-            case TradeListingStage.Payment:
+            case TRADE_LISTING_STAGE.Payment:
                 return this.payment_request(input.opts);
-            case TradeListingStage.Fulfillment:
+            case TRADE_LISTING_STAGE.Fulfillment:
                 return this.fulfillment_request(input.opts);
-            case TradeListingStage.Receipt:
+            case TRADE_LISTING_STAGE.Receipt:
                 return this.receipt_request(input.opts);
-            case TradeListingStage.Cancel:
-            case TradeListingStage.Refund:
+            case TRADE_LISTING_STAGE.Cancel:
+            case TRADE_LISTING_STAGE.Refund:
                 return Promise.resolve({
                     ok: false,
                     stage: input.stage,
@@ -456,7 +458,7 @@ export class TradeFlowServiceImpl implements TradeFlowService {
         this.waiters_by_request.clear();
     }
 
-    private async await_stage_result<S extends TradeListingStage>(
+    private async await_stage_result<S extends TradeListingStageKind>(
         stage: S,
         params: {
             listing_id: string;
@@ -773,7 +775,7 @@ export class TradeFlowServiceImpl implements TradeFlowService {
     }
 
     private resolve_input_event_id(
-        stage: Exclude<TradeListingStage, TradeListingStage.Order>,
+        stage: Exclude<TradeListingStageKind, typeof TRADE_LISTING_STAGE.Order>,
         listing_id: string,
         order_id: string
     ): string | undefined {
@@ -786,23 +788,23 @@ export class TradeFlowServiceImpl implements TradeFlowService {
         };
 
         if (
-            stage === TradeListingStage.Accept ||
-            stage === TradeListingStage.Cancel ||
-            stage === TradeListingStage.Refund
+            stage === TRADE_LISTING_STAGE.Accept ||
+            stage === TRADE_LISTING_STAGE.Cancel ||
+            stage === TRADE_LISTING_STAGE.Refund
         ) {
             return order_id;
         }
-        if (stage === TradeListingStage.Conveyance || stage === TradeListingStage.Invoice) {
-            return last_id(bundle.results.Accept);
+        if (stage === TRADE_LISTING_STAGE.Conveyance || stage === TRADE_LISTING_STAGE.Invoice) {
+            return last_id(bundle.results[TRADE_LISTING_STAGE.Accept]);
         }
-        if (stage === TradeListingStage.Payment) {
-            return last_id(bundle.results.Invoice);
+        if (stage === TRADE_LISTING_STAGE.Payment) {
+            return last_id(bundle.results[TRADE_LISTING_STAGE.Invoice]);
         }
-        if (stage === TradeListingStage.Fulfillment) {
-            return last_id(bundle.results.Payment);
+        if (stage === TRADE_LISTING_STAGE.Fulfillment) {
+            return last_id(bundle.results[TRADE_LISTING_STAGE.Payment]);
         }
-        if (stage === TradeListingStage.Receipt) {
-            return last_id(bundle.results.Fulfillment);
+        if (stage === TRADE_LISTING_STAGE.Receipt) {
+            return last_id(bundle.results[TRADE_LISTING_STAGE.Fulfillment]);
         }
         return undefined;
     }

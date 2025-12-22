@@ -1,9 +1,11 @@
 import { NDKEvent, NDKUser } from "@nostr-dev-kit/ndk";
 import type { ndk, StoreWritable } from "@radroots/apps-lib";
-import type { TradeListingConveyanceRequest, TradeListingOrderRequestPayload, TradeListingPaymentProofRequest, TradeListingStage } from "@radroots/trade-bindings";
+import type { TradeListingConveyanceRequest, TradeListingOrderRequestPayload, TradeListingPaymentProofRequest } from "@radroots/trade-bindings";
+import { TRADE_LISTING_STAGE } from "@radroots/utils-nostr";
+import type { TradeListingStageKind } from "@radroots/utils-nostr";
 import type { SvelteMap } from "svelte/reactivity";
 
-export type TradeListingStageKey = keyof typeof TradeListingStage;
+export type TradeListingStageKey = keyof typeof TRADE_LISTING_STAGE;
 
 export type TradeFlowServiceError =
     | "error.failed_to_publish"
@@ -17,9 +19,9 @@ export type TradeFlowServiceError =
 export interface OrderBundle {
     order_id?: string;
     listing_id: string;
-    requests: Partial<Record<TradeListingStage, NDKEvent[]>>;
-    results: Partial<Record<TradeListingStage, NDKEvent[]>>;
-    feedback: Partial<Record<TradeListingStage, NDKEvent[]>>;
+    requests: Partial<Record<TradeListingStageKind, NDKEvent[]>>;
+    results: Partial<Record<TradeListingStageKind, NDKEvent[]>>;
+    feedback: Partial<Record<TradeListingStageKind, NDKEvent[]>>;
     started_at?: number;
     last_update_at?: number;
     loading: boolean;
@@ -47,7 +49,7 @@ export type OrderRequestErr = {
 
 export type OrderRequestResult = OrderRequestOk | OrderRequestErr;
 
-export type StageActionOk<S extends TradeListingStage> = {
+export type StageActionOk<S extends TradeListingStageKind> = {
     ok: true;
     stage: S;
     request: NDKEvent;
@@ -56,14 +58,14 @@ export type StageActionOk<S extends TradeListingStage> = {
     bundle?: OrderBundle;
 };
 
-export type StageActionErr<S extends TradeListingStage> = {
+export type StageActionErr<S extends TradeListingStageKind> = {
     ok: false;
     stage: S;
     error: TradeFlowServiceError;
     request?: NDKEvent;
 };
 
-export type StageActionResult<S extends TradeListingStage> = StageActionOk<S> | StageActionErr<S>;
+export type StageActionResult<S extends TradeListingStageKind> = StageActionOk<S> | StageActionErr<S>;
 
 export type AcceptOptions = {
     listing_id: string;
@@ -118,24 +120,24 @@ export type RefundOptions = {
 
 
 export type StagePostInput =
-    | { stage: TradeListingStage.Accept; opts: AcceptOptions }
-    | { stage: TradeListingStage.Conveyance; opts: ConveyanceOptions }
-    | { stage: TradeListingStage.Invoice; opts: InvoiceOptions }
-    | { stage: TradeListingStage.Payment; opts: PaymentOptions }
-    | { stage: TradeListingStage.Fulfillment; opts: FulfillmentOptions }
-    | { stage: TradeListingStage.Receipt; opts: ReceiptOptions }
-    | { stage: TradeListingStage.Cancel; opts: CancelOptions }
-    | { stage: TradeListingStage.Refund; opts: RefundOptions };
+    | { stage: typeof TRADE_LISTING_STAGE.Accept; opts: AcceptOptions }
+    | { stage: typeof TRADE_LISTING_STAGE.Conveyance; opts: ConveyanceOptions }
+    | { stage: typeof TRADE_LISTING_STAGE.Invoice; opts: InvoiceOptions }
+    | { stage: typeof TRADE_LISTING_STAGE.Payment; opts: PaymentOptions }
+    | { stage: typeof TRADE_LISTING_STAGE.Fulfillment; opts: FulfillmentOptions }
+    | { stage: typeof TRADE_LISTING_STAGE.Receipt; opts: ReceiptOptions }
+    | { stage: typeof TRADE_LISTING_STAGE.Cancel; opts: CancelOptions }
+    | { stage: typeof TRADE_LISTING_STAGE.Refund; opts: RefundOptions };
 
 export type StagePostOutput =
-    | StageActionResult<TradeListingStage.Accept>
-    | StageActionResult<TradeListingStage.Conveyance>
-    | StageActionResult<TradeListingStage.Invoice>
-    | StageActionResult<TradeListingStage.Payment>
-    | StageActionResult<TradeListingStage.Fulfillment>
-    | StageActionResult<TradeListingStage.Receipt>
-    | StageActionErr<TradeListingStage.Cancel>
-    | StageActionErr<TradeListingStage.Refund>;
+    | StageActionResult<typeof TRADE_LISTING_STAGE.Accept>
+    | StageActionResult<typeof TRADE_LISTING_STAGE.Conveyance>
+    | StageActionResult<typeof TRADE_LISTING_STAGE.Invoice>
+    | StageActionResult<typeof TRADE_LISTING_STAGE.Payment>
+    | StageActionResult<typeof TRADE_LISTING_STAGE.Fulfillment>
+    | StageActionResult<typeof TRADE_LISTING_STAGE.Receipt>
+    | StageActionErr<typeof TRADE_LISTING_STAGE.Cancel>
+    | StageActionErr<typeof TRADE_LISTING_STAGE.Refund>;
 
 export interface CreateTradeFlowServiceOptions {
     ndk: StoreWritable<typeof ndk>;
@@ -165,16 +167,16 @@ export interface TradeFlowService {
         timeout_ms?: number
     ): Promise<OrderRequestResult>;
 
-    accept_request(opts: AcceptOptions): Promise<StageActionResult<TradeListingStage.Accept>>;
+    accept_request(opts: AcceptOptions): Promise<StageActionResult<typeof TRADE_LISTING_STAGE.Accept>>;
     conveyance_request(
         opts: ConveyanceOptions
-    ): Promise<StageActionResult<TradeListingStage.Conveyance>>;
-    invoice_request(opts: InvoiceOptions): Promise<StageActionResult<TradeListingStage.Invoice>>;
-    payment_request(opts: PaymentOptions): Promise<StageActionResult<TradeListingStage.Payment>>;
+    ): Promise<StageActionResult<typeof TRADE_LISTING_STAGE.Conveyance>>;
+    invoice_request(opts: InvoiceOptions): Promise<StageActionResult<typeof TRADE_LISTING_STAGE.Invoice>>;
+    payment_request(opts: PaymentOptions): Promise<StageActionResult<typeof TRADE_LISTING_STAGE.Payment>>;
     fulfillment_request(
         opts: FulfillmentOptions
-    ): Promise<StageActionResult<TradeListingStage.Fulfillment>>;
-    receipt_request(opts: ReceiptOptions): Promise<StageActionResult<TradeListingStage.Receipt>>;
+    ): Promise<StageActionResult<typeof TRADE_LISTING_STAGE.Fulfillment>>;
+    receipt_request(opts: ReceiptOptions): Promise<StageActionResult<typeof TRADE_LISTING_STAGE.Receipt>>;
 
     post(input: StagePostInput): Promise<StagePostOutput>;
 

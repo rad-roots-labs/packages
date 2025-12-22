@@ -36,7 +36,6 @@
         "svelte": "^5.0.0"
     },
     "devDependencies": {
-        "@radroots/dev": "workspace:*",
         "@sveltejs/adapter-auto": "^4.0.0",
         "@sveltejs/kit": "^2.22.0",
         "@sveltejs/package": "^2.0.0",

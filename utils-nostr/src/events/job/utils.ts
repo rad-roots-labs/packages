@@ -1,9 +1,11 @@
 import { JobInputType, KIND_JOB_FEEDBACK } from "@radroots/events-bindings";
-import { TradeListingStage } from "@radroots/trade-bindings";
 import {
     REQUEST_KINDS,
     RESULT_KINDS,
+    TRADE_LISTING_STAGE,
+    TRADE_LISTING_STAGE_KINDS,
 } from "../../domain/trade/lib.js";
+import type { TradeListingStageKind } from "../../domain/trade/lib.js";
 import type { NostrEventTags } from "../../types/lib.js";
 
 export function get_job_input_data_for_marker(
@@ -22,13 +24,11 @@ export function get_job_input_data_for_marker(
 
 export function get_trade_listing_stage_from_event_kind(
     kind: number
-): TradeListingStage | undefined {
-    for (const key of Object.keys(REQUEST_KINDS) as TradeListingStage[]) {
-        if (REQUEST_KINDS[key] === kind) return key;
+): TradeListingStageKind | undefined {
+    for (const stage_kind of TRADE_LISTING_STAGE_KINDS) {
+        if (REQUEST_KINDS[stage_kind] === kind) return stage_kind;
+        if (RESULT_KINDS[stage_kind] === kind) return stage_kind;
     }
-    for (const key of Object.keys(RESULT_KINDS) as TradeListingStage[]) {
-        if (RESULT_KINDS[key] === kind) return key;
-    }
-    if (kind === KIND_JOB_FEEDBACK) return TradeListingStage.Order;
+    if (kind === KIND_JOB_FEEDBACK) return TRADE_LISTING_STAGE.Order;
     return undefined;
 }

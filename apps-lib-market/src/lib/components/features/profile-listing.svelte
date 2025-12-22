@@ -7,8 +7,8 @@
     } from "$root";
 
     import type { RadrootsListing } from "@radroots/events-bindings";
+    import { TRADE_LISTING_STAGE } from "@radroots/utils-nostr";
     import {
-        TradeListingStage,
         type TradeListingOrderRequestPayload,
     } from "@radroots/trade-bindings";
 
@@ -65,12 +65,11 @@
     );
     const is_loading = $derived<boolean>(!!latest_order?.loading);
 
-    // Access results/feedback by enum key, not string
     const last_order_result = $derived(
-        latest_order?.results?.[TradeListingStage.Order]?.at(-1),
+        latest_order?.results?.[TRADE_LISTING_STAGE.Order]?.at(-1),
     );
     const last_feedback = $derived(
-        latest_order?.feedback?.[TradeListingStage.Order]?.at(-1),
+        latest_order?.feedback?.[TRADE_LISTING_STAGE.Order]?.at(-1),
     );
 
     // ---- Actions ----

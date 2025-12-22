@@ -80,6 +80,7 @@
         "@radroots/http": "workspace:*",
         "@radroots/tangle-schema-bindings": "workspace:*",
         "@radroots/tangle-sql-wasm": "workspace:*",
+        "@radroots/types-bindings": "workspace:*",
         "@radroots/utils": "workspace:*",
         "@radroots/utils-nostr": "workspace:*",
         "idb": "^8.0.3",
@@ -87,7 +88,9 @@
         "sql.js": "1.13.0"
     },
     "devDependencies": {
+        "@radroots/tsconfig": "workspace:*",
         "@types/debug": "^4.1.12",
+        "@types/sql.js": "^1.4.9",
         "rimraf": "^6.0.1",
         "typescript": "^5.3.3"
     },
