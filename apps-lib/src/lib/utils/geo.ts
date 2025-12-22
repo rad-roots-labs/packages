@@ -1,4 +1,4 @@
-import type { GeolocationPoint } from "@radroots/utils";
+import type { GeolocationPoint } from "@radroots/geo";
 
 export const geop_is_valid = (point?: GeolocationPoint): boolean => {
     if (!point) return false;

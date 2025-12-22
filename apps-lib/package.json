@@ -48,6 +48,7 @@
         "vite": "7.0.6"
     },
     "dependencies": {
+        "@radroots/geo": "*",
         "@radroots/locales": "*",
         "@radroots/utils": "*",
         "@radroots/utils-nostr": "*",

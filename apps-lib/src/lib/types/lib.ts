@@ -1,4 +1,5 @@
-import type { CallbackPromise, CallbackPromiseFull, CallbackPromiseGeneric, CallbackPromiseResult, GeocoderReverseResult, GeolocationPoint, IClientGeolocationPosition, MediaImageUploadResult } from "@radroots/utils";
+import type { GeocoderReverseResult, GeolocationPoint, IClientGeolocationPosition } from "@radroots/geo";
+import type { CallbackPromise, CallbackPromiseFull, CallbackPromiseGeneric, CallbackPromiseResult, MediaImageUploadResult } from "@radroots/utils";
 import type { Writable } from "svelte/store";
 import type { ISelectOption } from "./components";
 
