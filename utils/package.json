@@ -1,0 +1,44 @@
+{
+    "name": "@radroots/utils",
+    "version": "0.0.1",
+    "private": true,
+    "license": "GPLv3",
+    "type": "module",
+    "main": "./dist/cjs/index.js",
+    "module": "./dist/esm/index.js",
+    "types": "./dist/types/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/types/index.d.ts",
+            "import": "./dist/esm/index.js",
+            "require": "./dist/cjs/index.js"
+        }
+    },
+    "scripts": {
+        "build:esm": "tsc -p tsconfig.esm.json",
+        "build:cjs": "tsc -p tsconfig.cjs.json",
+        "build": "npm run clean && npm run build:esm && npm run build:cjs",
+        "prebuild": "npm run clean",
+        "clean": "rimraf dist",
+        "dev": "npm run watch",
+        "watch": "tsc -w"
+    },
+    "devDependencies": {
+        "@radroots/tsconfig": "*",
+        "@types/node": "^22.13.1",
+        "@types/uuid": "^10.0.0",
+        "rimraf": "^6.0.1",
+        "typescript": "5.8.3"
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "dependencies": {
+        "@radroots/types-bindings": "*",
+        "@noble/curves": "^1.6.0",
+        "@noble/hashes": "^1.4.0",
+        "convert": "^5.5.1",
+        "uuid": "^11.1.0",
+        "zod": "^4.0.5"
+    }
+}
