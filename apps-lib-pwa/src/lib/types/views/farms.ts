@@ -1,5 +1,5 @@
 import type { Farm } from "@radroots/tangle-schema-bindings";
-import type { GeocoderReverseResult, GeolocationPoint, LocationBasis } from "@radroots/utils";
+import type { GeocoderReverseResult, GeolocationPoint, LocationBasis } from "@radroots/geo";
 
 export type FarmExtended = {
     farm: Farm;

@@ -4,7 +4,7 @@
     import {
         type GeocoderReverseResult,
         type GeolocationPoint,
-    } from "@radroots/utils";
+    } from "@radroots/geo";
     import { Marker, Popup } from "svelte-maplibre";
     import MapMarkerAreaDisplay from "./map-marker-area-display.svelte";
 

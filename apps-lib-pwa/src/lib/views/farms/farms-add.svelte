@@ -26,13 +26,15 @@
     import {
         geol_lat_fmt,
         geol_lng_fmt,
-        handle_err,
-        parse_float,
         parse_geocode_address,
-        type CallbackPromiseGeneric,
         type GeocoderReverseResult,
         type GeolocationAddress,
         type GeolocationPoint,
+    } from "@radroots/geo";
+    import {
+        handle_err,
+        parse_float,
+        type CallbackPromiseGeneric,
     } from "@radroots/utils";
     import { onMount } from "svelte";
 

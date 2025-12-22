@@ -80,6 +80,7 @@
         "@radroots/apps-lib": "*",
         "@radroots/events-bindings": "*",
         "@radroots/client": "*",
+        "@radroots/geo": "*",
         "@radroots/tangle-schema-bindings": "*",
         "@radroots/themes": "*",
         "@radroots/utils": "*",

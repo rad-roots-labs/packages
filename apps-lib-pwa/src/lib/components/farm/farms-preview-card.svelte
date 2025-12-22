@@ -9,9 +9,9 @@
         geol_lng_fmt,
         parse_geol_point_tup,
         parse_tup_geop_point,
-        type CallbackPromiseGeneric,
         type GeolocationPointTuple,
-    } from "@radroots/utils";
+    } from "@radroots/geo";
+    import type { CallbackPromiseGeneric } from "@radroots/utils";
     import { onMount } from "svelte";
 
     const { ls, locale } = get_context(`lib`);

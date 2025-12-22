@@ -6,10 +6,10 @@
     import { focus_map_marker } from "$lib/utils/map";
     import { Fade, geop_is_valid, get_context } from "@radroots/apps-lib";
     import {
-        handle_err,
         type GeocoderReverseResult,
         type GeolocationPoint,
-    } from "@radroots/utils";
+    } from "@radroots/geo";
+    import { handle_err } from "@radroots/utils";
     import { onMount } from "svelte";
 
     const { lc_geop_current, lc_geocode } = get_context(`lib`);
