@@ -48,11 +48,11 @@
         "vite": "7.0.6"
     },
     "dependencies": {
-        "@radroots/geo": "*",
-        "@radroots/locales": "*",
-        "@radroots/utils": "*",
-        "@radroots/utils-nostr": "*",
-        "@radroots/themes": "*",
+        "@radroots/geo": "workspace:*",
+        "@radroots/locales": "workspace:*",
+        "@radroots/utils": "workspace:*",
+        "@radroots/utils-nostr": "workspace:*",
+        "@radroots/themes": "workspace:*",
         "@nostr-dev-kit/ndk": "2.14.33",
         "@nostr-dev-kit/ndk-cache-dexie": "2.6.34",
         "@nostr-dev-kit/ndk-svelte": "2.4.38",
