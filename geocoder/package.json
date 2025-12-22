@@ -32,9 +32,9 @@
         "access": "public"
     },
     "dependencies": {
-        "@radroots/geo": "*",
-        "@radroots/utils": "*",
-        "@radroots/types-bindings": "*",
+        "@radroots/geo": "workspace:*",
+        "@radroots/utils": "workspace:*",
+        "@radroots/types-bindings": "workspace:*",
         "sql.js": "1.13.0"
     }
 }
