@@ -1,6 +1,6 @@
 import { NDKEvent } from "@nostr-dev-kit/ndk";
 import { RadrootsJobInput } from "@radroots/events-bindings";
-import { KIND_TRADE_LISTING_FULFILL_REQ, KIND_TRADE_LISTING_FULFILL_RES, MARKER_PREVIOUS, TradeListingFulfillmentRequest, TradeListingFulfillmentState } from "@radroots/trade-bindings";
+import { KIND_TRADE_LISTING_FULFILL_REQ, KIND_TRADE_LISTING_FULFILL_RES, MARKER_PAYMENT_RESULT, TradeListingFulfillmentRequest, TradeListingFulfillmentResult } from "@radroots/trade-bindings";
 import { ndk_event } from "../../../../events/lib.js";
 import { NDKEventFigure } from "../../../../types/ndk.js";
 import {
@@ -18,7 +18,7 @@ export const ndk_event_trade_listing_fulfillment_request = async (
     const { ndk, ndk_user, data, options } = opts;
 
     const inputs: RadrootsJobInput[] = [
-        make_event_input(data.payment_result_event_id, MARKER_PREVIOUS),
+        make_event_input(data.payment_result_event_id, MARKER_PAYMENT_RESULT),
     ];
 
     const tags = build_request_tags(KIND_TRADE_LISTING_FULFILL_REQ, inputs, options);
@@ -35,7 +35,7 @@ export const ndk_event_trade_listing_fulfillment_request = async (
 export const ndk_event_trade_listing_fulfillment_result = async (
     opts: NDKEventFigure<{
         request_event_id: string;
-        content: TradeListingFulfillmentState | string;
+        content: TradeListingFulfillmentResult | string;
         options?: CommonResultOpts;
     }>
 ): Promise<NDKEvent | undefined> => {

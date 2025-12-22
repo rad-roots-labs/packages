@@ -2,7 +2,7 @@ import { schnorr } from "@noble/curves/secp256k1";
 import { hexToBytes } from "@noble/hashes/utils";
 import { NDKEvent, NDKTag } from "@nostr-dev-kit/ndk";
 import { time_now_ms, time_now_s, uuidv4 } from "@radroots/utils";
-import { finalizeEvent, getEventHash, nip19, type NostrEvent as NostrToolsEvent } from "nostr-tools";
+import { finalizeEvent, getEventHash, nip19, type NostrEvent } from "nostr-tools";
 import { ILibNostrEventSign, ILibNostrNeventEncode, NostrEventTags } from "../types/lib.js";
 import { NDKEventFigure } from "../types/ndk.js";
 import { tag_client } from "../utils/tags.js";
@@ -16,18 +16,18 @@ export const parse_nostr_event_basis = <T extends number>(event: NDKEvent, kind:
     return { id: event.id, published_at: event.created_at, author: event.pubkey, kind: event.kind as T };
 };
 
-export const lib_nostr_event_verify = (event: NostrToolsEvent): boolean => {
+export const lib_nostr_event_verify = (event: NostrEvent): boolean => {
     const hash = getEventHash(event);
     if (hash !== event.id) return false
     const valid = schnorr.verify(event.sig, hash, event.pubkey);
     return valid;
 };
 
-export const lib_nostr_event_sign = (opts: ILibNostrEventSign): NostrToolsEvent => {
+export const lib_nostr_event_sign = (opts: ILibNostrEventSign): NostrEvent => {
     return finalizeEvent(opts.event, hexToBytes(opts.secret_key))
 };
 
-export const lib_nostr_event_sign_attest = (secret_key: string): NostrToolsEvent => {
+export const lib_nostr_event_sign_attest = (secret_key: string): NostrEvent => {
     return lib_nostr_event_sign({
         secret_key,
         event: {

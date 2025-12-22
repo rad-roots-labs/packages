@@ -1,4 +1,4 @@
-import { type EventTemplate as NostrToolsEventTemplate } from "nostr-tools";
+import { type EventTemplate } from "nostr-tools";
 import { z } from 'zod';
 import { nostr_tag_client_schema } from "../schemas/lib.js";
 
@@ -90,5 +90,5 @@ export type ILibNostrNeventEncode = {
 
 export type ILibNostrEventSign = {
     secret_key: string;
-    event: NostrToolsEventTemplate;
+    event: EventTemplate;
 };

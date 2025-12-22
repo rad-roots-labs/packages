@@ -1,6 +1,6 @@
 import { NDKEvent } from "@nostr-dev-kit/ndk";
 import { RadrootsJobInput } from "@radroots/events-bindings";
-import { KIND_TRADE_LISTING_ACCEPT_REQ, KIND_TRADE_LISTING_ACCEPT_RES, MARKER_LISTING, MARKER_PREVIOUS, TradeListingAcceptRequest, TradeListingAcceptResult } from "@radroots/trade-bindings";
+import { KIND_TRADE_LISTING_ACCEPT_REQ, KIND_TRADE_LISTING_ACCEPT_RES, MARKER_LISTING, MARKER_ORDER_RESULT, TradeListingAcceptRequest, TradeListingAcceptResult } from "@radroots/trade-bindings";
 import { ndk_event } from "../../../../events/lib.js";
 import { NDKEventFigure } from "../../../../types/ndk.js";
 import {
@@ -18,7 +18,7 @@ export const ndk_event_trade_listing_accept_request = async (
     const { ndk, ndk_user, data, options } = opts;
 
     const inputs: RadrootsJobInput[] = [
-        make_event_input(data.order_result_event_id, MARKER_PREVIOUS),
+        make_event_input(data.order_result_event_id, MARKER_ORDER_RESULT),
         make_event_input(data.listing_event_id, MARKER_LISTING),
     ];
 

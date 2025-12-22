@@ -28,17 +28,20 @@
     },
     "devDependencies": {
         "@radroots/tsconfig": "workspace:*",
+        "@types/node": "^22.13.1",
         "rimraf": "^6.0.1",
         "typescript": "5.8.3"
     },
     "dependencies": {
-        "@radroots/events-bindings": "workspace:*",
-        "@radroots/trade-bindings": "workspace:*",
-        "@radroots/utils": "workspace:*",
         "@noble/curves": "^1.6.0",
         "@noble/hashes": "^1.4.0",
         "@nostr-dev-kit/ndk": "2.14.33",
-        "nostr-geotags": "workspace:*",
-        "nostr-tools": "^2.10.4"
+        "@radroots/core-bindings": "workspace:*",
+        "@radroots/events-bindings": "workspace:*",
+        "@radroots/trade-bindings": "workspace:*",
+        "@radroots/utils": "workspace:*",
+        "nostr-geotags": "^0.7.2",
+        "nostr-tools": "^2.10.4",
+        "zod": "^4.2.1"
     }
 }

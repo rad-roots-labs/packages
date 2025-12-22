@@ -19,7 +19,7 @@ export const ndk_event_trade_listing_order_request = async (
     const { ndk, ndk_user, data, options } = opts;
 
     const inputs: RadrootsJobInput[] = [
-        make_event_input(data.event.id, MARKER_LISTING),
+        make_event_input(data.event.id, MARKER_LISTING, data.event.relays ?? undefined),
         make_text_input(data.payload, MARKER_PAYLOAD),
     ];
 
