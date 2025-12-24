@@ -1,16 +1,10 @@
-import { RadrootsReaction } from "@radroots/events-bindings";
-import { NostrEventTags } from "../../types/lib.js";
+import type { RadrootsReaction } from "@radroots/events-bindings";
+import { reaction_tags } from "@radroots/events-codec-wasm";
+import type { NostrEventTags } from "../../types/lib.js";
+import { ensure_codec_wasm, parse_tags_json } from "../wasm.js";
 
-export const tags_reaction = (opts: RadrootsReaction): NostrEventTags => {
-    const { root } = opts;
-    const ref_kind = root.kind.toString();
-    const ref_author = root.author;
-    const relays = root.relays ?? [];
-    const tags: NostrEventTags = [
-        ["e", root.id, ...relays],
-        ["p", ref_author],
-        ["k", ref_kind],
-    ];
-    if (root.d_tag) tags.push(["a", `${ref_kind}:${ref_author}:${root.d_tag}`, ...relays]);
-    return tags;
+export const tags_reaction = async (opts: RadrootsReaction): Promise<NostrEventTags> => {
+    await ensure_codec_wasm();
+    const tags_json = reaction_tags(JSON.stringify(opts));
+    return parse_tags_json(tags_json);
 };

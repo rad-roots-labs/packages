@@ -10,12 +10,13 @@ export const nostr_event_comment = async (
     opts: NostrEventFigure<{ data: RadrootsComment }>,
 ): Promise<NostrSignedEvent | undefined> => {
     const { data } = opts;
+    const tags = await tags_comment(data);
     return nostr_event_create({
         ...opts,
         basis: {
             kind: KIND_RADROOTS_COMMENT,
             content: data.content,
-            tags: tags_comment(data),
+            tags,
         },
     });
 };

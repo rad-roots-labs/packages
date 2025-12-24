@@ -26,7 +26,7 @@ export const nostr_event_trade_listing_invoice_request = async (
         make_event_input(data.accept_result_event_id, MARKER_ACCEPT_RESULT),
     ];
 
-    const tags = build_request_tags(KIND_TRADE_LISTING_INVOICE_REQ, inputs, options);
+    const tags = await build_request_tags(KIND_TRADE_LISTING_INVOICE_REQ, inputs, options);
 
     return nostr_event_create({
         ...opts,
@@ -47,7 +47,7 @@ export const nostr_event_trade_listing_invoice_result = async (
 
     const parsed = typeof content === "string" ? undefined : content;
 
-    const base_tags = build_result_tags(
+    const base_tags = await build_result_tags(
         KIND_TRADE_LISTING_INVOICE_RES,
         request_event_id,
         options,

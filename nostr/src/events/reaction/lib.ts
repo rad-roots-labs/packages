@@ -10,12 +10,13 @@ export const nostr_event_reaction = async (
     opts: NostrEventFigure<{ data: RadrootsReaction }>,
 ): Promise<NostrSignedEvent | undefined> => {
     const { data } = opts;
+    const tags = await tags_reaction(data);
     return nostr_event_create({
         ...opts,
         basis: {
             kind: KIND_RADROOTS_REACTION,
             content: data.content,
-            tags: tags_reaction(data),
+            tags,
         },
     });
 };

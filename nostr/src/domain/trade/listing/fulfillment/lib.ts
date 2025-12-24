@@ -26,7 +26,7 @@ export const nostr_event_trade_listing_fulfillment_request = async (
         make_event_input(data.payment_result_event_id, MARKER_PAYMENT_RESULT),
     ];
 
-    const tags = build_request_tags(KIND_TRADE_LISTING_FULFILL_REQ, inputs, options);
+    const tags = await build_request_tags(KIND_TRADE_LISTING_FULFILL_REQ, inputs, options);
 
     return nostr_event_create({
         ...opts,
@@ -43,7 +43,11 @@ export const nostr_event_trade_listing_fulfillment_result = async (
 ): Promise<NostrSignedEvent | undefined> => {
     const { request_event_id, content, options } = opts;
 
-    const base_tags = build_result_tags(KIND_TRADE_LISTING_FULFILL_RES, request_event_id, options);
+    const base_tags = await build_result_tags(
+        KIND_TRADE_LISTING_FULFILL_RES,
+        request_event_id,
+        options,
+    );
 
     const tags = options?.chain
         ? [...base_tags, ...tags_trade_listing_chain(options.chain)]

@@ -42,12 +42,12 @@ export const make_text_input = (
     marker,
 });
 
-export const build_request_tags = (
+export const build_request_tags = async (
     kind: number,
     inputs: RadrootsJobInput[],
     opts?: CommonRequestOpts,
 ) =>
-    tags_job_request({
+    await tags_job_request({
         kind,
         inputs,
         output: opts?.output,
@@ -59,7 +59,7 @@ export const build_request_tags = (
         encrypted: !!opts?.encrypted,
     });
 
-export const build_result_tags = (
+export const build_result_tags = async (
     kind: number,
     request_event_id: string,
     opts?: CommonResultOpts,
@@ -69,7 +69,7 @@ export const build_result_tags = (
         payment_bolt11?: string;
     },
 ) =>
-    tags_job_result({
+    await tags_job_result({
         kind,
         request_event: {
             id: request_event_id,

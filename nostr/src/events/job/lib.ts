@@ -13,12 +13,13 @@ export const nostr_event_job_request = async (
     opts: NostrEventFigure<{ data: RadrootsJobRequest }>,
 ): Promise<NostrSignedEvent | undefined> => {
     const { data } = opts;
+    const tags = await tags_job_request(data);
     return nostr_event_create({
         ...opts,
         basis: {
             kind: data.kind,
             content: "",
-            tags: tags_job_request(data),
+            tags,
         },
     });
 };
@@ -27,12 +28,13 @@ export const nostr_event_job_result = async (
     opts: NostrEventFigure<{ data: RadrootsJobResult }>,
 ): Promise<NostrSignedEvent | undefined> => {
     const { data } = opts;
+    const tags = await tags_job_result(data);
     return nostr_event_create({
         ...opts,
         basis: {
             kind: data.kind,
             content: data.content || "",
-            tags: tags_job_result(data),
+            tags,
         },
     });
 };
@@ -41,12 +43,13 @@ export const nostr_event_job_feedback = async (
     opts: NostrEventFigure<{ data: RadrootsJobFeedback }>,
 ): Promise<NostrSignedEvent | undefined> => {
     const { data } = opts;
+    const tags = await tags_job_feedback(data);
     return nostr_event_create({
         ...opts,
         basis: {
             kind: data.kind,
             content: data.content || "",
-            tags: tags_job_feedback(data),
+            tags,
         },
     });
 };
@@ -91,7 +94,7 @@ export const nostr_event_job_feedback_todo = async (
         encrypted: !!options?.encrypted,
     };
 
-    const tags = tags_job_feedback(fb);
+    const tags = await tags_job_feedback(fb);
 
     return nostr_event_create({
         ...opts,
