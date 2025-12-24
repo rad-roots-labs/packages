@@ -4,6 +4,7 @@ import type { BackupDatastorePayload } from "../backup/types.js";
 import { WebCryptoService } from "../crypto/service.js";
 import { crypto_registry_clear_key_entry, crypto_registry_clear_store_index, crypto_registry_get_store_index } from "../crypto/registry.js";
 import { IDB_CONFIG_DATASTORE } from "../idb/config.js";
+import { idb_store_ensure } from "../idb/store.js";
 import { cl_datastore_error } from "./error.js";
 import type {
     IClientDatastore,
@@ -32,6 +33,7 @@ export class WebDatastore<
     private db_name: string;
     private store_name: string;
     private store: UseStore | null = null;
+    private store_ready: Promise<void> | null = null;
     private _key_map: Tk;
     private _key_param_map: Tp;
     private _key_obj_map: TkO;
@@ -53,11 +55,11 @@ export class WebDatastore<
         });
     }
 
-    private get_store(): UseStore {
-        if (!this.store) {
-            if (typeof indexedDB === "undefined") throw new Error(cl_datastore_error.idb_undefined);
-            this.store = createStore(this.db_name, this.store_name);
-        }
+    private async get_store(): Promise<UseStore> {
+        if (typeof indexedDB === "undefined") throw new Error(cl_datastore_error.idb_undefined);
+        if (!this.store_ready) this.store_ready = idb_store_ensure(this.db_name, this.store_name);
+        await this.store_ready;
+        if (!this.store) this.store = createStore(this.db_name, this.store_name);
         return this.store;
     }
 
@@ -71,13 +73,17 @@ export class WebDatastore<
     private async decrypt_value(store_key: string, stored: unknown): Promise<ResolveError<ResultObj<string>>> {
         if (typeof stored === "string") {
             const encrypted = await this.crypto.encrypt(this.store_id, text_enc(stored));
-            await idb_set(store_key, encrypted, this.get_store());
+            const store = await this.get_store();
+            await idb_set(store_key, encrypted, store);
             return { result: stored };
         }
         const bytes = this.as_bytes(stored);
         if (!bytes) return err_msg(cl_datastore_error.no_result);
         const outcome = await this.crypto.decrypt_record(this.store_id, bytes);
-        if (outcome.reencrypted) await idb_set(store_key, outcome.reencrypted, this.get_store());
+        if (outcome.reencrypted) {
+            const store = await this.get_store();
+            await idb_set(store_key, outcome.reencrypted, store);
+        }
         return { result: text_dec(outcome.plaintext) };
     }
 
@@ -94,7 +100,7 @@ export class WebDatastore<
 
     public async init(): Promise<ResolveError<void>> {
         try {
-            this.get_store();
+            await this.get_store();
         } catch (e) {
             return handle_err(e);
         }
@@ -103,7 +109,8 @@ export class WebDatastore<
     public async set(key: keyof Tk, value: string): Promise<ResolveError<ResultObj<string>>> {
         try {
             const encrypted = await this.crypto.encrypt(this.store_id, text_enc(value));
-            await idb_set(this._key_map[key], encrypted, this.get_store());
+            const store = await this.get_store();
+            await idb_set(this._key_map[key], encrypted, store);
             return { result: value };
         } catch (e) {
             return handle_err(e);
@@ -113,7 +120,8 @@ export class WebDatastore<
     public async get(key: keyof Tk): Promise<ResolveError<ResultObj<string>>> {
         try {
             const store_key = this._key_map[key];
-            const value = await idb_get(store_key, this.get_store());
+            const store = await this.get_store();
+            const value = await idb_get(store_key, store);
             if (!value) return err_msg(cl_datastore_error.no_result);
             return await this.decrypt_value(store_key, value);
         } catch (e) {
@@ -123,7 +131,8 @@ export class WebDatastore<
 
     public async del(key: keyof Tk): Promise<IClientDatastoreDelResolve> {
         try {
-            await idb_del(this._key_map[key], this.get_store());
+            const store = await this.get_store();
+            await idb_del(this._key_map[key], store);
             return { result: key.toString() };
         } catch (e) {
             return handle_err(e);
@@ -134,7 +143,8 @@ export class WebDatastore<
         try {
             const serialized = JSON.stringify(value);
             const encrypted = await this.crypto.encrypt(this.store_id, text_enc(serialized));
-            await idb_set(this._key_obj_map[key], encrypted, this.get_store());
+            const store = await this.get_store();
+            await idb_set(this._key_obj_map[key], encrypted, store);
             return { result: value };
         } catch (e) {
             return handle_err(e);
@@ -143,9 +153,10 @@ export class WebDatastore<
 
     public async update_obj<T extends Record<string, unknown>>(key: keyof TkO, value: Partial<T>): Promise<ResolveError<ResultObj<T>>> {
         try {
+            const store = await this.get_store();
             const k = this._key_obj_map[key];
             const obj_curr: Record<string, unknown> = {};
-            const curr = await idb_get(k, this.get_store());
+            const curr = await idb_get(k, store);
             if (curr) {
                 const decrypted = await this.decrypt_value(k, curr);
                 if ("err" in decrypted) return decrypted;
@@ -155,7 +166,7 @@ export class WebDatastore<
             const obj: T = { ...obj_curr, ...value } as T;
             const serialized = JSON.stringify(obj);
             const encrypted = await this.crypto.encrypt(this.store_id, text_enc(serialized));
-            await idb_set(k, encrypted, this.get_store());
+            await idb_set(k, encrypted, store);
             return { result: obj };
         } catch (e) {
             return handle_err(e);
@@ -165,7 +176,8 @@ export class WebDatastore<
     public async get_obj<T>(key: keyof TkO): Promise<ResolveError<ResultObj<T>>> {
         try {
             const store_key = this._key_obj_map[key];
-            const value = await idb_get(store_key, this.get_store());
+            const store = await this.get_store();
+            const value = await idb_get(store_key, store);
             if (!value) return err_msg(cl_datastore_error.no_result);
             const decrypted = await this.decrypt_value(store_key, value);
             if ("err" in decrypted) return decrypted;
@@ -177,7 +189,8 @@ export class WebDatastore<
 
     public async del_obj(key: keyof TkO): Promise<ResolveError<ResultObj<string>>> {
         try {
-            await idb_del(this._key_obj_map[key], this.get_store());
+            const store = await this.get_store();
+            await idb_del(this._key_obj_map[key], store);
             return { result: key.toString() };
         } catch (e) {
             return handle_err(e);
@@ -192,7 +205,8 @@ export class WebDatastore<
         try {
             const store_key = this._key_param_map[key](key_param);
             const encrypted = await this.crypto.encrypt(this.store_id, text_enc(value));
-            await idb_set(store_key, encrypted, this.get_store());
+            const store = await this.get_store();
+            await idb_set(store_key, encrypted, store);
             return { result: value };
         } catch (e) {
             return handle_err(e);
@@ -205,7 +219,8 @@ export class WebDatastore<
     ): Promise<ResolveError<ResultObj<string>>> {
         try {
             const store_key = this._key_param_map[key](key_param);
-            const value = await idb_get(store_key, this.get_store());
+            const store = await this.get_store();
+            const value = await idb_get(store_key, store);
             if (!value) return err_msg(cl_datastore_error.no_result);
             return await this.decrypt_value(store_key, value);
         } catch (e) {
@@ -215,10 +230,11 @@ export class WebDatastore<
 
     public async del_pref(key_prefix: string): Promise<IClientDatastoreDelPrefResolve> {
         try {
-            const all_keys = await idb_keys(this.get_store());
+            const store = await this.get_store();
+            const all_keys = await idb_keys(store);
             const filtered_keys = all_keys.filter((k): k is string => (typeof k === "string" && k.startsWith(key_prefix)));
             for (const key of filtered_keys) {
-                await idb_del(key, this.get_store());
+                await idb_del(key, store);
             }
             return { results: filtered_keys };
         } catch (e) {
@@ -228,7 +244,8 @@ export class WebDatastore<
 
     public async keys(): Promise<ResolveError<ResultsList<string>>> {
         try {
-            const all_keys = await idb_keys(this.get_store());
+            const store = await this.get_store();
+            const all_keys = await idb_keys(store);
             return { results: all_keys.filter((k): k is string => typeof k === "string") };
         } catch (e) {
             return handle_err(e);
@@ -237,11 +254,12 @@ export class WebDatastore<
 
     public async export_backup(): Promise<ResolveError<BackupDatastorePayload>> {
         try {
-            const all_keys = await idb_keys(this.get_store());
+            const store = await this.get_store();
+            const all_keys = await idb_keys(store);
             const entries: BackupDatastorePayload["entries"] = [];
             for (const key of all_keys) {
                 if (typeof key !== "string") continue;
-                const value = await idb_get(key, this.get_store());
+                const value = await idb_get(key, store);
                 if (!value) continue;
                 const decrypted = await this.decrypt_value(key, value);
                 if ("err" in decrypted) return decrypted;
@@ -255,9 +273,10 @@ export class WebDatastore<
 
     public async import_backup(payload: BackupDatastorePayload): Promise<ResolveError<void>> {
         try {
+            const store = await this.get_store();
             for (const entry of payload.entries) {
                 const encrypted = await this.crypto.encrypt(this.store_id, text_enc(entry.value));
-                await idb_set(entry.key, encrypted, this.get_store());
+                await idb_set(entry.key, encrypted, store);
             }
             return;
         } catch (e) {
@@ -267,7 +286,8 @@ export class WebDatastore<
 
     public async reset(): Promise<ResolveError<ResultPass>> {
         try {
-            await idb_clear(this.get_store());
+            const store = await this.get_store();
+            await idb_clear(store);
             const index = await crypto_registry_get_store_index(this.store_id);
             if (index) {
                 await crypto_registry_clear_store_index(this.store_id);

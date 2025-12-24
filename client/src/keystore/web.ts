@@ -15,6 +15,7 @@ import { WebCryptoService } from "../crypto/service.js";
 import type { LegacyKeyConfig } from "../crypto/types.js";
 import { crypto_registry_clear_key_entry, crypto_registry_clear_store_index, crypto_registry_get_store_index } from "../crypto/registry.js";
 import { IDB_CONFIG_KEYSTORE, IDB_STORE_CIPHER_SUFFIX } from "../idb/config.js";
+import { idb_store_ensure } from "../idb/store.js";
 import { cl_keystore_error } from "./error.js";
 import type { IClientKeystore, IClientKeystoreValue } from "./types.js";
 
@@ -36,6 +37,7 @@ export interface IWebKeystore extends IClientKeystore {
 export class WebKeystore implements IWebKeystore {
     private config: IdbClientConfig;
     private store: UseStore | null;
+    private store_ready: Promise<void> | null;
     private crypto: WebCryptoService;
     private store_id: string;
     private legacy_key_config: LegacyKeyConfig;
@@ -46,6 +48,7 @@ export class WebKeystore implements IWebKeystore {
             store: config?.store ?? IDB_CONFIG_KEYSTORE.store
         };
         this.store = null;
+        this.store_ready = null;
         this.store_id = `keystore:${this.config.database}:${this.config.store}`;
         this.crypto = new WebCryptoService();
         const legacy_store = `${this.config.store}${IDB_STORE_CIPHER_SUFFIX}`;
@@ -67,11 +70,11 @@ export class WebKeystore implements IWebKeystore {
         });
     }
 
-    private get_store(): UseStore {
-        if (!this.store) {
-            if (typeof indexedDB === "undefined") throw new Error(cl_keystore_error.idb_undefined);
-            this.store = createStore(this.config.database, this.config.store);
-        }
+    private async get_store(): Promise<UseStore> {
+        if (typeof indexedDB === "undefined") throw new Error(cl_keystore_error.idb_undefined);
+        if (!this.store_ready) this.store_ready = idb_store_ensure(this.config.database, this.config.store);
+        await this.store_ready;
+        if (!this.store) this.store = createStore(this.config.database, this.config.store);
         return this.store;
     }
 
@@ -97,7 +100,8 @@ export class WebKeystore implements IWebKeystore {
         try {
             const bytes = text_enc(value);
             const cipher_bytes = await this.crypto.encrypt(this.store_id, bytes);
-            await idb_set(key, cipher_bytes, this.get_store());
+            const store = await this.get_store();
+            await idb_set(key, cipher_bytes, store);
             return { result: key };
         } catch (e) {
             return handle_err(e);
@@ -106,7 +110,8 @@ export class WebKeystore implements IWebKeystore {
 
     public async remove(key: string): Promise<ResolveError<ResultObj<string>>> {
         try {
-            await idb_del(key, this.get_store());
+            const store = await this.get_store();
+            await idb_del(key, store);
             return { result: key };
         } catch (e) {
             return handle_err(e);
@@ -116,11 +121,12 @@ export class WebKeystore implements IWebKeystore {
     public async read(key?: string | null): Promise<ResolveError<ResultObj<IClientKeystoreValue>>> {
         try {
             if (!key) return err_msg(cl_keystore_error.missing_key);
-            const cipher_value = await idb_get(key, this.get_store());
+            const store = await this.get_store();
+            const cipher_value = await idb_get(key, store);
             const cipher_bytes = this.as_bytes(cipher_value);
             if (!cipher_bytes) return err_msg(cl_keystore_error.corrupt_data);
             const outcome = await this.crypto.decrypt_record(this.store_id, cipher_bytes);
-            if (outcome.reencrypted) await idb_set(key, outcome.reencrypted, this.get_store());
+            if (outcome.reencrypted) await idb_set(key, outcome.reencrypted, store);
             const plain = text_dec(outcome.plaintext);
             return { result: plain };
         } catch (e) {
@@ -130,7 +136,8 @@ export class WebKeystore implements IWebKeystore {
 
     public async keys(): Promise<ResolveError<ResultsList<string>>> {
         try {
-            const all_keys = await idb_keys(this.get_store());
+            const store = await this.get_store();
+            const all_keys = await idb_keys(store);
             return { results: all_keys.filter((k): k is string => typeof k === "string") };
         } catch (e) {
             return handle_err(e);
@@ -139,7 +146,8 @@ export class WebKeystore implements IWebKeystore {
 
     public async export_backup(): Promise<ResolveError<BackupKeystorePayload>> {
         try {
-            const all_keys = await idb_keys(this.get_store());
+            const store = await this.get_store();
+            const all_keys = await idb_keys(store);
             const entries: BackupKeystorePayload["entries"] = [];
             for (const key of all_keys) {
                 if (typeof key !== "string") continue;
@@ -156,6 +164,7 @@ export class WebKeystore implements IWebKeystore {
 
     public async import_backup(payload: BackupKeystorePayload): Promise<ResolveError<void>> {
         try {
+            await this.get_store();
             for (const entry of payload.entries) {
                 const res = await this.add(entry.key, entry.value);
                 if ("err" in res) return res;
@@ -168,7 +177,8 @@ export class WebKeystore implements IWebKeystore {
 
     public async reset(): Promise<ResolveError<ResultPass>> {
         try {
-            await idb_clear(this.get_store());
+            const store = await this.get_store();
+            await idb_clear(store);
             const index = await crypto_registry_get_store_index(this.store_id);
             if (index) {
                 await crypto_registry_clear_store_index(this.store_id);

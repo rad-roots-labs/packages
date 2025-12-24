@@ -1,0 +1,46 @@
+{
+    "name": "@radroots/apps-nostr",
+    "version": "0.0.1",
+    "private": true,
+    "license": "GPLv3",
+    "type": "module",
+    "main": "./dist/cjs/index.js",
+    "module": "./dist/esm/index.js",
+    "types": "./dist/types/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/types/index.d.ts",
+            "import": "./dist/esm/index.js",
+            "require": "./dist/cjs/index.js"
+        }
+    },
+    "scripts": {
+        "build:esm": "tsc -p tsconfig.esm.json",
+        "build:cjs": "tsc -p tsconfig.cjs.json",
+        "build": "npm run clean && npm run build:esm && npm run build:cjs",
+        "prebuild": "npm run clean",
+        "clean": "rimraf dist",
+        "dev": "npm run watch",
+        "watch": "tsc -w"
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "peerDependencies": {
+        "svelte": "^5.0.0"
+    },
+    "devDependencies": {
+        "@radroots/tsconfig": "workspace:*",
+        "@types/node": "^22.13.1",
+        "rimraf": "^6.0.1",
+        "svelte": "^5.0.0",
+        "typescript": "5.8.3"
+    },
+    "dependencies": {
+        "@radroots/nostr": "workspace:*",
+        "@welshman/app": "workspace:*",
+        "@welshman/net": "workspace:*",
+        "@welshman/signer": "workspace:*",
+        "@welshman/store": "workspace:*"
+    }
+}

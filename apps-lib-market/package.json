@@ -50,7 +50,6 @@
     },
     "dependencies": {
         "@radroots/apps-lib": "workspace:*",
-        "@radroots/utils-nostr": "workspace:*",
         "@radroots/utils": "workspace:*",
         "@radroots/core-bindings": "workspace:*",
         "@radroots/events-bindings": "workspace:*",

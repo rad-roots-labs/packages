@@ -82,7 +82,7 @@
         "@radroots/tangle-sql-wasm": "workspace:*",
         "@radroots/types-bindings": "workspace:*",
         "@radroots/utils": "workspace:*",
-        "@radroots/utils-nostr": "workspace:*",
+        "@radroots/nostr": "workspace:*",
         "idb": "^8.0.3",
         "idb-keyval": "^6.2.1",
         "sql.js": "1.13.0"

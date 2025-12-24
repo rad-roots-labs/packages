@@ -9,7 +9,11 @@ import {
     type ResultSecretKey,
     type ResultsList
 } from '@radroots/utils';
-import { lib_nostr_key_generate, lib_nostr_public_key, lib_nostr_secret_key_validate } from '@radroots/utils-nostr';
+import {
+    nostr_key_generate,
+    nostr_public_key_from_secret,
+    nostr_secret_key_validate
+} from "@radroots/nostr";
 import { cl_keystore_error } from "./error.js";
 import type { IClientKeystoreNostr } from './types.js';
 import { IDB_CONFIG_KEYSTORE_NOSTR } from "../idb/config.js";
@@ -33,9 +37,9 @@ export class WebKeystoreNostr implements IWebKeystoreNostr {
     }
 
     private async add_secret_key(secret_key_raw: string): Promise<ResolveError<ResultObj<string>>> {
-        const secret_key = lib_nostr_secret_key_validate(secret_key_raw);
+        const secret_key = nostr_secret_key_validate(secret_key_raw);
         if (!secret_key) throw new Error(cl_keystore_error.nostr_invalid_secret_key);
-        const public_key = lib_nostr_public_key(secret_key);
+        const public_key = nostr_public_key_from_secret(secret_key);
         return await this._keystore.add(public_key, secret_key);
     }
 
@@ -45,7 +49,7 @@ export class WebKeystoreNostr implements IWebKeystoreNostr {
 
     public async generate(): Promise<ResolveError<ResultPublicKey>> {
         try {
-            const secret_key = lib_nostr_key_generate();
+            const secret_key = nostr_key_generate();
             const resolve = await this.add_secret_key(secret_key);
             if ("err" in resolve) return resolve;
             return { public_key: resolve.result };

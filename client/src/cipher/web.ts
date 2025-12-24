@@ -5,6 +5,7 @@ import { crypto_registry_clear_key_entry, crypto_registry_clear_store_index, cry
 import { WebCryptoService } from "../crypto/service.js";
 import type { LegacyKeyConfig } from "../crypto/types.js";
 import { IDB_CONFIG_CIPHER_AES_GCM } from "../idb/config.js";
+import { idb_store_ensure } from "../idb/store.js";
 import { cl_cipher_error } from "./error.js";
 import type { IClientCipher } from "./types.js";
 
@@ -25,10 +26,11 @@ export class WebAesGcmCipher implements IWebAesGcmCipher {
     private readonly key_name: string;
     private readonly algorithm_name: string;
     private readonly iv_length: number;
-    private readonly legacy_store: UseStore;
+    private legacy_store: UseStore | null;
     private readonly store_id: string;
     private readonly crypto: WebCryptoService;
     private readonly legacy_key_config: LegacyKeyConfig;
+    private store_ready: Promise<void> | null = null;
 
     constructor(config?: WebAesGcmCipherConfig) {
         const idb_config = config?.idb_config ?? {};
@@ -43,7 +45,7 @@ export class WebAesGcmCipher implements IWebAesGcmCipher {
         if (typeof indexedDB === "undefined") throw new Error(cl_cipher_error.idb_undefined);
         if (!globalThis.crypto || !globalThis.crypto.subtle) throw new Error(cl_cipher_error.crypto_undefined);
 
-        this.legacy_store = createStore(this.db_name, this.store_name);
+        this.legacy_store = null;
         this.store_id = this.key_name;
         this.crypto = new WebCryptoService();
         this.legacy_key_config = {
@@ -69,13 +71,21 @@ export class WebAesGcmCipher implements IWebAesGcmCipher {
         };
     }
 
+    private async get_store(): Promise<UseStore> {
+        if (!this.store_ready) this.store_ready = idb_store_ensure(this.db_name, this.store_name);
+        await this.store_ready;
+        if (!this.legacy_store) this.legacy_store = createStore(this.db_name, this.store_name);
+        return this.legacy_store;
+    }
+
     public async reset(): Promise<void> {
+        const store = await this.get_store();
         const index = await crypto_registry_get_store_index(this.store_id);
         if (index) {
             await crypto_registry_clear_store_index(this.store_id);
             for (const key_id of index.key_ids) await crypto_registry_clear_key_entry(key_id);
         }
-        await idb_del(this.key_name, this.legacy_store);
+        await idb_del(this.key_name, store);
     }
 
     public async encrypt(data: Uint8Array): Promise<Uint8Array> {

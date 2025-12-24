@@ -7,6 +7,7 @@ import type { BackupSqlPayload } from "../backup/types.js";
 import { WebCryptoService } from "../crypto/service.js";
 import type { LegacyKeyConfig } from "../crypto/types.js";
 import { IDB_CONFIG_CIPHER_SQL } from "../idb/config.js";
+import { idb_store_ensure } from "../idb/store.js";
 import type { IClientSqlEncryptedStore, IWebSqlEngine, SqlJsExecOutcome, SqlJsParams, SqlJsResultRow, WebSqlEngineConfig } from "./types.js";
 
 const DEFAULT_SQL_CIPHER_CONFIG: IdbClientConfig = IDB_CONFIG_CIPHER_SQL;
@@ -22,12 +23,14 @@ class WebSqlEngineEncryptedStore implements IWebSqlEngineEncryptedStore {
     private readonly db_name: string;
     private readonly store_name: string;
     private store: UseStore | null;
+    private store_ready: Promise<void> | null;
 
     constructor(config: WebSqlEngineConfig) {
         this.store_key = config.store_key;
         this.db_name = config.idb_config.database;
         this.store_name = config.idb_config.store;
         this.store = null;
+        this.store_ready = null;
         this.store_id = `sql:${this.store_key}`;
         this.crypto = new WebCryptoService();
         const legacy_config: LegacyKeyConfig = {
@@ -54,30 +57,35 @@ class WebSqlEngineEncryptedStore implements IWebSqlEngineEncryptedStore {
         return null;
     }
 
-    private get_store(): UseStore {
+    private async get_store(): Promise<UseStore> {
+        if (!this.store_ready) this.store_ready = idb_store_ensure(this.db_name, this.store_name);
+        await this.store_ready;
         if (!this.store) this.store = createStore(this.db_name, this.store_name);
         return this.store;
     }
 
     async load(): Promise<Uint8Array | null> {
         if (typeof indexedDB === "undefined") return null;
-        const data = await idb_get(this.store_key, this.get_store());
+        const store = await this.get_store();
+        const data = await idb_get(this.store_key, store);
         const bytes = this.as_bytes(data);
         if (!bytes) return null;
         const outcome = await this.crypto.decrypt_record(this.store_id, bytes);
-        if (outcome.reencrypted) await idb_set(this.store_key, outcome.reencrypted, this.get_store());
+        if (outcome.reencrypted) await idb_set(this.store_key, outcome.reencrypted, store);
         return outcome.plaintext;
     }
 
     async save(bytes: Uint8Array): Promise<void> {
         if (typeof indexedDB === "undefined") return;
         const enc = await this.crypto.encrypt(this.store_id, bytes);
-        await idb_set(this.store_key, enc, this.get_store());
+        const store = await this.get_store();
+        await idb_set(this.store_key, enc, store);
     }
 
     async remove(): Promise<void> {
         if (typeof indexedDB === "undefined") return;
-        await idb_del(this.store_key, this.get_store());
+        const store = await this.get_store();
+        await idb_del(this.store_key, store);
     }
 }
 

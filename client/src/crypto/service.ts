@@ -1,5 +1,6 @@
 import { createStore, get as idb_get } from "idb-keyval";
 import { as_array_buffer } from "@radroots/utils";
+import { idb_store_ensure } from "../idb/store.js";
 import { cl_crypto_error } from "./error.js";
 import { crypto_envelope_decode, crypto_envelope_encode } from "./envelope.js";
 import { crypto_kdf_derive_kek, crypto_kdf_iterations_default, crypto_kdf_salt_create } from "./kdf.js";
@@ -267,6 +268,7 @@ export class WebCryptoService implements IWebCryptoService {
 
     private async load_legacy_key(legacy: LegacyKeyConfig): Promise<CryptoKey | null> {
         if (typeof indexedDB === "undefined") return null;
+        await idb_store_ensure(legacy.idb_config.database, legacy.idb_config.store);
         const legacy_store = createStore(legacy.idb_config.database, legacy.idb_config.store);
         const stored = await idb_get(legacy.key_name, legacy_store);
         if (!stored) return null;

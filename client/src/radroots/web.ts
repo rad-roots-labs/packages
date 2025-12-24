@@ -1,6 +1,6 @@
 import { err_msg, schema_media_resource } from '@radroots/utils';
 import { type IHttpResponse, is_err_response, is_error_response, is_pass_response, WebHttp } from '@radroots/http';
-import { lib_nostr_event_sign_attest } from '@radroots/utils-nostr';
+import { nostr_event_sign_attest } from "@radroots/nostr";
 import { cl_radroots_error } from "./error.js";
 import type {
     IClientRadroots,
@@ -41,7 +41,7 @@ export class WebClientRadroots implements IWebClientRadroots {
     }
 
     private create_x_nostr_event(secret_key: string): string {
-        return JSON.stringify(lib_nostr_event_sign_attest(secret_key));
+        return JSON.stringify(nostr_event_sign_attest(secret_key));
     }
 
     public async accounts_request(opts: IClientRadrootsAccountsRequest): Promise<IClientRadrootsAccountsRequestResolve> {
