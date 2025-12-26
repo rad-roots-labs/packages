@@ -33,6 +33,26 @@
             "invalid_message": "NFC message is invalid",
             "unknown_error": "NFC encountered an unknown error"
         },
+        "ble": {
+            "window_undefined": "The window context is unavailable",
+            "navigator_undefined": "The navigator context is unavailable",
+            "secure_context_required": "Bluetooth requires a secure context (HTTPS)",
+            "unsupported": "Bluetooth is not supported on this device",
+            "unavailable": "Bluetooth is unavailable or disabled",
+            "permission_denied": "Bluetooth permission was denied",
+            "device_not_found": "No Bluetooth device was selected",
+            "connect_failed": "Unable to connect over Bluetooth",
+            "service_not_found": "Bluetooth service was not found",
+            "characteristic_not_found": "Bluetooth characteristic was not found",
+            "notify_failed": "Unable to enable Bluetooth notifications",
+            "write_failed": "Bluetooth write failed",
+            "read_failed": "Bluetooth read failed",
+            "disconnected": "Bluetooth device disconnected",
+            "abort": "Bluetooth operation was aborted",
+            "timeout": "Bluetooth operation timed out",
+            "invalid_message": "Bluetooth message is invalid",
+            "unknown_error": "Bluetooth encountered an unknown error"
+        },
         "undefined_window": "The window context is unavailable",
         "nostr": {
             "missing_public_key": "There is no public key available",

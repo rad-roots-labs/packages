@@ -1,0 +1,14 @@
+{
+  "extends": "@radroots/tsconfig/tsconfig.esm.json",
+  "compilerOptions": {
+    "moduleResolution": "nodenext",
+    "lib": ["dom", "ES2022"],
+    "rootDir": "./src",
+    "outDir": "dist/esm",
+    "declaration": true,
+    "declarationMap": true,
+    "declarationDir": "dist/types"
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
+}
