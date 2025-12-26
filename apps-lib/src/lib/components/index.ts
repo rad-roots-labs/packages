@@ -5,3 +5,5 @@ export { default as Glyphi } from "./glyphi.svelte";
 export { default as ImageBlob } from "./image-blob.svelte";
 export { default as ImageSrc } from "./image-src.svelte";
 export { default as Input } from "./input.svelte";
+export { default as ViewPane } from "./view-pane.svelte";
+export { default as ViewStack } from "./view-stack.svelte";
