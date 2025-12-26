@@ -1,16 +1,22 @@
 import { handle_err, type IdbClientConfig, type ResolveError } from "@radroots/utils";
-import { createStore, del as idb_del, get as idb_get, set as idb_set, type UseStore } from "idb-keyval";
+import { del as idb_del, get as idb_get, set as idb_set, type UseStore } from "idb-keyval";
 import type { BindParams, Database, SqlJsStatic, SqlValue, Statement } from "sql.js";
 import init_sql_js from "sql.js/dist/sql-wasm.js";
 import { backup_b64_to_bytes, backup_bytes_to_b64 } from "../backup/codec.js";
 import type { BackupSqlPayload } from "../backup/types.js";
-import { WebCryptoService } from "../crypto/service.js";
 import type { LegacyKeyConfig } from "../crypto/types.js";
 import { IDB_CONFIG_CIPHER_SQL } from "../idb/config.js";
-import { idb_store_ensure } from "../idb/store.js";
+import { WebEncryptedStore } from "../idb/encrypted_store.js";
+import { idb_value_as_bytes } from "../idb/value.js";
+import { is_error } from "../utils/resolve.js";
+import { cl_sql_error } from "./error.js";
 import type { IClientSqlEncryptedStore, IWebSqlEngine, SqlJsExecOutcome, SqlJsParams, SqlJsResultRow, WebSqlEngineConfig } from "./types.js";
 
 const DEFAULT_SQL_CIPHER_CONFIG: IdbClientConfig = IDB_CONFIG_CIPHER_SQL;
+const resolve_or_throw = <T>(value: ResolveError<T>): T => {
+    if (is_error(value)) throw new Error(value.err);
+    return value;
+};
 
 interface IWebSqlEngineEncryptedStore extends IClientSqlEncryptedStore {
     get_store_id(): string;
@@ -19,29 +25,27 @@ interface IWebSqlEngineEncryptedStore extends IClientSqlEncryptedStore {
 class WebSqlEngineEncryptedStore implements IWebSqlEngineEncryptedStore {
     private readonly store_key: string;
     private readonly store_id: string;
-    private readonly crypto: WebCryptoService;
-    private readonly db_name: string;
-    private readonly store_name: string;
-    private store: UseStore | null;
-    private store_ready: Promise<void> | null;
+    private readonly encrypted_store: WebEncryptedStore;
 
     constructor(config: WebSqlEngineConfig) {
         this.store_key = config.store_key;
-        this.db_name = config.idb_config.database;
-        this.store_name = config.idb_config.store;
-        this.store = null;
-        this.store_ready = null;
         this.store_id = `sql:${this.store_key}`;
-        this.crypto = new WebCryptoService();
-        const legacy_config: LegacyKeyConfig = {
-            idb_config: config.cipher_config ?? DEFAULT_SQL_CIPHER_CONFIG,
-            key_name: `radroots.sql.${this.store_key}.aes-gcm.key`,
-            iv_length: 12,
-            algorithm: "AES-GCM"
-        };
-        this.crypto.register_store_config({
+        const legacy_idb_config = config.cipher_config === null
+            ? null
+            : config.cipher_config ?? DEFAULT_SQL_CIPHER_CONFIG;
+        const legacy_key: LegacyKeyConfig | null = legacy_idb_config
+            ? {
+                idb_config: legacy_idb_config,
+                key_name: `radroots.sql.${this.store_key}.aes-gcm.key`,
+                iv_length: 12,
+                algorithm: "AES-GCM"
+            }
+            : null;
+        this.encrypted_store = new WebEncryptedStore({
+            idb_config: config.idb_config,
             store_id: this.store_id,
-            legacy_key: legacy_config,
+            idb_error: cl_sql_error.idb_undefined,
+            legacy_key,
             iv_length: 12
         });
     }
@@ -50,34 +54,25 @@ class WebSqlEngineEncryptedStore implements IWebSqlEngineEncryptedStore {
         return this.store_id;
     }
 
-    private as_bytes(value: unknown): Uint8Array | null {
-        if (value instanceof Uint8Array) return value;
-        if (value instanceof ArrayBuffer) return new Uint8Array(value);
-        if (ArrayBuffer.isView(value)) return new Uint8Array(value.buffer, value.byteOffset, value.byteLength);
-        return null;
-    }
-
     private async get_store(): Promise<UseStore> {
-        if (!this.store_ready) this.store_ready = idb_store_ensure(this.db_name, this.store_name);
-        await this.store_ready;
-        if (!this.store) this.store = createStore(this.db_name, this.store_name);
-        return this.store;
+        const store = await this.encrypted_store.get_store();
+        return resolve_or_throw(store);
     }
 
     async load(): Promise<Uint8Array | null> {
         if (typeof indexedDB === "undefined") return null;
         const store = await this.get_store();
         const data = await idb_get(this.store_key, store);
-        const bytes = this.as_bytes(data);
+        const bytes = idb_value_as_bytes(data);
         if (!bytes) return null;
-        const outcome = await this.crypto.decrypt_record(this.store_id, bytes);
+        const outcome = resolve_or_throw(await this.encrypted_store.decrypt_record(bytes));
         if (outcome.reencrypted) await idb_set(this.store_key, outcome.reencrypted, store);
         return outcome.plaintext;
     }
 
     async save(bytes: Uint8Array): Promise<void> {
         if (typeof indexedDB === "undefined") return;
-        const enc = await this.crypto.encrypt(this.store_id, bytes);
+        const enc = resolve_or_throw(await this.encrypted_store.encrypt_bytes(bytes));
         const store = await this.get_store();
         await idb_set(this.store_key, enc, store);
     }

@@ -1,6 +1,6 @@
 <script lang="ts">
     import type { ILoadCircle } from "$lib/types/components/lib";
-    import { loading_style_map } from "$lib/utils/styles";
+    import { LOADING_STYLE_MAP } from "$lib/utils/styles";
     import { fmt_cl, Glyph } from "@radroots/apps-lib";
 
     let {
@@ -11,8 +11,8 @@
 
     const styles = $derived(
         basis?.dim
-            ? loading_style_map.get(basis?.dim)
-            : loading_style_map.get("sm"),
+            ? LOADING_STYLE_MAP.get(basis?.dim)
+            : LOADING_STYLE_MAP.get("sm"),
     );
 </script>
 

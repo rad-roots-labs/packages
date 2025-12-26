@@ -1,10 +1,9 @@
 <script lang="ts">
-    import type { IImagePath } from "$lib/types/ui";
-    import { get_context } from "$lib/utils/app/lib";
-    import ImageBlob from "./image-blob.svelte";
-    import ImageSrc from "./image-src.svelte";
+    import { get_context, ImageBlob, ImageSrc } from "@radroots/apps-lib";
+    import type { IImagePath } from "@radroots/apps-lib";
+    import type { LibContext } from "$lib/types/context";
 
-    const { lc_img_bin } = get_context(`lib`);
+    const { lc_img_bin } = get_context<LibContext>(`lib`);
     let { basis }: { basis: IImagePath } = $props();
 
     const img_path = $derived(basis.path);

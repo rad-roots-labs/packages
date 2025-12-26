@@ -1,8 +1,9 @@
 <script lang="ts">
+    import type { LibContext } from "$lib/types/context";
     import { get_context, Glyph } from "@radroots/apps-lib";
     import LoadSymbol from "../lib/load-symbol.svelte";
 
-    const { ls, lc_photos_add } = get_context(`lib`);
+    const { ls, lc_photos_add } = get_context<LibContext>(`lib`);
 
     let {
         basis,

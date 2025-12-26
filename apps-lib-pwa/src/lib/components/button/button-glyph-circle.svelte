@@ -1,14 +1,14 @@
 <script lang="ts">
     import type { IButtonGlyphCircle } from "$lib/types/components/lib";
-    import { fmt_cl, glyph_style_map } from "@radroots/apps-lib";
+    import { fmt_cl, GLYPH_STYLE_MAP } from "@radroots/apps-lib";
     import GlyphButton from "./button-glyph.svelte";
 
     let { basis }: { basis: IButtonGlyphCircle } = $props();
 
     const styles = $derived(
         basis?.glyph?.dim
-            ? glyph_style_map.get(basis?.glyph?.dim)
-            : glyph_style_map.get(`sm`),
+            ? GLYPH_STYLE_MAP.get(basis?.glyph?.dim)
+            : GLYPH_STYLE_MAP.get(`sm`),
     );
 </script>
 

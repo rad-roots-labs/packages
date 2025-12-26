@@ -1,6 +1,6 @@
 import type { GeometryGlyphDimension } from "$lib/types/lib";
 
-export const glyph_style_map: Map<GeometryGlyphDimension, { gl_1: number; dim_1?: number; }> = new Map([
+export const GLYPH_STYLE_MAP: Map<GeometryGlyphDimension, { gl_1: number; dim_1?: number; }> = new Map([
     ["xs--", { gl_1: 12 }],
     ["xs-", { gl_1: 12, dim_1: 17 }],
     ["xs", { gl_1: 15, dim_1: 18 }],

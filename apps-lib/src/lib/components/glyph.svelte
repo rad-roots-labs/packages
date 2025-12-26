@@ -1,12 +1,12 @@
 <script lang="ts">
-    import { glyph_style_map } from "$lib/styles/glyphs";
+    import { GLYPH_STYLE_MAP } from "$lib/styles/glyphs";
     import type { IGlyph } from "$lib/types/components";
-    import { fmt_cl } from "$lib/utils/app/lib";
+    import { fmt_cl } from "$lib/utils/app";
 
     let { basis }: { basis: IGlyph } = $props();
 
     const styles = $derived(
-        basis?.dim ? glyph_style_map.get(basis.dim) : glyph_style_map.get(`sm`),
+        basis?.dim ? GLYPH_STYLE_MAP.get(basis.dim) : GLYPH_STYLE_MAP.get(`sm`),
     );
 
     const weight = $derived(basis.weight ? `-${basis.weight}` : `-bold`);

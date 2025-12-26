@@ -13,7 +13,7 @@ import type {
 import type { IWebCryptoService, KeyMaterialProvider } from "../crypto/types.js";
 import { DeviceKeyMaterialProvider } from "../crypto/provider.js";
 import { handle_err, type ResolveError } from "@radroots/utils";
-import type { IError } from "@radroots/types-bindings";
+import { is_error } from "../utils/resolve.js";
 
 export type BackupBundleBuildOpts = {
     sql_store?: BackupSqlStore;
@@ -31,10 +31,6 @@ export type BackupBundleImportOpts = {
     crypto_service?: IWebCryptoService;
     key_material_provider?: KeyMaterialProvider;
     import_registry?: boolean;
-};
-
-const is_error = <T>(value: ResolveError<T>): value is IError<string> => {
-    return typeof value === "object" && value !== null && "err" in value;
 };
 
 const collect_payloads = async (opts: BackupBundleBuildOpts): Promise<ResolveError<BackupBundlePayload[]>> => {
@@ -79,6 +75,7 @@ export const backup_bundle_build = async (opts: BackupBundleBuildOpts): Promise<
     const crypto_registry = opts.crypto_service
         ? await opts.crypto_service.export_registry()
         : { stores: [], keys: [] };
+    if (is_error(crypto_registry)) return crypto_registry;
     return {
         manifest: {
             version: 1,
@@ -107,7 +104,8 @@ export const backup_bundle_import = async (blob: Uint8Array, opts: BackupBundleI
         const provider = opts.key_material_provider ?? new DeviceKeyMaterialProvider();
         const bundle = await backup_bundle_decode(blob, provider);
         if (opts.import_registry && opts.crypto_service) {
-            await opts.crypto_service.import_registry(bundle.manifest.crypto_registry);
+            const res = await opts.crypto_service.import_registry(bundle.manifest.crypto_registry);
+            if (is_error(res)) return res;
         }
         for (const payload of bundle.payloads) {
             if (payload.store_type === "sql" && opts.sql_store) {

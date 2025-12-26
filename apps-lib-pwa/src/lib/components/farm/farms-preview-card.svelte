@@ -1,6 +1,7 @@
 <script lang="ts">
     import MapMarkerArea from "$lib/components/map/map-marker-area.svelte";
     import Map from "$lib/components/map/map.svelte";
+    import type { LibContext } from "$lib/types/context";
     import type { FarmExtended } from "$lib/types/views/farms";
     import { get_context } from "@radroots/apps-lib";
     import {
@@ -14,7 +15,7 @@
     import type { CallbackPromiseGeneric } from "@radroots/utils";
     import { onMount } from "svelte";
 
-    const { ls, locale } = get_context(`lib`);
+    const { ls, locale } = get_context<LibContext>(`lib`);
 
     let {
         basis,

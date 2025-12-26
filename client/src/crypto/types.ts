@@ -1,4 +1,4 @@
-import type { IdbClientConfig } from "@radroots/utils";
+import type { IdbClientConfig, ResolveError } from "@radroots/utils";
 
 export type CryptoKeyStatus = "active" | "rotated";
 
@@ -62,10 +62,10 @@ export interface KeyMaterialProvider {
 
 export interface IWebCryptoService {
     register_store_config(config: CryptoStoreConfig): void;
-    encrypt(store_id: string, plaintext: Uint8Array): Promise<Uint8Array>;
-    decrypt(store_id: string, blob: Uint8Array): Promise<Uint8Array>;
-    decrypt_record(store_id: string, blob: Uint8Array): Promise<CryptoDecryptOutcome>;
-    rotate_store_key(store_id: string): Promise<string>;
-    export_registry(): Promise<CryptoRegistryExport>;
-    import_registry(registry: CryptoRegistryExport): Promise<void>;
+    encrypt(store_id: string, plaintext: Uint8Array): Promise<ResolveError<Uint8Array>>;
+    decrypt(store_id: string, blob: Uint8Array): Promise<ResolveError<Uint8Array>>;
+    decrypt_record(store_id: string, blob: Uint8Array): Promise<ResolveError<CryptoDecryptOutcome>>;
+    rotate_store_key(store_id: string): Promise<ResolveError<string>>;
+    export_registry(): Promise<ResolveError<CryptoRegistryExport>>;
+    import_registry(registry: CryptoRegistryExport): Promise<ResolveError<void>>;
 }

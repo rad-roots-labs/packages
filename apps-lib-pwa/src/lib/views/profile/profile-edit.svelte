@@ -1,23 +1,23 @@
 <script lang="ts">
-    import { FloatPage, LayoutPage, LayoutView, NavigationTabs } from "$lib";
+    import { FloatPage, InputPwa, LayoutPage, LayoutView, NavigationTabs } from "$lib";
     import ButtonRoundNav from "$lib/components/button/button-round-nav.svelte";
+    import type { LibContext } from "$lib/types/context";
     import type { IViewBasis } from "$lib/types/views";
     import type {
         IViewProfileEditData,
         ViewProfileEditFieldKey,
     } from "$lib/types/views/profile";
+    import { idb_kv_init_page } from "$lib/utils/keyval";
     import {
         type ElementCallbackValue,
         Flex,
-        InputExt,
         fmt_id,
         get_context,
-        idb_kv_init_page,
     } from "@radroots/apps-lib";
     import { type CallbackPromiseGeneric, handle_err } from "@radroots/utils";
     import { onMount } from "svelte";
 
-    const { ls } = get_context(`lib`);
+    const { ls } = get_context<LibContext>(`lib`);
 
     let {
         basis,
@@ -34,7 +34,7 @@
         val_field: string;
     } = $props();
 
-    const param: Record<ViewProfileEditFieldKey, { placeholder: string }> = {
+    const PARAM: Record<ViewProfileEditFieldKey, { placeholder: string }> = {
         name: {
             placeholder: `${$ls(`icu.enter_*`, { value: `profile username` })}`, // @todo
         },
@@ -57,7 +57,7 @@
     });
 
     const input_placeholder = $derived(
-        basis.data?.field ? param[basis.data.field]?.placeholder : ``,
+        basis.data?.field ? PARAM[basis.data.field]?.placeholder : ``,
     );
 </script>
 
@@ -69,7 +69,7 @@
                 <Flex />
             </div>
             {#if basis.data.field}
-                <InputExt
+                <InputPwa
                     bind:value={val_field}
                     basis={{
                         id: fmt_id(`field`),

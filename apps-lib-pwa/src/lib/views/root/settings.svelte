@@ -2,18 +2,19 @@
     import { LayoutView, PageToolbar } from "$lib";
     import LayoutTrellis from "$lib/components/layout/layout-trellis.svelte";
     import Trellis from "$lib/components/trellis/trellis.svelte";
+    import type { LibContext } from "$lib/types/context";
     import type { ITrellisExtList } from "$lib/types/components/trellis";
     import type { IViewBasis } from "$lib/types/views";
+    import { idb_kv_init_page } from "$lib/utils/keyval";
     import {
         get_context,
-        idb_kv_init_page,
-        symbols,
+        SYMBOLS,
         theme_mode,
     } from "@radroots/apps-lib";
     import { handle_err } from "@radroots/utils";
     import { onMount } from "svelte";
 
-    const { ls, lc_color_mode } = get_context(`lib`);
+    const { ls, lc_color_mode } = get_context<LibContext>(`lib`);
 
     let {
         basis,
@@ -71,7 +72,7 @@
                                     {
                                         entries: [
                                             {
-                                                value: symbols.bullet,
+                                                value: SYMBOLS.bullet,
                                                 label: `${$ls(`icu.choose_*`, {
                                                     value: `${$ls(
                                                         `common.color_mode`,

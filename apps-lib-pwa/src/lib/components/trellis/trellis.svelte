@@ -1,5 +1,6 @@
 <script lang="ts">
     import { app_lo } from "$lib/stores/app";
+    import type { LibContext } from "$lib/types/context";
     import type { ITrellis } from "$lib/types/components/trellis";
     import { fmt_cl, get_context, parse_layer } from "@radroots/apps-lib";
     import type { Snippet } from "svelte";
@@ -10,7 +11,7 @@
     import TrellisTitle from "./trellis-title.svelte";
     import TrellisTouch from "./trellis-touch.svelte";
 
-    const { ls } = get_context(`lib`);
+    const { ls } = get_context<LibContext>(`lib`);
 
     let {
         basis,

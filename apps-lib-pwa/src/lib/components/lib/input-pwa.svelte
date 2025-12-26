@@ -1,8 +1,8 @@
 <script lang="ts">
     import { browser } from "$app/environment";
+    import { idb_kv } from "$lib/utils/keyval";
     import {
         fmt_cl,
-        idb_kv,
         type IInput,
         parse_layer,
         value_constrain,
@@ -31,9 +31,9 @@
     );
 
     const sync_from_idb = async (): Promise<void> => {
-        if (!browser || !id) return;
+        if (!browser || !id || !idb_kv) return;
         try {
-            const kv_val = await idb_kv.get(id);
+            const kv_val = await idb_kv.get<string | undefined>(id);
             if (kv_val !== null && kv_val !== undefined && kv_val !== value) {
                 value = kv_val;
             } else if (kv_val === null || kv_val === undefined) {
@@ -46,7 +46,7 @@
     };
 
     const sync_to_idb = async (): Promise<void> => {
-        if (!browser || !id) return;
+        if (!browser || !id || !idb_kv) return;
         try {
             await idb_kv.set(id, value || ``);
         } catch (e) {

@@ -2,7 +2,6 @@ import type { ElementCallbackMount, ElementCallbackValue, ElementCallbackValueBl
 import type { CallbackPromiseGeneric, FormField } from "@radroots/utils";
 import type { HTMLInputTypeAttribute } from "svelte/elements";
 
-
 export type EntryStyle = `guide` | `line`;
 
 export type IGlyphI = {

@@ -1,4 +1,4 @@
-import { get_store } from "$lib/utils/app/lib";
+import { get_store } from "$lib/utils/app";
 import type { ThemeKey, ThemeMode } from "@radroots/themes";
 import { type CallbackPromiseGeneric } from "@radroots/utils";
 import { writable } from "svelte/store";

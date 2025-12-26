@@ -1,6 +1,6 @@
 <script lang="ts">
     import type { IImageSource } from "$lib/types/ui";
-    import { fmt_cl } from "$lib/utils/app/lib";
+    import { fmt_cl } from "$lib/utils/app";
 
     let { basis }: { basis: IImageSource } = $props();
 

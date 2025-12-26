@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { fmt_cl } from "$lib/utils/app/lib";
+    import { fmt_cl } from "$lib/utils/app";
     import type { Snippet } from "svelte";
     import { cubicIn, cubicOut } from "svelte/easing";
     import { fade, type FadeParams } from "svelte/transition";

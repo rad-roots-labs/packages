@@ -25,6 +25,18 @@ const RADROOTS_IDB_STORES = [
 const idb_missing_stores = (db: IDBDatabase, stores: string[]): string[] =>
     stores.filter((store) => !db.objectStoreNames.contains(store));
 
+const idb_database_exists = async (database: string): Promise<boolean> => {
+    if (typeof indexedDB === "undefined") return false;
+    const list_fn = indexedDB.databases;
+    if (typeof list_fn !== "function") return true;
+    try {
+        const entries = await list_fn.call(indexedDB);
+        return entries.some((entry) => entry.name === database);
+    } catch {
+        return true;
+    }
+};
+
 const idb_open = (database: string, version?: number, stores?: string[]): Promise<IDBDatabase> =>
     new Promise((resolve, reject) => {
         const request = indexedDB.open(database, version);
@@ -42,11 +54,9 @@ const idb_open = (database: string, version?: number, stores?: string[]): Promis
         };
     });
 
-export const idb_store_ensure = async (database: string, store: string): Promise<void> => {
-    if (typeof indexedDB === "undefined") return;
-    const target_stores = database === RADROOTS_IDB_DATABASE
-        ? Array.from(new Set([...RADROOTS_IDB_STORES, store]))
-        : [store];
+const idb_store_ensure_all = async (database: string, stores: string[]): Promise<void> => {
+    if (stores.length === 0) return;
+    const target_stores = Array.from(new Set(stores));
     let attempt = 0;
     while (attempt < 5) {
         attempt++;
@@ -67,5 +77,31 @@ export const idb_store_ensure = async (database: string, store: string): Promise
             if (e instanceof DOMException && e.name === "VersionError") continue;
             throw e;
         }
+    }
+};
+
+export const idb_store_ensure = async (database: string, store: string): Promise<void> => {
+    if (typeof indexedDB === "undefined") return;
+    await idb_store_ensure_all(database, [store]);
+};
+
+export const idb_store_bootstrap = async (database: string, stores?: string[]): Promise<void> => {
+    if (typeof indexedDB === "undefined") return;
+    const target_stores = stores ?? (database === RADROOTS_IDB_DATABASE ? RADROOTS_IDB_STORES : []);
+    if (target_stores.length === 0) return;
+    await idb_store_ensure_all(database, target_stores);
+};
+
+export const idb_store_exists = async (database: string, store: string): Promise<boolean> => {
+    if (typeof indexedDB === "undefined") return false;
+    const known = await idb_database_exists(database);
+    if (!known) return false;
+    try {
+        const db = await idb_open(database);
+        const exists = db.objectStoreNames.contains(store);
+        db.close();
+        return exists;
+    } catch {
+        return false;
     }
 };

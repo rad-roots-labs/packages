@@ -10,7 +10,7 @@ type ConfigWindow = {
     }
 };
 
-export const cfg_app: ConfigWindow = {
+export const CFG_APP: ConfigWindow = {
     layout: {
         ios0: {
             h: 600

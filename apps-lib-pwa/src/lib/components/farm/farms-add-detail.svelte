@@ -1,9 +1,10 @@
 <script lang="ts">
     import FormLineLedger from "$lib/components/form/form-line-ledger.svelte";
+    import type { LibContext } from "$lib/types/context";
     import { get_context } from "@radroots/apps-lib";
     import { area_units, form_fields } from "@radroots/utils";
 
-    const { ls } = get_context(`lib`);
+    const { ls } = get_context<LibContext>(`lib`);
 
     let {
         val_farmname = $bindable(``),

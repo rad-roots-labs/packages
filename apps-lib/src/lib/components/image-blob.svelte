@@ -1,23 +1,24 @@
 <script lang="ts">
     import type { IImageBlob } from "$lib/types/ui";
-    import { fmt_cl, to_arr_buf } from "$lib/utils/app/lib";
+    import { fmt_cl, to_arr_buf } from "$lib/utils/app";
 
     let { basis }: { basis: IImageBlob } = $props();
 
-    const img_src = $derived(
-        basis.data
-            ? URL.createObjectURL(
-                  new Blob(
-                      [
-                          basis.data instanceof Uint8Array
-                              ? to_arr_buf(basis.data)
-                              : basis.data,
-                      ],
-                      { type: "image/jpeg" },
-                  ),
-              )
-            : undefined,
-    );
+    let img_src = $state<string | undefined>(undefined);
+
+    $effect(() => {
+        if (!basis.data) {
+            img_src = undefined;
+            return;
+        }
+        const url = URL.createObjectURL(
+            new Blob([to_arr_buf(basis.data)], { type: "image/jpeg" })
+        );
+        img_src = url;
+        return () => {
+            URL.revokeObjectURL(url);
+        };
+    });
 </script>
 
 {#if img_src}

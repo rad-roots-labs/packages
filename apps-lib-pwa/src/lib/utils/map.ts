@@ -1,4 +1,4 @@
-export const cfg_map = {
+export const CFG_MAP = {
     styles: {
         base: {
             light: `https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json`,

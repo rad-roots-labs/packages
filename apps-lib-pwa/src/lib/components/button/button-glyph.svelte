@@ -1,9 +1,9 @@
 <script lang="ts">
-    import { type IGlyph, fmt_cl, glyph_style_map } from "@radroots/apps-lib";
+    import { type IGlyph, fmt_cl, GLYPH_STYLE_MAP } from "@radroots/apps-lib";
 
     let { basis }: { basis: IGlyph } = $props();
     const styles = $derived(
-        basis?.dim ? glyph_style_map.get(basis.dim) : glyph_style_map.get(`sm`),
+        basis?.dim ? GLYPH_STYLE_MAP.get(basis.dim) : GLYPH_STYLE_MAP.get(`sm`),
     );
 </script>
 

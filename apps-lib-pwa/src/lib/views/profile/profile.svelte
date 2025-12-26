@@ -1,19 +1,19 @@
 <script lang="ts">
-    import { NavigationTabs, SelectMenu } from "$lib";
+    import { ImagePath, NavigationTabs, SelectMenu } from "$lib";
     import ButtonRoundNav from "$lib/components/button/button-round-nav.svelte";
     import FloatPage from "$lib/components/lib/float-page.svelte";
     import ImageUploadPhotoAdd from "$lib/components/media/image-upload-photo-add.svelte";
+    import type { LibContext } from "$lib/types/context";
     import type { IViewBasis } from "$lib/types/views";
     import type {
         IViewProfileData,
         ViewProfileEditFieldKey,
     } from "$lib/types/views/profile";
+    import { idb_kv_init_page } from "$lib/utils/keyval";
     import {
         get_context,
         Glyph,
-        idb_kv_init_page,
-        ImagePath,
-        symbols,
+        SYMBOLS,
         type IViewOnDestroy,
     } from "@radroots/apps-lib";
     import {
@@ -23,7 +23,7 @@
     } from "@radroots/utils";
     import { onDestroy, onMount } from "svelte";
 
-    const { ls } = get_context(`lib`);
+    const { ls } = get_context<LibContext>(`lib`);
 
     let {
         basis,
@@ -235,7 +235,7 @@
                     <p
                         class={`font-sans font-[400] ${classes_photo_overlay_glyph}`}
                     >
-                        {symbols.bullet}
+                        {SYMBOLS.bullet}
                     </p>
                     <button
                         class={`flex flex-row justify-center items-center`}

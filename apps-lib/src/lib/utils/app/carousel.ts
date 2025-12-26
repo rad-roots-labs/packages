@@ -1,7 +1,6 @@
-
 import { casl_active, casl_i, casl_imax, casl_num } from "$lib/stores/carousel";
 import { exe_iter } from "@radroots/utils";
-import { get_store } from "./lib";
+import { get_store } from "./index";
 
 const CAROUSEL_DELAY_MS = 150;
 

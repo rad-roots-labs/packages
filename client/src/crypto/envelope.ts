@@ -4,6 +4,8 @@ import type { CryptoEnvelope } from "./types.js";
 const ENVELOPE_MAGIC = new Uint8Array([0x52, 0x52, 0x43, 0x45]);
 const ENVELOPE_VERSION = 1;
 const ENVELOPE_HEADER_LENGTH = 4 + 1 + 1 + 1 + 8;
+const TEXT_ENCODER = new TextEncoder();
+const TEXT_DECODER = new TextDecoder();
 
 const bytes_equal = (left: Uint8Array, right: Uint8Array): boolean => {
     if (left.length !== right.length) return false;
@@ -12,8 +14,7 @@ const bytes_equal = (left: Uint8Array, right: Uint8Array): boolean => {
 };
 
 export const crypto_envelope_encode = (envelope: CryptoEnvelope): Uint8Array => {
-    const encoder = new TextEncoder();
-    const key_bytes = encoder.encode(envelope.key_id);
+    const key_bytes = TEXT_ENCODER.encode(envelope.key_id);
     if (key_bytes.length > 255) throw new Error(cl_crypto_error.invalid_key_id);
     const total_len = ENVELOPE_HEADER_LENGTH + key_bytes.length + envelope.iv.length + envelope.ciphertext.length;
     const out = new Uint8Array(total_len);
@@ -39,7 +40,7 @@ export const crypto_envelope_encode = (envelope: CryptoEnvelope): Uint8Array => 
 
 export const crypto_envelope_decode = (blob: Uint8Array): CryptoEnvelope | null => {
     if (blob.byteLength < ENVELOPE_HEADER_LENGTH) return null;
-    const magic = blob.slice(0, ENVELOPE_MAGIC.length);
+    const magic = blob.subarray(0, ENVELOPE_MAGIC.length);
     if (!bytes_equal(magic, ENVELOPE_MAGIC)) return null;
     const view = new DataView(blob.buffer, blob.byteOffset, blob.byteLength);
     let offset = ENVELOPE_MAGIC.length;
@@ -54,13 +55,12 @@ export const crypto_envelope_decode = (blob: Uint8Array): CryptoEnvelope | null 
     offset += 8;
     const remaining = blob.byteLength - offset;
     if (remaining < key_len + iv_len + 1) throw new Error(cl_crypto_error.invalid_envelope);
-    const key_bytes = blob.slice(offset, offset + key_len);
+    const key_bytes = blob.subarray(offset, offset + key_len);
     offset += key_len;
-    const iv = blob.slice(offset, offset + iv_len);
+    const iv = blob.subarray(offset, offset + iv_len);
     offset += iv_len;
-    const ciphertext = blob.slice(offset);
-    const decoder = new TextDecoder();
-    const key_id = decoder.decode(key_bytes);
+    const ciphertext = blob.subarray(offset);
+    const key_id = TEXT_DECODER.decode(key_bytes);
     if (!key_id) throw new Error(cl_crypto_error.invalid_key_id);
     return {
         version,

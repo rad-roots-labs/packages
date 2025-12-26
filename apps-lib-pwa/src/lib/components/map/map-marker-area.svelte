@@ -1,4 +1,5 @@
 <script lang="ts">
+    import type { LibContext } from "$lib/types/context";
     import type { IMapMarkerArea } from "$lib/types/components/lib";
     import { get_context } from "@radroots/apps-lib";
     import {
@@ -8,7 +9,7 @@
     import { Marker, Popup } from "svelte-maplibre";
     import MapMarkerAreaDisplay from "./map-marker-area-display.svelte";
 
-    const { lc_geocode } = get_context(`lib`);
+    const { lc_geocode } = get_context<LibContext>(`lib`);
 
     let {
         basis,

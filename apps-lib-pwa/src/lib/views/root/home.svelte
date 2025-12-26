@@ -4,13 +4,15 @@
     import LayoutView from "$lib/components/layout/layout-view.svelte";
     import NavigationTabs from "$lib/components/navigation/navigation-tabs.svelte";
     import PageToolbar from "$lib/components/navigation/page-toolbar.svelte";
+    import type { LibContext } from "$lib/types/context";
     import type { IViewBasis, IViewHomeData } from "$lib/types/views";
-    import { get_context, idb_kv_init_page } from "@radroots/apps-lib";
+    import { idb_kv_init_page } from "$lib/utils/keyval";
+    import { get_context } from "@radroots/apps-lib";
 
     import { handle_err, type CallbackPromise } from "@radroots/utils";
     import { onMount } from "svelte";
 
-    const { ls } = get_context(`lib`);
+    const { ls } = get_context<LibContext>(`lib`);
 
     let {
         basis,

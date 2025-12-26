@@ -1,13 +1,13 @@
-import { type IdbClientConfig } from "@radroots/utils";
+import { err_msg, handle_err, type IdbClientConfig, type ResolveError } from "@radroots/utils";
 import { createStore, del as idb_del, type UseStore } from "idb-keyval";
-import type { WebAesGcmCipherConfig } from "../keystore/web.js";
 import { crypto_registry_clear_key_entry, crypto_registry_clear_store_index, crypto_registry_get_store_index } from "../crypto/registry.js";
 import { WebCryptoService } from "../crypto/service.js";
 import type { LegacyKeyConfig } from "../crypto/types.js";
 import { IDB_CONFIG_CIPHER_AES_GCM } from "../idb/config.js";
-import { idb_store_ensure } from "../idb/store.js";
+import { idb_store_ensure, idb_store_exists } from "../idb/store.js";
+import { is_error } from "../utils/resolve.js";
 import { cl_cipher_error } from "./error.js";
-import type { IClientCipher } from "./types.js";
+import type { ClientCipherDecryptResolve, ClientCipherEncryptResolve, ClientCipherResetResolve, IClientCipher, WebAesGcmCipherConfig } from "./types.js";
 
 const DEFAULT_IDB_CONFIG: IdbClientConfig = IDB_CONFIG_CIPHER_AES_GCM;
 
@@ -42,9 +42,6 @@ export class WebAesGcmCipher implements IWebAesGcmCipher {
             ? config?.iv_length ?? DEFAULT_WEB_AES_GCM_CONFIG.iv_length
             : DEFAULT_WEB_AES_GCM_CONFIG.iv_length;
 
-        if (typeof indexedDB === "undefined") throw new Error(cl_cipher_error.idb_undefined);
-        if (!globalThis.crypto || !globalThis.crypto.subtle) throw new Error(cl_cipher_error.crypto_undefined);
-
         this.legacy_store = null;
         this.store_id = this.key_name;
         this.crypto = new WebCryptoService();
@@ -71,30 +68,63 @@ export class WebAesGcmCipher implements IWebAesGcmCipher {
         };
     }
 
-    private async get_store(): Promise<UseStore> {
-        if (!this.store_ready) this.store_ready = idb_store_ensure(this.db_name, this.store_name);
-        await this.store_ready;
-        if (!this.legacy_store) this.legacy_store = createStore(this.db_name, this.store_name);
-        return this.legacy_store;
+    private ensure_env(): ResolveError<void> {
+        if (typeof indexedDB === "undefined") return err_msg(cl_cipher_error.idb_undefined);
+        if (!globalThis.crypto || !globalThis.crypto.subtle) return err_msg(cl_cipher_error.crypto_undefined);
+        return;
     }
 
-    public async reset(): Promise<void> {
-        const store = await this.get_store();
-        const index = await crypto_registry_get_store_index(this.store_id);
-        if (index) {
-            await crypto_registry_clear_store_index(this.store_id);
-            for (const key_id of index.key_ids) await crypto_registry_clear_key_entry(key_id);
+    private async get_store(): Promise<ResolveError<UseStore>> {
+        const env_err = this.ensure_env();
+        if (env_err) return env_err;
+        try {
+            if (!this.store_ready) this.store_ready = idb_store_ensure(this.db_name, this.store_name);
+            await this.store_ready;
+            if (!this.legacy_store) this.legacy_store = createStore(this.db_name, this.store_name);
+            return this.legacy_store;
+        } catch (e) {
+            return handle_err(e);
         }
-        await idb_del(this.key_name, store);
     }
 
-    public async encrypt(data: Uint8Array): Promise<Uint8Array> {
+    public async reset(): Promise<ClientCipherResetResolve> {
+        const env_err = this.ensure_env();
+        if (env_err) return env_err;
+        try {
+            const index = await crypto_registry_get_store_index(this.store_id);
+            if (is_error(index)) return index;
+            if (index) {
+                const cleared = await crypto_registry_clear_store_index(this.store_id);
+                if (is_error(cleared)) return cleared;
+                for (const key_id of index.key_ids) {
+                    const res = await crypto_registry_clear_key_entry(key_id);
+                    if (is_error(res)) return res;
+                }
+            }
+            const has_store = await idb_store_exists(this.db_name, this.store_name);
+            if (has_store) {
+                const store = await this.get_store();
+                if (is_error(store)) return store;
+                await idb_del(this.key_name, store);
+            }
+            return { pass: true } as const;
+        } catch (e) {
+            return handle_err(e);
+        }
+    }
+
+    public async encrypt(data: Uint8Array): Promise<ClientCipherEncryptResolve> {
+        const env_err = this.ensure_env();
+        if (env_err) return env_err;
         return await this.crypto.encrypt(this.store_id, data);
     }
 
-    public async decrypt(blob: Uint8Array): Promise<Uint8Array> {
-        if (blob.byteLength <= this.iv_length) throw new Error(cl_cipher_error.invalid_ciphertext);
+    public async decrypt(blob: Uint8Array): Promise<ClientCipherDecryptResolve> {
+        const env_err = this.ensure_env();
+        if (env_err) return env_err;
+        if (blob.byteLength <= this.iv_length) return err_msg(cl_cipher_error.invalid_ciphertext);
         const outcome = await this.crypto.decrypt_record(this.store_id, blob);
+        if (is_error(outcome)) return outcome;
         return outcome.plaintext;
     }
 }

@@ -3,6 +3,7 @@
     import MapMarkerArea from "$lib/components/map/map-marker-area.svelte";
     import Map from "$lib/components/map/map.svelte";
     import { app_lo } from "$lib/stores/app";
+    import type { LibContext } from "$lib/types/context";
     import { focus_map_marker } from "$lib/utils/map";
     import { Fade, geop_is_valid, get_context } from "@radroots/apps-lib";
     import {
@@ -12,7 +13,7 @@
     import { handle_err } from "@radroots/utils";
     import { onMount } from "svelte";
 
-    const { lc_geop_current, lc_geocode } = get_context(`lib`);
+    const { lc_geop_current, lc_geocode } = get_context<LibContext>(`lib`);
 
     let {
         map_geoc = $bindable(undefined),

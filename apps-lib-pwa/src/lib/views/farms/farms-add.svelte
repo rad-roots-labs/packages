@@ -8,6 +8,7 @@
     import CarouselItem from "$lib/components/lib/carousel-item.svelte";
     import PageToolbar from "$lib/components/navigation/page-toolbar.svelte";
     import { app_platform } from "$lib/stores/app";
+    import type { LibContext } from "$lib/types/context";
     import type { IViewFarmsAddSubmission } from "$lib/types/views/farms";
     import { schema_view_farms_add_submission } from "$lib/utils/farm/schema";
     import { focus_map_marker } from "$lib/utils/map";
@@ -39,7 +40,7 @@
     import { onMount } from "svelte";
 
     const { ls, locale, lc_gui_alert, lc_geop_current, lc_geocode } =
-        get_context(`lib`);
+        get_context<LibContext>(`lib`);
 
     let {
         basis,

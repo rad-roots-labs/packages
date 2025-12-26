@@ -37,6 +37,7 @@ export { default as WrapBorder } from "./components/lib/wrap-border.svelte";
 export { default as MapMarkerAreaDisplay } from "./components/map/map-marker-area-display.svelte";
 export { default as MapMarkerArea } from "./components/map/map-marker-area.svelte";
 export { default as Map } from "./components/map/map.svelte";
+export { default as ImagePath } from "./components/media/image-path.svelte";
 export { default as ImageUploadPhotoAdd } from "./components/media/image-upload-photo-add.svelte";
 export { default as NavigationTabs } from "./components/navigation/navigation-tabs.svelte";
 export { default as PageHeader } from "./components/navigation/page-header.svelte";

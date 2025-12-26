@@ -1,10 +1,10 @@
 <script lang="ts">
     import { browser } from "$app/environment";
+    import { idb_kv } from "$lib/utils/keyval";
     import {
         Glyph,
         type ISelect,
         fmt_cl,
-        idb_kv,
         parse_layer,
     } from "@radroots/apps-lib";
     import { handle_err } from "@radroots/utils";
@@ -38,7 +38,7 @@
 
     onMount(async () => {
         try {
-            if (id && basis?.sync_init && browser) {
+            if (id && basis?.sync_init && browser && idb_kv) {
                 const sync_val = await idb_kv.get(id);
                 await idb_kv.set(id, sync_val || ``);
             }
@@ -48,7 +48,7 @@
     });
 
     $effect(() => {
-        if (browser && id && basis?.sync) {
+        if (browser && id && basis?.sync && idb_kv) {
             (async () => {
                 await idb_kv.set(id, value);
             })();
@@ -62,7 +62,7 @@
                 .reduce((_, j) => j, [])
                 .find((k) => k.value === el?.value);
             if (el) el.value = value;
-            if (basis?.sync && id && browser) await idb_kv.set(id, value);
+            if (basis?.sync && id && browser && idb_kv) await idb_kv.set(id, value);
             if (basis.callback && opt) await basis.callback(opt);
         } catch (e) {
             console.log(`(error) handle_on_change `, e);

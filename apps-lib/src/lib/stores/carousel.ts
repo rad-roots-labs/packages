@@ -1,4 +1,4 @@
-import { get_store } from "$lib/utils/app/lib";
+import { get_store } from "$lib/utils/app";
 import { writable } from "svelte/store";
 
 export const casl_active = writable<boolean>(false);

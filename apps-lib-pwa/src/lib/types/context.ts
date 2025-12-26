@@ -1,7 +1,6 @@
 import type { I18nTranslateFunction, I18nTranslateLocale, LocalCallbackColorMode, LocalCallbackGeocode, LocalCallbackGeocodeCurrent, LocalCallbackGuiAlert, LocalCallbackGuiConfirm, LocalCallbackImgBin, LocalCallbackPhotosAddMultiple, LocalCallbackPhotosUpload } from "@radroots/apps-lib";
 
-export type ContextKeys =
-    | `lib`;
+export type ContextKeys = `lib`;
 
 export type ContextMap = {
     lib: LibContext;

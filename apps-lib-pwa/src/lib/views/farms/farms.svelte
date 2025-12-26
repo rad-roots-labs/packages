@@ -5,12 +5,13 @@
     import LayoutPage from "$lib/components/layout/layout-page.svelte";
     import LayoutView from "$lib/components/layout/layout-view.svelte";
     import PageToolbar from "$lib/components/navigation/page-toolbar.svelte";
+    import type { LibContext } from "$lib/types/context";
     import type { IViewBasis } from "$lib/types/views";
     import type { IViewFarmsData } from "$lib/types/views/farms";
+    import { idb_kv_init_page } from "$lib/utils/keyval";
     import {
         Fade,
         get_context,
-        idb_kv_init_page,
         type CallbackRoute,
     } from "@radroots/apps-lib";
     import {
@@ -20,7 +21,7 @@
     } from "@radroots/utils";
     import { onMount } from "svelte";
 
-    const { ls } = get_context(`lib`);
+    const { ls } = get_context<LibContext>(`lib`);
 
     let {
         basis,

@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { loading_style_map } from "$lib/utils/styles";
+    import { LOADING_STYLE_MAP } from "$lib/utils/styles";
     import type { ILoadSymbol } from "@radroots/apps-lib";
 
     let {
@@ -10,8 +10,8 @@
 
     const styles = $derived(
         basis?.dim
-            ? loading_style_map.get(basis?.dim)
-            : loading_style_map.get("sm"),
+            ? LOADING_STYLE_MAP.get(basis?.dim)
+            : LOADING_STYLE_MAP.get("sm"),
     );
 
     const num_blades = $derived(basis?.blades || 8);

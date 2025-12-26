@@ -1,6 +1,6 @@
 import type { LoadingDimension } from "@radroots/apps-lib";
 
-export const loading_style_map: Map<LoadingDimension, { dim_1: number; gl_2: number }> = new Map([
+export const LOADING_STYLE_MAP: Map<LoadingDimension, { dim_1: number; gl_2: number }> = new Map([
     ["glyph-send-button", { dim_1: 20, gl_2: 20 }],
     ["xs", { dim_1: 12, gl_2: 12 }],
     ["sm", { dim_1: 16, gl_2: 16 }],
