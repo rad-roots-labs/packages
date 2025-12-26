@@ -35,6 +35,7 @@ export * from "./events/plot/parse.js";
 export * from "./events/plot/tags.js";
 export * from "./events/profile/lib.js";
 export * from "./events/profile/parse.js";
+export * from "./events/profile/tags.js";
 export * from "./events/reaction/lib.js";
 export * from "./events/reaction/parse.js";
 export * from "./events/reaction/tags.js";

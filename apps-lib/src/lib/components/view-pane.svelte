@@ -61,7 +61,6 @@
         style_active?: string;
         style_inactive?: string;
         role?: string;
-        tabindex?: number;
         aria_label?: string;
     };
 
@@ -73,11 +72,30 @@
         children: Snippet;
     } = $props();
 
+    const view_context_fallback = writable<ViewContext<string>>({
+        active_view: "",
+        mode: "stack",
+        fade: true,
+        transition_ms: DEFAULT_TRANSITION_MS,
+        opacity_inactive: DEFAULT_OPACITY_INACTIVE,
+        scale_inactive: DEFAULT_SCALE_INACTIVE,
+        offset_x: DEFAULT_OFFSET_X,
+        offset_y: DEFAULT_OFFSET_Y,
+        blur_inactive_px: DEFAULT_BLUR_INACTIVE_PX,
+        pointer_events_inactive: DEFAULT_POINTER_EVENTS_INACTIVE,
+        z_index_active: DEFAULT_Z_INDEX_ACTIVE,
+        z_index_inactive: DEFAULT_Z_INDEX_INACTIVE,
+    });
+
     const view_context_store =
         get_context<Writable<ViewContext<string>> | undefined>(
             VIEW_CONTEXT_KEY,
-        ) ??
-        writable<ViewContext<string>>({
+        ) ?? view_context_fallback;
+    const use_fallback = view_context_store === view_context_fallback;
+
+    $effect(() => {
+        if (!use_fallback) return;
+        view_context_fallback.set({
             active_view: basis.active_view ?? basis.view,
             mode: basis.mode ?? "stack",
             fade: basis.fade ?? true,
@@ -93,6 +111,7 @@
             z_index_active: basis.z_index_active ?? DEFAULT_Z_INDEX_ACTIVE,
             z_index_inactive: basis.z_index_inactive ?? DEFAULT_Z_INDEX_INACTIVE,
         });
+    });
 
     const view_context_value = $derived($view_context_store);
 
@@ -186,7 +205,6 @@
     data-view={basis.view}
     style={style}
     role={basis.role ?? undefined}
-    tabindex={basis.tabindex ?? undefined}
     aria-label={basis.aria_label ?? undefined}
     aria-hidden={!is_active}
 >

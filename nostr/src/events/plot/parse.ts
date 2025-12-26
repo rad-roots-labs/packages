@@ -33,8 +33,11 @@ export const parse_nostr_plot_event = (
     if (!d_tag) return undefined;
     const farm_addr = get_event_tag(event.tags, "a");
     if (!farm_addr) return undefined;
+    const farm_pubkey = get_event_tag(event.tags, "p");
+    if (!farm_pubkey) return undefined;
     const farm_ref = parse_farm_addr(farm_addr);
     if (!farm_ref) return undefined;
+    if (farm_pubkey !== farm_ref.pubkey) return undefined;
     try {
         const parsed = JSON.parse(event.content);
         const plot = radroots_plot_schema.parse(parsed);

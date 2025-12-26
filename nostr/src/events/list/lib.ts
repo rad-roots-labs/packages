@@ -1,4 +1,4 @@
-import type { RadrootsList } from "@radroots/events-bindings";
+import type { RadrootsList, RadrootsListEntry } from "@radroots/events-bindings";
 import type { NostrEventFigure, NostrSignedEvent } from "../../types/nostr.js";
 import { nostr_event_create } from "../lib.js";
 import { tags_list } from "./tags.js";
@@ -41,4 +41,39 @@ export const nostr_event_list = async (
             tags,
         },
     });
+};
+
+const is_string_array = (value: unknown): value is string[] =>
+    Array.isArray(value) && value.every(item => typeof item === "string");
+
+export const list_private_entries_json = (entries: RadrootsListEntry[]): string | undefined => {
+    const tags: string[][] = [];
+    for (const entry of entries) {
+        if (!entry.tag.trim()) return undefined;
+        const first = entry.values[0];
+        if (!first || !first.trim()) return undefined;
+        tags.push([entry.tag, ...entry.values]);
+    }
+    return JSON.stringify(tags);
+};
+
+export const list_private_entries_parse = (content: string): RadrootsListEntry[] | undefined => {
+    let parsed: unknown;
+    try {
+        parsed = JSON.parse(content);
+    } catch {
+        return undefined;
+    }
+    if (!Array.isArray(parsed)) return undefined;
+    const entries: RadrootsListEntry[] = [];
+    for (const tag of parsed) {
+        if (!is_string_array(tag)) return undefined;
+        if (!tag.length) return undefined;
+        const [name, ...values] = tag;
+        if (!name.trim()) return undefined;
+        const first = values[0];
+        if (!first || !first.trim()) return undefined;
+        entries.push({ tag: name, values });
+    }
+    return entries;
 };

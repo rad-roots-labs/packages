@@ -12,6 +12,7 @@
         get_context,
     } from "@radroots/apps-lib";
     import type { Snippet } from "svelte";
+    import { writable, type Writable } from "svelte/store";
 
     let {
         basis,
@@ -21,11 +22,17 @@
         children: Snippet;
     } = $props();
 
-    const carousel_ctx = get_context<CarouselStore<string> | undefined>(
-        CAROUSEL_CONTEXT_KEY,
+    const carousel_context_fallback = writable<CarouselStore<string> | undefined>(
+        undefined,
     );
+    const carousel_context_store =
+        get_context<Writable<CarouselStore<string> | undefined> | undefined>(
+            CAROUSEL_CONTEXT_KEY,
+        ) ?? carousel_context_fallback;
 
-    const carousel = $derived(basis.carousel ?? carousel_ctx);
+    const carousel_context_value = $derived($carousel_context_store);
+
+    const carousel = $derived(basis.carousel ?? carousel_context_value);
     const view = $derived(basis.view ?? carousel?.view ?? ``);
 
     const classes = $derived(

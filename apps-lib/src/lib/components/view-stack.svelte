@@ -68,7 +68,7 @@
         z_index_inactive: DEFAULT_Z_INDEX_INACTIVE,
     });
 
-    const view_context_value = $derived((): ViewContext<string> => ({
+    const view_context_value = $derived({
         active_view: basis.active_view,
         mode: basis.mode ?? "stack",
         fade: basis.fade ?? true,
@@ -82,7 +82,7 @@
             basis.pointer_events_inactive ?? DEFAULT_POINTER_EVENTS_INACTIVE,
         z_index_active: basis.z_index_active ?? DEFAULT_Z_INDEX_ACTIVE,
         z_index_inactive: basis.z_index_inactive ?? DEFAULT_Z_INDEX_INACTIVE,
-    }));
+    });
 
     set_context(VIEW_CONTEXT_KEY, view_context);
 
