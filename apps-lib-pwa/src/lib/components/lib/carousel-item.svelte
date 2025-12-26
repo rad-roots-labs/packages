@@ -4,7 +4,13 @@
         CarouselMouseEvent,
         ICarouselItem,
     } from "$lib/types/components/lib";
-    import { fmt_cl } from "@radroots/apps-lib";
+    import type { CarouselStore } from "@radroots/apps-lib";
+    import {
+        CAROUSEL_CONTEXT_KEY,
+        carousel_register_item,
+        fmt_cl,
+        get_context,
+    } from "@radroots/apps-lib";
     import type { Snippet } from "svelte";
 
     let {
@@ -15,9 +21,23 @@
         children: Snippet;
     } = $props();
 
+    const carousel_ctx = get_context<CarouselStore<string> | undefined>(
+        CAROUSEL_CONTEXT_KEY,
+    );
+
+    const carousel = $derived(basis.carousel ?? carousel_ctx);
+    const view = $derived(basis.view ?? carousel?.view ?? ``);
+
     const classes = $derived(
         `${fmt_cl(basis.classes)} carousel-item flex flex-col h-full w-full`,
     );
+
+    let item_el: HTMLDivElement | null = $state(null);
+
+    $effect(() => {
+        if (!carousel) return;
+        return carousel_register_item(carousel, item_el);
+    });
 
     const handle_click = async (ev: MouseEvent): Promise<void> => {
         if (!basis.callback_click) return;
@@ -34,7 +54,8 @@
 
 <!-- svelte-ignore a11y_no_noninteractive_tabindex -->
 <div
-    data-carousel-item={basis.view}
+    bind:this={item_el}
+    data-carousel-item={view}
     class={classes}
     role={basis.role ?? undefined}
     tabindex={basis.tabindex ?? undefined}

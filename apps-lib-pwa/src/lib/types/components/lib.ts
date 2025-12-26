@@ -1,4 +1,4 @@
-import type { CallbackRoute, GeometryScreenPositionHorizontal, ICb, ICbOpt, IClOpt, IDisabledOpt, IGlyph, IGlyphKey, ILoadingOpt, ILyOpt, LoadingDimension } from "@radroots/apps-lib";
+import type { CallbackRoute, CarouselStore, GeometryScreenPositionHorizontal, ICb, ICbOpt, IClOpt, IDisabledOpt, IGlyph, IGlyphKey, ILoadingOpt, ILyOpt, LoadingDimension } from "@radroots/apps-lib";
 import type { CallbackPromise, CallbackPromiseGeneric } from "@radroots/utils";
 
 export type IButtonSimple = ILyOpt & {
@@ -37,11 +37,13 @@ export type CarouselKeyboardEvent = KeyboardEvent & {
 };
 
 export type ICarouselContainer<T extends string> = IClOpt & {
-    view: T;
+    carousel: CarouselStore<T>;
+    view?: T;
 };
 
 export type ICarouselItem<T extends string> = IClOpt & {
-    view: T;
+    carousel?: CarouselStore<T>;
+    view?: T;
     role?: string;
     tabindex?: number;
     callback_click?: CallbackPromiseGeneric<CarouselMouseEvent>;

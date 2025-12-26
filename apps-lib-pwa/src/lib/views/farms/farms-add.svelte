@@ -13,10 +13,9 @@
     import { schema_view_farms_add_submission } from "$lib/utils/farm/schema";
     import { focus_map_marker } from "$lib/utils/map";
     import {
+        carousel_create,
         carousel_dec,
         carousel_inc,
-        carousel_init,
-        casl_i,
         el_id,
         fmt_id,
         geop_init,
@@ -32,12 +31,7 @@
         type GeolocationAddress,
         type GeolocationPoint,
     } from "@radroots/geo";
-    import {
-        handle_err,
-        parse_float,
-        type CallbackPromiseGeneric,
-    } from "@radroots/utils";
-    import { onMount } from "svelte";
+    import { parse_float, type CallbackPromiseGeneric } from "@radroots/utils";
 
     const { ls, locale, lc_gui_alert, lc_geop_current, lc_geocode } =
         get_context<LibContext>(`lib`);
@@ -62,17 +56,16 @@
     let val_farmarea = $state(``);
     let val_farmarea_unit = $state(`ac`);
 
-    const carousel_view: "farms_add" = "farms_add";
-
-    const disabled_submit = $derived($casl_i === 1 && !val_farmname);
-
-    onMount(async () => {
-        try {
-            await carousel_init(carousel_view, 1);
-        } catch (e) {
-            handle_err(e, `on_mount`);
-        }
+    const carousel_farms_add = carousel_create({
+        view: "farms_add",
+        max_index: 1,
     });
+
+    const carousel_farms_add_index = carousel_farms_add.index;
+
+    const disabled_submit = $derived(
+        $carousel_farms_add_index === 1 && !val_farmname,
+    );
 
     const farm_geop_lat = $derived(
         geop_is_valid(map_geop)
@@ -131,16 +124,16 @@
     };
 
     const handle_continue = async (): Promise<void> => {
-        switch ($casl_i) {
+        switch ($carousel_farms_add_index) {
             case 1:
                 return await handle_continue_1();
             default:
-                await carousel_inc(carousel_view);
+                await carousel_inc(carousel_farms_add);
         }
     };
 
     const handle_back = async (): Promise<void> => {
-        switch ($casl_i) {
+        switch ($carousel_farms_add_index) {
             case 1: {
                 if (!geop_is_valid(map_geop)) {
                     const geop_cur = await lc_geop_current();
@@ -153,7 +146,7 @@
                 }
             }
             default:
-                return await carousel_dec(carousel_view);
+                return await carousel_dec(carousel_farms_add);
         }
     };
 </script>
@@ -193,12 +186,11 @@
     </PageToolbar>
     <CarouselContainer
         basis={{
-            view: carousel_view,
+            carousel: carousel_farms_add,
         }}
     >
         <CarouselItem
             basis={{
-                view: carousel_view,
                 classes: `justify-start items-center`,
             }}
         >
@@ -211,7 +203,6 @@
         </CarouselItem>
         <CarouselItem
             basis={{
-                view: carousel_view,
                 classes: `justify-start items-center`,
             }}
         >
@@ -238,7 +229,7 @@
                 },
                 back: {
                     label: `${$ls(`common.back`)}`,
-                    visible: $casl_i > 0,
+                    visible: $carousel_farms_add_index > 0,
                     callback: handle_back,
                 },
             }}
