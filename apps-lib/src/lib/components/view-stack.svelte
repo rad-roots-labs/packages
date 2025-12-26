@@ -54,6 +54,21 @@
     } = $props();
 
     const view_context = writable<ViewContext<string>>({
+        active_view: "",
+        mode: "stack",
+        fade: true,
+        transition_ms: DEFAULT_TRANSITION_MS,
+        opacity_inactive: DEFAULT_OPACITY_INACTIVE,
+        scale_inactive: DEFAULT_SCALE_INACTIVE,
+        offset_x: DEFAULT_OFFSET_X,
+        offset_y: DEFAULT_OFFSET_Y,
+        blur_inactive_px: DEFAULT_BLUR_INACTIVE_PX,
+        pointer_events_inactive: DEFAULT_POINTER_EVENTS_INACTIVE,
+        z_index_active: DEFAULT_Z_INDEX_ACTIVE,
+        z_index_inactive: DEFAULT_Z_INDEX_INACTIVE,
+    });
+
+    const view_context_value = $derived((): ViewContext<string> => ({
         active_view: basis.active_view,
         mode: basis.mode ?? "stack",
         fade: basis.fade ?? true,
@@ -67,30 +82,12 @@
             basis.pointer_events_inactive ?? DEFAULT_POINTER_EVENTS_INACTIVE,
         z_index_active: basis.z_index_active ?? DEFAULT_Z_INDEX_ACTIVE,
         z_index_inactive: basis.z_index_inactive ?? DEFAULT_Z_INDEX_INACTIVE,
-    });
+    }));
 
     set_context(VIEW_CONTEXT_KEY, view_context);
 
     $effect(() => {
-        view_context.set({
-            active_view: basis.active_view,
-            mode: basis.mode ?? "stack",
-            fade: basis.fade ?? true,
-            transition_ms: basis.transition_ms ?? DEFAULT_TRANSITION_MS,
-            opacity_inactive:
-                basis.opacity_inactive ?? DEFAULT_OPACITY_INACTIVE,
-            scale_inactive: basis.scale_inactive ?? DEFAULT_SCALE_INACTIVE,
-            offset_x: basis.offset_x ?? DEFAULT_OFFSET_X,
-            offset_y: basis.offset_y ?? DEFAULT_OFFSET_Y,
-            blur_inactive_px:
-                basis.blur_inactive_px ?? DEFAULT_BLUR_INACTIVE_PX,
-            pointer_events_inactive:
-                basis.pointer_events_inactive ??
-                DEFAULT_POINTER_EVENTS_INACTIVE,
-            z_index_active: basis.z_index_active ?? DEFAULT_Z_INDEX_ACTIVE,
-            z_index_inactive:
-                basis.z_index_inactive ?? DEFAULT_Z_INDEX_INACTIVE,
-        });
+        view_context.set(view_context_value);
     });
 
     const mode = $derived(basis.mode ?? "stack");
