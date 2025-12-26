@@ -7,6 +7,7 @@
         type ViewMode,
         type ViewPointerEvents,
     } from "./view-context";
+    import { writable, type Writable } from "svelte/store";
 
     const DEFAULT_TRANSITION_MS = 260;
     const DEFAULT_OPACITY_INACTIVE = 0;
@@ -72,10 +73,32 @@
         children: Snippet;
     } = $props();
 
-    const view_context =
-        get_context<ViewContext<string> | undefined>(VIEW_CONTEXT_KEY);
+    const view_context_store =
+        get_context<Writable<ViewContext<string>> | undefined>(
+            VIEW_CONTEXT_KEY,
+        ) ??
+        writable<ViewContext<string>>({
+            active_view: basis.active_view ?? basis.view,
+            mode: basis.mode ?? "stack",
+            fade: basis.fade ?? true,
+            transition_ms: basis.transition_ms ?? DEFAULT_TRANSITION_MS,
+            opacity_inactive: basis.opacity_inactive ?? DEFAULT_OPACITY_INACTIVE,
+            scale_inactive: basis.scale_inactive ?? DEFAULT_SCALE_INACTIVE,
+            offset_x: basis.offset_x ?? DEFAULT_OFFSET_X,
+            offset_y: basis.offset_y ?? DEFAULT_OFFSET_Y,
+            blur_inactive_px:
+                basis.blur_inactive_px ?? DEFAULT_BLUR_INACTIVE_PX,
+            pointer_events_inactive:
+                basis.pointer_events_inactive ?? DEFAULT_POINTER_EVENTS_INACTIVE,
+            z_index_active: basis.z_index_active ?? DEFAULT_Z_INDEX_ACTIVE,
+            z_index_inactive: basis.z_index_inactive ?? DEFAULT_Z_INDEX_INACTIVE,
+        });
 
-    const active_view = $derived(basis.active_view ?? view_context?.active_view);
+    const view_context_value = $derived($view_context_store);
+
+    const active_view = $derived(
+        basis.active_view ?? view_context_value?.active_view,
+    );
     const is_active = $derived(
         basis.active !== undefined
             ? basis.active
@@ -83,45 +106,47 @@
               ? basis.view === active_view
               : true,
     );
-    const mode = $derived(basis.mode ?? view_context?.mode ?? "stack");
-    const fade = $derived(basis.fade ?? view_context?.fade ?? true);
+    const mode = $derived(basis.mode ?? view_context_value?.mode ?? "stack");
+    const fade = $derived(basis.fade ?? view_context_value?.fade ?? true);
     const transition_ms = $derived(
-        basis.transition_ms ?? view_context?.transition_ms ?? DEFAULT_TRANSITION_MS,
+        basis.transition_ms ??
+            view_context_value?.transition_ms ??
+            DEFAULT_TRANSITION_MS,
     );
     const opacity_inactive = $derived(
         basis.opacity_inactive ??
-            view_context?.opacity_inactive ??
+            view_context_value?.opacity_inactive ??
             DEFAULT_OPACITY_INACTIVE,
     );
     const scale_inactive = $derived(
         basis.scale_inactive ??
-            view_context?.scale_inactive ??
+            view_context_value?.scale_inactive ??
             DEFAULT_SCALE_INACTIVE,
     );
     const offset_x = $derived(
-        basis.offset_x ?? view_context?.offset_x ?? DEFAULT_OFFSET_X,
+        basis.offset_x ?? view_context_value?.offset_x ?? DEFAULT_OFFSET_X,
     );
     const offset_y = $derived(
-        basis.offset_y ?? view_context?.offset_y ?? DEFAULT_OFFSET_Y,
+        basis.offset_y ?? view_context_value?.offset_y ?? DEFAULT_OFFSET_Y,
     );
     const blur_inactive_px = $derived(
         basis.blur_inactive_px ??
-            view_context?.blur_inactive_px ??
+            view_context_value?.blur_inactive_px ??
             DEFAULT_BLUR_INACTIVE_PX,
     );
     const pointer_events_inactive = $derived(
         basis.pointer_events_inactive ??
-            view_context?.pointer_events_inactive ??
+            view_context_value?.pointer_events_inactive ??
             DEFAULT_POINTER_EVENTS_INACTIVE,
     );
     const z_index_active = $derived(
         basis.z_index_active ??
-            view_context?.z_index_active ??
+            view_context_value?.z_index_active ??
             DEFAULT_Z_INDEX_ACTIVE,
     );
     const z_index_inactive = $derived(
         basis.z_index_inactive ??
-            view_context?.z_index_inactive ??
+            view_context_value?.z_index_inactive ??
             DEFAULT_Z_INDEX_INACTIVE,
     );
     const display = $derived(basis.display ?? DEFAULT_DISPLAY);
