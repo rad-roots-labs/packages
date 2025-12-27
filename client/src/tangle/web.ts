@@ -161,6 +161,7 @@ export type WebTangleDatabaseConfig = {
     store_key?: string;
     idb_config?: IdbClientConfig;
     cipher_config?: IdbClientConfig | null;
+    sql_wasm_path?: string;
 };
 
 const is_record = (value: unknown): value is Record<string, unknown> =>
@@ -238,12 +239,14 @@ export class WebTangleDatabase implements IWebTangleDatabase {
     private readonly store_key: string;
     private readonly idb_config: IdbClientConfig;
     private readonly cipher_config: IdbClientConfig | null;
+    private readonly sql_wasm_path: string | undefined;
     private init_promise: Promise<void> | null = null;
 
     constructor(config?: WebTangleDatabaseConfig) {
         this.store_key = config?.store_key ?? DEFAULT_TANGLE_STORE_KEY;
         this.idb_config = config?.idb_config ?? DEFAULT_TANGLE_IDB_CONFIG;
         this.cipher_config = config?.cipher_config ?? null;
+        this.sql_wasm_path = config?.sql_wasm_path;
     }
 
     get_store_key(): string {
@@ -266,7 +269,8 @@ export class WebTangleDatabase implements IWebTangleDatabase {
         return {
             store_key: this.store_key,
             idb_config: this.idb_config,
-            cipher_config: this.cipher_config
+            cipher_config: this.cipher_config,
+            sql_wasm_path: this.sql_wasm_path
         };
     }
 

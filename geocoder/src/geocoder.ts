@@ -1,10 +1,11 @@
 import type { GeolocationPoint } from "@radroots/geo";
-import { err_msg } from "@radroots/utils";
+import { err_msg, resolve_wasm_path } from "@radroots/utils";
 import type { Database } from "sql.js";
 import type { GeocoderReverseResult, IGeocoder, IGeocoderConnectResolve, IGeocoderCountryCenter, IGeocoderCountryCenterResolve, IGeocoderCountryListResolve, IGeocoderCountryListResult, IGeocoderCountryResolve, IGeocoderReverseOpts, IGeocoderReverseResolve } from "./types.js";
 import { parse_geocode_country_center_result, parse_geocode_country_list_result, parse_geocode_reverse_result } from "./utils.js";
 
 const KM_PER_DEGREE_LATITUDE = 111;
+const DEFAULT_SQL_WASM_PATH = `/assets/sql-wasm.wasm`;
 
 export class Geocoder implements IGeocoder {
     private _db: Database | null = null;
@@ -15,11 +16,11 @@ export class Geocoder implements IGeocoder {
         this._database_name = database_name || `/geonames/geonames.db`;
     }
 
-    public async connect(wasm_dir: string = `/assets`): Promise<IGeocoderConnectResolve> {
+    public async connect(wasm_path?: string): Promise<IGeocoderConnectResolve> {
         try {
             const init_sqljs = await import(`sql.js`);
             const sql = await init_sqljs.default({
-                locateFile: wasm_file => `${wasm_dir}/${wasm_file}`
+                locateFile: wasm_file => resolve_wasm_path(wasm_path, wasm_file, DEFAULT_SQL_WASM_PATH)
             });
             const database_res = await fetch(this._database_name);
             const database_buffer = await database_res.arrayBuffer();

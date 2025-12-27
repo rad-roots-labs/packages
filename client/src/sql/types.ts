@@ -28,6 +28,7 @@ export type WebSqlEngineConfig = {
     store_key: string;
     idb_config: IdbClientConfig;
     cipher_config?: IdbClientConfig | null;
+    sql_wasm_path?: string;
 };
 
 export interface IClientSqlEncryptedStore {

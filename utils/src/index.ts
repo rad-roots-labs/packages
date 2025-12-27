@@ -8,6 +8,7 @@ export * from "./media/index.js";
 export * from "./model/index.js";
 export * from "./numbers/index.js";
 export * from "./object/index.js";
+export * from "./path/index.js";
 export * from "./text/index.js";
 export * from "./time/index.js";
 export * from "./types/index.js";

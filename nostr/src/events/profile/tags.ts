@@ -1,25 +1,24 @@
-import type { RadrootsActorType } from "@radroots/events-bindings";
+import type { RadrootsProfileType } from "@radroots/events-bindings";
 import type { NostrEventTags } from "../../types/lib.js";
 
-const ACTOR_TAG_KEY = "t";
-const ACTOR_TAG_PREFIX = "radroots:actor:";
+const TYPE_TAG_KEY = "t";
+const TYPE_TAG_PREFIX = "radroots:type:";
 
-const is_actor_type = (value: string): value is RadrootsActorType =>
-    value === "person" || value === "farm";
+export const radroots_profile_type_tag_value = (profile_type: RadrootsProfileType): string =>
+    `${TYPE_TAG_PREFIX}${profile_type}`;
 
-export const radroots_actor_tag_value = (actor: RadrootsActorType): string =>
-    `${ACTOR_TAG_PREFIX}${actor}`;
+export const tags_profile_type = (profile_type?: RadrootsProfileType): NostrEventTags =>
+    profile_type ? [[TYPE_TAG_KEY, radroots_profile_type_tag_value(profile_type)]] : [];
 
-export const tags_profile_actor = (actor?: RadrootsActorType): NostrEventTags =>
-    actor ? [[ACTOR_TAG_KEY, radroots_actor_tag_value(actor)]] : [];
-
-export const parse_profile_actor_tag = (tags: NostrEventTags): RadrootsActorType | undefined => {
+export const parse_profile_type_tag = (
+    tags: NostrEventTags,
+): RadrootsProfileType | undefined => {
     for (const tag of tags) {
-        if (tag[0] !== ACTOR_TAG_KEY) continue;
+        if (tag[0] !== TYPE_TAG_KEY) continue;
         const value = tag[1];
-        if (!value || !value.startsWith(ACTOR_TAG_PREFIX)) continue;
-        const actor = value.slice(ACTOR_TAG_PREFIX.length);
-        if (is_actor_type(actor)) return actor;
+        if (!value || !value.startsWith(TYPE_TAG_PREFIX)) continue;
+        const profile_type = value.slice(TYPE_TAG_PREFIX.length);
+        if (profile_type === "individual" || profile_type === "farm") return profile_type;
     }
     return undefined;
 };

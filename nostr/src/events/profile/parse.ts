@@ -1,14 +1,14 @@
-import type { RadrootsActorType, RadrootsProfile } from "@radroots/events-bindings";
+import type { RadrootsProfile, RadrootsProfileType } from "@radroots/events-bindings";
 import { radroots_profile_schema } from "@radroots/events-bindings";
 import type { NostrEvent } from "../../types/nostr.js";
 import { parse_nostr_event_basis } from "../lib.js";
 import type { NostrEventBasis } from "../subscription.js";
 import { KIND_RADROOTS_PROFILE, type KindRadrootsProfile } from "./lib.js";
-import { parse_profile_actor_tag } from "./tags.js";
+import { parse_profile_type_tag } from "./tags.js";
 
 export type RadrootsProfileNostrEvent = NostrEventBasis<KindRadrootsProfile> & {
     profile: RadrootsProfile;
-    actor_type?: RadrootsActorType;
+    profile_type?: RadrootsProfileType;
 };
 
 export const parse_nostr_profile_event = (
@@ -19,8 +19,8 @@ export const parse_nostr_profile_event = (
     try {
         const parsed = JSON.parse(event.content);
         const profile = radroots_profile_schema.parse(parsed);
-        const actor_type = parse_profile_actor_tag(event.tags);
-        return actor_type ? { ...ev, profile, actor_type } : { ...ev, profile };
+        const profile_type = parse_profile_type_tag(event.tags);
+        return profile_type ? { ...ev, profile, profile_type } : { ...ev, profile };
     } catch {
         return undefined;
     }

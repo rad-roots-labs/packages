@@ -39,7 +39,7 @@ export type IGeocoderCountryListResolve = ResultsList<IGeocoderCountryListResult
 export type IGeocoderCountryCenterResolve = ResultObj<GeolocationPoint> | IError<GeocoderIError>;
 
 export type IGeocoder = {
-    connect(wasm_path: string): Promise<IGeocoderConnectResolve>;
+    connect(wasm_path?: string): Promise<IGeocoderConnectResolve>;
     reverse(point: GeolocationPoint, opts?: IGeocoderReverseOpts): Promise<IGeocoderReverseResolve>;
     country(opts: IGeocoderCountryCenter): Promise<IGeocoderCountryResolve>;
     country_list(): Promise<IGeocoderCountryListResolve>;

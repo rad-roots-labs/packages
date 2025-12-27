@@ -1,4 +1,4 @@
-import { handle_err, type IdbClientConfig, type ResolveError } from "@radroots/utils";
+import { handle_err, resolve_wasm_path, type IdbClientConfig, type ResolveError } from "@radroots/utils";
 import { del as idb_del, get as idb_get, set as idb_set, type UseStore } from "idb-keyval";
 import type { BindParams, Database, SqlJsStatic, SqlValue, Statement } from "sql.js";
 import init_sql_js from "sql.js/dist/sql-wasm.js";
@@ -13,6 +13,7 @@ import { cl_sql_error } from "./error.js";
 import type { IClientSqlEncryptedStore, IWebSqlEngine, SqlJsExecOutcome, SqlJsParams, SqlJsResultRow, WebSqlEngineConfig } from "./types.js";
 
 const DEFAULT_SQL_CIPHER_CONFIG: IdbClientConfig = IDB_CONFIG_CIPHER_SQL;
+const DEFAULT_SQL_WASM_PATH = "/assets/sql-wasm.wasm";
 const resolve_or_throw = <T>(value: ResolveError<T>): T => {
     if (is_error(value)) throw new Error(value.err);
     return value;
@@ -99,7 +100,9 @@ export class WebSqlEngine implements IWebSqlEngine {
     }
 
     static async create(config: WebSqlEngineConfig): Promise<WebSqlEngine> {
-        const sql = await init_sql_js({ locateFile: f => `/assets/${f}` });
+        const sql = await init_sql_js({
+            locateFile: wasm_file => resolve_wasm_path(config.sql_wasm_path, wasm_file, DEFAULT_SQL_WASM_PATH)
+        });
         const store = new WebSqlEngineEncryptedStore(config);
         const existing = await store.load();
         const db = existing ? new sql.Database(existing) : new sql.Database();
