@@ -1,29 +1,38 @@
 import type { GeolocationPoint } from "@radroots/geo";
 import { err_msg, resolve_wasm_path } from "@radroots/utils";
 import type { Database } from "sql.js";
-import type { GeocoderReverseResult, IGeocoder, IGeocoderConnectResolve, IGeocoderCountryCenter, IGeocoderCountryCenterResolve, IGeocoderCountryListResolve, IGeocoderCountryListResult, IGeocoderCountryResolve, IGeocoderReverseOpts, IGeocoderReverseResolve } from "./types.js";
-import { parse_geocode_country_center_result, parse_geocode_country_list_result, parse_geocode_reverse_result } from "./utils.js";
+import type { GeocoderConfig, GeocoderConnectConfig, GeocoderReverseResult, IGeocoder, IGeocoderConnectResolve, IGeocoderCountryCenter, IGeocoderCountryCenterResolve, IGeocoderCountryListResolve, IGeocoderCountryListResult, IGeocoderCountryResolve, IGeocoderReverseOpts, IGeocoderReverseResolve } from "./types.js";
+import { parse_geocode_country_center_result, parse_geocode_country_list_result, parse_geocode_reverse_result, resolve_geocoder_database_path } from "./utils.js";
 
 const KM_PER_DEGREE_LATITUDE = 111;
 const DEFAULT_SQL_WASM_PATH = `/assets/sql-wasm.wasm`;
-const DEFAULT_SQL_DATABASE_PATH = `/assets/geonames.db`;
+
+const normalize_geocoder_connect_config = (config?: GeocoderConnectConfig | string): GeocoderConnectConfig => {
+    if (!config) return {};
+    if (typeof config === `string`) return { wasm_path: config };
+    return config;
+};
 
 export class Geocoder implements IGeocoder {
     private _db: Database | null = null;
-    private _database_name: string;
+    private _database_path: string;
 
-    constructor(database_name?: string) {
-        if (database_name && database_name.charAt(0) !== `/`) throw new Error(`Error: database name must be a valid path`);
-        this._database_name = database_name || DEFAULT_SQL_DATABASE_PATH;
+    constructor(config?: GeocoderConfig | string) {
+        const database_path = typeof config === `string` ? config : config?.database_path;
+        this._database_path = resolve_geocoder_database_path(database_path);
     }
 
-    public async connect(wasm_path?: string): Promise<IGeocoderConnectResolve> {
+    public async connect(config?: GeocoderConnectConfig | string): Promise<IGeocoderConnectResolve> {
         try {
+            const connect_config = normalize_geocoder_connect_config(config);
+            const database_path = connect_config.database_path
+                ? resolve_geocoder_database_path(connect_config.database_path)
+                : this._database_path;
             const init_sqljs = await import(`sql.js`);
             const sql = await init_sqljs.default({
-                locateFile: wasm_file => resolve_wasm_path(wasm_path, wasm_file, DEFAULT_SQL_WASM_PATH)
+                locateFile: wasm_file => resolve_wasm_path(connect_config.wasm_path, wasm_file, DEFAULT_SQL_WASM_PATH)
             });
-            const database_res = await fetch(this._database_name);
+            const database_res = await fetch(database_path);
             const database_buffer = await database_res.arrayBuffer();
             this._db = new sql.Database(new Uint8Array(database_buffer));
             return true;

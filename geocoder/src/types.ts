@@ -21,6 +21,14 @@ export type GeocoderReverseResult = {
 
 export type GeocoderDegreeOffset = 0.5 | 1.0 | 1.5 | 2.0 | 2.5 | 3
 
+export type GeocoderConfig = {
+    database_path?: string;
+};
+
+export type GeocoderConnectConfig = GeocoderConfig & {
+    wasm_path?: string;
+};
+
 export type IGeocoderReverseOpts = {
     degree_offset?: GeocoderDegreeOffset;
     limit?: number | false;
@@ -39,7 +47,7 @@ export type IGeocoderCountryListResolve = ResultsList<IGeocoderCountryListResult
 export type IGeocoderCountryCenterResolve = ResultObj<GeolocationPoint> | IError<GeocoderIError>;
 
 export type IGeocoder = {
-    connect(wasm_path?: string): Promise<IGeocoderConnectResolve>;
+    connect(config?: GeocoderConnectConfig | string): Promise<IGeocoderConnectResolve>;
     reverse(point: GeolocationPoint, opts?: IGeocoderReverseOpts): Promise<IGeocoderReverseResolve>;
     country(opts: IGeocoderCountryCenter): Promise<IGeocoderCountryResolve>;
     country_list(): Promise<IGeocoderCountryListResolve>;
