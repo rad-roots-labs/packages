@@ -1,6 +1,7 @@
 import { schnorr } from "@noble/curves/secp256k1";
 import { hexToBytes } from "@noble/hashes/utils";
 import { makeEvent } from "@welshman/util";
+import { KIND_POST } from "@radroots/events-bindings";
 import { time_now_ms, time_now_s, uuidv4 } from "@radroots/utils";
 import {
     finalizeEvent,
@@ -47,7 +48,7 @@ export const nostr_event_sign_attest = (secret_key: string): NostrToolsEvent => 
     return nostr_event_sign({
         secret_key,
         event: {
-            kind: 1,
+            kind: KIND_POST,
             created_at: time_now_s(),
             tags: [],
             content: uuidv4(),

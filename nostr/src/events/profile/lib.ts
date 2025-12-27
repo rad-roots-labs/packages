@@ -1,10 +1,7 @@
-import type { RadrootsProfile, RadrootsProfileType } from "@radroots/events-bindings";
+import { KIND_PROFILE, type RadrootsProfile, type RadrootsProfileType } from "@radroots/events-bindings";
 import type { NostrEventFigure, NostrSignedEvent } from "../../types/nostr.js";
 import { nostr_event_create } from "../lib.js";
 import { tags_profile_type } from "./tags.js";
-
-export const KIND_RADROOTS_PROFILE = 0;
-export type KindRadrootsProfile = typeof KIND_RADROOTS_PROFILE;
 
 export const nostr_event_profile = async (
     opts: NostrEventFigure<{ data: RadrootsProfile; profile_type?: RadrootsProfileType }>,
@@ -14,7 +11,7 @@ export const nostr_event_profile = async (
     return nostr_event_create({
         ...event_opts,
         basis: {
-            kind: KIND_RADROOTS_PROFILE,
+            kind: KIND_PROFILE,
             content: JSON.stringify(data),
             tags: tags.length ? tags : undefined,
         },

@@ -4,11 +4,7 @@ import type {
     RadrootsCoreQuantityPrice,
 } from "@radroots/core-bindings";
 import {
-    type RadrootsListing,
-    type RadrootsListingDiscount,
-    type RadrootsListingImage,
-    type RadrootsListingLocation,
-    type RadrootsListingQuantity,
+    KIND_LISTING,
     radroots_listing_discount_schema,
     radroots_listing_image_schema,
     radroots_listing_location_schema,
@@ -16,13 +12,17 @@ import {
     radroots_listing_product_schema,
     radroots_listing_quantity_schema,
     radroots_listing_schema,
+    type RadrootsListing,
+    type RadrootsListingDiscount,
+    type RadrootsListingImage,
+    type RadrootsListingLocation,
+    type RadrootsListingQuantity,
 } from "@radroots/events-bindings";
 import type { NostrEvent } from "../../types/nostr.js";
 import { get_event_tag, get_event_tags, parse_nostr_event_basis } from "../lib.js";
 import type { NostrEventBasis } from "../subscription.js";
-import { KIND_RADROOTS_LISTING, type KindRadrootsListing } from "./lib.js";
 
-export type RadrootsListingNostrEvent = NostrEventBasis<KindRadrootsListing> & { listing: RadrootsListing };
+export type RadrootsListingNostrEvent = NostrEventBasis<typeof KIND_LISTING> & { listing: RadrootsListing };
 
 type CoreUnit = RadrootsCoreQuantity["unit"];
 type CoreCurrency = RadrootsCoreMoney["currency"];
@@ -163,7 +163,7 @@ const is_listing_image = (value: RadrootsListingImage | undefined): value is Rad
 export const parse_nostr_listing_event = (
     event: NostrEvent,
 ): RadrootsListingNostrEvent | undefined => {
-    const ev = parse_nostr_event_basis(event, KIND_RADROOTS_LISTING);
+    const ev = parse_nostr_event_basis(event, KIND_LISTING);
     if (!ev) return undefined;
     try {
         const tags = event.tags;

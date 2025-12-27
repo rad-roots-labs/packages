@@ -6,6 +6,7 @@ import { parse_geocode_country_center_result, parse_geocode_country_list_result,
 
 const KM_PER_DEGREE_LATITUDE = 111;
 const DEFAULT_SQL_WASM_PATH = `/assets/sql-wasm.wasm`;
+const DEFAULT_SQL_DATABASE_PATH = `/assets/geonames.db`;
 
 export class Geocoder implements IGeocoder {
     private _db: Database | null = null;
@@ -13,7 +14,7 @@ export class Geocoder implements IGeocoder {
 
     constructor(database_name?: string) {
         if (database_name && database_name.charAt(0) !== `/`) throw new Error(`Error: database name must be a valid path`);
-        this._database_name = database_name || `/geonames/geonames.db`;
+        this._database_name = database_name || DEFAULT_SQL_DATABASE_PATH;
     }
 
     public async connect(wasm_path?: string): Promise<IGeocoderConnectResolve> {

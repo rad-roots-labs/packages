@@ -1,12 +1,9 @@
-import type { RadrootsPlot } from "@radroots/events-bindings";
-import { radroots_plot_schema } from "@radroots/events-bindings";
+import { KIND_FARM, KIND_PLOT, radroots_plot_schema, type RadrootsPlot } from "@radroots/events-bindings";
 import type { NostrEvent } from "../../types/nostr.js";
 import { get_event_tag, parse_nostr_event_basis } from "../lib.js";
 import type { NostrEventBasis } from "../subscription.js";
-import { KIND_RADROOTS_FARM } from "../farm/lib.js";
-import { KIND_RADROOTS_PLOT, type KindRadrootsPlot } from "./lib.js";
 
-export type RadrootsPlotNostrEvent = NostrEventBasis<KindRadrootsPlot> & { plot: RadrootsPlot };
+export type RadrootsPlotNostrEvent = NostrEventBasis<typeof KIND_PLOT> & { plot: RadrootsPlot };
 
 type PlotFarmRef = {
     pubkey: string;
@@ -17,7 +14,7 @@ const parse_farm_addr = (value: string): PlotFarmRef | undefined => {
     const parts = value.split(":");
     if (parts.length < 3) return undefined;
     const kind = Number(parts[0]);
-    if (!Number.isFinite(kind) || kind !== KIND_RADROOTS_FARM) return undefined;
+    if (!Number.isFinite(kind) || kind !== KIND_FARM) return undefined;
     const pubkey = parts[1]?.trim() || "";
     const d_tag = parts.slice(2).join(":").trim();
     if (!pubkey || !d_tag) return undefined;
@@ -27,7 +24,7 @@ const parse_farm_addr = (value: string): PlotFarmRef | undefined => {
 export const parse_nostr_plot_event = (
     event: NostrEvent,
 ): RadrootsPlotNostrEvent | undefined => {
-    const ev = parse_nostr_event_basis(event, KIND_RADROOTS_PLOT);
+    const ev = parse_nostr_event_basis(event, KIND_PLOT);
     if (!ev) return undefined;
     const d_tag = get_event_tag(event.tags, "d");
     if (!d_tag) return undefined;

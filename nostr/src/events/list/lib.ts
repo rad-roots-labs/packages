@@ -1,25 +1,44 @@
-import type { RadrootsList, RadrootsListEntry } from "@radroots/events-bindings";
+import {
+    KIND_LIST_BLOCKED_RELAYS,
+    KIND_LIST_BOOKMARKS,
+    KIND_LIST_COMMUNITIES,
+    KIND_LIST_DM_RELAYS,
+    KIND_LIST_EMOJIS,
+    KIND_LIST_GOOD_WIKI_AUTHORS,
+    KIND_LIST_GOOD_WIKI_RELAYS,
+    KIND_LIST_INTERESTS,
+    KIND_LIST_MEDIA_FOLLOWS,
+    KIND_LIST_MUTE,
+    KIND_LIST_PINNED_NOTES,
+    KIND_LIST_PUBLIC_CHATS,
+    KIND_LIST_READ_WRITE_RELAYS,
+    KIND_LIST_RELAY_FEEDS,
+    KIND_LIST_SEARCH_RELAYS,
+    KIND_LIST_SIMPLE_GROUPS,
+    type RadrootsList,
+    type RadrootsListEntry,
+} from "@radroots/events-bindings";
 import type { NostrEventFigure, NostrSignedEvent } from "../../types/nostr.js";
 import { nostr_event_create } from "../lib.js";
 import { tags_list } from "./tags.js";
 
 export const NIP51_LIST_KINDS = [
-    10000,
-    10001,
-    10002,
-    10003,
-    10004,
-    10005,
-    10006,
-    10007,
-    10009,
-    10012,
-    10015,
-    10020,
-    10030,
-    10050,
-    10101,
-    10102,
+    KIND_LIST_MUTE,
+    KIND_LIST_PINNED_NOTES,
+    KIND_LIST_READ_WRITE_RELAYS,
+    KIND_LIST_BOOKMARKS,
+    KIND_LIST_COMMUNITIES,
+    KIND_LIST_PUBLIC_CHATS,
+    KIND_LIST_BLOCKED_RELAYS,
+    KIND_LIST_SEARCH_RELAYS,
+    KIND_LIST_SIMPLE_GROUPS,
+    KIND_LIST_RELAY_FEEDS,
+    KIND_LIST_INTERESTS,
+    KIND_LIST_MEDIA_FOLLOWS,
+    KIND_LIST_EMOJIS,
+    KIND_LIST_DM_RELAYS,
+    KIND_LIST_GOOD_WIKI_AUTHORS,
+    KIND_LIST_GOOD_WIKI_RELAYS,
 ] as const;
 
 export type KindRadrootsList = typeof NIP51_LIST_KINDS[number];

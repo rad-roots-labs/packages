@@ -1,16 +1,14 @@
-import type { RadrootsFarm } from "@radroots/events-bindings";
-import { radroots_farm_schema } from "@radroots/events-bindings";
+import { KIND_FARM, radroots_farm_schema, type RadrootsFarm } from "@radroots/events-bindings";
 import type { NostrEvent } from "../../types/nostr.js";
 import { get_event_tag, parse_nostr_event_basis } from "../lib.js";
 import type { NostrEventBasis } from "../subscription.js";
-import { KIND_RADROOTS_FARM, type KindRadrootsFarm } from "./lib.js";
 
-export type RadrootsFarmNostrEvent = NostrEventBasis<KindRadrootsFarm> & { farm: RadrootsFarm };
+export type RadrootsFarmNostrEvent = NostrEventBasis<typeof KIND_FARM> & { farm: RadrootsFarm };
 
 export const parse_nostr_farm_event = (
     event: NostrEvent,
 ): RadrootsFarmNostrEvent | undefined => {
-    const ev = parse_nostr_event_basis(event, KIND_RADROOTS_FARM);
+    const ev = parse_nostr_event_basis(event, KIND_FARM);
     if (!ev) return undefined;
     const d_tag = get_event_tag(event.tags, "d");
     if (!d_tag) return undefined;
