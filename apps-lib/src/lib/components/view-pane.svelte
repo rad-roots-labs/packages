@@ -199,14 +199,27 @@
     const style = $derived(
         `position: ${position}; inset: ${inset}; width: ${width}; height: ${height}; min-height: ${min_height}; display: ${display}; flex-direction: ${direction}; align-items: ${align}; justify-content: ${justify}; gap: ${gap}; padding: ${padding}; overflow: ${overflow}; background: ${background}; opacity: ${opacity}; transform: ${transform}; filter: ${filter}; transition: ${transition}; pointer-events: ${pointer_events}; z-index: ${z_index}; box-sizing: border-box; will-change: transform, opacity, filter; backface-visibility: hidden; transform-style: preserve-3d; ${basis.style ?? ""} ${is_active ? basis.style_active ?? "" : basis.style_inactive ?? ""}`,
     );
+
+    let pane_el: HTMLDivElement | null = $state(null);
+
+    $effect(() => {
+        if (is_active) return;
+        if (typeof document === "undefined") return;
+        if (!pane_el) return;
+        const active_el = document.activeElement;
+        if (!active_el) return;
+        if (!pane_el.contains(active_el)) return;
+        (active_el as HTMLElement).blur();
+    });
 </script>
 
 <div
+    bind:this={pane_el}
     data-view={basis.view}
     style={style}
     role={basis.role ?? undefined}
     aria-label={basis.aria_label ?? undefined}
-    aria-hidden={!is_active}
+    inert={!is_active}
 >
     {@render children()}
 </div>

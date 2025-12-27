@@ -213,12 +213,32 @@ const is_tangle_database_backup = (value: unknown): value is TangleDatabaseBacku
 
 const DEFAULT_TANGLE_STORE_KEY = "radroots-pwa-v1-tangle-db";
 const DEFAULT_TANGLE_IDB_CONFIG: IdbClientConfig = IDB_CONFIG_TANGLE;
+let wasm_init_promise: Promise<void> | null = null;
+
+const runtime_available = (): boolean => {
+    return typeof window !== "undefined" || typeof self !== "undefined";
+};
+
+const wasm_init_once = async (): Promise<void> => {
+    if (!wasm_init_promise) {
+        wasm_init_promise = (async () => {
+            await init_wasm();
+        })();
+    }
+    try {
+        await wasm_init_promise;
+    } catch (e) {
+        wasm_init_promise = null;
+        throw e;
+    }
+};
 
 export class WebTangleDatabase implements IWebTangleDatabase {
     private engine: WebSqlEngine | null = null;
     private readonly store_key: string;
     private readonly idb_config: IdbClientConfig;
     private readonly cipher_config: IdbClientConfig | null;
+    private init_promise: Promise<void> | null = null;
 
     constructor(config?: WebTangleDatabaseConfig) {
         this.store_key = config?.store_key ?? DEFAULT_TANGLE_STORE_KEY;
@@ -250,16 +270,40 @@ export class WebTangleDatabase implements IWebTangleDatabase {
         };
     }
 
+    private async ensure_ready(): Promise<void> {
+        await this.init();
+        if (!this.engine) throw new Error(cl_tangle_error.init_failure);
+    }
+
     async init(): Promise<void> {
         if (this.engine) return;
-        await init_wasm();
-        this.engine = await WebSqlEngine.create(this.get_engine_config());
-        radroots_sql_install_bridges(this.engine);
-        tangle_db_run_migrations();
+        if (!runtime_available()) throw new Error(cl_tangle_error.runtime_unavailable);
+        if (!this.init_promise) {
+            this.init_promise = (async () => {
+                await wasm_init_once();
+                this.engine = await WebSqlEngine.create(this.get_engine_config());
+                radroots_sql_install_bridges(this.engine);
+                tangle_db_run_migrations();
+            })();
+        }
+        try {
+            await this.init_promise;
+        } catch (e) {
+            this.engine = null;
+            this.init_promise = null;
+            throw e;
+        }
+    }
+
+    async close(): Promise<void> {
+        if (this.engine) await this.engine.close();
+        this.engine = null;
+        this.init_promise = null;
     }
 
     async migration_state(): Promise<SqlJsMigrationState | IError<string>> {
         try {
+            await this.ensure_ready();
             const res = await query_sql("select id, name, applied_at from __migrations order by id asc", "[]");
             let parsed: unknown = res;
             if (typeof res === "string") {
@@ -278,25 +322,35 @@ export class WebTangleDatabase implements IWebTangleDatabase {
     }
 
     async reset(): Promise<SqlJsMigrationState | IError<string>> {
-        tangle_db_reset_database();
-        tangle_db_run_migrations();
-        return this.migration_state();
+        try {
+            await this.ensure_ready();
+            tangle_db_reset_database();
+            tangle_db_run_migrations();
+            return this.migration_state();
+        } catch (e) {
+            return handle_err(e);
+        }
     }
 
     async reinit(): Promise<SqlJsMigrationState | IError<string>> {
-        if (this.engine) {
-            await this.engine.purge_storage();
-            await this.engine.close();
+        try {
+            await this.ensure_ready();
+            if (this.engine) {
+                await this.engine.purge_storage();
+                await this.engine.close();
+            }
+            this.engine = await WebSqlEngine.create(this.get_engine_config());
+            radroots_sql_install_bridges(this.engine);
+            tangle_db_run_migrations();
+            return this.migration_state();
+        } catch (e) {
+            return handle_err(e);
         }
-        this.engine = await WebSqlEngine.create(this.get_engine_config());
-        radroots_sql_install_bridges(this.engine);
-        tangle_db_run_migrations();
-        return this.migration_state();
     }
 
     async export_backup(): Promise<TangleDatabaseBackup | IError<string>> {
         try {
-            await this.init();
+            await this.ensure_ready();
             const res = await tangle_db_export_backup();
             let parsed: unknown = res;
             if (typeof res === "string") {
@@ -315,7 +369,7 @@ export class WebTangleDatabase implements IWebTangleDatabase {
 
     async import_backup(backup: TangleDatabaseBackup): Promise<void | IError<string>> {
         try {
-            await this.init();
+            await this.ensure_ready();
             tangle_db_import_backup(this.serialize(backup));
             return;
         } catch (e) {
@@ -324,218 +378,267 @@ export class WebTangleDatabase implements IWebTangleDatabase {
     }
 
     async farm_create(opts: IFarmCreate): Promise<IFarmCreateResolve | IError<string>> {
+        await this.ensure_ready();
         const res = await tangle_db_farm_create(this.serialize(opts));
         return this.deserialize<IFarmCreateResolve>(res);
     }
 
     async farm_find_one(opts: IFarmFindOne): Promise<IFarmFindOneResolve | IError<string>> {
+        await this.ensure_ready();
         const res = await tangle_db_farm_find_one(this.serialize(opts));
         return this.deserialize<IFarmFindOneResolve>(res);
     }
 
     async farm_find_many(opts?: IFarmFindMany): Promise<IFarmFindManyResolve | IError<string>> {
+        await this.ensure_ready();
         const res = await tangle_db_farm_find_many(this.serialize(opts ?? {}));
         return this.deserialize<IFarmFindManyResolve>(res);
     }
 
     async farm_delete(opts: IFarmDelete): Promise<IFarmDeleteResolve | IError<string>> {
+        await this.ensure_ready();
         const res = await tangle_db_farm_delete(this.serialize(opts));
         return this.deserialize<IFarmDeleteResolve>(res);
     }
 
     async farm_update(opts: IFarmUpdate): Promise<IFarmUpdateResolve | IError<string>> {
+        await this.ensure_ready();
         const res = await tangle_db_farm_update(this.serialize(opts));
         return this.deserialize<IFarmUpdateResolve>(res);
     }
 
     async location_gcs_create(opts: ILocationGcsCreate): Promise<ILocationGcsCreateResolve | IError<string>> {
+        await this.ensure_ready();
         const res = await tangle_db_location_gcs_create(this.serialize(opts));
         return this.deserialize<ILocationGcsCreateResolve>(res);
     }
 
     async location_gcs_find_one(opts: ILocationGcsFindOne): Promise<ILocationGcsFindOneResolve | IError<string>> {
+        await this.ensure_ready();
         const res = await tangle_db_location_gcs_find_one(this.serialize(opts));
         return this.deserialize<ILocationGcsFindOneResolve>(res);
     }
 
     async location_gcs_find_many(opts?: ILocationGcsFindMany): Promise<ILocationGcsFindManyResolve | IError<string>> {
+        await this.ensure_ready();
         const res = await tangle_db_location_gcs_find_many(this.serialize(opts ?? {}));
         return this.deserialize<ILocationGcsFindManyResolve>(res);
     }
 
     async location_gcs_delete(opts: ILocationGcsDelete): Promise<ILocationGcsDeleteResolve | IError<string>> {
+        await this.ensure_ready();
         const res = await tangle_db_location_gcs_delete(this.serialize(opts));
         return this.deserialize<ILocationGcsDeleteResolve>(res);
     }
 
     async location_gcs_update(opts: ILocationGcsUpdate): Promise<ILocationGcsUpdateResolve | IError<string>> {
+        await this.ensure_ready();
         const res = await tangle_db_location_gcs_update(this.serialize(opts));
         return this.deserialize<ILocationGcsUpdateResolve>(res);
     }
 
     async log_error_create(opts: ILogErrorCreate): Promise<ILogErrorCreateResolve | IError<string>> {
+        await this.ensure_ready();
         const res = await tangle_db_log_error_create(this.serialize(opts));
         return this.deserialize<ILogErrorCreateResolve>(res);
     }
 
     async log_error_find_one(opts: ILogErrorFindOne): Promise<ILogErrorFindOneResolve | IError<string>> {
+        await this.ensure_ready();
         const res = await tangle_db_log_error_find_one(this.serialize(opts));
         return this.deserialize<ILogErrorFindOneResolve>(res);
     }
 
     async log_error_find_many(opts?: ILogErrorFindMany): Promise<ILogErrorFindManyResolve | IError<string>> {
+        await this.ensure_ready();
         const res = await tangle_db_log_error_find_many(this.serialize(opts ?? {}));
         return this.deserialize<ILogErrorFindManyResolve>(res);
     }
 
     async log_error_delete(opts: ILogErrorDelete): Promise<ILogErrorDeleteResolve | IError<string>> {
+        await this.ensure_ready();
         const res = await tangle_db_log_error_delete(this.serialize(opts));
         return this.deserialize<ILogErrorDeleteResolve>(res);
     }
 
     async log_error_update(opts: ILogErrorUpdate): Promise<ILogErrorUpdateResolve | IError<string>> {
+        await this.ensure_ready();
         const res = await tangle_db_log_error_update(this.serialize(opts));
         return this.deserialize<ILogErrorUpdateResolve>(res);
     }
 
     async media_image_create(opts: IMediaImageCreate): Promise<IMediaImageCreateResolve | IError<string>> {
+        await this.ensure_ready();
         const res = await tangle_db_media_image_create(this.serialize(opts));
         return this.deserialize<IMediaImageCreateResolve>(res);
     }
 
     async media_image_find_one(opts: IMediaImageFindOne): Promise<IMediaImageFindOneResolve | IError<string>> {
+        await this.ensure_ready();
         const res = await tangle_db_media_image_find_one(this.serialize(opts));
         return this.deserialize<IMediaImageFindOneResolve>(res);
     }
 
     async media_image_find_many(opts?: IMediaImageFindMany): Promise<IMediaImageFindManyResolve | IError<string>> {
+        await this.ensure_ready();
         const res = await tangle_db_media_image_find_many(this.serialize(opts ?? {}));
         return this.deserialize<IMediaImageFindManyResolve>(res);
     }
 
     async media_image_delete(opts: IMediaImageDelete): Promise<IMediaImageDeleteResolve | IError<string>> {
+        await this.ensure_ready();
         const res = await tangle_db_media_image_delete(this.serialize(opts));
         return this.deserialize<IMediaImageDeleteResolve>(res);
     }
 
     async media_image_update(opts: IMediaImageUpdate): Promise<IMediaImageUpdateResolve | IError<string>> {
+        await this.ensure_ready();
         const res = await tangle_db_media_image_update(this.serialize(opts));
         return this.deserialize<IMediaImageUpdateResolve>(res);
     }
 
     async nostr_profile_create(opts: INostrProfileCreate): Promise<INostrProfileCreateResolve | IError<string>> {
+        await this.ensure_ready();
         const res = await tangle_db_nostr_profile_create(this.serialize(opts));
         return this.deserialize<INostrProfileCreateResolve>(res);
     }
 
     async nostr_profile_find_one(opts: INostrProfileFindOne): Promise<INostrProfileFindOneResolve | IError<string>> {
+        await this.ensure_ready();
         const res = await tangle_db_nostr_profile_find_one(this.serialize(opts));
         return this.deserialize<INostrProfileFindOneResolve>(res);
     }
 
     async nostr_profile_find_many(opts?: INostrProfileFindMany): Promise<INostrProfileFindManyResolve | IError<string>> {
+        await this.ensure_ready();
         const res = await tangle_db_nostr_profile_find_many(this.serialize(opts ?? {}));
         return this.deserialize<INostrProfileFindManyResolve>(res);
     }
 
     async nostr_profile_delete(opts: INostrProfileDelete): Promise<INostrProfileDeleteResolve | IError<string>> {
+        await this.ensure_ready();
         const res = await tangle_db_nostr_profile_delete(this.serialize(opts));
         return this.deserialize<INostrProfileDeleteResolve>(res);
     }
 
     async nostr_profile_update(opts: INostrProfileUpdate): Promise<INostrProfileUpdateResolve | IError<string>> {
+        await this.ensure_ready();
         const res = await tangle_db_nostr_profile_update(this.serialize(opts));
         return this.deserialize<INostrProfileUpdateResolve>(res);
     }
 
     async nostr_relay_create(opts: INostrRelayCreate): Promise<INostrRelayCreateResolve | IError<string>> {
+        await this.ensure_ready();
         const res = await tangle_db_nostr_relay_create(this.serialize(opts));
         return this.deserialize<INostrRelayCreateResolve>(res);
     }
 
     async nostr_relay_find_one(opts: INostrRelayFindOne): Promise<INostrRelayFindOneResolve | IError<string>> {
+        await this.ensure_ready();
         const res = await tangle_db_nostr_relay_find_one(this.serialize(opts));
         return this.deserialize<INostrRelayFindOneResolve>(res);
     }
 
     async nostr_relay_find_many(opts?: INostrRelayFindMany): Promise<INostrRelayFindManyResolve | IError<string>> {
+        await this.ensure_ready();
         const res = await tangle_db_nostr_relay_find_many(this.serialize(opts ?? {}));
         return this.deserialize<INostrRelayFindManyResolve>(res);
     }
 
     async nostr_relay_delete(opts: INostrRelayDelete): Promise<INostrRelayDeleteResolve | IError<string>> {
+        await this.ensure_ready();
         const res = await tangle_db_nostr_relay_delete(this.serialize(opts));
         return this.deserialize<INostrRelayDeleteResolve>(res);
     }
 
     async nostr_relay_update(opts: INostrRelayUpdate): Promise<INostrRelayUpdateResolve | IError<string>> {
+        await this.ensure_ready();
         const res = await tangle_db_nostr_relay_update(this.serialize(opts));
         return this.deserialize<INostrRelayUpdateResolve>(res);
     }
 
     async trade_product_create(opts: ITradeProductCreate): Promise<ITradeProductCreateResolve | IError<string>> {
+        await this.ensure_ready();
         const res = await tangle_db_trade_product_create(this.serialize(opts));
         return this.deserialize<ITradeProductCreateResolve>(res);
     }
 
     async trade_product_find_one(opts: ITradeProductFindOne): Promise<ITradeProductFindOneResolve | IError<string>> {
+        await this.ensure_ready();
         const res = await tangle_db_trade_product_find_one(this.serialize(opts));
         return this.deserialize<ITradeProductFindOneResolve>(res);
     }
 
     async trade_product_find_many(opts?: ITradeProductFindMany): Promise<ITradeProductFindManyResolve | IError<string>> {
+        await this.ensure_ready();
         const res = await tangle_db_trade_product_find_many(this.serialize(opts ?? {}));
         return this.deserialize<ITradeProductFindManyResolve>(res);
     }
 
     async trade_product_delete(opts: ITradeProductDelete): Promise<ITradeProductDeleteResolve | IError<string>> {
+        await this.ensure_ready();
         const res = await tangle_db_trade_product_delete(this.serialize(opts));
         return this.deserialize<ITradeProductDeleteResolve>(res);
     }
 
     async trade_product_update(opts: ITradeProductUpdate): Promise<ITradeProductUpdateResolve | IError<string>> {
+        await this.ensure_ready();
         const res = await tangle_db_trade_product_update(this.serialize(opts));
         return this.deserialize<ITradeProductUpdateResolve>(res);
     }
 
     async farm_location_set(opts: IFarmLocationRelation): Promise<IFarmLocationResolve | IError<string>> {
+        await this.ensure_ready();
         const res = await tangle_db_farm_location_set(this.serialize(opts));
         return this.deserialize<IFarmLocationResolve>(res);
     }
 
     async farm_location_unset(opts: IFarmLocationRelation): Promise<IFarmLocationResolve | IError<string>> {
+        await this.ensure_ready();
         const res = await tangle_db_farm_location_unset(this.serialize(opts));
         return this.deserialize<IFarmLocationResolve>(res);
     }
 
     async nostr_profile_relay_set(opts: INostrProfileRelayRelation): Promise<INostrProfileRelayResolve | IError<string>> {
+        await this.ensure_ready();
         const res = await tangle_db_nostr_profile_relay_set(this.serialize(opts));
         return this.deserialize<INostrProfileRelayResolve>(res);
     }
 
     async nostr_profile_relay_unset(opts: INostrProfileRelayRelation): Promise<INostrProfileRelayResolve | IError<string>> {
+        await this.ensure_ready();
         const res = await tangle_db_nostr_profile_relay_unset(this.serialize(opts));
         return this.deserialize<INostrProfileRelayResolve>(res);
     }
 
     async trade_product_location_set(opts: ITradeProductLocationRelation): Promise<ITradeProductLocationResolve | IError<string>> {
+        await this.ensure_ready();
         const res = await tangle_db_trade_product_location_set(this.serialize(opts));
         return this.deserialize<ITradeProductLocationResolve>(res);
     }
 
     async trade_product_location_unset(opts: ITradeProductLocationRelation): Promise<ITradeProductLocationResolve | IError<string>> {
+        await this.ensure_ready();
         const res = await tangle_db_trade_product_location_unset(this.serialize(opts));
         return this.deserialize<ITradeProductLocationResolve>(res);
     }
 
     async trade_product_media_set(opts: ITradeProductMediaRelation): Promise<ITradeProductMediaResolve | IError<string>> {
+        await this.ensure_ready();
         const res = await tangle_db_trade_product_media_set(this.serialize(opts));
         return this.deserialize<ITradeProductMediaResolve>(res);
     }
 
     async trade_product_media_unset(opts: ITradeProductMediaRelation): Promise<ITradeProductMediaResolve | IError<string>> {
+        await this.ensure_ready();
         const res = await tangle_db_trade_product_media_unset(this.serialize(opts));
         return this.deserialize<ITradeProductMediaResolve>(res);
     }
 
 }
+
+export const web_tangle_database_create = async (config?: WebTangleDatabaseConfig): Promise<WebTangleDatabase> => {
+    const db = new WebTangleDatabase(config);
+    await db.init();
+    return db;
+};

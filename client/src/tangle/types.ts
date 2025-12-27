@@ -84,6 +84,7 @@ import type { TangleDatabaseBackup } from "./web.js";
 
 export interface IClientTangleDatabase {
     init(): Promise<void>;
+    close(): Promise<void>;
     migration_state(): Promise<SqlJsMigrationState | IError<string>>;
     reset(): Promise<SqlJsMigrationState | IError<string>>;
     reinit(): Promise<SqlJsMigrationState | IError<string>>;
